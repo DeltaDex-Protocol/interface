@@ -42,6 +42,19 @@ const UserInformation = ({
   const [jumpIntensity, setJumpIntensity] = useState("");
 
   const sendForm = async () => {
+    console.log([
+      addressToken0,
+      addressToken1,
+      token0Balance,
+      fees,
+      perDay,
+      strike,
+      expiration,
+      riskFree,
+      volatility,
+      meanReversion,
+      jumpDeviation,
+      jumpIntensity]);
     const { success, status } = await mintNFT(
       addressToken0,
       addressToken1,
@@ -148,7 +161,7 @@ const UserInformation = ({
             placeholder="uint"
             size="sm"
             successMsg="done"
-            onChange={(event) => setFees(event.target.value)}
+            onChange={(event) => setPerDay(event.target.value)}
           />
           <FormInput
             xs={12}
@@ -163,7 +176,7 @@ const UserInformation = ({
             placeholder="uint256"
             size="sm"
             successMsg="done"
-            onChange={(event) => setPerDay(event.target.value)}
+            onChange={(event) => setStrike(event.target.value)}
           />
         </Row>
         <Row className="mt-3 px-3">
@@ -187,7 +200,7 @@ const UserInformation = ({
             lg
             as={Col}
             inpClass="py-2"
-            className="p-0 ms-lg-5 mt-4 mt-lg-0"
+            className="p-0 ms-lg-5 mt-4 mt-lg-3"
             name="riskFreeRate"
             type="text"
             controlId=""
@@ -222,7 +235,7 @@ const UserInformation = ({
             lg
             as={Col}
             inpClass="py-2"
-            className="p-0"
+            className="p-0 ms-lg-5 mt-0 mt-lg-0"
             name="intensityOfJump"
             type="text"
             controlId=""
