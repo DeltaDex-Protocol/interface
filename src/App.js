@@ -14,7 +14,13 @@ import { getStorage } from './utils/storage';
 // kirill
 import Button from 'react-bootstrap/Button'
 import { connectWallet, getCurrentWalletConnected } from "./utils/interact.js";
+var jazzicon = require('jazzicon')
 
+// var body = document.querySelector('body')
+// for(var i = 0; i < 1; i++) {
+//   var el = jazzicon(100, Math.round(Math.random() * 10000000))
+//   body.appendChild(el)
+// }
 
 const App = () => {
 
@@ -47,10 +53,10 @@ const App = () => {
   useEffect(() => {
     const func = async () => {
       const {address, status} = await getCurrentWalletConnected();
-      if (address) {
-      setWallet(address.slice(0, 7) + "..." + address.slice(-6, ));
-    }
-      setStatus(status);
+    //   if (address) {
+    //   setWallet(address.slice(0, 7) + "..." + address.slice(-6, ));
+    // }
+      // setStatus(status);
     }
     func().then( () => {
       checkUserIsRegister()
@@ -72,7 +78,7 @@ const App = () => {
   return (
      <>
 
-        <Button variant="primary" className="float-end mt-5 py-2" onClick={connectWalletPressed}> 
+{/*        <Button variant="primary" className="float-end mt-5 py-2" onClick={connectWalletPressed}> 
         {walletAddress.length > 0 ? (
           "Connected: " +
           String(walletAddress).substring(0, 6) +
@@ -81,12 +87,12 @@ const App = () => {
         ) : (
           <span>Connect Wallet</span>
         )}
-        </Button>
+        </Button>*/}
 
      {/*{console.log(getStorage('users'))}*/}
       { toggle === 'register' && <RegisterForm onRegister={checkUserIsRegister}  onLogin={changeToggle} /> }
       { toggle === 'login' && <LoginForm onRegister={changeToggle} onLogin={checkUserIsRegister} /> }
-      { toggle === 'panel' && <Panel onLogOut={checkUserIsRegister} onAddress={walletAddress}/> }
+      { toggle === 'panel' && <Panel onLogOut={checkUserIsRegister} /> }
     </>
   )
 }

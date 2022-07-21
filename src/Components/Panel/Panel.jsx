@@ -13,11 +13,12 @@ import UserChangePassword from './UserChangePassword/UserChangePassword'
 import { UserEdit, Lock, ProfileCircle, Code1 } from "iconsax-react";
 import { Row, Col, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
-// import { connectWallet, getCurrentWalletConnected } from "./utils/interact.js";
 
 
 // import utils
 import { getStorage, updateStorage } from './../../utils/storage';
+import { connectWallet, getCurrentWalletConnected } from "./../../utils/interact.js";
+
 
 class Panel extends PureComponent {
     constructor(props) {
@@ -27,7 +28,12 @@ class Panel extends PureComponent {
         this.state = {
             user: {...this.initState(this.myVerifyUser)},
             toggle: 'replicate option',
-            address: this.props.onAddress,
+            walletAddress: "",
+            status: "",
+            name: "",
+            description: "",
+            url: "",
+
         }
         // const [walletAddress, setWallet] = useState("");
         // const [status, setStatus] = useState("");
@@ -71,6 +77,21 @@ class Panel extends PureComponent {
         this.changeUserInformation = this.changeUserInformation.bind(this)
     }
 
+    connectWalletPressed = async () => { 
+        const walletResponse = await connectWallet();
+        let address = walletResponse.address;
+
+        if (address) {
+            address = address.slice(0, 7) + "..." + address.slice(-6, );
+        }
+
+        this.setState({
+            status: walletResponse.status,
+            walletAddress: address
+        });
+
+  };
+
 
 
     getUserFromStorage() {
@@ -89,10 +110,15 @@ class Panel extends PureComponent {
         this.changeUserInformation(['isLogin'], [false])
     }
 
+    // after rendering
     componentDidUpdate() {
-        updateStorage(getStorage('users'), this.state.user)
-        !this.state.user.isLogin && this.props.onLogOut()
-    }
+
+        // func().then( () => {
+
+        // updateStorage(getStorage('users'), this.state.user)
+        // !this.state.user.isLogin && this.props.onLogOut()
+    // }
+}
 
     changeToggle(toggle) {
         this.setState({ toggle })
@@ -121,26 +147,27 @@ class Panel extends PureComponent {
         
     render() {
         return (
+            <div className={`${styles['panel-wrapper']} align-items-center px-5 `}>
+                            <Button variant="primary" className="float-end mt-5 py-2" onClick={this.connectWalletPressed}> 
+                    {this.state.walletAddress.length > 0 ? (
+                      "Connected: " +
+                      String(this.state.walletAddress).substring(0, 6) +
+                      "..." +
+                      String(this.state.walletAddress).substring(38)
+                    ) : (
+                      <span>Connect Wallet</span>
+                    )}
+                </Button>
             <div className={`${styles['panel-wrapper']} d-flex align-items-center justify-content-center`}>
-                {/* <div className={styles['bg-overlay']}></div> TODO */} 
-                {/*{console.log(this.state.address)}*/}
-{/*                <Button variant="primary" className="float-end mt-5 py-2" onClick={connectWalletPressed}> 
-                {walletAddress.length > 0 ? (
-                  "Connected: " +
-                  String(walletAddress).substring(0, 6) +
-                  "..." +
-                  String(walletAddress).substring(38)
-                ) : (
-                  <span>Connect Wallet</span>
-                )}
-                </Button>*/}
+
+
+
                 <div className={`${styles.container} d-flex justify-content-center align-items-center p-0`}>
                     <Row className={`${styles['panel']} flex-column flex-md-row justify-content-center align-items-center px-3`}>
                         <Col xs={12} sm={8} md={4} className="d-flex flex-column justify-content-center p-0">
                             <UserCard
                                 username={"Your address"} 
-                                userBirthday={this.state.address} 
-                                // userEmail={this.state.address} 
+                                userBirthday={this.state.walletAddress} 
                                 sidebarLinks={this.sidebarLinks}
                                 onChangeToggle={this.changeToggle}
                             />
@@ -177,6 +204,7 @@ class Panel extends PureComponent {
                         Log out
                     </Button>
                 ), document.getElementById("root"))}*/}
+            </div>
             </div>
         )
     }
