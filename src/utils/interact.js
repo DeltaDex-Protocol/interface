@@ -111,6 +111,7 @@ export const mintNFT = async (
   try {
     const tx = await optionmaker.JDM_CALL_START_REPLICATION(JDM_Call_Input);
     // wait until the transaction is mined
+    // console.log('here')
     await tx.wait();
 
     return {
@@ -177,6 +178,12 @@ export const mintNFT = async (
 // 		}
 // 	}
 
+// }
+
+// export const getCurrentPositions = async() => {
+//   const signer = provider.getSigner();
+//   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+//   return await optionmaker.getPairUserAddress('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
 // }
 
 export const getCurrentWalletConnected = async () => {

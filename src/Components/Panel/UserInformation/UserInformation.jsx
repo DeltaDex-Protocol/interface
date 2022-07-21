@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 
 // import utils
 import { getStorage } from "../../../utils/storage";
-import { mintNFT } from "../../../utils/interact";
+import { mintNFT, getCurrentPositions } from "../../../utils/interact";
 
 const UserInformation = ({
   username,
@@ -40,6 +40,10 @@ const UserInformation = ({
   const [meanReversion, setMeanReversion] = useState("");
   const [jumpDeviation, setJumpDeviation] = useState("");
   const [jumpIntensity, setJumpIntensity] = useState("");
+
+
+  // getCurrentPositions().then((positions) => console.log(positions));
+  
 
   const sendForm = async () => {
     console.log([
