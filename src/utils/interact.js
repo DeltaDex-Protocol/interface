@@ -1,10 +1,15 @@
 import { pinJSONToIPFS } from "./pinata.js";
 require("dotenv").config();
-const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
+// const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
 const contractABI = require("../OptionMaker.json");
-const contractAddress = "0xAe120F0df055428E45b264E7794A18c54a2a3fAF";
-const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
-const web3 = createAlchemyWeb3(alchemyKey);
+const contractAddress = "0x9Fcca440F19c62CDF7f973eB6DDF218B15d4C71D";
+// const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
+// const web3 = createAlchemyWeb3(alchemyKey);
+
+var ethers = require("ethers");
+const url = "http://127.0.0.1:8545";
+// const provider = new ethers.providers.JsonRpcProvider(url);
+const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 export const connectWallet = async () => {
   if (window.ethereum) {
@@ -84,9 +89,11 @@ export const getCurrentWalletConnected = async () => {
   }
 };
 
+/*
 async function loadContract() {
   return new web3.eth.Contract(contractABI, contractAddress);
 }
+*/
 
 export const mintNFT = async (
   addressToken0,
@@ -109,33 +116,16 @@ export const mintNFT = async (
     };
   }
 
-  console.log(addressToken0);
-
-  //make metadata
-  const metadata = new Object();
-
-  metadata.addressToken0 = addressToken0;
-  metadata.addressToken1 = addressToken1;
-  metadata.token0Balance = token0Balance;
-  metadata.fees = fees;
-  metadata.perDay = perDay;
-
-  metadata.strike = strike;
-  metadata.expiration = expiration;
-  metadata.riskFree = riskFree;
-  metadata.volatility = volatility;
-  metadata.meanReversion = meanReversion;
-  metadata.jumpDeviation = jumpDeviation;
-  metadata.JumpIntensity = jumpIntensity;
-
-  const pinataResponse = await pinJSONToIPFS(metadata);
-  if (!pinataResponse.success) {
-    return {
-      success: false,
-      status: "😢 Something went wrong while uploading your tokenURI.",
-    };
-  }
-  const tokenURI = pinataResponse.pinataUrl;
+  token0Balance = ethers.utils.parseUnits(token0Balance);
+  fees = ethers.utils.parseUnits(fees);
+  perDay = ethers.utils.parseUnits(perDay);
+  strike = ethers.utils.parseUnits(strike);
+  expiration = ethers.utils.parseUnits(expiration);
+  riskFree = ethers.utils.parseUnits(riskFree);
+  volatility = ethers.utils.parseUnits(volatility);
+  meanReversion = ethers.utils.parseUnits(meanReversion);
+  jumpDeviation = ethers.utils.parseUnits(jumpDeviation);
+  jumpIntensity = ethers.utils.parseUnits(jumpIntensity);
 
   // JDM input
   const JDM_Call_Input = [
@@ -160,8 +150,29 @@ export const mintNFT = async (
     ],
   ];
 
-  window.contract = await new web3.eth.Contract(contractABI, contractAddress);
+  const signer = provider.getSigner();
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
+  try {
+    const tx = await optionmaker.JDM_CALL_START_REPLICATION(JDM_Call_Input);
+    // wait until the transaction is mined
+    await tx.wait();
+
+    return {
+      success: true,
+      status:
+        "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      status: "😥 Something went wrong: " + error.message,
+    };
+  }
+
+  // window.contract = await new web3.eth.Contract(contractABI, contractAddress);
+
+  /*
   const transactionParameters = {
     to: contractAddress, // Required except during contract publications.
     from: window.ethereum.selectedAddress, // must match user's active address.
@@ -187,4 +198,5 @@ export const mintNFT = async (
       status: "😥 Something went wrong: " + error.message,
     };
   }
+  */
 };
