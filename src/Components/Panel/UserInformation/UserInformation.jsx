@@ -41,9 +41,7 @@ const UserInformation = ({
   const [jumpDeviation, setJumpDeviation] = useState("");
   const [jumpIntensity, setJumpIntensity] = useState("");
 
-
   // getCurrentPositions().then((positions) => console.log(positions));
-  
 
   const sendForm = async () => {
     console.log([
@@ -58,7 +56,8 @@ const UserInformation = ({
       volatility,
       meanReversion,
       jumpDeviation,
-      jumpIntensity]);
+      jumpIntensity,
+    ]);
     const { success, status } = await mintNFT(
       addressToken0,
       addressToken1,

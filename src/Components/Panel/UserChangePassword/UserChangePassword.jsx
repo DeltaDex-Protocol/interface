@@ -9,8 +9,11 @@ import { Form, Button } from "react-bootstrap";
 import { useFormik } from "formik";
 import { string, object, ref } from "yup";
 
+import { getUserPositions, getCurrentPositions } from "../../../utils/interact";
+
 const UserChangePassword = ({ password, onChangeInfo }) => {
   const [submit, setSubmit] = useState(false);
+  // const [view, setView] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -52,7 +55,7 @@ const UserChangePassword = ({ password, onChangeInfo }) => {
 
   return (
     <>
-      <Titles title="All Positions" text="" />
+      <Titles title="My Positions" text="" />
 
       <Form className="mt-5" noValidate onSubmit={formik.handleSubmit}>
         <FormInput
@@ -102,9 +105,9 @@ const UserChangePassword = ({ password, onChangeInfo }) => {
           disabled={submit && !formik.isValid ? true : false}
           className="mt-5 py-2 px-4"
           type="submit"
-          onClick={() => setSubmit(true)}
+          onClick={() => getUserPositions()}
         >
-          Update
+          View Positions
         </Button>
       </Form>
     </>

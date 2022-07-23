@@ -9,7 +9,7 @@
 // const contractAddress = "0xd1b04035bB8E12584070f3f42090877Cee52817a";
 
 const contractABI = require("./OptionMaker.json");
-const contractAddress = "0x9Fcca440F19c62CDF7f973eB6DDF218B15d4C71D";
+const contractAddress = "0x1343248Cbd4e291C6979e70a138f4c774e902561";
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -127,65 +127,6 @@ export const mintNFT = async (
   }
 };
 
-// export const mintNFT = async (url, name, description) => {
-// 	// error handling
-// 	if (url.trim() == "" || (name.trim() == "" || description.trim() == "")) {
-// 		return {
-// 			success: false,
-//     		status: "❗Please make sure all fields are completed before minting.",
-// 		}
-// 	}
-
-// 	const metadata = new Object();
-// 	metadata.name = name;
-// 	metadata.image = url;
-// 	metadata.description = description;
-
-// 	//make pinata call
-// 	const pinataResponse = await pinJSONToIPFS(metadata);
-// 	if (!pinataResponse.success) {
-// 		return {
-// 			success: false,
-//           status: "😢 Something went wrong while uploading your tokenURI.",
-// 		}
-// 	}
-
-// 	const tokenURI = pinataResponse.pinataUrl;
-
-// 	window.contract = await new web3.eth.Contract(contractABI, contractAddress);
-
-// 	// set up your Ethereum transaction
-// 	const transactionParameters = {
-// 		"to": contractAddress,
-// 		"from": window.ethereum.selectedAddress,
-// 		"data": window.contract.methods.mintNFT(window.ethereum.selectedAddress, tokenURI).encodeABI()
-// 	};
-
-// 	try {
-// 		const txHash = await window.ethereum
-// 			.request({
-// 				method: "eth_sendTransaction",
-// 				params: [transactionParameters],
-// 			});
-// 		return {
-// 			success: true,
-// 	        status: "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/" + txHash
-// 		}
-// 	} catch (error) {
-// 		return {
-// 		    success: false,
-//         	status: "😥 Something went wrong: " + error.message
-// 		}
-// 	}
-
-// }
-
-// export const getCurrentPositions = async() => {
-//   const signer = provider.getSigner();
-//   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
-//   return await optionmaker.getPairUserAddress('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
-// }
-
 export const getCurrentWalletConnected = async () => {
   if (window.ethereum) {
     try {
@@ -226,4 +167,25 @@ export const getCurrentWalletConnected = async () => {
       ),
     };
   }
+};
+
+// test
+
+export const getUserPositions = async () => {
+  const signer = provider.getSigner();
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+
+  const pairAddress = await optionmaker.allPairs(0);
+  console.log(pairAddress);
+
+  const userAddress = await signer.getAddress();
+  console.log(userAddress);
+
+  var option = await optionmaker.JDM_Calls(pairAddress, userAddress, 0);
+
+  // wait until the transaction is mined
+  // console.log('here')
+  // await option.wait();
+
+  console.log(option);
 };

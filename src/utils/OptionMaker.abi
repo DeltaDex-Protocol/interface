@@ -26,6 +26,39 @@
     "type": "error"
   },
   {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__Exp2InputTooBig",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__ExpInputTooBig",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__LogInputTooSmall",
+    "type": "error"
+  },
+  {
     "inputs": [],
     "name": "PRBMathSD59x18__MulInputTooSmall",
     "type": "error"
@@ -39,6 +72,28 @@
       }
     ],
     "name": "PRBMathSD59x18__MulOverflow",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__SqrtNegativeInput",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "int256",
+        "name": "x",
+        "type": "int256"
+      }
+    ],
+    "name": "PRBMathSD59x18__SqrtOverflow",
     "type": "error"
   },
   {
@@ -615,6 +670,72 @@
   {
     "inputs": [
       {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "S",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "K",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "T",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "r",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "sigma",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "m",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "v",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lam",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct JDM.MertonInput",
+        "name": "_params",
+        "type": "tuple"
+      }
+    ],
+    "name": "MERTON_PUT",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "p",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "delta",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -710,9 +831,9 @@
     "name": "Positions",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1062,6 +1183,67 @@
       }
     ],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "S",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "K",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "T",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "r",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "sigma",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "m",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "v",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lam",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct JDM.MertonInput",
+        "name": "_params",
+        "type": "tuple"
+      }
+    ],
+    "name": "delta_MERTON_PUT",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "delta",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1435,6 +1617,25 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      }
+    ],
+    "name": "getPairUsers",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "token0",
         "type": "address"
       },
@@ -1477,49 +1678,59 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "pair",
-        "type": "address"
+        "components": [
+          {
+            "internalType": "int256",
+            "name": "S",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "K",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "T",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "r",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "sigma",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "m",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "v",
+            "type": "int256"
+          },
+          {
+            "internalType": "int256",
+            "name": "lam",
+            "type": "int256"
+          }
+        ],
+        "internalType": "struct JDM.MertonInput",
+        "name": "_params",
+        "type": "tuple"
       }
     ],
-    "name": "getUserAddressesInPair",
+    "name": "pMERTON_PUT",
     "outputs": [
       {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
-    ],
-    "name": "getUserPositions",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "numOfPairs",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "int256",
+        "name": "p",
+        "type": "int256"
       }
     ],
     "stateMutability": "view",
