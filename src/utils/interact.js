@@ -180,10 +180,10 @@ export const mintNFT = async (
 
 // }
 
-// export const getCurrentPositions = async() => {
+// export const getCurrentPositions = () => {
 //   const signer = provider.getSigner();
 //   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
-//   return await optionmaker.getPairUserAddress('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
+//   return  optionmaker.PairUsers();
 // }
 
 export const getCurrentWalletConnected = async () => {

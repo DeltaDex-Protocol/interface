@@ -7,10 +7,10 @@ body {
     background-color: #fcfcfc;
 }
 .container {
-    width: 83%;
+    width: 90%;
 }
 .panel {
-    width: 85%;
+    width: 80%;
     z-index: 2;
     margin: 100px 0;
 }

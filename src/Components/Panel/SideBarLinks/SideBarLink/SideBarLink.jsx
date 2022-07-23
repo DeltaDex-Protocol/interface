@@ -29,15 +29,6 @@ const SideBarLink = ({ id, border, text, icon, href, active, onActive }) => {
 }
 
 // validate component
-SideBarLink.propTypes = {
-    id: PropTypes.number.isRequired,
-    className: PropTypes.string,
-    border: PropTypes.bool,
-    text: PropTypes.string.isRequired,
-    icon: PropTypes.element,
-    href: PropTypes.string,
-    active: PropTypes.bool,
-    onActive: PropTypes.func.isRequired,
-}
+
 
 export default SideBarLink

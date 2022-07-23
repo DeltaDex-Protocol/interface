@@ -42,7 +42,7 @@ const UserInformation = ({
   const [jumpIntensity, setJumpIntensity] = useState("");
 
 
-  // getCurrentPositions().then((positions) => console.log(positions));
+  // const a = getCurrentPositions();
   
 
   const sendForm = async () => {
@@ -302,14 +302,5 @@ const UserInformation = ({
   );
 };
 
-// validate the component
-UserInformation.propTypes = {
-  username: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  birthday: PropTypes.string.isRequired,
-  onChangeInfo: PropTypes.func.isRequired,
-};
 
 export default UserInformation;

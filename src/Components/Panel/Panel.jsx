@@ -18,6 +18,8 @@ import PropTypes from 'prop-types'
 // import utils
 import { getStorage, updateStorage } from './../../utils/storage';
 import { connectWallet, getCurrentWalletConnected } from "./../../utils/interact.js";
+import Sidebar from '../Sidebar/Sidebar'
+import Header from "./../Header/Header.jsx";
 
 
 class Panel extends PureComponent {
@@ -28,18 +30,14 @@ class Panel extends PureComponent {
         this.state = {
             user: {...this.initState(this.myVerifyUser)},
             toggle: 'replicate option',
-            walletAddress: "",
+            walletAddress: "Not connected",
             status: "",
             name: "",
             description: "",
             url: "",
 
         }
-        // const [walletAddress, setWallet] = useState("");
-        // const [status, setStatus] = useState("");
-        // const [name, setName] = useState("");
-        // const [description, setDescription] = useState("");
-        // const [url, setURL] = useState("");
+
         
         this.sidebarLinks = [
             {
@@ -110,7 +108,6 @@ class Panel extends PureComponent {
         this.changeUserInformation(['isLogin'], [false])
     }
 
-    // after rendering
     componentDidUpdate() {
 
         // func().then( () => {
@@ -124,9 +121,7 @@ class Panel extends PureComponent {
         this.setState({ toggle })
     }
 
-    // changeAddress(addr) {
-    //     this.setState({address: addr})
-    // }
+
 
     changeUserInformation(keyInfos, valInfos) {
         let newInfo = {}
@@ -148,8 +143,10 @@ class Panel extends PureComponent {
     render() {
         return (
             <div className={`${styles['panel-wrapper']} align-items-center px-5 `}>
-                            <Button variant="primary" className="float-end mt-5 py-2" onClick={this.connectWalletPressed}> 
-                    {this.state.walletAddress.length > 0 ? (
+                <Header/>
+
+                <Button variant="primary" className="float-end mt-5 py-2" onClick={this.connectWalletPressed}> 
+                    {this.state.walletAddress !== "Not connected" ? (
                       "Connected: " +
                       String(this.state.walletAddress).substring(0, 6) +
                       "..." +
@@ -158,23 +155,29 @@ class Panel extends PureComponent {
                       <span>Connect Wallet</span>
                     )}
                 </Button>
-            <div className={`${styles['panel-wrapper']} d-flex align-items-center justify-content-center`}>
 
+            <div className={`${styles['panel-wrapper']} d-flex align-items-center justify-content-center`}>
+            <Sidebar 
+                username={"Your address"}
+                userAddress={this.state.walletAddress}
+                userProfile={this.state.walletAddress}
+                sidebarLinks={this.sidebarLinks}
+            />
+                
 
 
                 <div className={`${styles.container} d-flex justify-content-center align-items-center p-0`}>
-                    <Row className={`${styles['panel']} flex-column flex-md-row justify-content-center align-items-center px-3`}>
-                        <Col xs={12} sm={8} md={4} className="d-flex flex-column justify-content-center p-0">
+                    <Row className={`${styles['panel']} flex-column flex-md-row justify-content-center align-items-center`}>
+                        {/*<Col xs={12} sm={8} md={4} className="d-flex flex-column justify-content-center p-0">
                             <UserCard
                                 username={"Your address"} 
                                 userBirthday={this.state.walletAddress} 
                                 sidebarLinks={this.sidebarLinks}
                                 onChangeToggle={this.changeToggle}
                             />
-                        </Col>
+                        </Col>*/}
                         
                         <Col xs={12} sm={8} md={7} className={`${styles['panel-column']} bg-white border mt-5 mt-md-0 ms-md-5 p-5`}>
-                            {/*{console.log(this.state.toggle)}*/}
                             {this.state.toggle === 'replicate option' && (
                                 <UserInformation 
                                     username={this.state.user.username}
@@ -194,25 +197,13 @@ class Panel extends PureComponent {
                         </Col>
                     </Row>
                 </div >
-{/*        }
-        }*/}
-{/*                {createPortal((
-                    <Button 
-                        variant="primary" 
-                        className={styles["log-out-btn"]} 
-                        onClick={this.logOut}>
-                        Log out
-                    </Button>
-                ), document.getElementById("root"))}*/}
+
             </div>
             </div>
         )
     }
 }
 
-// validate component
-Panel.propTypes = {
-    onLogOut: PropTypes.func.isRequired
-}
+
 
 export default Panel

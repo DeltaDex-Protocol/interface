@@ -101,10 +101,6 @@ const RegisterForm = ({ onRegister, onLogin }) => {
     )
 }
 
-// validate component
-RegisterForm.propTypes = {
-    onRegister: PropTypes.func.isRequired,
-    onLogin: PropTypes.func.isRequired,
-}
+
 
 export default RegisterForm

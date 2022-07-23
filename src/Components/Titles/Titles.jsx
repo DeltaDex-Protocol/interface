@@ -13,9 +13,6 @@ const Titles = ({ title, text }) => {
 }
 
 // validate component
-Titles.propTypes = {
-    title: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-}
+
 
 export default Titles

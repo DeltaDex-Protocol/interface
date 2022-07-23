@@ -55,23 +55,5 @@ class FormInput extends PureComponent {
     }
 }
 
-// validate this component
-FormInput.propTypes = {
-    inpClass: PropTypes.string,
-    className: PropTypes.string,
-    controlId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    placeholder: PropTypes.string.isRequired, 
-    type: PropTypes.string, 
-    as: PropTypes.elementType,
-    errMsg: PropTypes.string.isRequired, 
-    successMsg: PropTypes.string.isRequired, 
-    valid: PropTypes.bool.isRequired, 
-    invalid: PropTypes.bool.isRequired, 
-    size: PropTypes.string,
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired
-}
 
 export default FormInput

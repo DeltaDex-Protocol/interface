@@ -14,13 +14,8 @@ import { getStorage } from './utils/storage';
 // kirill
 import Button from 'react-bootstrap/Button'
 import { connectWallet, getCurrentWalletConnected } from "./utils/interact.js";
-var jazzicon = require('jazzicon')
 
-// var body = document.querySelector('body')
-// for(var i = 0; i < 1; i++) {
-//   var el = jazzicon(100, Math.round(Math.random() * 10000000))
-//   body.appendChild(el)
-// }
+
 
 const App = () => {
 
