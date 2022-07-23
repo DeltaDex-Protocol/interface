@@ -16,6 +16,7 @@
     "react-bootstrap": "^2.3.1",
     "react-dom": "^18.1.0",
     "react-jazzicon": "^1.0.4",
+    "react-select": "^5.4.0",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
