@@ -10,7 +10,7 @@ import UserInformation from "./UserInformation/UserInformation";
 import UserChangePassword from "./UserChangePassword/UserChangePassword";
 
 // import other pkgs
-import { UserEdit, Lock, ProfileCircle, Code1 } from "iconsax-react";
+import { Add, Lock, Layer, Code1, Wallet2 } from "iconsax-react";
 import { Row, Col, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -46,7 +46,7 @@ class Panel extends PureComponent {
         id: 1,
         border: true,
         text: "replicate option",
-        icon: <UserEdit size="20" color="black" />,
+        icon: <Add size="20" color="black" />,
         active: true,
       },
       {
@@ -60,7 +60,7 @@ class Panel extends PureComponent {
         id: 3,
         border: true,
         text: "all positions",
-        icon: <ProfileCircle size="20" color="black" />,
+        icon: <Layer size="20" color="black" />,
         active: false,
       },
       {
@@ -170,7 +170,10 @@ class Panel extends PureComponent {
             "..." +
             String(this.state.walletAddress).substring(38)
           ) : (
-            <span>Connect Wallet</span>
+            <span>
+              <Wallet2 size="20" />
+              Connect Wallet
+            </span>
           )}
         </Button>
         <div
