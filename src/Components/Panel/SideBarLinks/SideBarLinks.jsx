@@ -13,14 +13,11 @@ const SideBarLinks = ({ sidebarLinks, onChangeToggle }) => {
     const [linksState, setLinks] = useState({
         links: [ ...sidebarLinks  ]
     })
-    // console.log(linksState);
 
     const activeLink = (linkId) => {
-
         linksState.links.forEach(link => link.active = false)
         
-        const link = linksState.links.find(link => link.id === linkId);
-        
+        const link = linksState.links.find(link => link.id === linkId)
         if (!link.href) {
             link.active = true
             

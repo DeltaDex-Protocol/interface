@@ -5,38 +5,66 @@ import styles from './LinksOfSidebar.module.css'
 
 const LinksOfSidebar = ({sidebarLinks, onChangeToggle}) => {
 
-	const [linkState, setLinkState] = useState({
+	const [linksState, setLinks] = useState({
 		links: [...sidebarLinks],
 	})
 
-	const activeLink = () => {
-		console.log('pass');
+	// console.log(linksState);
+
+	const activeLink = (linkId) => {
+		linksState.links.forEach(link => link.active = false);
+		const link = linksState.links.find(link => link.id === linkId);
+
+		// console.log(linkId);
+
+        link.active = true;
+        
+        setLinks(prev => {
+            return {
+                links: [
+                    ...prev.links
+                ]
+            }
+        })
+        onChangeToggle(link.text)
+
 	}
 
 
 	return (
 		<>
-			<div className={`${styles["link-sidebar"]}`}>
-				<h1 className={`${styles["title"]} mt-3`}> Replicate option </h1>
-				<h2 className={`${styles["description"]} mt-3`} >
-				Start the replication with arbitrary parameters</h2>
-			</div>
-
-			<div className={`${styles["link-sidebar"]}`}>
-				<h1 className={`${styles["title"]} mt-3`}> My positions</h1>
-				<h2 className={`${styles["description"]} mt-3`} >
-				Click to see your previous replications</h2>
-			</div>
-
-			<div className={`${styles["link-sidebar"]}`}>
-				<h1 className={`${styles["title"]} mt-3`}> All positions</h1>
-				<h2 className={`${styles["description"]} mt-3`} >
-				Check users' positions close to hedging</h2>			
-			</div>
-
+			{linksState.links.map(link => 
+				<Linkbox 
+					text={link.text} 
+					description={link.description} 
+					key={link.id}
+					onActive={activeLink}
+					id={link.id}
+					active={link.active}
+					/>
+			)}
 		</>
 		);
 
 };
+
+const Linkbox = ({text, description, onActive, id, active}) => {
+
+	return (active ? (
+			<div className={`${styles["active-link-sidebar"]}`} onClick={() => onActive(id)}>
+				<h1 className={`${styles["title"]} mt-3`}> {text} </h1>
+				<h2 className={`${styles["description"]} mt-3`}> {description} </h2>
+			</div>
+			) : (
+			<div className={`${styles["link-sidebar"]}`} onClick={() => onActive(id)}>
+				<h1 className={`${styles["title"]} mt-3`}> {text} </h1>
+				<h2 className={`${styles["description"]} mt-3`}> {description} </h2>
+			</div>
+			)
+			)
+
+};
+
+
 
 export default LinksOfSidebar;

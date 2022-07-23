@@ -11,21 +11,20 @@ import LinksOfSidebar from './LinksOfSidebar';
 
 
 
-const Sidebar = ({username, userAddress, userProfile, sidebarLinks} ) => {
+const Sidebar = ({username, userAddress, userProfile, sidebarLinks, onChangeToggle} ) => {
 
 	const sidebarStyle = {
 		position: "fixed",
-		top: "150px",
+		top: "100px",
 		left: "30px",
 		height: "100vh",
 		width: "190px",
-		backgroundColor: "#fff",
 }
 
 	return (
 		<div style={sidebarStyle}>
 			<UserProfile username={username} userAddress={userAddress} userProfile={userProfile} />
-			<LinksOfSidebar sidebarLinks={sidebarLinks}/>
+			<LinksOfSidebar sidebarLinks={sidebarLinks} onChangeToggle={onChangeToggle}/>
 		</div>
 	);
 }

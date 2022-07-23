@@ -29,7 +29,7 @@ class Panel extends PureComponent {
         
         this.state = {
             user: {...this.initState(this.myVerifyUser)},
-            toggle: 'replicate option',
+            toggle: 'Replicate option',
             walletAddress: "Not connected",
             status: "",
             name: "",
@@ -43,31 +43,24 @@ class Panel extends PureComponent {
             {
                 id: 1,
                 border: true,
-                text: 'replicate option',
-                icon: <UserEdit size='20' color="black"/>,
+                text: 'Replicate option',
+                description: 'Start the replication with arbitrary parameters',
                 active: true,
             },
             {
                 id: 2,
                 border: true,
-                text: 'my positions',
-                icon: <Lock size="20" color="black" />,
+                text: 'My positions',
+                description: 'Click to see your previous replications',
                 active: false,
             },
             {
                 id: 3,
                 border: true,
-                text: 'all positions',
-                icon: <ProfileCircle size="20" color="black" />,
+                text: 'All positions',
+                description: "Check users' positions close to hedging",
                 active: false,
             },
-            {
-                id: 4,
-                border: false,
-                href: 'https://deltadex.io',
-                text: 'DeltaDex.io',
-                icon: <Code1 size="20" color="black" />,
-            }
         ]
 
         this.logOut = this.logOut.bind(this)
@@ -142,10 +135,12 @@ class Panel extends PureComponent {
         
     render() {
         return (
-            <div className={`${styles['panel-wrapper']} align-items-center px-5 `}>
-                <Header/>
+            <>
+            <Header walletAddress={this.state.walletAddress} connectPressed={this.connectWalletPressed}/>
+            <div className={`${styles['panel-wrapper']}  px-5 `}>
+                
 
-                <Button variant="primary" className="float-end mt-5 py-2" onClick={this.connectWalletPressed}> 
+{/*                <Button variant="primary" className="float-end mt-5 py-2" onClick={this.connectWalletPressed}> 
                     {this.state.walletAddress !== "Not connected" ? (
                       "Connected: " +
                       String(this.state.walletAddress).substring(0, 6) +
@@ -154,20 +149,20 @@ class Panel extends PureComponent {
                     ) : (
                       <span>Connect Wallet</span>
                     )}
-                </Button>
+                </Button>*/}
 
-            <div className={`${styles['panel-wrapper']} d-flex align-items-center justify-content-center`}>
+            <div className={`${styles['panel-wrapper']} d-flex`}>
             <Sidebar 
                 username={"Your address"}
                 userAddress={this.state.walletAddress}
                 userProfile={this.state.walletAddress}
                 sidebarLinks={this.sidebarLinks}
+                onChangeToggle={this.changeToggle}
             />
                 
 
-
-                <div className={`${styles.container} d-flex justify-content-center align-items-center p-0`}>
-                    <Row className={`${styles['panel']} flex-column flex-md-row justify-content-center align-items-center`}>
+                <div className={`${styles.container} justify-content-center align-items-center p-0`}>
+                    <Row className={`${styles['panel']}  `}>
                         {/*<Col xs={12} sm={8} md={4} className="d-flex flex-column justify-content-center p-0">
                             <UserCard
                                 username={"Your address"} 
@@ -177,8 +172,8 @@ class Panel extends PureComponent {
                             />
                         </Col>*/}
                         
-                        <Col xs={12} sm={8} md={7} className={`${styles['panel-column']} bg-white border mt-5 mt-md-0 ms-md-5 p-5`}>
-                            {this.state.toggle === 'replicate option' && (
+                        <div className={`${styles['panel-column']} bg-white border mt-5 mt-md-0  p-5`}>
+                            {this.state.toggle === 'Replicate option' && (
                                 <UserInformation 
                                     username={this.state.user.username}
                                     firstName={this.state.user.firstName}
@@ -188,18 +183,19 @@ class Panel extends PureComponent {
                                     onChangeInfo={this.changeUserInformation}
                                 />
                             )}
-                            {this.state.toggle === 'my positions' && (
+                            {this.state.toggle === 'My positions' && (
                                 <UserChangePassword 
                                     password={this.state.user.password}
                                     onChangeInfo={this.changeUserInformation} 
                                 />
                             )}
-                        </Col>
+                        </div>
                     </Row>
                 </div >
 
             </div>
             </div>
+            </>
         )
     }
 }
