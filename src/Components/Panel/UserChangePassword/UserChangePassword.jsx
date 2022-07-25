@@ -17,6 +17,7 @@ import {
 
 import Creatable, { useCreatable } from "react-select/creatable";
 import DataGrid from "react-data-grid";
+import { useEffect } from "react";
 
 const TokenOptions = [
   { label: "Black Scholes", value: "BSM" },
@@ -44,7 +45,7 @@ const columns = [
   { key: "v", name: "v" },
 ];
 
-const rows = [
+/* const rows = [
   {
     id: 0,
     token0: "DAI",
@@ -64,9 +65,11 @@ const rows = [
     m: 1.0,
     v: 1.0,
   },
-];
+]; */
 
-// const rows = [{}];
+// const rows = ({}) => getRows();
+
+const rows = [{}];
 
 // const rows = getUserPositionsTable();
 
@@ -75,6 +78,111 @@ const UserChangePassword = ({}) => {
 
   const [tagInputValue, setTagInputValue] = useState("");
   const [tagValue, setTagValue] = useState("");
+
+  const [rowData, setRowData] = useState([]);
+
+  /*   useEffect(() => {
+    rowData = getUserPositions();
+    setRowData(rowData);
+  }); */
+
+  const rows = [
+    {
+      id: 0,
+      token0: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      token1: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      token0_balance: "149.0379590356981485",
+      token1_balance: "0.875374677280394091",
+      amount: "1500.0",
+      expiry: "1674507901",
+      fees: "200.0",
+      hedges: "4000000000000000000",
+      hedgeFee: "0.0",
+      strike: "1000.0",
+      T: "0.5",
+      r: "0.1",
+      sigma: "0.9",
+      lam: "1.0",
+      m: "1.0",
+      v: "1.0",
+    },
+    {
+      id: 0,
+      token0: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      token1: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      token0_balance: "179.0331122020014705",
+      token1_balance: "0.855693402037468628",
+      amount: "1500.0",
+      expiry: "1674508578",
+      fees: "200.0",
+      hedges: "4000000000000000000",
+      hedgeFee: "0.0",
+      strike: "1200.0",
+      T: "0.5",
+      r: "0.1",
+      sigma: "1.0",
+      lam: "1.0",
+      m: "1.0",
+      v: "1.0",
+    },
+    {
+      id: 0,
+      token0: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      token1: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      token0_balance: "179.0178495739317195",
+      token1_balance: "0.855639814052167858",
+      amount: "1500.0",
+      expiry: "1674508762",
+      fees: "200.0",
+      hedges: "4000000000000000000",
+      hedgeFee: "0.0",
+      strike: "1200.0",
+      T: "0.5",
+      r: "0.1",
+      sigma: "1.0",
+      lam: "1.0",
+      m: "1.0",
+      v: "1.0",
+    },
+    {
+      id: 0,
+      token0: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      token1: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      token0_balance: "179.002588992334566",
+      token1_balance: "0.855586229603914766",
+      amount: "1500.0",
+      expiry: "1674509705",
+      fees: "200.0",
+      hedges: "5000000000000000000",
+      hedgeFee: "0.0",
+      strike: "1200.0",
+      T: "0.5",
+      r: "0.1",
+      sigma: "1.0",
+      lam: "1.0",
+      m: "1.0",
+      v: "1.0",
+    },
+    {
+      id: 0,
+      token0: "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+      token1: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      token0_balance: "84.8126433555979245",
+      token1_balance: "0.916520949722071599",
+      amount: "1500.0",
+      expiry: "1665049507",
+      fees: "500.0",
+      hedges: "2000000000000000000",
+      hedgeFee: "0.000000000000000003",
+      strike: "1200.0",
+      T: "0.2",
+      r: "0.1",
+      sigma: "1.0",
+      lam: "1.0",
+      m: "1.0",
+      v: "1.0",
+    },
+  ];
 
   return (
     <>
@@ -93,7 +201,7 @@ const UserChangePassword = ({}) => {
           placeholder="Filter by model"
           size="sm"
         />
-        <DataGrid columns={columns} rows={rows} rdg-dark />
+        <DataGrid columns={columns} rows={rows} rdg-light />
 
         <Button
           variant="primary"
