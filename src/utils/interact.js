@@ -172,6 +172,7 @@ export const getCurrentWalletConnected = async () => {
 // @dev get react grid rows
 export const getUserPositions = async () => {
   const signer = provider.getSigner();
+  
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
   const userAddress = await signer.getAddress();
@@ -193,7 +194,7 @@ export const getUserPositions = async () => {
 
     rows.push(row);
   }
-  console.log(rows);
+  // console.log(rows);
 
   return rows;
 };
