@@ -317,6 +317,8 @@ function parsePosition(JDM_CALL) {
   return row;
 }
 
+//@ dev depreciated
+
 export const getUserPositionsTable = async () => {
   const signer = provider.getSigner();
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
@@ -451,5 +453,5 @@ export const getUserPositionsTable = async () => {
   ];
   */
 
-  console.log(position);
+  // console.log(position);
 };
