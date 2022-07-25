@@ -20,6 +20,8 @@ import { getStorage, updateStorage } from './../../utils/storage';
 import { connectWallet, getCurrentWalletConnected } from "./../../utils/interact.js";
 import Sidebar from '../Sidebar/Sidebar'
 import Header from "./../Header/Header.jsx";
+import TradingViewWidget from 'react-tradingview-widget';
+
 
 
 class Panel extends PureComponent {
@@ -150,6 +152,7 @@ class Panel extends PureComponent {
                       <span>Connect Wallet</span>
                     )}
                 </Button>*/}
+            <TradingViewWidget symbol="NASDAQ:AAPL" />
 
             <div className={`${styles['panel-wrapper']} d-flex`}>
             <Sidebar 
