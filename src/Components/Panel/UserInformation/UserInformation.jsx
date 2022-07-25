@@ -149,8 +149,8 @@ const UserInformation = ({
             size="sm"
             onKeyDown={handleKeyDown}
             onChange={(value) => {
-              setaddressToken0(value);
-              console.log(addressToken0);
+              setaddressToken0(value.value);
+              console.log(value.value);
             }}
           />
         </Row>
@@ -186,8 +186,8 @@ const UserInformation = ({
             size="sm"
             onKeyDown={handleKeyDown}
             onChange={(value) => {
-              setaddressToken1(value);
-              console.log(addressToken1);
+              setaddressToken1(value.value);
+              console.log(value.value);
             }}
           />
         </Row>

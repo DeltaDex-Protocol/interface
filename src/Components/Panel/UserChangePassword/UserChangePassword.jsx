@@ -99,7 +99,7 @@ const UserChangePassword = ({}) => {
           variant="primary"
           className="mt-5 py-2 px-4"
           type="submit"
-          onClick={() => getUserPositionsTable()}
+          onClick={() => getUserPositions()}
         >
           View Positions
         </Button>

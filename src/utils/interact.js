@@ -9,7 +9,7 @@
 // const contractAddress = "0xd1b04035bB8E12584070f3f42090877Cee52817a";
 
 const contractABI = require("./OptionMaker.json");
-const contractAddress = "0x1343248Cbd4e291C6979e70a138f4c774e902561";
+const contractAddress = "0x547382C0D1b23f707918D3c83A77317B71Aa8470";
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
