@@ -1,6 +1,8 @@
 body {
     position: relative;
 }
+
+
 .panel-wrapper {
     width: 100%;
     min-height: 100vh;
@@ -61,4 +63,9 @@ body {
         width: 100% ;
         padding: 0 30px;
     }
+}
+
+
+.chart {
+    border-radius: 300px;
 }

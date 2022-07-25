@@ -20,7 +20,7 @@ import { getStorage, updateStorage } from './../../utils/storage';
 import { connectWallet, getCurrentWalletConnected } from "./../../utils/interact.js";
 import Sidebar from '../Sidebar/Sidebar'
 import Header from "./../Header/Header.jsx";
-import TradingViewWidget from 'react-tradingview-widget';
+// import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 
 
 
@@ -142,17 +142,6 @@ class Panel extends PureComponent {
             <div className={`${styles['panel-wrapper']}  px-5 `}>
                 
 
-{/*                <Button variant="primary" className="float-end mt-5 py-2" onClick={this.connectWalletPressed}> 
-                    {this.state.walletAddress !== "Not connected" ? (
-                      "Connected: " +
-                      String(this.state.walletAddress).substring(0, 6) +
-                      "..." +
-                      String(this.state.walletAddress).substring(38)
-                    ) : (
-                      <span>Connect Wallet</span>
-                    )}
-                </Button>*/}
-            <TradingViewWidget symbol="NASDAQ:AAPL" />
 
             <div className={`${styles['panel-wrapper']} d-flex`}>
             <Sidebar 
@@ -162,7 +151,7 @@ class Panel extends PureComponent {
                 sidebarLinks={this.sidebarLinks}
                 onChangeToggle={this.changeToggle}
             />
-                
+
 
                 <div className={`${styles.container} justify-content-center align-items-center p-0`}>
                     <Row className={`${styles['panel']}  `}>

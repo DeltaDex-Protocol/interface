@@ -15,6 +15,9 @@ import { getStorage } from "../../../utils/storage";
 import { mintNFT, getCurrentPositions } from "../../../utils/interact";
 
 import Creatable, { useCreatable } from "react-select/creatable";
+import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+
+
 
 const UserInformation = ({
   username,
@@ -113,6 +116,23 @@ const UserInformation = ({
 
   return (
     <>
+              <TradingViewWidget
+                symbol="BINANCE:ETHUSDT"
+                locale="en"
+                width={700}
+                height= {300}
+                range={"6m"}
+                isTransparent={false}
+                autosize= {false}
+                largeChartUrl=""
+                hide_legend={true}
+                hide_top_toolbar={true}
+                hide_side_toolbar={true}
+                toolbar_bg={false}
+                style={3}
+                details={false}
+                control_bar={false}
+              />
       <Titles
         title="Replicate Your option"
         text="Choose the parameters of the option you'd like to replicate"
