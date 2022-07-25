@@ -9,7 +9,7 @@
 // const contractAddress = "0xd1b04035bB8E12584070f3f42090877Cee52817a";
 
 const contractABI = require("./OptionMaker.json");
-const contractAddress = "0x9Fcca440F19c62CDF7f973eB6DDF218B15d4C71D";
+const contractAddress = "0x1343248Cbd4e291C6979e70a138f4c774e902561";
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -64,7 +64,7 @@ export const mintNFT = async (
   jumpDeviation,
   jumpIntensity
 ) => {
-  if (addressToken0.trim() == "") {
+  if (addressToken0 == "") {
     return {
       success: false,
       status: "❗Please make sure all fields are completed before minting.",
@@ -127,65 +127,6 @@ export const mintNFT = async (
   }
 };
 
-// export const mintNFT = async (url, name, description) => {
-// 	// error handling
-// 	if (url.trim() == "" || (name.trim() == "" || description.trim() == "")) {
-// 		return {
-// 			success: false,
-//     		status: "❗Please make sure all fields are completed before minting.",
-// 		}
-// 	}
-
-// 	const metadata = new Object();
-// 	metadata.name = name;
-// 	metadata.image = url;
-// 	metadata.description = description;
-
-// 	//make pinata call
-// 	const pinataResponse = await pinJSONToIPFS(metadata);
-// 	if (!pinataResponse.success) {
-// 		return {
-// 			success: false,
-//           status: "😢 Something went wrong while uploading your tokenURI.",
-// 		}
-// 	}
-
-// 	const tokenURI = pinataResponse.pinataUrl;
-
-// 	window.contract = await new web3.eth.Contract(contractABI, contractAddress);
-
-// 	// set up your Ethereum transaction
-// 	const transactionParameters = {
-// 		"to": contractAddress,
-// 		"from": window.ethereum.selectedAddress,
-// 		"data": window.contract.methods.mintNFT(window.ethereum.selectedAddress, tokenURI).encodeABI()
-// 	};
-
-// 	try {
-// 		const txHash = await window.ethereum
-// 			.request({
-// 				method: "eth_sendTransaction",
-// 				params: [transactionParameters],
-// 			});
-// 		return {
-// 			success: true,
-// 	        status: "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/" + txHash
-// 		}
-// 	} catch (error) {
-// 		return {
-// 		    success: false,
-//         	status: "😥 Something went wrong: " + error.message
-// 		}
-// 	}
-
-// }
-
-// export const getCurrentPositions = () => {
-//   const signer = provider.getSigner();
-//   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
-//   return  optionmaker.PairUsers();
-// }
-
 export const getCurrentWalletConnected = async () => {
   if (window.ethereum) {
     try {
@@ -226,4 +167,157 @@ export const getCurrentWalletConnected = async () => {
       ),
     };
   }
+};
+
+// test
+
+export const getUserPositions = async () => {
+  const signer = provider.getSigner();
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+
+  const pairAddress = await optionmaker.allPairs(0);
+  console.log(pairAddress);
+
+  const userAddress = await signer.getAddress();
+  console.log(userAddress);
+
+  var option = await optionmaker.JDM_Calls(pairAddress, userAddress, 0);
+
+  // wait until the transaction is mined
+  // console.log('here')
+  // await option.wait();
+
+  console.log(option);
+};
+
+export const getUserPositionsTable = async () => {
+  const signer = provider.getSigner();
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+
+  const pairAddress = await optionmaker.allPairs(0);
+  console.log(pairAddress);
+
+  const userAddress = await signer.getAddress();
+  console.log(userAddress);
+
+  var JDM_CALL = await optionmaker.JDM_Calls(pairAddress, userAddress, 0);
+
+  const JDM = JSON.stringify(JDM_CALL);
+
+  const JDMparsed = JSON.parse(JDM);
+
+  var token0 = JDMparsed[0];
+  var token1 = JDMparsed[1];
+
+  var token0_balance = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[2]),
+    "ether"
+  );
+
+  var token1_balance = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[3]),
+    "ether"
+  );
+
+  var amount = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[4]),
+    "ether"
+  );
+
+  var expiry = ethers.BigNumber.from(JDMparsed[5]).toString();
+
+  var fees = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[6]),
+    "ether"
+  );
+
+  var perDay = ethers.BigNumber.from(JDMparsed[7]).toString();
+
+  var hedgeFee = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[8]),
+    "ether"
+  );
+
+  var lastHedge = ethers.BigNumber.from(JDMparsed[9]).toString();
+
+  var K = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[10][0]),
+    "ether"
+  );
+
+  var T = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[10][1]),
+    "ether"
+  );
+
+  var r = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[10][2]),
+    "ether"
+  );
+
+  var sigma = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[10][3]),
+    "ether"
+  );
+
+  var m = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[10][4]),
+    "ether"
+  );
+
+  var v = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[10][5]),
+    "ether"
+  );
+
+  var lam = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[10][6]),
+    "ether"
+  );
+
+  var position = [
+    token0,
+    token1,
+    token0_balance,
+    token1_balance,
+    amount,
+    expiry,
+    fees,
+    perDay,
+    hedgeFee,
+    lastHedge,
+    K,
+    T,
+    r,
+    sigma,
+    m,
+    v,
+    lam,
+  ];
+
+  /*
+  const rows = [
+    {
+      id: 0,
+      token0: token0,
+      token1: token1,
+      token0_balance: token0_balance,
+      token1_balance: token1_balance,
+      amount: amount,
+      expiry: expiry,
+      fees: fees,
+      hedges: perDay,
+      hedgeFee: hedgeFee,
+      strike: K,
+      T: T,
+      r: r,
+      sigma: sigma,
+      lam: lam,
+      m: m,
+      v: v,
+    },
+  ];
+  */
+
+  console.log(position);
 };

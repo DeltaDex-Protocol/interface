@@ -14,6 +14,8 @@ import PropTypes from "prop-types";
 import { getStorage } from "../../../utils/storage";
 import { mintNFT, getCurrentPositions } from "../../../utils/interact";
 
+import Creatable, { useCreatable } from "react-select/creatable";
+
 const UserInformation = ({
   username,
   firstName,
@@ -41,9 +43,7 @@ const UserInformation = ({
   const [jumpDeviation, setJumpDeviation] = useState("");
   const [jumpIntensity, setJumpIntensity] = useState("");
 
-
   // const a = getCurrentPositions();
-  
 
   const sendForm = async () => {
     console.log([
@@ -58,7 +58,8 @@ const UserInformation = ({
       volatility,
       meanReversion,
       jumpDeviation,
-      jumpIntensity]);
+      jumpIntensity,
+    ]);
     const { success, status } = await mintNFT(
       addressToken0,
       addressToken1,
@@ -75,6 +76,41 @@ const UserInformation = ({
     );
   };
 
+  const [tagInputValue, setTagInputValue] = useState("");
+  const [tagValue, setTagValue] = useState("");
+
+  const TokenOptions = [
+    { label: "DAI", value: "0x6B175474E89094C44Da98b954EedeAC495271d0F" },
+    { label: "USDC", value: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" },
+    { label: "USDT", value: "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
+    { label: "WETH", value: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" },
+  ];
+
+  const handleKeyDown = (event) => {
+    if (!tagInputValue) return;
+    switch (event.key) {
+      case "Enter":
+      case "Tab":
+        setTagValue([...tagValue, createOption(tagInputValue)]);
+        setTagInputValue("");
+
+        event.preventDefault();
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const createOption = (label) => ({
+    label,
+    value: label,
+  });
+
+  const handleInputChange = (value) => {
+    setTagInputValue(value);
+  };
+
   return (
     <>
       <Titles
@@ -83,39 +119,76 @@ const UserInformation = ({
       />
 
       <Form>
-        <Row className="mt-5 px-3">
-          <FormInput
+        <Row className="mt-2 px-3">
+          <p
             xs={12}
             lg
             as={Col}
             inpClass="py-2"
             className="p-0"
-            name="token0"
+            name="amountOfToken0"
             type="text"
             controlId=""
-            text="Token 0"
-            placeholder="Address of token 0"
-            size="sm"
-            successMsg="done"
-            onChange={(event) => {
-              setaddressToken0(event.target.value);
-              console.log(addressToken0);
-            }}
-          />
-          <FormInput
+          >
+            {" "}
+            Token 1
+          </p>
+          <Creatable
+            options={TokenOptions}
+            isClearable
             xs={12}
             lg
             as={Col}
             inpClass="py-2"
-            className="p-0 ms-lg-5 mt-3 mt-lg-0"
-            name="token1"
+            className="p-0"
+            name="amountOfToken0"
             type="text"
             controlId=""
-            text="Token 1"
-            placeholder="Address of token 1"
+            text="Amount of token 0"
+            placeholder="Address Token 1"
             size="sm"
-            successMsg="done"
-            onChange={(event) => setaddressToken1(event.target.value)}
+            onKeyDown={handleKeyDown}
+            onChange={(value) => {
+              setaddressToken0(value);
+              console.log(addressToken0);
+            }}
+          />
+        </Row>
+
+        <Row className="mt-3 mt-lg-4 px-3">
+          <p
+            xs={12}
+            lg
+            as={Col}
+            inpClass="py-2"
+            className="p-0"
+            name="amountOfToken0"
+            type="text"
+            controlId=""
+            text="Amount of token 0"
+          >
+            {" "}
+            Token 2
+          </p>
+          <Creatable
+            options={TokenOptions}
+            isClearable
+            xs={12}
+            lg
+            as={Col}
+            inpClass="py-2"
+            className="p-0"
+            name="amountOfToken0"
+            type="text"
+            controlId=""
+            text="Amount of token 0"
+            placeholder="Address Token 2"
+            size="sm"
+            onKeyDown={handleKeyDown}
+            onChange={(value) => {
+              setaddressToken1(value);
+              console.log(addressToken1);
+            }}
           />
         </Row>
 
@@ -301,6 +374,5 @@ const UserInformation = ({
     </>
   );
 };
-
 
 export default UserInformation;
