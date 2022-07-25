@@ -44,7 +44,7 @@ const columns = [
   { key: "v", name: "v" },
 ];
 
-const rows = [
+/* const rows = [
   {
     id: 0,
     token0: "DAI",
@@ -64,7 +64,9 @@ const rows = [
     m: 1.0,
     v: 1.0,
   },
-];
+]; */
+
+const rows = getUserPositions();
 
 // const rows = ({}) => getRows();
 

@@ -169,8 +169,7 @@ export const getCurrentWalletConnected = async () => {
   }
 };
 
-// test
-
+// @dev get react grid rows
 export const getUserPositions = async () => {
   const signer = provider.getSigner();
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
@@ -180,7 +179,7 @@ export const getUserPositions = async () => {
 
   const noOfPositions = await optionmaker.userIDlength(userAddress);
 
-  // const rows [];
+  const rows = [];
 
   for (let i = 0; i < noOfPositions; i++) {
     const pairAddress = await optionmaker.Positions(userAddress, i);
@@ -189,10 +188,14 @@ export const getUserPositions = async () => {
       userAddress,
       i
     );
+    const row = parsePosition(JDM_CALL);
+    // console.log(row);
 
-    const JDMparsed = parsePosition(JDM_CALL);
-    console.log(JDMparsed);
+    rows.push(row);
   }
+  console.log(rows);
+
+  return rows;
 };
 
 // @dev depreciated
@@ -270,6 +273,7 @@ function parsePosition(JDM_CALL) {
     "ether"
   );
 
+  /* 
   var position = [
     token0,
     token1,
@@ -288,9 +292,29 @@ function parsePosition(JDM_CALL) {
     m,
     v,
     lam,
-  ];
+  ]; */
 
-  return position;
+  const row = {
+    id: 0,
+    token0: token0,
+    token1: token1,
+    token0_balance: token0_balance,
+    token1_balance: token1_balance,
+    amount: amount,
+    expiry: expiry,
+    fees: fees,
+    hedges: perDay,
+    hedgeFee: hedgeFee,
+    strike: K,
+    T: T,
+    r: r,
+    sigma: sigma,
+    lam: lam,
+    m: m,
+    v: v,
+  };
+
+  return row;
 }
 
 export const getUserPositionsTable = async () => {
