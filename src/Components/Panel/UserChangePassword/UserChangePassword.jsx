@@ -66,6 +66,8 @@ const rows = [
   },
 ];
 
+// const rows = ({}) => getRows();
+
 // const rows = [{}];
 
 // const rows = getUserPositionsTable();
@@ -93,7 +95,7 @@ const UserChangePassword = ({}) => {
           placeholder="Filter by model"
           size="sm"
         />
-        <DataGrid columns={columns} rows={rows} rdg-dark />
+        <DataGrid columns={columns} rows={rows} rdg-light />
 
         <Button
           variant="primary"
