@@ -58,7 +58,7 @@ const App = () => {
       // changeAddress(this.state.address)
 
     }
-      )
+      ).catch(()=>null);
     
   }, [checkUserIsRegister, walletAddress])
 

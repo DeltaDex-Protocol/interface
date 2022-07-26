@@ -16,16 +16,12 @@ import { mintNFT, getCurrentPositions } from "../../../utils/interact";
 
 import Creatable, { useCreatable } from "react-select/creatable";
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
-
+// import Chart from "../../Charts/Chart.jsx";
+import ProfitChart from "../../Charts/NewChart.jsx";
 
 
 const UserInformation = ({
-  username,
-  firstName,
-  lastName,
-  email,
-  birthday,
-  onChangeInfo,
+  data
 }) => {
   const [submit, setSubmit] = useState(false);
 
@@ -45,6 +41,8 @@ const UserInformation = ({
   const [meanReversion, setMeanReversion] = useState("");
   const [jumpDeviation, setJumpDeviation] = useState("");
   const [jumpIntensity, setJumpIntensity] = useState("");
+
+  // console.log(data);
 
   // const a = getCurrentPositions();
 
@@ -89,6 +87,18 @@ const UserInformation = ({
     { label: "WETH", value: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" },
   ];
 
+  const OptionTypes = [
+    {label: "Vanilla call", value: "vanillaCall"},
+    {label: "Vanilla put", value: "vanillaPut"},
+    {label: "Curved call", value: "curvedCall"},
+    {label: "Curved put", value: "curvedPut"}
+  ];
+
+  const OptionDirections = [
+    {label: "long", value: "long"},
+    {label: "short", value: "short"}
+  ];
+
   const handleKeyDown = (event) => {
     if (!tagInputValue) return;
     switch (event.key) {
@@ -116,7 +126,7 @@ const UserInformation = ({
 
   return (
     <>
-              <TradingViewWidget
+              {/*<TradingViewWidget
                 symbol="BINANCE:ETHUSDT"
                 locale="en"
                 width={700}
@@ -132,14 +142,138 @@ const UserInformation = ({
                 style={3}
                 details={false}
                 control_bar={false}
-              />
-      <Titles
+                rightPriceScale={false}
+              />*/}
+      {console.log(data)}
+      {/*{data.length > 0 && (<Chart data={data}/>)}*/}
+
+      {/*{Chart(data)}*/}
+      <Titles className=""
         title="Replicate Your option"
         text="Choose the parameters of the option you'd like to replicate"
       />
 
-      <Form>
-        <Row className="mt-2 px-3">
+      <Form className="mt-4">
+        <Row className="mt-2">
+
+          <Col className="">
+            <Row className="">
+              <Col>
+                <p
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="p-0"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  >
+                    {" "}
+                    Option type
+                  </p>
+                <Creatable
+                  options={OptionTypes}
+                  isClearable
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="p-0"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  placeholder="Choose_type"
+                  size="sm"
+                  onKeyDown={handleKeyDown}
+                  onChange={(value) => {
+                    setaddressToken0(value.value);
+                    console.log(value.value);
+                  }}
+                  />
+              </Col>
+              <Col>
+                <Col className="p-0">
+                <p
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="p-0"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  >
+                    {" "}
+                    Direction
+                </p>
+                <Creatable
+                  options={OptionDirections}
+                  isClearable
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="p-0"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  text=""
+                  placeholder="long/short"
+                  size="sm"
+                  onKeyDown={handleKeyDown}
+                  onChange={(value) => {
+                    setaddressToken0(value.value);
+                    console.log(value.value);
+                  }}
+                />
+                </Col>
+              </Col>
+            </Row>
+              <Row className="mt-2">
+                <Col>
+                <FormInput
+            xs={12}
+            lg
+            as={Col}
+            inpClass="py-2"
+            className=""
+            name="strike"
+            type="text"
+            controlId=""
+            text="Strike Price"
+            placeholder="uint256"
+            size="sm"
+            successMsg="done"
+            onChange={(event) => setStrike(event.target.value)}
+          />
+                </Col>
+
+                <Col>
+                  <FormInput
+                    xs={12}
+                    lg
+                    as={Col}
+                    inpClass="py-2"
+                    className="p-0"
+                    name="expirationDate"
+                    type="text"
+                    controlId=""
+                    text="Expiration Date"
+                    placeholder="uint256"
+                    size="sm"
+                    successMsg="done"
+                    onChange={(event) => setExpiration(event.target.value)}
+                  />
+                </Col>
+              </Row>
+          </Col>
+            <Col>
+              <ProfitChart className="flex justify-end" />
+            </Col>
+        </Row>
+
+        <Row className="mt-3 mt-lg-4 px-3">
           <p
             xs={12}
             lg
@@ -173,7 +307,7 @@ const UserInformation = ({
               console.log(value.value);
             }}
           />
-        </Row>
+          </Row>
 
         <Row className="mt-3 mt-lg-4 px-3">
           <p
