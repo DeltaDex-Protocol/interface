@@ -27,17 +27,19 @@ import Header from "./../Header/Header.jsx";
 // import {BScurvedPut, deltaBScurvedPut} from './../../utils/BScurvedPut.js';
 // import {BScurvedCall, deltaBScurvedCall} from './../../utils/BScurvedCall.js';
 
+// import PriceChart from "./../Charts/PriceChart.jsx";
+
+import AllPositions from "./../Positions/AllPositions.jsx";
 
 
-
-var inputs = {
-    x0: 250,          // amount in usdc (i.e. TV0 = 2 * x0)
-    S: 57,            // current price of the underlying asset
-    K: 50,            // strike price of the option
-    T: 0.25,          // time to expiration of the option in years
-    r: 0.01,          // annual risk-free interest rate
-    sigma: 0.50,      // volatility of the underlying asset
-};
+// var inputs = {
+//     x0: 250,          // amount in usdc (i.e. TV0 = 2 * x0)
+//     S: 57,            // current price of the underlying asset
+//     K: 50,            // strike price of the option
+//     T: 0.25,          // time to expiration of the option in years
+//     r: 0.01,          // annual risk-free interest rate
+//     sigma: 0.50,      // volatility of the underlying asset
+// };
 
 
 const Panel = () => {
@@ -129,7 +131,6 @@ const Panel = () => {
 
     return (
             <>
-            
             <Header walletAddress={walletAddress} connectPressed={connectWalletPressed}/>
             <div className={`${styles['panel-wrapper']}  px-5 `}>
                 
@@ -146,21 +147,25 @@ const Panel = () => {
 
                 <div className={`${styles.container} justify-content-center align-items-center p-0`}>
                     <Row className={`${styles['panel']}  `}>
-
-                        
+                        {toggle !== 'All positions' && (
                         <div className={`${styles['panel-column']} bg-white border mt-5 mt-md-0  p-5`}>
                             {toggle === 'Replicate option' && (
                                 <ReplicationForm data={data}/>
                             )}
+
                             {toggle === 'My positions' && (
                                 <UserChangePassword />
                             )}
-                        </div>
+                        </div>)}
                     </Row>
+
+                    {toggle === 'All positions' && (
+                                <AllPositions className="mt-0"/>)}
                 </div >
 
             </div>
             </div>
+
             </>
         )
 

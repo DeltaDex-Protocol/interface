@@ -11,12 +11,47 @@ const sliderInfos = {
 		symbol: "$"
 	},
 	'expiry': {
-		name: "Exipiration Date",
+		name: "Expiration Date",
 		min: 5,
 		max: 500,
 		step: 1,
 		symbol: " days"
-		}
+	},
+	'totalValue': {
+		name: "Total value invested in Uniswap V2 LP position",
+		min: 100,
+		max: 20000,
+		step: 100,
+		symbol: "$"
+	},
+	'amountOfToken2': {
+		name: "How many options you want to replicate (i.e. 1 ETH)",
+		min: 1,
+		max: 999,
+		step: 1,
+		symbol: ""
+	},
+	'deltaHedgesPerDay': {
+		name: "Number of delta hedges per day",
+		min: 1,
+		max: 24,
+		step: 1,
+		symbol: ""
+	},
+	'feesToHedgers': {
+		name: "Fees to be splitted between hedgers",
+		min: 1,
+		max: 900,
+		step: 1,
+		symbol: "$"
+	},
+	'riskFree': {
+		name: "Risk-free rate",
+		min: 0,
+		max: 0.2,
+		step: 0.01,
+		symbol: ""
+	}
 }
 
 
@@ -77,7 +112,9 @@ export default function Slider(props) {
 					thumbClassName="absolute w-5 h-5 cursor-grab bg-indigo-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 -top-2px"
 					value={value}
 					onChange={(value) => {
-						setValue(value)
+						setValue(value);
+						// here  handler should be added
+						props.onChangeToggle(value);
 					}}
 				/>
 				{/*<span>{value}{sym}</span>*/}

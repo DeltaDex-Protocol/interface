@@ -213,9 +213,11 @@ export default function ProfitChart(
   {params, OptionType, OptionDirection}
 ) {
 
-  // const {S, K, T, r, sigma} = params;
+  var {S, K, T, r, sigma} = params;
 
+  var TV0 = params.TV0 || 1000; 
 
+  var x0 = TV0 / 2;
 
 
   // const data = fillData(OptionType.value, params);
@@ -224,14 +226,16 @@ export default function ProfitChart(
 
   var data = [];
 
+  T = T / 365;
+
   if (OptionType.value === "vanillaCall")
-    data = fillVanillaCall(1000, 1100, 0.5, 0.01, 0.8, OptionDirection.value);
+    data = fillVanillaCall(S, K, T, r, sigma, OptionDirection.value);
   else if (OptionType.value === "vanillaPut")
-    data = fillVanillaPut(1000, 1100, 0.5, 0.01, 0.8, OptionDirection.value);
+    data = fillVanillaPut(S, K, T, r, sigma, OptionDirection.value);
   else if (OptionType.value === "curvedCall")
-    data = fillCurvedCall(1000, 1100, 0.5, 0.01, 0.8, OptionDirection.value, 250);
+    data = fillCurvedCall(S, K, T, r, sigma, OptionDirection.value, x0);
   else if (OptionType.value === "curvedPut")
-      data = fillCurvedPut(1000, 1100, 0.5, 0.01, 0.8, OptionDirection.value, 250);
+      data = fillCurvedPut(S, K, T, r, sigma, OptionDirection.value, x0);
 
 
 
@@ -278,7 +282,7 @@ export default function ProfitChart(
           },
           title: {
             display: true,
-            text: 'Exchange rate at expiry, $',
+            text: 'Spot price at expiry, $',
           },
         },
       },
@@ -298,7 +302,7 @@ export default function ProfitChart(
     return () => {
       chart.destroy()
     }
-  }, [OptionType, OptionDirection])
+  }, [OptionType, OptionDirection, data])
 
   return (
     <div className="max-w-md p-2 sm:p-8 border rounded shadow">
@@ -306,7 +310,7 @@ export default function ProfitChart(
       <hr className="my-2"/>
       <canvas id="profit-chart"/>
 
-      <div className="mt-3 flex justify-between text-gray-500 font-sans">
+      {/*<div className="mt-3 flex justify-between text-gray-500 font-sans">
         <span className="flex items-center gap-3">
           <div className="bg-green-400 w-3 h-3 rounded-full"/>
           <span className="text-sm"> Max Profit </span>
@@ -326,7 +330,7 @@ export default function ProfitChart(
           <span className="text-sm"> Max Loss </span>
         </span>
         <span className="text-sm"> {'sdfdfs'} </span>
-      </div>
+      </div>*/}
     </div>
   )
 }

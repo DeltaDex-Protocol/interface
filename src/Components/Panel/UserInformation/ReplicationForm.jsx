@@ -20,6 +20,7 @@ import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 import ProfitChart from "../../Charts/NewChart.jsx";
 import Slider from "../../Charts/Slider.jsx";
 
+import PriceChart from "../../Charts/PriceChart.jsx";
 
 
 
@@ -56,8 +57,8 @@ const ReplicationForm = ({ data }) => {
   const [fees, setFees] = useState("");
   const [perDay, setPerDay] = useState("");
 
-  const [strike, setStrike] = useState("");
-  const [expiration, setExpiration] = useState("");
+  const [strike, setStrike] = useState(300);
+  const [expiration, setExpiration] = useState(5);
   const [riskFree, setRiskFree] = useState("");
   const [volatility, setVolatility] = useState("");
   const [meanReversion, setMeanReversion] = useState("");
@@ -66,6 +67,7 @@ const ReplicationForm = ({ data }) => {
 
   const [OptionType, setOptionType] = useState(OptionTypes[0]);
   const [OptionDirection, setDirection] = useState(OptionDirections[0]);
+  const [totalValue, setTotalValue] = useState(1000);
 
 
 
@@ -151,13 +153,14 @@ const ReplicationForm = ({ data }) => {
                 control_bar={false}
                 rightPriceScale={false}
               />*/}
-      {console.log(data)}
+      {/*{console.log(data)}*/}
       {/*{data.length > 0 && (<Chart data={data}/>)}/*/}
 
       <Titles className=""
         title="Replicate Your option"
         text="Choose the parameters of the option you'd like to replicate"
       />
+
 
       <Form className="mt-4">
         <Row className="mt-2">
@@ -241,100 +244,131 @@ const ReplicationForm = ({ data }) => {
               <Row className="mt-2">
                 <Col>
 
-                <Slider sliderType="strike" onChangeToggle = {{setStrike, setExpiration}}/>
+                <Slider sliderType="strike" onChangeToggle = {setStrike}/>
                 </Col>
                 <Col>
-                  <Slider sliderType="expiry"/>
+                  <Slider sliderType="expiry" onChangeToggle = {setExpiration}/>
                 </Col>
               </Row>
-              <Row>
-              <span className="my-3 font-bold text-lg">Specify the pair by choosing tokens pair</span>
-              </Row>
 
+              {OptionType.value === ("curvedCall") && <Row>
+                <Col>
+                <Slider sliderType = "totalValue" onChangeToggle={setTotalValue}/>
+                </Col>
+              </Row>}
+              {OptionType.value === ("curvedPut") && <Row>
+                <Col>
+                <Slider sliderType = "totalValue" onChangeToggle={setTotalValue}/>
+                </Col>
+              </Row>}
               <Row>
+              <span className="my-3 font-bold text-lg">Specify the pair by choosing tokens</span>
+              </Row>
+              <Row className=''>
               <Col>
-            <p
-              xs={12}
-              lg
-              as={Col}
-              inpClass="py-2"
-              className="p-0"
-              name="amountOfToken0"
-              type="text"
-              controlId=""
-              >
-              Token 1
-            </p>
-          <Creatable
-            options={TokenOptions}
-            isClearable
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="amountOfToken0"
-            type="text"
-            controlId=""
-            text="Amount of token 0"
-            placeholder="Address Token 1"
-            size="sm"
-            onKeyDown={handleKeyDown}
-            onChange={(value) => {
-              setaddressToken0(value.value);
-              console.log(value.value);
-            }}
-          />
-          </Col>
-          <Col>
-          <p
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="amountOfToken0"
-            type="text"
-            controlId=""
-            text="Amount of token 0"
-          >
-            Token 2
-          </p>
-          <Creatable
-            options={TokenOptions}
-            isClearable
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="amountOfToken0"
-            type="text"
-            controlId=""
-            text="Amount of token 0"
-            placeholder="Address Token 2"
-            size="sm"
-            onKeyDown={handleKeyDown}
-            onChange={(value) => {
-              setaddressToken1(value.value);
-              console.log(value.value);
-            }}
-          />
-          </Col>
+                <p
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="p-0"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  >
+                  Token 1
+                </p>
+                <Creatable
+                  options={TokenOptions}
+                  isClearable
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="p-0 z-10"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  text="Amount of token 0"
+                  placeholder="Address Token 1"
+                  size="sm"
+                  onKeyDown={handleKeyDown}
+                  onChange={(value) => {
+                    setaddressToken0(value.value);
+                    console.log(value.value);
+                  }}
+                />
+              </Col>
+          
+              <Col>
+                <p
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="p-0"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  text="Amount of token 0"
+                  >
+                  Token 2
+                </p>
+                <Creatable
+                  options={TokenOptions}
+                  isClearable
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="p-0 z-10"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  text="Amount of token 0"
+                  placeholder="Address Token 2"
+                  size="sm"
+                  onKeyDown={handleKeyDown}
+                  onChange={(value) => {
+                    setaddressToken1(value.value);
+                    console.log(value.value);
+                  }}
+                />
+              </Col>
           </Row>
+          <Row className="mt-2">
+                <Col>
+
+                <Slider sliderType="amountOfToken2" onChangeToggle = {setToken0Balance}/>
+                </Col>
+                <Col>
+                  <Slider sliderType="deltaHedgesPerDay" onChangeToggle = {setPerDay}/>
+                </Col>
+          </Row>
+          <Row className="mt-2">
+                <Col>
+
+                <Slider sliderType="feesToHedgers" onChangeToggle = {setFees}/>
+                </Col>
+                <Col>
+                  <Slider sliderType="riskFree" onChangeToggle = {setRiskFree}/>
+                </Col>
+              </Row>    
+
           </Col>
+
             <Col>
               <ProfitChart 
                 OptionType={OptionType} 
                 OptionDirection={OptionDirection} 
-                params={{center: 1000, width:4000, k:1, optionPrice:100}}
+                params={{S: 1000, K: strike, T: expiration, r:0.01, sigma:0.8, TV0: totalValue}}
                 className="flex justify-end" />
             </Col>
         </Row>
 
 
         <Row className="mt-3 mt-lg-4 px-3">
-          <FormInput
+          {/*<FormInput
             xs={12}
             lg
             as={Col}
@@ -347,9 +381,9 @@ const ReplicationForm = ({ data }) => {
             placeholder="uint256"
             size="sm"
             onChange={(event) => setToken0Balance(event.target.value)}
-          />
+          />*/}
         </Row>
-        <Row className="mt-3 px-3">
+        {/*<Row className="mt-3 px-3">
           <FormInput
             xs={12}
             lg
@@ -364,9 +398,9 @@ const ReplicationForm = ({ data }) => {
             placeholder="uint256"
             onChange={(event) => setFees(event.target.value)}
           />
-        </Row>
-        <Row className="mt-3 px-3">
-          <FormInput
+        </Row>*/}
+        {/*<Row className="mt-3 px-3">*/}
+{/*          <FormInput
             xs={12}
             lg
             as={Col}
@@ -380,10 +414,10 @@ const ReplicationForm = ({ data }) => {
             size="sm"
             successMsg="done"
             onChange={(event) => setPerDay(event.target.value)}
-          />
-        </Row>
+          />*/}
+        {/*</Row>*/}
 
-        <Row className="mt-3 px-3">
+        {/*<Row className="mt-3 px-3">
 
           <FormInput
             xs={12}
@@ -400,7 +434,7 @@ const ReplicationForm = ({ data }) => {
             successMsg="done"
             onChange={(event) => setRiskFree(event.target.value)}
           />
-        </Row>
+        </Row>*/}
         <p className="mt-3 px-1 fw-bold">
           Choose the parameters of Jump Diffusion Model:
         </p>
