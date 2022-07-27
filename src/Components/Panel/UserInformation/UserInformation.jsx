@@ -18,6 +18,9 @@ import Creatable, { useCreatable } from "react-select/creatable";
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 // import Chart from "../../Charts/Chart.jsx";
 import ProfitChart from "../../Charts/NewChart.jsx";
+import Slider from "../../Charts/Slider.jsx";
+
+
 
 
 const UserInformation = ({
@@ -126,6 +129,7 @@ const UserInformation = ({
 
   return (
     <>
+        
               {/*<TradingViewWidget
                 symbol="BINANCE:ETHUSDT"
                 locale="en"
@@ -179,7 +183,7 @@ const UserInformation = ({
                   lg
                   as={Col}
                   inpClass="py-2"
-                  className="p-0"
+                  className="p-0 z-10"
                   name="amountOfToken0"
                   type="text"
                   controlId=""
@@ -214,7 +218,7 @@ const UserInformation = ({
                   lg
                   as={Col}
                   inpClass="py-2"
-                  className="p-0"
+                  className="p-0 z-10"
                   name="amountOfToken0"
                   type="text"
                   controlId=""
@@ -232,48 +236,98 @@ const UserInformation = ({
             </Row>
               <Row className="mt-2">
                 <Col>
-                <FormInput
+
+                <Slider sliderType="strike"/>
+                </Col>
+                <Col>
+                  <Slider sliderType="expiry"/>
+                </Col>
+              </Row>
+              <Row>
+              <span className="my-3 font-bold text-lg">Specify the pair by choosing tokens pair</span>
+              </Row>
+
+              <Row>
+              <Col>
+            <p
+              xs={12}
+              lg
+              as={Col}
+              inpClass="py-2"
+              className="p-0"
+              name="amountOfToken0"
+              type="text"
+              controlId=""
+              >
+              {" "}
+              Token 1
+            </p>
+          <Creatable
+            options={TokenOptions}
+            isClearable
             xs={12}
             lg
             as={Col}
             inpClass="py-2"
-            className=""
-            name="strike"
+            className="p-0"
+            name="amountOfToken0"
             type="text"
             controlId=""
-            text="Strike Price"
-            placeholder="uint256"
+            text="Amount of token 0"
+            placeholder="Address Token 1"
             size="sm"
-            successMsg="done"
-            onChange={(event) => setStrike(event.target.value)}
+            onKeyDown={handleKeyDown}
+            onChange={(value) => {
+              setaddressToken0(value.value);
+              console.log(value.value);
+            }}
           />
-                </Col>
-
-                <Col>
-                  <FormInput
-                    xs={12}
-                    lg
-                    as={Col}
-                    inpClass="py-2"
-                    className="p-0"
-                    name="expirationDate"
-                    type="text"
-                    controlId=""
-                    text="Expiration Date"
-                    placeholder="uint256"
-                    size="sm"
-                    successMsg="done"
-                    onChange={(event) => setExpiration(event.target.value)}
-                  />
-                </Col>
-              </Row>
+          </Col>
+          <Col>
+          <p
+            xs={12}
+            lg
+            as={Col}
+            inpClass="py-2"
+            className="p-0"
+            name="amountOfToken0"
+            type="text"
+            controlId=""
+            text="Amount of token 0"
+          >
+            {" "}
+            Token 2
+          </p>
+          <Creatable
+            options={TokenOptions}
+            isClearable
+            xs={12}
+            lg
+            as={Col}
+            inpClass="py-2"
+            className="p-0"
+            name="amountOfToken0"
+            type="text"
+            controlId=""
+            text="Amount of token 0"
+            placeholder="Address Token 2"
+            size="sm"
+            onKeyDown={handleKeyDown}
+            onChange={(value) => {
+              setaddressToken1(value.value);
+              console.log(value.value);
+            }}
+          />
+          </Col>
+          </Row>
           </Col>
             <Col>
               <ProfitChart className="flex justify-end" />
             </Col>
         </Row>
 
-        <Row className="mt-3 mt-lg-4 px-3">
+
+        {/*<Row className="mt-3 mt-lg-4 px-3">
           <p
             xs={12}
             lg
@@ -344,7 +398,7 @@ const UserInformation = ({
               console.log(value.value);
             }}
           />
-        </Row>
+        </Row>*/}
 
         <Row className="mt-3 mt-lg-4 px-3">
           <FormInput
@@ -394,7 +448,7 @@ const UserInformation = ({
             successMsg="done"
             onChange={(event) => setPerDay(event.target.value)}
           />
-          <FormInput
+{/*          <FormInput
             xs={12}
             lg
             as={Col}
@@ -408,10 +462,10 @@ const UserInformation = ({
             size="sm"
             successMsg="done"
             onChange={(event) => setStrike(event.target.value)}
-          />
+          />*/}
         </Row>
         <Row className="mt-3 px-3">
-          <FormInput
+{/*          <FormInput
             xs={12}
             lg
             as={Col}
@@ -425,13 +479,13 @@ const UserInformation = ({
             size="sm"
             successMsg="done"
             onChange={(event) => setExpiration(event.target.value)}
-          />
+          />*/}
           <FormInput
             xs={12}
             lg
             as={Col}
             inpClass="py-2"
-            className="p-0 ms-lg-5 mt-4 mt-lg-3"
+            className="p-0  mt-4 mt-lg-3"
             name="riskFreeRate"
             type="text"
             controlId=""

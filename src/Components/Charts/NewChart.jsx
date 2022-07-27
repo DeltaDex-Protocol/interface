@@ -55,31 +55,67 @@ Chart.register(
 )
 
 
+const uniV2TotalValue = (TV0, S0, S) => {
+  return TV0 * (Math.sqrt(S) - Math.sqrt(S0)) / Math.sqrt(S0)
+}
 
-const title = 'Expected Profit and Loss'
 
-export default function ProfitChart(
-  props = {center: 1200, width:1000, k:1200, optionPrice:30}
-) {
-  const { center, width, k, optionPrice } = {center: 1200, width:2000, k:1200, optionPrice:30};
-  const data = []
+const fillData = (optionType, params) => {
+
+  const _data = []
+
+  const { center, width, k, optionPrice } = params;
+  const TV0 = 100
+  const S0 = 1000
 
   const N = 50
-  // console.log(Math.round(center ))
+
   // __ part of chart
-  for (let i = 0; i < N; i++)
-    data.push({
+  for (let i = N-1; i >= 0; i--)
+    _data.push({
       x: Math.round(center - i * width / N),
-      y: 0,
+      y: +TV0,
     })
 
   // / part of chart
   for (let i = 0; i < N; i++)
-    data.push({
+    _data.push({
       x: Math.round(center + i * width / N),
-      y: i * k,
+      y: TV0 - uniV2TotalValue(TV0, S0, center + i * width / N ),
     })
+
+  return _data;
+}
+
+
+
+const title = 'Expected Profit and Loss'
+
+export default function ProfitChart(
+  props
+) {
+
+  // center = strike, k = amount * 2, 
+  const { center, width, k, optionPrice } = {center: 1000, width:4000, k:1, optionPrice:100};
+  const data = fillData('curvedPut',{center: 1000, width:2000, k:1, optionPrice:100} )
+
+  const N = 50
+  // console.log(Math.round(center ))
+  // __ part of chart
+  // for (let i = 0; i < N; i++)
+  //   data.push({
+  //     x: Math.round(center - i * width / N),
+  //     y: -optionPrice,
+  //   })
+
+  // // / part of chart
+  // for (let i = 0; i < N; i++)
+  //   data.push({
+  //     x: Math.round(center + i * width / N),
+  //     y: i * (width / N) * k - optionPrice,
+  //   })
   console.log(data);
+
 
   const chartData = {
     datasets: [{

@@ -20,9 +20,29 @@ import { connectWallet, getCurrentWalletConnected } from "./../../utils/interact
 import Sidebar from '../Sidebar/Sidebar'
 import Header from "./../Header/Header.jsx";
 // import TradingViewWidget, { Themes } from 'react-tradingview-widget';
+// import Slider from "./../Slider/Slider.jsx";
+
+import {BSvanillaCall, deltaBSvanillaCall} from './../../utils/BSvanillaCall.js';
+import {BSvanillaPut, deltaBSvanillaPut} from './../../utils/BSvanillaPut.js';
+import {BScurvedPut, deltaBScurvedPut} from './../../utils/BScurvedPut.js';
+import {BScurvedCall, deltaBScurvedCall} from './../../utils/BScurvedCall.js';
+
+
+
+
+var inputs = {
+    x0: 250,          // amount in usdc (i.e. TV0 = 2 * x0)
+    S: 57,            // current price of the underlying asset
+    K: 50,            // strike price of the option
+    T: 0.25,          // time to expiration of the option in years
+    r: 0.01,          // annual risk-free interest rate
+    sigma: 0.50,      // volatility of the underlying asset
+};
 
 
 const Panel = () => {
+
+    console.log(deltaBScurvedCall(inputs))
 
     const sidebarLinks = [
             {
@@ -114,7 +134,6 @@ const Panel = () => {
             <Header walletAddress={walletAddress} connectPressed={connectWalletPressed}/>
             <div className={`${styles['panel-wrapper']}  px-5 `}>
                 
-
 
             <div className={`${styles['panel-wrapper']} d-flex`}>
             <Sidebar 
