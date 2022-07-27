@@ -6,7 +6,7 @@ import styles from './Panel.module.css'
 
 // import other component
 import UserCard from './UserCard/UserCard'
-import UserInformation from './UserInformation/UserInformation'
+import ReplicationForm from './UserInformation/ReplicationForm'
 import UserChangePassword from './UserChangePassword/UserChangePassword'
 
 // import other pkgs
@@ -22,10 +22,10 @@ import Header from "./../Header/Header.jsx";
 // import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 // import Slider from "./../Slider/Slider.jsx";
 
-import {BSvanillaCall, deltaBSvanillaCall} from './../../utils/BSvanillaCall.js';
-import {BSvanillaPut, deltaBSvanillaPut} from './../../utils/BSvanillaPut.js';
-import {BScurvedPut, deltaBScurvedPut} from './../../utils/BScurvedPut.js';
-import {BScurvedCall, deltaBScurvedCall} from './../../utils/BScurvedCall.js';
+// import {BSvanillaCall, deltaBSvanillaCall} from './../../utils/BSvanillaCall.js';
+// import {BSvanillaPut, deltaBSvanillaPut} from './../../utils/BSvanillaPut.js';
+// import {BScurvedPut, deltaBScurvedPut} from './../../utils/BScurvedPut.js';
+// import {BScurvedCall, deltaBScurvedCall} from './../../utils/BScurvedCall.js';
 
 
 
@@ -42,7 +42,7 @@ var inputs = {
 
 const Panel = () => {
 
-    console.log(deltaBScurvedCall(inputs))
+    // console.log(deltaBScurvedCall(inputs))
 
     const sidebarLinks = [
             {
@@ -123,7 +123,6 @@ const Panel = () => {
                 });
 
             setData(_data);
-            // console.log(_data);
         });
     }, []);
 
@@ -151,7 +150,7 @@ const Panel = () => {
                         
                         <div className={`${styles['panel-column']} bg-white border mt-5 mt-md-0  p-5`}>
                             {toggle === 'Replicate option' && (
-                                <UserInformation data={data}/>
+                                <ReplicationForm data={data}/>
                             )}
                             {toggle === 'My positions' && (
                                 <UserChangePassword />

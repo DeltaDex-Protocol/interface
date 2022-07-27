@@ -23,9 +23,28 @@ import Slider from "../../Charts/Slider.jsx";
 
 
 
-const UserInformation = ({
-  data
-}) => {
+const TokenOptions = [
+  { label: "DAI", value: "0x6B175474E89094C44Da98b954EedeAC495271d0F" },
+  { label: "USDC", value: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" },
+  { label: "USDT", value: "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
+  { label: "WETH", value: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" },
+];
+
+const OptionTypes = [
+  {label: "Vanilla call", value: "vanillaCall"},
+  {label: "Vanilla put", value: "vanillaPut"},
+  {label: "Curved call", value: "curvedCall"},
+  {label: "Curved put", value: "curvedPut"}
+];
+
+const OptionDirections = [
+  {label: "long", value: "long"},
+  {label: "short", value: "short"}
+];
+
+
+const ReplicationForm = ({ data }) => {
+
   const [submit, setSubmit] = useState(false);
 
   const [walletAddress, setWallet] = useState("");
@@ -45,9 +64,10 @@ const UserInformation = ({
   const [jumpDeviation, setJumpDeviation] = useState("");
   const [jumpIntensity, setJumpIntensity] = useState("");
 
-  // console.log(data);
+  const [OptionType, setOptionType] = useState(OptionTypes[0]);
+  const [OptionDirection, setDirection] = useState(OptionDirections[0]);
 
-  // const a = getCurrentPositions();
+
 
   const sendForm = async () => {
     console.log([
@@ -83,24 +103,7 @@ const UserInformation = ({
   const [tagInputValue, setTagInputValue] = useState("");
   const [tagValue, setTagValue] = useState("");
 
-  const TokenOptions = [
-    { label: "DAI", value: "0x6B175474E89094C44Da98b954EedeAC495271d0F" },
-    { label: "USDC", value: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" },
-    { label: "USDT", value: "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
-    { label: "WETH", value: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" },
-  ];
 
-  const OptionTypes = [
-    {label: "Vanilla call", value: "vanillaCall"},
-    {label: "Vanilla put", value: "vanillaPut"},
-    {label: "Curved call", value: "curvedCall"},
-    {label: "Curved put", value: "curvedPut"}
-  ];
-
-  const OptionDirections = [
-    {label: "long", value: "long"},
-    {label: "short", value: "short"}
-  ];
 
   const handleKeyDown = (event) => {
     if (!tagInputValue) return;
@@ -149,9 +152,8 @@ const UserInformation = ({
                 rightPriceScale={false}
               />*/}
       {console.log(data)}
-      {/*{data.length > 0 && (<Chart data={data}/>)}*/}
+      {/*{data.length > 0 && (<Chart data={data}/>)}/*/}
 
-      {/*{Chart(data)}*/}
       <Titles className=""
         title="Replicate Your option"
         text="Choose the parameters of the option you'd like to replicate"
@@ -173,7 +175,6 @@ const UserInformation = ({
                   type="text"
                   controlId=""
                   >
-                    {" "}
                     Option type
                   </p>
                 <Creatable
@@ -188,11 +189,13 @@ const UserInformation = ({
                   type="text"
                   controlId=""
                   placeholder="Choose_type"
+                  defaultValue={OptionTypes[0]}
                   size="sm"
                   onKeyDown={handleKeyDown}
                   onChange={(value) => {
-                    setaddressToken0(value.value);
-                    console.log(value.value);
+                    if (value === null) return;
+                    setOptionType(value);
+                    console.log(OptionType);
                   }}
                   />
               </Col>
@@ -208,7 +211,6 @@ const UserInformation = ({
                   type="text"
                   controlId=""
                   >
-                    {" "}
                     Direction
                 </p>
                 <Creatable
@@ -224,10 +226,12 @@ const UserInformation = ({
                   controlId=""
                   text=""
                   placeholder="long/short"
+                  defaultValue={OptionDirections[0]}
                   size="sm"
                   onKeyDown={handleKeyDown}
                   onChange={(value) => {
-                    setaddressToken0(value.value);
+                    if (value === null) return;
+                    setDirection(value);
                     console.log(value.value);
                   }}
                 />
@@ -237,7 +241,7 @@ const UserInformation = ({
               <Row className="mt-2">
                 <Col>
 
-                <Slider sliderType="strike"/>
+                <Slider sliderType="strike" onChangeToggle = {{setStrike, setExpiration}}/>
                 </Col>
                 <Col>
                   <Slider sliderType="expiry"/>
@@ -259,7 +263,6 @@ const UserInformation = ({
               type="text"
               controlId=""
               >
-              {" "}
               Token 1
             </p>
           <Creatable
@@ -295,7 +298,6 @@ const UserInformation = ({
             controlId=""
             text="Amount of token 0"
           >
-            {" "}
             Token 2
           </p>
           <Creatable
@@ -322,83 +324,14 @@ const UserInformation = ({
           </Row>
           </Col>
             <Col>
-              <ProfitChart className="flex justify-end" />
+              <ProfitChart 
+                OptionType={OptionType} 
+                OptionDirection={OptionDirection} 
+                params={{center: 1000, width:4000, k:1, optionPrice:100}}
+                className="flex justify-end" />
             </Col>
         </Row>
 
-
-        {/*<Row className="mt-3 mt-lg-4 px-3">
-          <p
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="amountOfToken0"
-            type="text"
-            controlId=""
-          >
-            {" "}
-            Token 1
-          </p>
-          <Creatable
-            options={TokenOptions}
-            isClearable
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="amountOfToken0"
-            type="text"
-            controlId=""
-            text="Amount of token 0"
-            placeholder="Address Token 1"
-            size="sm"
-            onKeyDown={handleKeyDown}
-            onChange={(value) => {
-              setaddressToken0(value.value);
-              console.log(value.value);
-            }}
-          />
-          </Row>
-
-        <Row className="mt-3 mt-lg-4 px-3">
-          <p
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="amountOfToken0"
-            type="text"
-            controlId=""
-            text="Amount of token 0"
-          >
-            {" "}
-            Token 2
-          </p>
-          <Creatable
-            options={TokenOptions}
-            isClearable
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="amountOfToken0"
-            type="text"
-            controlId=""
-            text="Amount of token 0"
-            placeholder="Address Token 2"
-            size="sm"
-            onKeyDown={handleKeyDown}
-            onChange={(value) => {
-              setaddressToken1(value.value);
-              console.log(value.value);
-            }}
-          />
-        </Row>*/}
 
         <Row className="mt-3 mt-lg-4 px-3">
           <FormInput
@@ -448,38 +381,10 @@ const UserInformation = ({
             successMsg="done"
             onChange={(event) => setPerDay(event.target.value)}
           />
-{/*          <FormInput
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0 ms-lg-5 mt-4 mt-lg-3"
-            name="strike"
-            type="text"
-            controlId=""
-            text="Strike Price"
-            placeholder="uint256"
-            size="sm"
-            successMsg="done"
-            onChange={(event) => setStrike(event.target.value)}
-          />*/}
         </Row>
+
         <Row className="mt-3 px-3">
-{/*          <FormInput
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="expirationDate"
-            type="text"
-            controlId=""
-            text="Expiration Date"
-            placeholder="uint256"
-            size="sm"
-            successMsg="done"
-            onChange={(event) => setExpiration(event.target.value)}
-          />*/}
+
           <FormInput
             xs={12}
             lg
@@ -564,13 +469,6 @@ const UserInformation = ({
           />
         </Row>
 
-        {/*<Button 
-                    onClick={() => setSubmit(true)}
-                    disabled={submit && !formik.isValid ? true : false}
-                    variant="primary" className='mt-5 py-2 px-4'
-                    type="submit">
-                    Update
-                </Button>*/}
         <Button
           variant="primary"
           className="mt-5 py-2 px-40"
@@ -583,4 +481,4 @@ const UserInformation = ({
   );
 };
 
-export default UserInformation;
+export default ReplicationForm;

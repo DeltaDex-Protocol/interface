@@ -27,6 +27,14 @@ import {
   SubTitle,
 } from 'chart.js'
 
+import {BSvanillaCall, deltaBSvanillaCall} from './../../utils/BSvanillaCall.js';
+import {BSvanillaPut, deltaBSvanillaPut} from './../../utils/BSvanillaPut.js';
+import {BScurvedPut, deltaBScurvedPut} from './../../utils/BScurvedPut.js';
+import {BScurvedCall, deltaBScurvedCall} from './../../utils/BScurvedCall.js';
+
+
+
+
 Chart.register(
   ArcElement,
   LineElement,
@@ -55,67 +63,179 @@ Chart.register(
 )
 
 
+const fillVanillaCall = (S, K, T, r, sigma, direction) => {
+  const _data = [];
+
+  const N = 100;
+  const width = 2 * K;
+
+  const dir = (direction == 'long' ? 1 : -1);
+
+
+  const optionPrice = BSvanillaCall({S, K, T, r, sigma});
+  const pivot = Math.round(K / width * N);
+
+
+  for (let i = 0; i < pivot; i++) {
+    var S = ((i / N) * width);
+    _data.push({
+      x: Math.round(S),
+      y: -dir*optionPrice,
+    })
+  }
+
+  for (let i = pivot; i < N; i++) {
+    var S = ((i / N) * width);
+    _data.push({
+      x: Math.round(S),
+      y: dir*((S - K) - optionPrice),
+    })
+  }
+
+  return _data;
+
+}
+
+
+const fillVanillaPut = (S, K, T, r, sigma, direction) => {
+  const _data = [];
+
+  const dir = (direction == 'long' ? 1 : -1);
+
+  const N = 100;
+  const width = 2 * K;
+
+  const optionPrice = BSvanillaCall({S, K, T, r, sigma});
+  const pivot = Math.round(K / width * N);
+
+  for (let i = 0; i < pivot; i++) {
+    var S = ((i / N) * width);
+    _data.push({
+      x: Math.round(S),
+      y: dir*(K - S - optionPrice),
+    })
+  }
+
+  for (let i = pivot; i < N; i++) {
+    var S = ((i / N) * width);
+    _data.push({
+      x: Math.round(S),
+      y:  - dir * optionPrice,
+    })
+  }
+
+  return _data;
+
+}
+
+const fillCurvedCall = (S, K, T, r, sigma, direction, TV0) => {
+  const _data = [];
+
+  const N = 100;
+  const width = 3 * K;
+
+  const dir = (direction == 'long' ? 1 : -1);
+
+  const x0 = TV0 / 2;
+
+  const optionPrice = BScurvedCall({x0, S, K, T, r, sigma});
+  const pivot = Math.round(K / width * N);
+
+
+  for (let i = 0; i < pivot; i++) {
+    var S = ((i / N) * width);
+    _data.push({
+      x: Math.round(S),
+      y: -dir*optionPrice,
+    })
+  }
+
+  for (let i = pivot; i < N; i++) {
+    var S = ((i / N) * width);
+    _data.push({
+      x: Math.round(S),
+      y: dir*((TV0/Math.sqrt(K))*(Math.sqrt(S) - Math.sqrt(K)) - optionPrice),
+    })
+  }
+
+  return _data;
+
+}
+
+const fillCurvedPut = (S, K, T, r, sigma, direction, TV0) => {
+  const _data = [];
+
+  const N = 50;
+  const width = 3 * K;
+
+  const dir = (direction == 'long' ? 1 : -1);
+
+  const x0 = TV0 / 2;
+
+  const optionPrice = BScurvedPut({x0, S, K, T, r, sigma});
+  const pivot = Math.round(K / width * N);
+
+
+  for (let i = 0; i < pivot; i++) {
+    var S = ((i / N) * width);
+    _data.push({
+      x: Math.round(S),
+      y: dir*(TV0-(TV0/Math.sqrt(K))*(Math.sqrt(S)) - optionPrice),
+    })
+  }
+
+  for (let i = pivot; i < N; i++) {
+    var S = ((i / N) * width);
+    _data.push({
+      x: Math.round(S),
+      y: dir*(-optionPrice),
+    })
+  }
+
+  return _data;
+
+}
+
+
+
+
+
 const uniV2TotalValue = (TV0, S0, S) => {
   return TV0 * (Math.sqrt(S) - Math.sqrt(S0)) / Math.sqrt(S0)
 }
 
-
-const fillData = (optionType, params) => {
-
-  const _data = []
-
-  const { center, width, k, optionPrice } = params;
-  const TV0 = 100
-  const S0 = 1000
-
-  const N = 50
-
-  // __ part of chart
-  for (let i = N-1; i >= 0; i--)
-    _data.push({
-      x: Math.round(center - i * width / N),
-      y: +TV0,
-    })
-
-  // / part of chart
-  for (let i = 0; i < N; i++)
-    _data.push({
-      x: Math.round(center + i * width / N),
-      y: TV0 - uniV2TotalValue(TV0, S0, center + i * width / N ),
-    })
-
-  return _data;
-}
 
 
 
 const title = 'Expected Profit and Loss'
 
 export default function ProfitChart(
-  props
+  {params, OptionType, OptionDirection}
 ) {
 
-  // center = strike, k = amount * 2, 
-  const { center, width, k, optionPrice } = {center: 1000, width:4000, k:1, optionPrice:100};
-  const data = fillData('curvedPut',{center: 1000, width:2000, k:1, optionPrice:100} )
+  // const {S, K, T, r, sigma} = params;
 
-  const N = 50
-  // console.log(Math.round(center ))
-  // __ part of chart
-  // for (let i = 0; i < N; i++)
-  //   data.push({
-  //     x: Math.round(center - i * width / N),
-  //     y: -optionPrice,
-  //   })
 
-  // // / part of chart
-  // for (let i = 0; i < N; i++)
-  //   data.push({
-  //     x: Math.round(center + i * width / N),
-  //     y: i * (width / N) * k - optionPrice,
-  //   })
-  console.log(data);
 
+
+  // const data = fillData(OptionType.value, params);
+
+  // console.log(OptionDirection)
+
+  var data = [];
+
+  if (OptionType.value === "vanillaCall")
+    data = fillVanillaCall(1000, 1100, 0.5, 0.01, 0.8, OptionDirection.value);
+  else if (OptionType.value === "vanillaPut")
+    data = fillVanillaPut(1000, 1100, 0.5, 0.01, 0.8, OptionDirection.value);
+  else if (OptionType.value === "curvedCall")
+    data = fillCurvedCall(1000, 1100, 0.5, 0.01, 0.8, OptionDirection.value, 250);
+  else if (OptionType.value === "curvedPut")
+      data = fillCurvedPut(1000, 1100, 0.5, 0.01, 0.8, OptionDirection.value, 250);
+
+
+
+  // console.log(OptionType.value, data);
 
   const chartData = {
     datasets: [{
@@ -150,7 +270,7 @@ export default function ProfitChart(
             display: true,
             text: 'profit, $',
           },
-          position: { x: center },
+          // position: { x: center },
         },
         x: {
           grid: {
@@ -178,7 +298,7 @@ export default function ProfitChart(
     return () => {
       chart.destroy()
     }
-  }, [center, k, width])
+  }, [OptionType, OptionDirection])
 
   return (
     <div className="max-w-md p-2 sm:p-8 border rounded shadow">
@@ -198,14 +318,14 @@ export default function ProfitChart(
           <div className="bg-orange-400 w-3 h-3 rounded-full"/>
           <span className="text-sm"> Break Even </span>
         </span>
-        <span className="text-sm"> {center} </span>
+        <span className="text-sm"> {'dsf'} </span>
       </div>
       <div className="mt-1 flex justify-between text-gray-500 font-sans">
         <span className="flex items-center gap-3">
           <div className="bg-pink-400 w-3 h-3 rounded-full"/>
           <span className="text-sm"> Max Loss </span>
         </span>
-        <span className="text-sm"> {optionPrice} </span>
+        <span className="text-sm"> {'sdfdfs'} </span>
       </div>
     </div>
   )
