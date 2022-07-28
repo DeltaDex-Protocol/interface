@@ -9,11 +9,7 @@
 // const contractAddress = "0xd1b04035bB8E12584070f3f42090877Cee52817a";
 
 const contractABI = require("./OptionMaker.json");
-<<<<<<< HEAD
 const contractAddress = "0x512F7469BcC83089497506b5df64c6E246B39925";
-=======
-const contractAddress = "0xd9fEc8238711935D6c8d79Bef2B9546ef23FC046";
->>>>>>> main
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -189,22 +185,13 @@ export const getUserPositions = async () => {
 
   for (let i = 0; i < noOfPositions; i++) {
     const pairAddress = await optionmaker.Positions(userAddress, i.toString());
-<<<<<<< HEAD
 
     var optionPosition1 = await optionmaker.JDM_Options(
-=======
-    var optionPosition = await optionmaker.JDM_Options(
->>>>>>> main
       pairAddress,
       userAddress,
       i
     );
-<<<<<<< HEAD
     const JDMrow = parseJDM(i, optionPosition1);
-=======
-    const row = parseJDM(i, optionPosition);
-    // console.log(row);
->>>>>>> main
 
     console.log(JDMrow["token0"]);
 
@@ -236,7 +223,6 @@ export const getUserPositions = async () => {
   return rows;
 };
 
-<<<<<<< HEAD
 function checkIfEmptyPosition(position) {
   if (position["token0"] == "0x0000000000000000000000000000000000000000") {
     return true;
@@ -245,9 +231,6 @@ function checkIfEmptyPosition(position) {
   }
 }
 
-=======
-// @dev depreciated
->>>>>>> main
 function parseJDM(i, optionPosition) {
   const JDM = JSON.stringify(optionPosition);
 
