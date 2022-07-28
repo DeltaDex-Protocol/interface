@@ -27,9 +27,12 @@ import Header from "./../Header/Header.jsx";
 // import {BScurvedPut, deltaBScurvedPut} from './../../utils/BScurvedPut.js';
 // import {BScurvedCall, deltaBScurvedCall} from './../../utils/BScurvedCall.js';
 
-// import PriceChart from "./../Charts/PriceChart.jsx";
+import PriceChart from "./../Charts/PriceChart.jsx";
 
 import AllPositions from "./../Positions/AllPositions.jsx";
+
+import MyPositions from "./../Positions/MyPositions.jsx";
+
 
 
 // var inputs = {
@@ -146,19 +149,22 @@ const Panel = () => {
 
 
                 <div className={`${styles.container} justify-content-center align-items-center p-0`}>
+                      {/*<PriceChart data={data} className="justify-content-center"/>*/}
+
                     <Row className={`${styles['panel']}  `}>
-                        {toggle !== 'All positions' && (
+                        {toggle !== 'All positions' && toggle !== 'My positions' && (
                         <div className={`${styles['panel-column']} bg-white border mt-5 mt-md-0  p-5`}>
                             {toggle === 'Replicate option' && (
                                 <ReplicationForm data={data}/>
                             )}
-
-                            {toggle === 'My positions' && (
+                        </div>)}
+                        {toggle === 'My positions' && (
                                 <UserChangePassword />
                             )}
-                        </div>)}
                     </Row>
-
+                    {/*{toggle === 'My positions' && (
+                                <MyPositions />
+                            )}*/}
                     {toggle === 'All positions' && (
                                 <AllPositions className="mt-0"/>)}
                 </div >

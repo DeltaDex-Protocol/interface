@@ -134,27 +134,7 @@ const ReplicationForm = ({ data }) => {
 
   return (
     <>
-        
-              {/*<TradingViewWidget
-                symbol="BINANCE:ETHUSDT"
-                locale="en"
-                width={700}
-                height= {300}
-                range={"6m"}
-                isTransparent={false}
-                autosize= {false}
-                largeChartUrl=""
-                hide_legend={true}
-                hide_top_toolbar={true}
-                hide_side_toolbar={true}
-                toolbar_bg={false}
-                style={3}
-                details={false}
-                control_bar={false}
-                rightPriceScale={false}
-              />*/}
-      {/*{console.log(data)}*/}
-      {/*{data.length > 0 && (<Chart data={data}/>)}/*/}
+
 
       <Titles className=""
         title="Replicate Your option"
@@ -338,8 +318,7 @@ const ReplicationForm = ({ data }) => {
           </Row>
           <Row className="mt-2">
                 <Col>
-
-                <Slider sliderType="amountOfToken2" onChangeToggle = {setToken0Balance}/>
+                  <Slider sliderType="amountOfToken2" onChangeToggle = {setToken0Balance}/>
                 </Col>
                 <Col>
                   <Slider sliderType="deltaHedgesPerDay" onChangeToggle = {setPerDay}/>
@@ -347,22 +326,32 @@ const ReplicationForm = ({ data }) => {
           </Row>
           <Row className="mt-2">
                 <Col>
-
-                <Slider sliderType="feesToHedgers" onChangeToggle = {setFees}/>
+                  <Slider sliderType="feesToHedgers" onChangeToggle = {setFees}/>
                 </Col>
                 <Col>
                   <Slider sliderType="riskFree" onChangeToggle = {setRiskFree}/>
                 </Col>
-              </Row>    
+          </Row>    
 
           </Col>
 
-            <Col>
+            <Col className="">
+            <Row>
+            <Col className="flex justify-center">
               <ProfitChart 
                 OptionType={OptionType} 
                 OptionDirection={OptionDirection} 
                 params={{S: 1000, K: strike, T: expiration, r:0.01, sigma:0.8, TV0: totalValue}}
-                className="flex justify-end" />
+                className="" />
+            </Col>
+            </Row>
+            <Row>
+            <Col className="flex justify-center">
+                  <PriceChart data={data} className=""/>
+            </Col>
+            {/*<Col xs={1}>2
+            </Col>*/}
+            </Row>
             </Col>
         </Row>
 

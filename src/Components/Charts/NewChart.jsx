@@ -238,7 +238,6 @@ export default function ProfitChart(
       data = fillCurvedPut(S, K, T, r, sigma, OptionDirection.value, x0);
 
 
-
   // console.log(OptionType.value, data);
 
   const chartData = {
@@ -305,7 +304,7 @@ export default function ProfitChart(
   }, [OptionType, OptionDirection, data])
 
   return (
-    <div className="max-w-md p-2 sm:p-8 border rounded shadow">
+    <div className="w-3/4  p-2 sm:p-8 border rounded-lg shadow-md">
       <h5 className="font-sans text-base">{title}</h5>
       <hr className="my-2"/>
       <canvas id="profit-chart"/>
