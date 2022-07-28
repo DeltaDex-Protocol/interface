@@ -9,7 +9,7 @@
 // const contractAddress = "0xd1b04035bB8E12584070f3f42090877Cee52817a";
 
 const contractABI = require("./OptionMaker.json");
-const contractAddress = "0x547382C0D1b23f707918D3c83A77317B71Aa8470";
+const contractAddress = "0xd9fEc8238711935D6c8d79Bef2B9546ef23FC046";
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -172,36 +172,37 @@ export const getCurrentWalletConnected = async () => {
 // @dev get react grid rows
 export const getUserPositions = async () => {
   const signer = provider.getSigner();
-  
+
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
   const userAddress = await signer.getAddress();
-  console.log(userAddress);
+  console.log(userAddress.address);
 
   const noOfPositions = await optionmaker.userIDlength(userAddress);
+  console.log(noOfPositions);
 
   const rows = [];
 
   for (let i = 0; i < noOfPositions; i++) {
-    const pairAddress = await optionmaker.Positions(userAddress, i);
-    var JDM_CALL = await optionmaker.JDM_Calls(
-      pairAddress._hex,
+    const pairAddress = await optionmaker.Positions(userAddress, i.toString());
+    var optionPosition = await optionmaker.JDM_Options(
+      pairAddress,
       userAddress,
       i
     );
-    const row = parsePosition(JDM_CALL);
+    const row = parseJDM(i, optionPosition);
     // console.log(row);
 
     rows.push(row);
   }
-  // console.log(rows);
+  console.log(rows);
 
   return rows;
 };
 
 // @dev depreciated
-function parsePosition(JDM_CALL) {
-  const JDM = JSON.stringify(JDM_CALL);
+function parseJDM(i, optionPosition) {
+  const JDM = JSON.stringify(optionPosition);
 
   const JDMparsed = JSON.parse(JDM);
 
@@ -218,94 +219,81 @@ function parsePosition(JDM_CALL) {
     "ether"
   );
 
+  var isCall = JDMparsed[4];
+  var isLong = JDMparsed[5];
+
   var amount = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[4]),
-    "ether"
-  );
-
-  var expiry = ethers.BigNumber.from(JDMparsed[5]).toString();
-
-  var fees = ethers.utils.formatUnits(
     ethers.BigNumber.from(JDMparsed[6]),
     "ether"
   );
 
-  var perDay = ethers.BigNumber.from(JDMparsed[7]).toString();
+  var expiry = ethers.BigNumber.from(JDMparsed[7]).toString();
 
-  var hedgeFee = ethers.utils.formatUnits(
+  var fees = ethers.utils.formatUnits(
     ethers.BigNumber.from(JDMparsed[8]),
     "ether"
   );
 
-  var lastHedge = ethers.BigNumber.from(JDMparsed[9]).toString();
+  var perDay = ethers.BigNumber.from(JDMparsed[9]).toString();
+
+  var hedgeFee = ethers.utils.formatUnits(
+    ethers.BigNumber.from(JDMparsed[10]),
+    "ether"
+  );
+
+  var lastHedge = ethers.BigNumber.from(JDMparsed[11]).toString();
 
   var K = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][0]),
+    ethers.BigNumber.from(JDMparsed[12][0]),
     "ether"
   );
 
   var T = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][1]),
+    ethers.BigNumber.from(JDMparsed[12][1]),
     "ether"
   );
 
   var r = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][2]),
+    ethers.BigNumber.from(JDMparsed[12][2]),
     "ether"
   );
 
   var sigma = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][3]),
+    ethers.BigNumber.from(JDMparsed[12][3]),
     "ether"
   );
 
   var m = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][4]),
+    ethers.BigNumber.from(JDMparsed[12][4]),
     "ether"
   );
 
   var v = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][5]),
+    ethers.BigNumber.from(JDMparsed[12][5]),
     "ether"
   );
 
   var lam = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][6]),
+    ethers.BigNumber.from(JDMparsed[12][6]),
     "ether"
   );
 
-  /* 
-  var position = [
-    token0,
-    token1,
-    token0_balance,
-    token1_balance,
-    amount,
-    expiry,
-    fees,
-    perDay,
-    hedgeFee,
-    lastHedge,
-    K,
-    T,
-    r,
-    sigma,
-    m,
-    v,
-    lam,
-  ]; */
-
   const row = {
-    id: 0,
+    id: i + 1,
     token0: token0,
     token1: token1,
     token0_balance: token0_balance,
     token1_balance: token1_balance,
+
+    isCall: isCall,
+    isLong: isLong,
+
     amount: amount,
     expiry: expiry,
     fees: fees,
-    hedges: perDay,
+    perday: perDay,
     hedgeFee: hedgeFee,
+    lastHedge: lastHedge,
     strike: K,
     T: T,
     r: r,

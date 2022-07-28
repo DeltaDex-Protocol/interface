@@ -60,10 +60,10 @@ Chart.register(
 export default function PriceChart( { data } ) {
 
   const title = 'ETH price';
-
+  console.log(data);
 
   data = data.map((el, index) => ({
-    x: index / 365,
+    x: index,
     y: el.value,
   }));
 
@@ -94,24 +94,35 @@ export default function PriceChart( { data } ) {
         point: { radius: 0}
       },
       scales: {
+
         y: {
           grid: {
+            drawBorder: false,
             display: false,
           },
           title: {
-            display: true,
+            display: false,
             text: 'price, $',
           },
+          ticks: {
+            display: false,
+          }
           // position: { x: center },
         },
         x: {
+          // type: 'time',
+
           grid: {
+            drawBorder: false,
             display: false,
           },
           title: {
-            display: true,
-            text: 'ETH price',
+            display: false,
+            text: '',
           },
+          ticks: {
+            display: false,
+          }
         },
       },
       plugins: {
@@ -130,11 +141,11 @@ export default function PriceChart( { data } ) {
     return () => {
       chart.destroy()
     }
-  }, [])
+  }, [data])
 
   return (
-    <div className="mt-5 max-w-md p-2 sm:p-8 border rounded shadow">
-      {/*<h5 className="font-sans text-base">{title}</h5>*/}
+    <div className="mt-5 w-3/4 p-2 sm:p-8 border rounded-lg shadow-md">
+      <h5 className="font-sans text-sm">{title}</h5>
       {/*<hr className="my-2"/>*/}
       <canvas id="price-chart"/>
 

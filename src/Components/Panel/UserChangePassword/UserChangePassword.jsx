@@ -35,7 +35,7 @@ const columns = [
   { key: "amount", name: "Initial Deposit" },
   { key: "expiry", name: "Time to expiry" },
   { key: "fees", name: "Fees" },
-  { key: "hedges", name: "Hedges" },
+  { key: "lastHedge", name: "Last Hedge" },
   { key: "strike", name: "K" },
   { key: "T", name: "T" },
   { key: "r", name: "r" },
@@ -44,8 +44,6 @@ const columns = [
   { key: "m", name: "m" },
   { key: "v", name: "v" },
 ];
-
-
 
 // const rows = ({}) => getRows();
 
@@ -64,15 +62,13 @@ const UserChangePassword = ({}) => {
   const [upd, setUpd] = useState(false);
 
   useEffect(() => {
-      const func = async () => {
-        const rowData = await getUserPositions();
-        console.log(rowData);
-        setRowData(rowData);
-      }
-      func()
-  }, [upd]); 
-
-  
+    const func = async () => {
+      const rowData = await getUserPositions();
+      console.log(rowData);
+      setRowData(rowData);
+    };
+    func();
+  }, [upd]);
 
   return (
     <>
