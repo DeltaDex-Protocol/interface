@@ -139,13 +139,26 @@ const Panel = () => {
                 
 
             <div className={`${styles['panel-wrapper']} d-flex`}>
-            <Sidebar 
+            {/*<Sidebar 
+                username={"Your address"}
+                userAddress={walletAddress}
+                userProfile={walletAddress}
+                sidebarLinks={sidebarLinks}
+                onChangeToggle={changeToggle}
+            />*/}
+
+<aside class="w-64 mt-24" aria-label="Sidebar">
+   <div class="overflow-y-auto py-4 px-3  rounded ">
+      <Sidebar 
                 username={"Your address"}
                 userAddress={walletAddress}
                 userProfile={walletAddress}
                 sidebarLinks={sidebarLinks}
                 onChangeToggle={changeToggle}
             />
+   </div>
+</aside>
+
 
 
                 <div className={`${styles.container} justify-content-center align-items-center p-0`}>
@@ -158,13 +171,13 @@ const Panel = () => {
                                 <ReplicationForm data={data}/>
                             )}
                         </div>)}
-                        {toggle === 'My positions' && (
+{/*                        {toggle === 'My positions' && (
                                 <UserChangePassword />
-                            )}
-                    </Row>
-                    {/*{toggle === 'My positions' && (
-                                <MyPositions />
                             )}*/}
+                    </Row>
+                    {toggle === 'My positions' && (
+                                <MyPositions />
+                            )}
                     {toggle === 'All positions' && (
                                 <AllPositions className="mt-0"/>)}
                 </div >
