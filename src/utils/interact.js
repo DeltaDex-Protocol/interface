@@ -185,22 +185,52 @@ export const getUserPositions = async () => {
 
   for (let i = 0; i < noOfPositions; i++) {
     const pairAddress = await optionmaker.Positions(userAddress, i.toString());
-    var optionPosition = await optionmaker.JDM_Options(
+
+    var optionPosition1 = await optionmaker.JDM_Options(
       pairAddress,
       userAddress,
       i
     );
-    const row = parseJDM(i, optionPosition);
-    // console.log(row);
+    const JDMrow = parseJDM(i, optionPosition1);
 
-    rows.push(row);
+    console.log(JDMrow["token0"]);
+
+    var isEmpty = checkIfEmptyPosition(JDMrow);
+    if (isEmpty == true) {
+      console.log("empty");
+    } else {
+      rows.push(JDMrow);
+    }
+
+    var optionPosition2 = await optionmaker.BS_Options(
+      pairAddress,
+      userAddress,
+      i
+    );
+
+    const BSrow = parseBS(i, optionPosition2);
+
+    var isEmpty = checkIfEmptyPosition(BSrow);
+
+    if (isEmpty == true) {
+      console.log("empty");
+    } else {
+      rows.push(BSrow);
+    }
   }
   console.log(rows);
 
   return rows;
 };
 
-// @dev depreciated
+function checkIfEmptyPosition(position) {
+  if (position["token0"] == "0x0000000000000000000000000000000000000000") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function parseJDM(i, optionPosition) {
   const JDM = JSON.stringify(optionPosition);
 
@@ -306,7 +336,95 @@ function parseJDM(i, optionPosition) {
   return row;
 }
 
-//@ dev depreciated
+function parseBS(i, optionPosition) {
+  const BS = JSON.stringify(optionPosition);
+
+  const BSparsed = JSON.parse(BS);
+
+  var token0 = BSparsed[0];
+  var token1 = BSparsed[1];
+
+  var token0_balance = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[2]),
+    "ether"
+  );
+
+  var token1_balance = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[3]),
+    "ether"
+  );
+
+  var isCall = BSparsed[4];
+  var isLong = BSparsed[5];
+
+  var amount = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[6]),
+    "ether"
+  );
+
+  var expiry = ethers.BigNumber.from(BSparsed[7]).toString();
+
+  var fees = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[8]),
+    "ether"
+  );
+
+  var perDay = ethers.BigNumber.from(BSparsed[9]).toString();
+
+  var hedgeFee = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[10]),
+    "ether"
+  );
+
+  var lastHedge = ethers.BigNumber.from(BSparsed[11]).toString();
+
+  var K = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[12][0]),
+    "ether"
+  );
+
+  var T = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[12][1]),
+    "ether"
+  );
+
+  var r = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[12][2]),
+    "ether"
+  );
+
+  var sigma = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSparsed[12][3]),
+    "ether"
+  );
+
+  const row = {
+    id: i + 1,
+    token0: token0,
+    token1: token1,
+    token0_balance: token0_balance,
+    token1_balance: token1_balance,
+
+    isCall: isCall,
+    isLong: isLong,
+
+    amount: amount,
+    expiry: expiry,
+    fees: fees,
+    perday: perDay,
+    hedgeFee: hedgeFee,
+    lastHedge: lastHedge,
+    strike: K,
+    T: T,
+    r: r,
+    sigma: sigma,
+    lam: 0,
+    m: 0,
+    v: 0,
+  };
+
+  return row;
+}
 
 export const getUserPositionsTable = async () => {
   const signer = provider.getSigner();
