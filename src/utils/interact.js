@@ -9,7 +9,7 @@
 // const contractAddress = "0xd1b04035bB8E12584070f3f42090877Cee52817a";
 
 const contractABI = require("./OptionMaker.json");
-const contractAddress = "0xd9fEc8238711935D6c8d79Bef2B9546ef23FC046";
+const contractAddress = "0x512F7469BcC83089497506b5df64c6E246B39925";
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -418,9 +418,9 @@ function parseBS(i, optionPosition) {
     T: T,
     r: r,
     sigma: sigma,
-    lam: 0,
-    m: 0,
-    v: 0,
+    lam: "-",
+    m: "-",
+    v: "-",
   };
 
   return row;
