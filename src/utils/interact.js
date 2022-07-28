@@ -181,20 +181,7 @@ export const getUserPositions = async () => {
   const noOfPositions = await optionmaker.userIDlength(userAddress);
   console.log(noOfPositions);
 
-  let i = 0;
-
-  const pairAddress = await optionmaker.Positions(userAddress, i.toString());
-  console.log(pairAddress);
-
   const rows = [];
-
-  var optionPosition = await optionmaker.JDM_Options(
-    pairAddress,
-    userAddress,
-    3
-  );
-
-  console.log(optionPosition);
 
   for (let i = 0; i < noOfPositions; i++) {
     const pairAddress = await optionmaker.Positions(userAddress, i.toString());
