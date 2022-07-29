@@ -625,3 +625,13 @@ export const getAllPairAddresses = async () => {
 
   return Pairs;
 };
+
+export const getTokenPair = async (token0, token1) => {
+  const signer = provider.getSigner();
+
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+
+  let pairAddress = await optionmaker.getPair(token0, token1);
+
+  return pairAddress;
+};
