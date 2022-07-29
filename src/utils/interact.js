@@ -562,6 +562,8 @@ export const getAllPositions = async () => {
 
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
+  // const tokenAddresses = await getAllPairAddresses();
+
   let tokenPair = "0x7BDA8b27E891F9687BD6d3312Ab3f4F458e2cC91";
 
   let users = await optionmaker.getUserAddressesInPair(tokenPair);
@@ -620,30 +622,26 @@ export const getAllPositions = async () => {
   }
 };
 
-/*   export const getAllPairAddresses = async () => {
-    const signer = provider.getSigner();
+async function getAllPairAddresses() {
+  const signer = provider.getSigner();
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
-    const optionmaker = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
+  const numberOfPairs = await optionmaker.numOfPairs();
 
-    let Pairs = await optionmaker.Pairs();
+  let pairs = [];
+  for (let i = 0; i < numberOfPairs; i++) {
+    let pair = await optionmaker.Pairs(i);
+    pairs.push(pair);
+  }
+  return pairs;
+}
 
-    return Pairs;
-  };
+export const getTokenPair = async (token0, token1) => {
+  const signer = provider.getSigner();
 
-  export const getTokenPair = async (token0, token1) => {
-    const signer = provider.getSigner();
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
-    const optionmaker = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
+  let pairAddress = await optionmaker.getPair(token0, token1);
 
-    let pairAddress = await optionmaker.getPair(token0, token1);
-
-    return pairAddress;
-  }; */
+  return pairAddress;
+};
