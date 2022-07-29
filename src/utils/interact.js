@@ -186,6 +186,8 @@ export const getUserPositions = async () => {
   for (let i = 0; i < noOfPositions; i++) {
     const pairAddress = await optionmaker.Positions(userAddress, i.toString());
 
+    // JDM positions
+
     var optionPosition1 = await optionmaker.JDM_Options(
       pairAddress,
       userAddress,
@@ -202,6 +204,8 @@ export const getUserPositions = async () => {
       rows.push(JDMrow);
     }
 
+    // BS positions
+
     var optionPosition2 = await optionmaker.BS_Options(
       pairAddress,
       userAddress,
@@ -216,6 +220,23 @@ export const getUserPositions = async () => {
       console.log("empty");
     } else {
       rows.push(BSrow);
+    }
+
+    // BSC positions
+    var optionPosition3 = await optionmaker.BSC_Options(
+      pairAddress,
+      userAddress,
+      i
+    );
+    const BSCrow = parseBSC(i, optionPosition3);
+
+    console.log(JDMrow["token0"]);
+
+    var isEmpty = checkIfEmptyPosition(BSCrow);
+    if (isEmpty == true) {
+      console.log("empty");
+    } else {
+      rows.push(BSCrow);
     }
   }
   console.log(rows);
@@ -418,6 +439,102 @@ function parseBS(i, optionPosition) {
     T: T,
     r: r,
     sigma: sigma,
+    lam: "-",
+    m: "-",
+    v: "-",
+  };
+
+  return row;
+}
+
+function parseBSC(i, optionPosition) {
+  const BSC = JSON.stringify(optionPosition);
+
+  const BSCparsed = JSON.parse(BSC);
+
+  var token0 = BSCparsed[0];
+  var token1 = BSCparsed[1];
+
+  var token0_balance = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[2]),
+    "ether"
+  );
+
+  var token1_balance = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[3]),
+    "ether"
+  );
+
+  var isCall = BSCparsed[4];
+  var isLong = BSCparsed[5];
+
+  var amount = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[6]),
+    "ether"
+  );
+
+  var expiry = ethers.BigNumber.from(BSCparsed[7]).toString();
+
+  var fees = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[8]),
+    "ether"
+  );
+
+  var perDay = ethers.BigNumber.from(BSCparsed[9]).toString();
+
+  var hedgeFee = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[10]),
+    "ether"
+  );
+
+  var lastHedge = ethers.BigNumber.from(BSCparsed[11]).toString();
+
+  var K = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[12][0]),
+    "ether"
+  );
+
+  var T = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[12][1]),
+    "ether"
+  );
+
+  var r = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[12][2]),
+    "ether"
+  );
+
+  var sigma = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[12][3]),
+    "ether"
+  );
+
+  var tv0 = ethers.utils.formatUnits(
+    ethers.BigNumber.from(BSCparsed[12][4]),
+    "ether"
+  );
+
+  const row = {
+    id: i + 1,
+    token0: token0,
+    token1: token1,
+    token0_balance: token0_balance,
+    token1_balance: token1_balance,
+
+    isCall: isCall,
+    isLong: isLong,
+
+    amount: amount,
+    expiry: expiry,
+    fees: fees,
+    perday: perDay,
+    hedgeFee: hedgeFee,
+    lastHedge: lastHedge,
+    strike: K,
+    T: T,
+    r: r,
+    sigma: sigma,
+    tv0: tv0,
     lam: "-",
     m: "-",
     v: "-",
