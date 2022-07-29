@@ -131,6 +131,7 @@ const ReplicationForm = ({ data }) => {
         expiration: expiration,
         address_token1: addressToken1,
         address_token2: addressToken2,
+        token1_balance: token1Balance,
         hedges_per_day: perDay,
         option_amount: OptionAmount,
         total_value_of_fees: fees,
@@ -191,11 +192,13 @@ const ReplicationForm = ({ data }) => {
       // jumpDeviation,
       // jumpIntensity
 
+    console.log(formInputs)
+
     console.log([
       formInputs.address_token1+"",
       formInputs.address_token2+"",
-      formInputs.token1Balance+"",
-      formInputs.fees+"",
+      formInputs.token1_balance+"",
+      formInputs.total_value_of_fees+"",
       formInputs.hedges_per_day+"",
       formInputs.strike+"",
       formInputs.expiration+"",
@@ -203,15 +206,15 @@ const ReplicationForm = ({ data }) => {
       formInputs.model_params.vol+"",
       formInputs.model_params.jump_size_mean+"",
       formInputs.model_params.jump_deviation+"",
-      formInputs.model_params.jumpIntensity+""
+      formInputs.model_params.jump_intensity+""
     ])
 
 
     const { success, status } = await sendForm(
       formInputs.address_token1+"",
       formInputs.address_token2+"",
-      formInputs.token1Balance+"",
-      formInputs.fees+"",
+      formInputs.token1_balance+"",
+      formInputs.total_value_of_fees+"",
       formInputs.hedges_per_day+"",
       formInputs.strike+"",
       formInputs.expiration+"",
@@ -219,7 +222,7 @@ const ReplicationForm = ({ data }) => {
       formInputs.model_params.vol+"",
       formInputs.model_params.jump_size_mean+"",
       formInputs.model_params.jump_deviation+"",
-      formInputs.model_params.jumpIntensity+""
+      formInputs.model_params.jump_intensity+""
     );
   }
 
