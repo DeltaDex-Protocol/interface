@@ -11,8 +11,8 @@ import { string, object, ref } from "yup";
 
 import {
   getUserPositions,
-  getUserPositionsTable,
-  getCurrentPositions,
+  getTokenPair,
+  getAllPairAddresses,
   getAllPositions,
 } from "./../../utils/interact";
 
@@ -177,7 +177,7 @@ const AllPositions = ({}) => {
   useEffect(() => {
     const func = async () => {
       // const rowData = await getAllPositions('0x7BDA8b27E891F9687BD6d3312Ab3f4F458e2cC91');
-      const rowData = await getUserPositions();
+      const rowData = await getAllPositions();
       console.log(rowData);
       setRowData(rowData);
     };

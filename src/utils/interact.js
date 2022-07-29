@@ -557,32 +557,33 @@ function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
 
-export const getAllPositions = async (tokenPair) => {
+export const getAllPositions = async () => {
   const signer = provider.getSigner();
 
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+
+  let tokenPair = "0x7BDA8b27E891F9687BD6d3312Ab3f4F458e2cC91";
 
   let users = await optionmaker.getUserAddressesInPair(tokenPair);
 
   let uniqueUsers = users.filter(onlyUnique);
 
-  // alert(uniqueUsers)
-
-  // // console.log(uniqueUsers);
+  console.log(uniqueUsers);
   // let positions = [];
   for (const user of uniqueUsers) {
     // addresses of token pairs that user is a part of
     let tokenPairs = await optionmaker.getUserPositions(user);
 
-    // // console.log("token pairs", tokenPairs);
+    console.log("token pairs", tokenPairs);
 
     // number of positions in this tokenPair
     let noOfPositionsInPair = tokenPairs.filter((x) => x == tokenPair).length;
 
-    // // console.log(noOfPositionsInPair);
+    // console.log(noOfPositionsInPair);
     // let noOfPosiitons = optionmaker.userIDlength(user);
 
     let positions = [];
+    let rows = [];
 
     for (let i = 0; i < noOfPositionsInPair; i++) {
       let JDM = await optionmaker.JDM_Options(tokenPair, user, i);
@@ -591,8 +592,8 @@ export const getAllPositions = async (tokenPair) => {
       if (isEmpty == true) {
         // pass
       } else {
-        positions.push(JDM);
-        // // console.log(BS);
+        const JDMrow = parseJDM(i, JDM);
+        rows.push(JDMrow);
       }
 
       let BS = await optionmaker.BS_Options(tokenPair, user, i);
@@ -601,7 +602,8 @@ export const getAllPositions = async (tokenPair) => {
       if (isEmpty == true) {
         // pass
       } else {
-        positions.push(BS);
+        const BSrow = parseBS(i, BS);
+        rows.push(BSrow);
       }
 
       let BSC = await optionmaker.BSC_Options(tokenPair, user, i);
@@ -609,29 +611,39 @@ export const getAllPositions = async (tokenPair) => {
       if (isEmpty == true) {
         // pass
       } else {
-        positions.push(BSC);
+        const BSCrow = parseBSC(i, BSC);
+        rows.push(BSCrow);
       }
     }
     console.log(positions);
+    return rows;
   }
 };
 
-export const getAllPairAddresses = async () => {
-  const signer = provider.getSigner();
+/*   export const getAllPairAddresses = async () => {
+    const signer = provider.getSigner();
 
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+    const optionmaker = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
 
-  let Pairs = await optionmaker.Pairs();
+    let Pairs = await optionmaker.Pairs();
 
-  return Pairs;
-};
+    return Pairs;
+  };
 
-export const getTokenPair = async (token0, token1) => {
-  const signer = provider.getSigner();
+  export const getTokenPair = async (token0, token1) => {
+    const signer = provider.getSigner();
 
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+    const optionmaker = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
 
-  let pairAddress = await optionmaker.getPair(token0, token1);
+    let pairAddress = await optionmaker.getPair(token0, token1);
 
-  return pairAddress;
-};
+    return pairAddress;
+  }; */
