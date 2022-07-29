@@ -12,7 +12,11 @@ import PropTypes from "prop-types";
 
 // import utils
 import { getStorage } from "../../../utils/storage";
-import { sendForm, getCurrentPositions } from "../../../utils/interact";
+import {
+  sendForm,
+  getCurrentPositions,
+  startReplication,
+} from "../../../utils/interact";
 
 import Creatable, { useCreatable } from "react-select/creatable";
 import TradingViewWidget, { Themes } from "react-tradingview-widget";
@@ -109,18 +113,18 @@ const ReplicationForm = ({ data }) => {
 
   const processForm = async () => {
     var formInputs = {
+      model_type: chosenModel,
       option_type: OptionType,
       option_direction: OptionDirection,
-      strike: strike,
-      expiration: expiration,
+      strike: strike + "",
+      expiration: expiration + "",
       address_token1: addressToken1,
       address_token2: addressToken2,
-      token1_balance: token1Balance,
-      token2_balance: token2Balance,
-      hedges_per_day: perDay,
-      option_amount: OptionAmount,
-      total_value_of_fees: fees,
-      model_type: chosenModel,
+      token1_balance: token1Balance + "",
+      token2_balance: token2Balance + "",
+      hedges_per_day: perDay + "",
+      option_amount: OptionAmount + "",
+      total_value_of_fees: fees + "",
       model_params: {},
       etc: {},
     };
@@ -130,23 +134,24 @@ const ReplicationForm = ({ data }) => {
       formInputs.option_type.value === "curvedPut"
     ) {
       formInputs.etc = {
-        total_value_invested_in_lp: totalValueInvestedInLP,
+        total_value_invested_in_lp: totalValueInvestedInLP + "",
       };
     }
 
     if (formInputs.model_type.label === "Jump Diffusion") {
       formInputs.model_params = {
-        risk_free_rate: riskFree,
-        vol: JDMvol,
-        jump_size_mean: JDMjumpSizeMean,
-        jump_deviation: JDMjumpDeviation,
-        jump_intensity: JDMjumpIntensity,
+        risk_free_rate: riskFree + "",
+        vol: JDMvol + "",
+        jump_size_mean: JDMjumpSizeMean + "",
+        jump_deviation: JDMjumpDeviation + "",
+        jump_intensity: JDMjumpIntensity + "",
       };
     }
 
     if (formInputs.model_type.label === "Black-Scholes") {
       formInputs.model_params = {
-        vol: BSvol,
+        risk_free_rate: riskFree + "",
+        vol: BSvol + "",
       };
     }
 
@@ -173,7 +178,7 @@ const ReplicationForm = ({ data }) => {
 
     console.log(formInputs);
 
-    console.log([
+    /*     console.log([
       formInputs.address_token1 + "",
       formInputs.address_token2 + "",
       formInputs.token1_balance + "",
@@ -186,25 +191,11 @@ const ReplicationForm = ({ data }) => {
       formInputs.model_params.jump_size_mean + "",
       formInputs.model_params.jump_deviation + "",
       formInputs.model_params.jump_intensity + "",
-    ]);
+    ]); */
 
-    const { success, status } = await sendForm(
-      formInputs.address_token1 + "",
-      formInputs.address_token2 + "",
-      formInputs.token1_balance + "",
-      formInputs.total_value_of_fees + "",
-      formInputs.hedges_per_day + "",
-      formInputs.strike + "",
-      formInputs.expiration + "",
-      formInputs.model_params.risk_free_rate + "",
-      formInputs.model_params.vol + "",
-      formInputs.model_params.jump_size_mean + "",
-      formInputs.model_params.jump_deviation + "",
-      formInputs.model_params.jump_intensity + ""
-    );
-    console.log(success, status)
-  }
-
+    const { success, status } = await startReplication(formInputs);
+    console.log(success, status);
+  };
 
   const handleKeyDown = (event) => {
     if (!tagInputValue) return;

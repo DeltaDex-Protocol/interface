@@ -50,7 +50,154 @@ export const connectWallet = async () => {
   }
 };
 
-export const startReplication = async (
+export const startReplication = async (formInputs) => {
+  let isCall = false;
+  let isLong = false;
+
+  if (
+    formInputs.option_type.value === "curvedCall" ||
+    formInputs.option_type.value === "vanillaCall"
+  ) {
+    isCall = true;
+  }
+  /* 
+  if (formInputs.model_type.label === "Black-Scholes") {
+    let token1_balance = ethers.utils.parseUnits(formInputs.token1_balance);
+    let token2_balance = ethers.utils.parseUnits(formInputs.token2_balance);
+    let total_value_of_fees = ethers.utils.parseUnits(
+      formInputs.total_value_of_fees
+    );
+    let hedges_per_day = ethers.utils.parseUnits(
+      formInputs.hedges_per_day,
+      "wei"
+    );
+    let strike = ethers.utils.parseUnits(formInputs.strike);
+    let expiration = ethers.utils.parseUnits(formInputs.expiration);
+    let risk_free_rate = ethers.utils.parseUnits(
+      formInputs.model_params.risk_free_rate
+    );
+    let vol = ethers.utils.parseUnits(formInputs.model_params.vol);
+
+    const BS_input = [
+      formInputs.address_token1,
+      formInputs.address_token2,
+      !isCall ? 0 : token1_balance,
+      isCall ? 0 : token2_balance,
+      isCall,
+      isLong,
+      0,
+      0,
+      total_value_of_fees,
+      hedges_per_day,
+      0,
+      0,
+      [strike, expiration, risk_free_rate, vol],
+    ];
+
+    const signer = provider.getSigner();
+    const optionmaker = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+
+    try {
+      const tx = await optionmaker.BS_START_REPLICATION(BS_input);
+      // wait until the transaction is mined
+      // // console.log('here')
+      await tx.wait();
+
+      return {
+        success: true,
+        status:
+          "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+      };
+    } catch (error) {
+      return {
+        success: false,
+        status: "😥 Something went wrong: " + error.message,
+      };
+    }
+  }
+ */
+  if (formInputs.model_type.label === "Jump Diffusion") {
+    let token1_balance = ethers.utils.parseUnits(formInputs.token1_balance);
+    let token2_balance = ethers.utils.parseUnits(formInputs.token2_balance);
+    let total_value_of_fees = ethers.utils.parseUnits(
+      formInputs.total_value_of_fees
+    );
+    let hedges_per_day = ethers.utils.parseUnits(
+      formInputs.hedges_per_day,
+      "wei"
+    );
+    let strike = ethers.utils.parseUnits(formInputs.strike);
+    let expiration = ethers.utils.parseUnits(formInputs.expiration);
+    let risk_free_rate = ethers.utils.parseUnits(
+      formInputs.model_params.risk_free_rate
+    );
+    let vol = ethers.utils.parseUnits(formInputs.model_params.vol);
+    let jump_size_mean = ethers.utils.parseUnits(
+      formInputs.model_params.jump_size_mean
+    );
+    let jump_deviation = ethers.utils.parseUnits(
+      formInputs.model_params.jump_deviation
+    );
+    let jump_intensity = ethers.utils.parseUnits(
+      formInputs.model_params.jump_intensity
+    );
+
+    const JDM_input = [
+      formInputs.address_token1,
+      formInputs.address_token2,
+      !isCall ? 0 : token1_balance,
+      isCall ? 0 : token2_balance,
+      isCall.toString(),
+      isLong.toString(),
+      0,
+      0,
+      total_value_of_fees,
+      hedges_per_day,
+      0,
+      0,
+      [
+        strike,
+        expiration,
+        risk_free_rate,
+        vol,
+        jump_size_mean,
+        jump_deviation,
+        jump_intensity,
+      ],
+    ];
+
+    const signer = provider.getSigner();
+    const optionmaker = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+
+    try {
+      const tx = await optionmaker.JDM_START_REPLICATION(JDM_input);
+      // wait until the transaction is mined
+      // // console.log('here')
+      await tx.wait();
+
+      return {
+        success: true,
+        status:
+          "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+      };
+    } catch (error) {
+      return {
+        success: false,
+        status: "😥 Something went wrong: " + error.message,
+      };
+    }
+  }
+};
+
+export const startReplication2 = async (
   model,
   isCall,
   isLong,
@@ -238,7 +385,7 @@ export const sendForm = async (
       jumpIntensity,
     ],
   ];
-  console.log('JDM_call_input', JDM_Call_Input)
+  console.log("JDM_call_input", JDM_Call_Input);
 
   const signer = provider.getSigner();
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
