@@ -50,7 +50,11 @@ export const connectWallet = async () => {
   }
 };
 
-export const mintNFT = async (
+
+// export const 
+
+
+export const sendForm = async (
   addressToken0,
   addressToken1,
   token0Balance,

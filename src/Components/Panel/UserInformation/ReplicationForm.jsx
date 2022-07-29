@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 
 // import utils
 import { getStorage } from "../../../utils/storage";
-import { mintNFT, getCurrentPositions } from "../../../utils/interact";
+import { sendForm, getCurrentPositions } from "../../../utils/interact";
 
 import Creatable, { useCreatable } from "react-select/creatable";
 import TradingViewWidget, { Themes } from 'react-tradingview-widget';
@@ -60,25 +60,20 @@ const ReplicationForm = ({ data }) => {
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
 
-  const [addressToken0, setaddressToken0] = useState("");
-  const [addressToken1, setaddressToken1] = useState("");
-  const [token0Balance, setToken0Balance] = useState("");
+  const [addressToken1, setAddressToken1] = useState("");
+  const [addressToken2, setAddressToken2] = useState("");
+  const [token1Balance, setToken1Balance] = useState("0");
   const [fees, setFees] = useState("");
   const [perDay, setPerDay] = useState("");
-
+  const [OptionAmount, setOptionAmount] = useState(1);
   const [strike, setStrike] = useState(300);
   const [expiration, setExpiration] = useState(5);
-  const [riskFree, setRiskFree] = useState("");
-  const [volatility, setVolatility] = useState("");
-  const [meanReversion, setMeanReversion] = useState("");
-  const [jumpDeviation, setJumpDeviation] = useState("");
-  const [jumpIntensity, setJumpIntensity] = useState("");
-
   const [OptionType, setOptionType] = useState(OptionTypes[0]);
   const [OptionDirection, setDirection] = useState(OptionDirections[0]);
-  const [totalValue, setTotalValue] = useState(1000);
 
-  const [chosenModel, setModel] = useState(AvailableModels[0]);
+
+  const [totalValueInvestedInLP, setTotalValueInvestedInLP] = useState(1000);
+
 
   const [showAdvancedSettings, setAdvanced] = useState(false);
 
@@ -86,42 +81,148 @@ const ReplicationForm = ({ data }) => {
   const [tagValue, setTagValue] = useState("");
 
 
+
+
+  const [chosenModel, setModel] = useState(AvailableModels[0]);
+
+
+  const [riskFree, setRiskFree] = useState("0");
+
+  // BS params
+  const [BSvol, setBSvol] = useState("");
+
+
+  // JDM params
+  const [JDMvol, setJDMvol] = useState(0.1);
+  const [JDMjumpSizeMean, setJDMjumpSizeMean] = useState("0");
+  const [JDMjumpDeviation, setJDMjumpDeviation] = useState("0");
+  const [JDMjumpIntensity, setJDMjumpIntensity] = useState("0");
+
+
+
+
   // useEffect(() => {
 
   // }, []);
 
 
+  // var formInputs = {
+  //       option_type: OptionType,
+  //       option_direction: OptionDirection,
+  //       strike: strike,
+  //       expiry: expiration,
+  //       address_token1: addressToken1,
+  //       address_token2: addressToken2,
+  //       hedges_per_day: perDay,
+  //       option_amount: OptionAmount,
+  //       total_value_of_fees: fees,
+  //       model_type: chosenModel,
+  //       model: {
+  //         risk_free_rate: riskFree,
+  //         ...
+  //       }
+  //   }
 
-  const sendForm = async () => {
+  const processForm = async () => {
+    var formInputs = {
+        option_type: OptionType,
+        option_direction: OptionDirection,
+        strike: strike,
+        expiration: expiration,
+        address_token1: addressToken1,
+        address_token2: addressToken2,
+        hedges_per_day: perDay,
+        option_amount: OptionAmount,
+        total_value_of_fees: fees,
+        model_type: chosenModel,
+        model_params: {
+
+        },
+        etc: {
+
+        }
+    };
+
+    if (formInputs.option_type.value === "curvedCall"
+        || formInputs.option_type.value === "curvedPut"
+        ) {
+        formInputs.etc = {
+          total_value_invested_in_lp: totalValueInvestedInLP,
+        }
+
+    }
+
+
+    if (formInputs.model_type.label === "Jump Diffusion") {
+      formInputs.model_params = {
+        risk_free_rate: riskFree,
+        vol: JDMvol,
+        jump_size_mean: JDMjumpSizeMean,
+        jump_deviation: JDMjumpDeviation,
+        jump_intensity: JDMjumpIntensity,
+      }
+    }
+
+    if (formInputs.model_type.label === "Black-Scholes") {
+      formInputs.model_params = {
+        vol: BSvol,
+      }
+    }
+
+    if (formInputs.model_type.label === "SABR model") {
+      // pass
+    }
+
+    if (formInputs.model_type.label === "Heston model") {
+      // pass
+    }
+
+
+      // addressToken0,
+      // addressToken1,
+      // token0Balance,
+      // fees,
+      // perDay,
+      // strike,
+      // expiration,
+      // riskFree,
+      // volatility,
+      // meanReversion,
+      // jumpDeviation,
+      // jumpIntensity
+
     console.log([
-      addressToken0,
-      addressToken1,
-      token0Balance,
-      fees,
-      perDay,
-      strike,
-      expiration,
-      riskFree,
-      volatility,
-      meanReversion,
-      jumpDeviation,
-      jumpIntensity,
-    ]);
-    const { success, status } = await mintNFT(
-      addressToken0,
-      addressToken1,
-      token0Balance,
-      fees,
-      perDay,
-      strike,
-      expiration,
-      riskFree,
-      volatility,
-      meanReversion,
-      jumpDeviation,
-      jumpIntensity
+      formInputs.address_token1+"",
+      formInputs.address_token2+"",
+      formInputs.token1Balance+"",
+      formInputs.fees+"",
+      formInputs.hedges_per_day+"",
+      formInputs.strike+"",
+      formInputs.expiration+"",
+      formInputs.model_params.risk_free_rate+"",
+      formInputs.model_params.vol+"",
+      formInputs.model_params.jump_size_mean+"",
+      formInputs.model_params.jump_deviation+"",
+      formInputs.model_params.jumpIntensity+""
+    ])
+
+
+    const { success, status } = await sendForm(
+      formInputs.address_token1+"",
+      formInputs.address_token2+"",
+      formInputs.token1Balance+"",
+      formInputs.fees+"",
+      formInputs.hedges_per_day+"",
+      formInputs.strike+"",
+      formInputs.expiration+"",
+      formInputs.model_params.risk_free_rate+"",
+      formInputs.model_params.vol+"",
+      formInputs.model_params.jump_size_mean+"",
+      formInputs.model_params.jump_deviation+"",
+      formInputs.model_params.jumpIntensity+""
     );
-  };
+  }
+
 
   
 
@@ -253,12 +354,12 @@ const ReplicationForm = ({ data }) => {
 
               {OptionType.value === ("curvedCall") && <Row>
                 <Col>
-                <Slider sliderType = "totalValue" onChangeToggle={setTotalValue}/>
+                <Slider sliderType = "totalValue" onChangeToggle={setTotalValueInvestedInLP}/>
                 </Col>
               </Row>}
               {OptionType.value === ("curvedPut") && <Row>
                 <Col>
-                <Slider sliderType = "totalValue" onChangeToggle={setTotalValue}/>
+                <Slider sliderType = "totalValue" onChangeToggle={setTotalValueInvestedInLP}/>
                 </Col>
               </Row>}
               <Row>
@@ -294,7 +395,7 @@ const ReplicationForm = ({ data }) => {
                   size="sm"
                   onKeyDown={handleKeyDown}
                   onChange={(value) => {
-                    setaddressToken0(value.value);
+                    setAddressToken1(value.value);
                     console.log(value.value);
                   }}
                 />
@@ -330,7 +431,7 @@ const ReplicationForm = ({ data }) => {
                   size="sm"
                   onKeyDown={handleKeyDown}
                   onChange={(value) => {
-                    setaddressToken1(value.value);
+                    setAddressToken2(value.value);
                     console.log(value.value);
                   }}
                 />
@@ -338,7 +439,7 @@ const ReplicationForm = ({ data }) => {
           </Row>
           <Row className="mt-2">
                 <Col>
-                  <Slider sliderType="amountOfToken2" onChangeToggle = {setToken0Balance}/>
+                  <Slider sliderType="amountOfToken2" onChangeToggle = {setOptionAmount}/>
                 </Col>
                 <Col>
                   <Slider sliderType="deltaHedgesPerDay" onChangeToggle = {setPerDay}/>
@@ -363,7 +464,7 @@ const ReplicationForm = ({ data }) => {
               <ProfitChart 
                 OptionType={OptionType} 
                 OptionDirection={OptionDirection} 
-                params={{S: data[data.length-1].value, K: strike, T: expiration, r:riskFree, sigma:0.8, TV0: totalValue}}
+                params={{S: data[data.length-1].value, K: strike, T: expiration, r:riskFree, sigma:0.8, TV0: totalValueInvestedInLP}}
                 className="" />
             )}
             </Col>
@@ -460,7 +561,7 @@ const ReplicationForm = ({ data }) => {
             placeholder="float"
             size="sm"
             successMsg="done"
-            onChange={(event) => setVolatility(event.target.value)}
+            onChange={(event) => setBSvol(parseFloat(event.target.value))}
           />
           <Col/>
         </Row>
@@ -485,7 +586,7 @@ const ReplicationForm = ({ data }) => {
             placeholder="float"
             size="sm"
             successMsg="done"
-            onChange={(event) => setVolatility(event.target.value)}
+            onChange={(event) => setJDMvol(parseFloat(event.target.value))}
           />
 
           <FormInput
@@ -501,7 +602,7 @@ const ReplicationForm = ({ data }) => {
             placeholder="float"
             size="sm"
             successMsg="done"
-            onChange={(event) => setJumpIntensity(event.target.value)}
+            onChange={(event) => setJDMjumpIntensity(parseFloat(event.target.value))}
           />
         </Row>
         <Row className="mt-3">
@@ -518,7 +619,7 @@ const ReplicationForm = ({ data }) => {
             placeholder="float"
             size="sm"
             successMsg="done"
-            onChange={(event) => setMeanReversion(event.target.value)}
+            onChange={(event) => setJDMjumpSizeMean(parseFloat(event.target.value))}
           />
           <FormInput
             xs={12}
@@ -533,7 +634,7 @@ const ReplicationForm = ({ data }) => {
             placeholder="float"
             size="sm"
             successMsg="done"
-            onChange={(event) => setJumpDeviation(event.target.value)}
+            onChange={(event) => setJDMjumpDeviation(parseFloat(event.target.value))}
           />
         </Row>
         </>)}
@@ -541,7 +642,7 @@ const ReplicationForm = ({ data }) => {
         <Button
           variant="primary"
           className="mt-5 py-2 px-40"
-          onClick={sendForm}
+          onClick={processForm}
         >
           Start replication
         </Button>
