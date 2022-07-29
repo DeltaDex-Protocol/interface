@@ -111,7 +111,7 @@ export const mintNFT = async (
   try {
     const tx = await optionmaker.JDM_CALL_START_REPLICATION(JDM_Call_Input);
     // wait until the transaction is mined
-    // console.log('here')
+    // // console.log('here')
     await tx.wait();
 
     return {
@@ -176,10 +176,10 @@ export const getUserPositions = async () => {
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
   const userAddress = await signer.getAddress();
-  console.log(userAddress.address);
+  // // console.log(userAddress.address);
 
   const noOfPositions = await optionmaker.userIDlength(userAddress);
-  console.log(noOfPositions);
+  // // console.log(noOfPositions);
 
   const rows = [];
 
@@ -195,11 +195,11 @@ export const getUserPositions = async () => {
     );
     const JDMrow = parseJDM(i, optionPosition1);
 
-    console.log(JDMrow["token0"]);
+    // // console.log(JDMrow["token0"]);
 
     var isEmpty = checkIfEmptyPosition(JDMrow);
     if (isEmpty == true) {
-      console.log("empty");
+      // // console.log("empty");
     } else {
       rows.push(JDMrow);
     }
@@ -217,7 +217,7 @@ export const getUserPositions = async () => {
     var isEmpty = checkIfEmptyPosition(BSrow);
 
     if (isEmpty == true) {
-      console.log("empty");
+      // console.log("empty");
     } else {
       rows.push(BSrow);
     }
@@ -230,16 +230,16 @@ export const getUserPositions = async () => {
     );
     const BSCrow = parseBSC(i, optionPosition3);
 
-    console.log(JDMrow["token0"]);
+    // console.log(JDMrow["token0"]);
 
     var isEmpty = checkIfEmptyPosition(BSCrow);
     if (isEmpty == true) {
-      console.log("empty");
+      // console.log("empty");
     } else {
       rows.push(BSCrow);
     }
   }
-  console.log(rows);
+  // console.log(rows);
 
   return rows;
 };
@@ -543,139 +543,75 @@ function parseBSC(i, optionPosition) {
   return row;
 }
 
-export const getUserPositionsTable = async () => {
+// Get all positions
+
+function checkIfEmptyPosition2(position) {
+  if (position["tokenA"] == "0x0000000000000000000000000000000000000000") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
+
+export const getAllPositions = async () => {
   const signer = provider.getSigner();
+
+  const tokenPair = "0x7BDA8b27E891F9687BD6d3312Ab3f4F458e2cC91";
+
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
-  const pairAddress = await optionmaker.allPairs(0);
-  console.log(pairAddress);
+  let users = await optionmaker.getUserAddressesInPair(tokenPair);
 
-  const userAddress = await signer.getAddress();
-  console.log(userAddress);
+  let uniqueUsers = users.filter(onlyUnique);
 
-  // this is trashy code bc it assumes the last position of user is in pairAddress...
-  const positionID = (await optionmaker.userIDlength(userAddress)) - 1;
+  // // console.log(uniqueUsers);
+  // let positions = [];
+  for (const user of uniqueUsers) {
+    // addresses of token pairs that user is a part of
+    let tokenPairs = await optionmaker.getUserPositions(user);
 
-  console.log(positionID);
+    // // console.log("token pairs", tokenPairs);
 
-  var JDM_CALL = await optionmaker.JDM_Calls(pairAddress, userAddress, 3);
+    // number of positions in this tokenPair
+    let noOfPositionsInPair = tokenPairs.filter((x) => x == tokenPair).length;
 
-  const JDM = JSON.stringify(JDM_CALL);
+    // // console.log(noOfPositionsInPair);
+    // let noOfPosiitons = optionmaker.userIDlength(user);
 
-  const JDMparsed = JSON.parse(JDM);
+    let positions = [];
 
-  var token0 = JDMparsed[0];
-  var token1 = JDMparsed[1];
+    for (let i = 0; i < noOfPositionsInPair; i++) {
+      let JDM = await optionmaker.JDM_Options(tokenPair, user, i);
 
-  var token0_balance = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[2]),
-    "ether"
-  );
+      var isEmpty = checkIfEmptyPosition2(JDM);
+      if (isEmpty == true) {
+        // pass
+      } else {
+        positions.push(JDM);
+        // // console.log(BS);
+      }
 
-  var token1_balance = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[3]),
-    "ether"
-  );
+      let BS = await optionmaker.BS_Options(tokenPair, user, i);
 
-  var amount = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[4]),
-    "ether"
-  );
+      var isEmpty = checkIfEmptyPosition2(BS);
+      if (isEmpty == true) {
+        // pass
+      } else {
+        positions.push(BS);
+      }
 
-  var expiry = ethers.BigNumber.from(JDMparsed[5]).toString();
-
-  var fees = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[6]),
-    "ether"
-  );
-
-  var perDay = ethers.BigNumber.from(JDMparsed[7]).toString();
-
-  var hedgeFee = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[8]),
-    "ether"
-  );
-
-  var lastHedge = ethers.BigNumber.from(JDMparsed[9]).toString();
-
-  var K = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][0]),
-    "ether"
-  );
-
-  var T = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][1]),
-    "ether"
-  );
-
-  var r = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][2]),
-    "ether"
-  );
-
-  var sigma = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][3]),
-    "ether"
-  );
-
-  var m = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][4]),
-    "ether"
-  );
-
-  var v = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][5]),
-    "ether"
-  );
-
-  var lam = ethers.utils.formatUnits(
-    ethers.BigNumber.from(JDMparsed[10][6]),
-    "ether"
-  );
-
-  var position = [
-    token0,
-    token1,
-    token0_balance,
-    token1_balance,
-    amount,
-    expiry,
-    fees,
-    perDay,
-    hedgeFee,
-    lastHedge,
-    K,
-    T,
-    r,
-    sigma,
-    m,
-    v,
-    lam,
-  ];
-
-  /*
-  const rows = [
-    {
-      id: 0,
-      token0: token0,
-      token1: token1,
-      token0_balance: token0_balance,
-      token1_balance: token1_balance,
-      amount: amount,
-      expiry: expiry,
-      fees: fees,
-      hedges: perDay,
-      hedgeFee: hedgeFee,
-      strike: K,
-      T: T,
-      r: r,
-      sigma: sigma,
-      lam: lam,
-      m: m,
-      v: v,
-    },
-  ];
-  */
-
-  // console.log(position);
+      let BSC = await optionmaker.BSC_Options(tokenPair, user, i);
+      var isEmpty = checkIfEmptyPosition2(BSC);
+      if (isEmpty == true) {
+        // pass
+      } else {
+        positions.push(BSC);
+      }
+    }
+    console.log(positions);
+  }
 };
