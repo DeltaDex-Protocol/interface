@@ -108,12 +108,13 @@ export const sendForm = async (
       jumpIntensity,
     ],
   ];
+  console.log('JDM_call_input', JDM_Call_Input)
 
   const signer = provider.getSigner();
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
   try {
-    const tx = await optionmaker.JDM_CALL_START_REPLICATION(JDM_Call_Input);
+    const tx = await optionmaker.JDM_START_REPLICATION(JDM_Call_Input);
     // wait until the transaction is mined
     // // console.log('here')
     await tx.wait();

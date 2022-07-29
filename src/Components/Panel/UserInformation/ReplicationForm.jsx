@@ -224,6 +224,7 @@ const ReplicationForm = ({ data }) => {
       formInputs.model_params.jump_deviation+"",
       formInputs.model_params.jump_intensity+""
     );
+    console.log(success, status)
   }
 
 

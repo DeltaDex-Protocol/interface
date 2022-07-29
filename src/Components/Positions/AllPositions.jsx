@@ -53,24 +53,7 @@ const defineAddresses = {
   "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH",
 };
 
-const IntervalExample = () => {
-  const [seconds, setSeconds] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((seconds) => seconds + 1);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        {seconds} seconds have elapsed since mounting.
-      </header>
-    </div>
-  );
-};
 
 const GenerateRow = ({ row }) => {
   const [isVisible, setVisibility] = useState(false);
@@ -79,7 +62,7 @@ const GenerateRow = ({ row }) => {
   const costForHedging = parseFloat(Math.random() * 1.5).toFixed(3);
 
   var current = Date.now();
-  console.log((current - parseInt(row.lastHedge) * 1000) / 1000);
+  // console.log((current - parseInt(row.lastHedge) * 1000) / 1000);
 
   const perDay = parseInt(row.perday);
 
@@ -113,7 +96,6 @@ const GenerateRow = ({ row }) => {
 
   return (
     <>
-      {/*<IntervalExample/>*/}
       <tr
         className="bg-gray-00  hover:bg-gray-300 text-center"
         id={row.id}
@@ -129,7 +111,7 @@ const GenerateRow = ({ row }) => {
           {costForHedging + " $"}
         </th>
         <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
-          {row.hedgeFee + " DAI"}
+          {(parseFloat(row.hedgeFee).toFixed(3)) + " DAI"}
         </th>
 
         <td>{seconds > 0 ? secondsToDhms(seconds) : "0 s"}</td>
