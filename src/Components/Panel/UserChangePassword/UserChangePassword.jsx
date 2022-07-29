@@ -40,6 +40,7 @@ const columns = [
   { key: "T", name: "T" },
   { key: "r", name: "r" },
   { key: "sigma", name: "sigma" },
+  { key: "tv0", name: "tv0" },
   { key: "lam", name: "lam" },
   { key: "m", name: "m" },
   { key: "v", name: "v" },
