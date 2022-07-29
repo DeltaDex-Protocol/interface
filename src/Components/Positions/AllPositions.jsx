@@ -55,13 +55,68 @@ const defineAddresses = {
 }
 
 
+const IntervalExample = () => {
+  const [seconds, setSeconds] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(seconds => seconds + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        {seconds} seconds have elapsed since mounting.
+      </header>
+    </div>
+  );
+};
+
+
+
+
 const GenerateRow = ({row}) => {
 
   const [isVisible, setVisibility] = useState(false);
   // console.log(defineAddresses.)
 
+  const costForHedging = parseFloat(Math.random()*1.5).toFixed(3);
+
+  var current = Date.now();
+  console.log((current - parseInt(row.lastHedge)*1000)/1000);
+
+  const perDay = parseInt(row.perday);
+
+  const counter = parseInt(24 * 3600 / perDay - (current - parseInt(row.lastHedge)*1000)/1000);
+
+
+  const [seconds, setSeconds] = useState(counter);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+        setSeconds(seconds => seconds - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const secondsToDhms = (seconds) => {
+    var d = Math.floor(seconds / (3600*24));
+    var h = Math.floor(seconds % (3600*24) / 3600);
+    var m = Math.floor(seconds % 3600 / 60);
+    var s = Math.floor(seconds % 60);
+
+    var dDisplay = d > 0 ? d + (d == 1 ? " d " : " d ") : "";
+    var hDisplay = h > 0 ? h + (h == 1 ? " h " : " h ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " m " : " m ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " s" : " s") : "";
+    return dDisplay + hDisplay + mDisplay + sDisplay;
+  }
+
   return (
     <>
+    {/*<IntervalExample/>*/}
     <tr className="bg-gray-00  hover:bg-gray-300 text-center" id={row.id} onClick={() => setVisibility(!isVisible)}>
       <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
           {row.id} 
@@ -70,103 +125,23 @@ const GenerateRow = ({row}) => {
           {defineAddresses[row.token0] + "-" + defineAddresses[row.token1]}
       </td>
       <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
-          {parseFloat(row.token0_balance).toFixed(3)}
+          {costForHedging + "$"}
       </th>
       <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
-          {parseFloat(row.token1_balance).toFixed(3)}
+          {row.fees + "$"}
       </th>
 
-      <td className="py-4 px-6">
-          {row.isCall ? "call" : "put"}
-      </td>
-      <td className="py-4 px-6">
-          {row.isLong ? "long" : "short"}
-      </td>
       <td>
-        {row.strike}
-      </td>
-      <td>
-        {new Date(parseInt(row.expiry) * 1000).toISOString().slice(0, 10).replace('T', ' ')}
-      </td>
-      <td>
-        {new Date(parseInt(row.lastHedge) * 1000).toISOString().slice(0,10)}
+        {secondsToDhms(seconds)}
       </td>
       <td className="py-4 px-3">
           <button 
-          className="font-medium text-black rounded-lg bg-gray-300"
+          className="font-medium text-white rounded-lg bg-blue-500"
           onClick={() => setVisibility(!isVisible)}
-          >Show</button>
+          >Hedge</button>
       </td>
     </tr>
-    {(isVisible !== false) && (
-        <>
-              <tr className=" bg-gray-300 text-center">
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">fees</span>
-                      <br/>
-                      {row.fees}
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">amount</span>
-                      <br/>
-                      {parseFloat(row.amount).toFixed(3)}
-                  </th>
-                  <th scope="col" colspan="1" className="py-3 px-6 ">
-                      <span className="text-black">hedge fee</span>
-                      <br/>
-                      {parseFloat(row.hedgeFee).toFixed(3)} 
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">hedges per day</span>
-                      <br/>
-                      {row.perday}
-                  </th>
-                  <th/>
-                  <th/>
-                  <th/>
-                  <th/>
-                  <th/>
-                  <th/>
-              </tr>
-              <tr className=" bg-gray-300 text-center">
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">model</span>
-                      <br/>
-                      {"jump diffusion"}
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">lambda</span>
-                      <br/>
-                      {parseFloat(row.lam).toFixed(3)}
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">m</span>
-                      <br/>
-                      {parseFloat(row.m).toFixed(3)}
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">risk-free rate</span>
-                      <br/>
-                      {parseFloat(row.r).toFixed(3)}
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">sigma</span>
-                      <br/>
-                      {parseFloat(row.sigma).toFixed(3)}
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                      <span className="text-black">nu</span>
-                      <br/>
-                      {parseFloat(row.v).toFixed(3)}
-                  </th>
-                  <th/>
-                  <th/>
-                  <th/>
-                  <th/>
-              </tr>
-          </>
-
-    )}
+    
     </>
     )
 }
@@ -212,29 +187,23 @@ const AllPositions = ({}) => {
                       Option pair
                   </th>
                   <th scope="col" className="py-3 px-6">
-                      Reward for hedging
-                  </th>
-                  <th scope="col" className="py-3 px-6">
                       Estimated tx cost for hedging
                   </th>
-                  <th/>
-                  <th/>
-                  <th/>
                   <th scope="col" className="py-3 px-6">
-                      Expiry
-                  </th>
-                  <th scope="col" className="py-3 px-6">
-                      Last hedge
+                      Reward for hedging
                   </th>
 
                   <th scope="col" className="py-3 px-6">
-                      Details
+                      Time left until next hedging 
                   </th>
+                  <th/>
+
               </tr>
           </thead>
           {rowData[0] !== undefined && (
           <tbody>
               {rowData.map((el, i) => <GenerateRow row={rowData[i]}/>)}
+
           </tbody>
           )}
       </table>
