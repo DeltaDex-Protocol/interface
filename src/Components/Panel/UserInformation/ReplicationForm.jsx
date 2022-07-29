@@ -48,8 +48,8 @@ const OptionDirections = [
 const AvailableModels = [
   { label: "Black-Scholes", value: "black-scholes" },
   { label: "Jump Diffusion", value: "jump-diffusion" },
-  { label: "SABR model", value: "sabr" },
-  { label: "Heston model", value: "heston" },
+  { label: "SABR model (coming soon)", value: "sabr" },
+  { label: "Heston model (coming soon)", value: "heston" },
 ];
 
 const ReplicationForm = ({ data }) => {
