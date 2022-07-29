@@ -133,13 +133,20 @@ const GenerateRow = ({row}) => {
       </th>
 
       <td>
-        {secondsToDhms(seconds)}
+        {(seconds > 0) ? secondsToDhms(seconds) : '0 s'}
       </td>
       <td className="py-4 px-3">
-          <button 
-          className="font-medium text-white rounded-lg bg-blue-500"
+      {(seconds > 0) ? (
+          <button disabled
+          className="font-medium text-white rounded-lg bg-blue-500 disabled:bg-gray-300"
+          onClick={() => setVisibility(!isVisible)}
+          >Hedge</button>)
+      :
+      (<button
+          className="font-medium text-white rounded-lg bg-blue-500 disabled:bg-gray-300"
           onClick={() => setVisibility(!isVisible)}
           >Hedge</button>
+      )}
       </td>
     </tr>
     
