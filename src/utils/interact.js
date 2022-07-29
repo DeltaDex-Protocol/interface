@@ -560,7 +560,6 @@ function onlyUnique(value, index, self) {
 export const getAllPositions = async (tokenPair) => {
   const signer = provider.getSigner();
 
-
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
   let users = await optionmaker.getUserAddressesInPair(tokenPair);
@@ -615,4 +614,14 @@ export const getAllPositions = async (tokenPair) => {
     }
     console.log(positions);
   }
+};
+
+export const getAllPairAddresses = async () => {
+  const signer = provider.getSigner();
+
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+
+  let Pairs = await optionmaker.Pairs();
+
+  return Pairs;
 };
