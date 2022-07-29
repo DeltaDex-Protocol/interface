@@ -44,6 +44,15 @@ const OptionDirections = [
 ];
 
 
+const AvailableModels = [
+  {label: 'Black-Scholes', value: 'black-scholes'},
+  {label: 'Jump Diffusion', value: 'jump-diffusion'},
+  {label: 'SABR model', value: 'sabr'},
+  {label: "Heston model", value: 'heston'}
+]
+
+
+
 const ReplicationForm = ({ data }) => {
 
   const [submit, setSubmit] = useState(false);
@@ -68,6 +77,18 @@ const ReplicationForm = ({ data }) => {
   const [OptionType, setOptionType] = useState(OptionTypes[0]);
   const [OptionDirection, setDirection] = useState(OptionDirections[0]);
   const [totalValue, setTotalValue] = useState(1000);
+
+  const [chosenModel, setModel] = useState(AvailableModels[0]);
+
+  const [showAdvancedSettings, setAdvanced] = useState(false);
+
+  const [tagInputValue, setTagInputValue] = useState("");
+  const [tagValue, setTagValue] = useState("");
+
+
+  // useEffect(() => {
+
+  // }, []);
 
 
 
@@ -102,8 +123,7 @@ const ReplicationForm = ({ data }) => {
     );
   };
 
-  const [tagInputValue, setTagInputValue] = useState("");
-  const [tagValue, setTagValue] = useState("");
+  
 
 
 
@@ -338,11 +358,14 @@ const ReplicationForm = ({ data }) => {
             <Col className="">
             <Row>
             <Col className="flex justify-center">
+            {data.length > 0 && (
+
               <ProfitChart 
                 OptionType={OptionType} 
                 OptionDirection={OptionDirection} 
-                params={{S: 1000, K: strike, T: expiration, r:0.01, sigma:0.8, TV0: totalValue}}
+                params={{S: data[data.length-1].value, K: strike, T: expiration, r:riskFree, sigma:0.8, TV0: totalValue}}
                 className="" />
+            )}
             </Col>
             </Row>
             <Row>
@@ -356,55 +379,10 @@ const ReplicationForm = ({ data }) => {
         </Row>
 
 
-        <Row className="mt-3 mt-lg-4 px-3">
-          {/*<FormInput
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="amountOfToken0"
-            type="text"
-            controlId=""
-            text="Amount of token 0"
-            placeholder="uint256"
-            size="sm"
-            onChange={(event) => setToken0Balance(event.target.value)}
-          />*/}
-        </Row>
-        {/*<Row className="mt-3 px-3">
-          <FormInput
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0  mt-3 mt-lg-0"
-            name="fees"
-            type="text"
-            controlId=""
-            text="Fees you agree to split between your position hedgers"
-            size="sm"
-            placeholder="uint256"
-            onChange={(event) => setFees(event.target.value)}
-          />
+        {/*<Row className="mt-3 mt-lg-4 px-3">
+
         </Row>*/}
-        {/*<Row className="mt-3 px-3">*/}
-{/*          <FormInput
-            xs={12}
-            lg
-            as={Col}
-            inpClass="py-2"
-            className="p-0"
-            name="hedgePerDay"
-            type="text"
-            controlId=""
-            text="Number of delta hedges per day"
-            placeholder="uint"
-            size="sm"
-            successMsg="done"
-            onChange={(event) => setPerDay(event.target.value)}
-          />*/}
-        {/*</Row>*/}
+
 
         {/*<Row className="mt-3 px-3">
 
@@ -424,53 +402,120 @@ const ReplicationForm = ({ data }) => {
             onChange={(event) => setRiskFree(event.target.value)}
           />
         </Row>*/}
-        <p className="mt-3 px-1 fw-bold">
+{/*        <p className="mt-3 px-1 fw-bold">
           Choose the parameters of Jump Diffusion Model:
-        </p>
-        <Row className="mt-3 px-3">
+        </p>*/}
+        <Row className="">
+        <Col>
+              <p className="mt-2 px-1 fw-bold">
+                Choose the model:
+              </p>
+                <Creatable
+                  options={AvailableModels}
+                  isClearable
+                  xs={12}
+                  lg
+                  as={Col}
+                  inpClass="py-2"
+                  className="z-10"
+                  name="amountOfToken0"
+                  type="text"
+                  controlId=""
+                  placeholder="Choose_type"
+                  defaultValue={AvailableModels[0]}
+                  size="sm"
+                  onKeyDown={handleKeyDown}
+                  onChange={(value) => {
+                    if (value === null) return;
+                    setModel(value);
+                  }}
+                  />
+        </Col>
+        <Col className="text-center">
+              <label for="default-toggle" className="mt-5 inline-flex relative items-center cursor-pointer">
+                <input type="checkbox" value="" id="default-toggle" className="sr-only peer" 
+                  onClick={() => {setAdvanced(!showAdvancedSettings)}}
+                />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue-600"></div>
+                <span className="ml-3 text-md font-medium text-gray-900 ">Advanced settings</span>
+              </label>
+        </Col>
+          
+        </Row>
+
+     {showAdvancedSettings===true &&
+      chosenModel.label === "Black-Scholes" && (
+      <>
+      <Row className="mt-3">
           <FormInput
             xs={12}
             lg
             as={Col}
             inpClass="py-2"
-            className="p-0"
+            className=""
             name="sigma"
             type="text"
             controlId=""
             text="Volatility (sigma)"
-            placeholder="uint256"
+            placeholder="float"
             size="sm"
             successMsg="done"
             onChange={(event) => setVolatility(event.target.value)}
           />
+          <Col/>
+        </Row>
+      </>
+      )}        
+
+
+     {showAdvancedSettings===true &&
+      chosenModel.label === "Jump Diffusion" && (
+      <>
+        <Row className="mt-3">
           <FormInput
             xs={12}
             lg
             as={Col}
             inpClass="py-2"
-            className="p-0 ms-lg-5 mt-0 mt-lg-0"
+            className=""
+            name="sigma"
+            type="text"
+            controlId=""
+            text="Volatility (sigma)"
+            placeholder="float"
+            size="sm"
+            successMsg="done"
+            onChange={(event) => setVolatility(event.target.value)}
+          />
+
+          <FormInput
+            xs={12}
+            lg
+            as={Col}
+            inpClass="py-2"
+            className=""
             name="intensityOfJump"
             type="text"
             controlId=""
             text="Intensity Of Jump (lam)"
-            placeholder="uint256"
+            placeholder="float"
             size="sm"
             successMsg="done"
             onChange={(event) => setJumpIntensity(event.target.value)}
           />
         </Row>
-        <Row className="mt-3 px-3">
+        <Row className="mt-3">
           <FormInput
             xs={12}
             lg
             as={Col}
             inpClass="py-2"
-            className="p-0"
+            className=""
             name="meanRateOfJump"
             type="text"
             controlId=""
             text="Mean of Merton's Jump size (m)"
-            placeholder="uint256"
+            placeholder="float"
             size="sm"
             successMsg="done"
             onChange={(event) => setMeanReversion(event.target.value)}
@@ -480,17 +525,18 @@ const ReplicationForm = ({ data }) => {
             lg
             as={Col}
             inpClass="py-2"
-            className="p-0 ms-lg-5 mt-4 mt-lg-0"
+            className=""
             name="stdOfJump"
             type="text"
             controlId=""
             text="Standart Deviation of Jump size (v)"
-            placeholder="uint256"
+            placeholder="float"
             size="sm"
             successMsg="done"
             onChange={(event) => setJumpDeviation(event.target.value)}
           />
         </Row>
+        </>)}
 
         <Button
           variant="primary"

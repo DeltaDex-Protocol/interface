@@ -60,7 +60,8 @@ Chart.register(
 export default function PriceChart( { data } ) {
 
   const title = 'ETH price';
-  console.log(data);
+
+  const [hoverPrice, setHoverPrice] = useState(1000);
 
   data = data.map((el, index) => ({
     x: index,
@@ -69,6 +70,8 @@ export default function PriceChart( { data } ) {
 
   console.log(data);
 
+  // data = data.slice(40, data.length);
+
   const chartData = {
     datasets: [{
       label: 'price',
@@ -76,6 +79,7 @@ export default function PriceChart( { data } ) {
       backgroundColor: '#e85b9480',
       borderColor: '#e85b94ff',
       showLine: true,
+      pointHoverRadius: 10,
     }],
   }
 
@@ -84,8 +88,9 @@ export default function PriceChart( { data } ) {
     data: chartData,
     options: {
       animation: {
-        duration: 0
+        duration: 0,
       },
+      onHover: (el) => {console.log(el.x); setHoverPrice(data[el.x].y)},
       interaction: {
         mode: 'x',
         intersect: false,
@@ -129,9 +134,16 @@ export default function PriceChart( { data } ) {
         legend: {
           display: false,
         },
+        tooltip: {
+          enabled: false,
+        },
       },
     },
   }
+
+
+
+
   useEffect(() => {
     const ctx = document
       .getElementById('price-chart')
@@ -145,7 +157,7 @@ export default function PriceChart( { data } ) {
 
   return (
     <div className="mt-5 w-3/4 p-2 sm:p-8 border rounded-lg shadow-md">
-      <h5 className="font-sans text-sm">{title}</h5>
+      <h5 className="font-sans text-sm">{title + ": "+ hoverPrice + "$"}</h5>
       {/*<hr className="my-2"/>*/}
       <canvas id="price-chart"/>
 

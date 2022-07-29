@@ -207,7 +207,7 @@ const uniV2TotalValue = (TV0, S0, S) => {
 
 
 
-const title = 'Expected Profit and Loss'
+const title = 'The payoff of chosen option'
 
 export default function ProfitChart(
   {params, OptionType, OptionDirection}
@@ -218,6 +218,8 @@ export default function ProfitChart(
   var TV0 = params.TV0 || 1000; 
 
   var x0 = TV0 / 2;
+
+  // const [payoff, setPayoff] = useState('')
 
 
   // const data = fillData(OptionType.value, params);
@@ -312,7 +314,7 @@ export default function ProfitChart(
       {/*<div className="mt-3 flex justify-between text-gray-500 font-sans">
         <span className="flex items-center gap-3">
           <div className="bg-green-400 w-3 h-3 rounded-full"/>
-          <span className="text-sm"> Max Profit </span>
+          <span className="text-sm"> Spot price </span>
         </span>
         <span className="text-sm"> {Infinity} </span>
       </div>
