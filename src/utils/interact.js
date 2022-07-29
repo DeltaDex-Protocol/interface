@@ -568,8 +568,7 @@ export const getAllPositions = async () => {
 
   let uniqueUsers = users.filter(onlyUnique);
 
-  // // console.log(uniqueUsers);
-  // let positions = [];
+  const rows = [];
   for (const user of uniqueUsers) {
     // addresses of token pairs that user is a part of
     let tokenPairs = await optionmaker.getUserPositions(user);
@@ -582,7 +581,7 @@ export const getAllPositions = async () => {
     // // console.log(noOfPositionsInPair);
     // let noOfPosiitons = optionmaker.userIDlength(user);
 
-    let positions = [];
+    // let positions = [];
 
     for (let i = 0; i < noOfPositionsInPair; i++) {
       let JDM = await optionmaker.JDM_Options(tokenPair, user, i);
@@ -591,7 +590,9 @@ export const getAllPositions = async () => {
       if (isEmpty == true) {
         // pass
       } else {
-        positions.push(JDM);
+        const JDMrow = parseJDM(i, JDM);
+        rows.push(JDMrow);
+
         // // console.log(BS);
       }
 
@@ -601,7 +602,8 @@ export const getAllPositions = async () => {
       if (isEmpty == true) {
         // pass
       } else {
-        positions.push(BS);
+        const BSrow = parseBS(i, BS);
+        rows.push(BSrow);
       }
 
       let BSC = await optionmaker.BSC_Options(tokenPair, user, i);
@@ -609,9 +611,11 @@ export const getAllPositions = async () => {
       if (isEmpty == true) {
         // pass
       } else {
-        positions.push(BSC);
+        const BSCrow = parseBSC(i, BSC);
+        rows.push(BSCrow);
       }
     }
-    console.log(positions);
+
+    return rows;
   }
 };
