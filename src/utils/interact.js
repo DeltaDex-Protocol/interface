@@ -50,10 +50,140 @@ export const connectWallet = async () => {
   }
 };
 
+export const startReplication = async (
+  model,
+  isCall,
+  isLong,
+  addressToken0,
+  addressToken1,
+  token0Balance,
+  token1Balance,
+  fees,
+  perDay,
+  strike,
+  expiration,
+  riskFree,
+  volatility,
+  meanReversion,
+  jumpDeviation,
+  jumpIntensity
+) => {
+  if (model == "BS") {
+    const BS_input = [
+      addressToken0,
+      addressToken1,
+      token0Balance,
+      token1Balance,
+      isCall,
+      isLong,
+      0,
+      0,
+      fees,
+      perDay,
+      0,
+      0,
+      [strike, expiration, riskFree, volatility],
+    ];
 
-// export const 
+    token0Balance = ethers.utils.parseUnits(token0Balance);
+    fees = ethers.utils.parseUnits(fees);
+    perDay = ethers.utils.parseUnits(perDay, "wei");
+    strike = ethers.utils.parseUnits(strike);
+    expiration = ethers.utils.parseUnits(expiration);
+    riskFree = ethers.utils.parseUnits(riskFree);
+    volatility = ethers.utils.parseUnits(volatility);
 
+    const signer = provider.getSigner();
+    const optionmaker = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
 
+    try {
+      const tx = await optionmaker.BS_START_REPLICATION(BS_input);
+      // wait until the transaction is mined
+      // // console.log('here')
+      await tx.wait();
+
+      return {
+        success: true,
+        status:
+          "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+      };
+    } catch (error) {
+      return {
+        success: false,
+        status: "😥 Something went wrong: " + error.message,
+      };
+    }
+  } else if (model == "JDM") {
+    const JDM_Input = [
+      addressToken0,
+      addressToken1,
+      token0Balance,
+      token1Balance,
+      isCall,
+      isLong,
+      0,
+      0,
+      0,
+      fees,
+      perDay,
+      0,
+      0,
+      [
+        strike,
+        expiration,
+        riskFree,
+        volatility,
+        meanReversion,
+        jumpDeviation,
+        jumpIntensity,
+      ],
+    ];
+
+    token0Balance = ethers.utils.parseUnits(token0Balance);
+    fees = ethers.utils.parseUnits(fees);
+    perDay = ethers.utils.parseUnits(perDay, "wei");
+    strike = ethers.utils.parseUnits(strike);
+    expiration = ethers.utils.parseUnits(expiration);
+    riskFree = ethers.utils.parseUnits(riskFree);
+    volatility = ethers.utils.parseUnits(volatility);
+    meanReversion = ethers.utils.parseUnits(meanReversion);
+    jumpDeviation = ethers.utils.parseUnits(jumpDeviation);
+    jumpIntensity = ethers.utils.parseUnits(jumpIntensity);
+
+    const signer = provider.getSigner();
+    const optionmaker = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+
+    try {
+      const tx = await optionmaker.JDM_START_REPLICATION(JDM_Input);
+      // wait until the transaction is mined
+      // // console.log('here')
+      await tx.wait();
+
+      return {
+        success: true,
+        status:
+          "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+      };
+    } catch (error) {
+      return {
+        success: false,
+        status: "😥 Something went wrong: " + error.message,
+      };
+    }
+  } else {
+    // other model
+  }
+};
+
+// export const
 export const sendForm = async (
   addressToken0,
   addressToken1,
@@ -77,7 +207,7 @@ export const sendForm = async (
 
   token0Balance = ethers.utils.parseUnits(token0Balance);
   fees = ethers.utils.parseUnits(fees);
-  perDay = ethers.utils.parseUnits(perDay);
+  perDay = ethers.utils.parseUnits(perDay, "wei");
   strike = ethers.utils.parseUnits(strike);
   expiration = ethers.utils.parseUnits(expiration);
   riskFree = ethers.utils.parseUnits(riskFree);
