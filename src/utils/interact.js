@@ -557,16 +557,17 @@ function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
 }
 
-export const getAllPositions = async () => {
+export const getAllPositions = async (tokenPair) => {
   const signer = provider.getSigner();
 
-  const tokenPair = "0x7BDA8b27E891F9687BD6d3312Ab3f4F458e2cC91";
 
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
   let users = await optionmaker.getUserAddressesInPair(tokenPair);
 
   let uniqueUsers = users.filter(onlyUnique);
+
+  // alert(uniqueUsers)
 
   // // console.log(uniqueUsers);
   // let positions = [];

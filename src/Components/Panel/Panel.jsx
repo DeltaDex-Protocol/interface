@@ -147,17 +147,17 @@ const Panel = () => {
                 onChangeToggle={changeToggle}
             />*/}
 
-<aside class="w-64 mt-24" aria-label="Sidebar">
-   <div class="overflow-y-auto py-4 px-3  rounded ">
-      <Sidebar 
-                username={"Your address"}
-                userAddress={walletAddress}
-                userProfile={walletAddress}
-                sidebarLinks={sidebarLinks}
-                onChangeToggle={changeToggle}
-            />
-   </div>
-</aside>
+            <aside className="w-64 mt-24" aria-label="Sidebar">
+               <div className="overflow-y-auto py-4 px-3  rounded ">
+                  <Sidebar 
+                            username={"Your address"}
+                            userAddress={walletAddress}
+                            userProfile={walletAddress}
+                            sidebarLinks={sidebarLinks}
+                            onChangeToggle={changeToggle}
+                        />
+               </div>
+            </aside>
 
 
 

@@ -93,7 +93,7 @@ const GenerateRow = ({row}) => {
       </td>
       <td className="py-4 px-3">
           <button 
-          className="font-medium text-black rounded-lg bg-gray-300"
+          className="font-medium text-white rounded-lg bg-blue-500"
           onClick={() => setVisibility(!isVisible)}
           >Show</button>
       </td>

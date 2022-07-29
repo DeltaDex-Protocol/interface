@@ -13,6 +13,7 @@ import {
   getUserPositions,
   getUserPositionsTable,
   getCurrentPositions,
+  getAllPositions,
 } from "./../../utils/interact";
 
 import Creatable, { useCreatable } from "react-select/creatable";
@@ -168,6 +169,7 @@ const AllPositions = ({}) => {
 
   useEffect(() => {
     const func = async () => {
+      // const rowData = await getAllPositions('0x7BDA8b27E891F9687BD6d3312Ab3f4F458e2cC91');
       const rowData = await getUserPositions();
       console.log(rowData);
       setRowData(rowData);
