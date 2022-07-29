@@ -177,6 +177,8 @@ export const startReplication = async (formInputs) => {
       signer
     );
 
+    console.log(JDM_input)
+
     try {
       const tx = await optionmaker.JDM_START_REPLICATION(JDM_input);
       // wait until the transaction is mined

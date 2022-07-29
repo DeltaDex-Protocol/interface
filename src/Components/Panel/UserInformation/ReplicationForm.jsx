@@ -60,8 +60,8 @@ const ReplicationForm = ({ data }) => {
 
   const [addressToken1, setAddressToken1] = useState("");
   const [addressToken2, setAddressToken2] = useState("");
-  const [token1Balance, setToken1Balance] = useState("0");
-  const [token2Balance, setToken2Balance] = useState("0");
+  const [token1Balance, setToken1Balance] = useState("1");
+  const [token2Balance, setToken2Balance] = useState("1");
   const [fees, setFees] = useState("");
   const [perDay, setPerDay] = useState("");
   const [OptionAmount, setOptionAmount] = useState(1);
