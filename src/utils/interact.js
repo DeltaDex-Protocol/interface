@@ -50,10 +50,46 @@ export const connectWallet = async () => {
   }
 };
 
+function startReplication(
+  model,
+  isCall,
+  isLong,
+  addressToken0,
+  addressToken1,
+  token0Balance,
+  token1Balance,
+  fees,
+  perDay,
+  strike,
+  expiration,
+  riskFree,
+  volatility,
+  meanReversion,
+  jumpDeviation,
+  jumpIntensity
+) {
+  if (model == "BS") {
+    const BS_input = [
+      addressToken0,
+      addressToken1,
+      token0Balance,
+      token1Balance,
+      isCall,
+      isLong,
+      0,
+      0,
+      fees,
+      perDay,
+      0,
+      0,
+      [strike, expiration, riskFree, volatility],
+    ];
+  } else if (model == "JDM") {
+  } else {
+  }
+}
 
-// export const 
-
-
+// export const
 export const sendForm = async (
   addressToken0,
   addressToken1,
@@ -77,7 +113,7 @@ export const sendForm = async (
 
   token0Balance = ethers.utils.parseUnits(token0Balance);
   fees = ethers.utils.parseUnits(fees);
-  perDay = ethers.utils.parseUnits(perDay);
+  perDay = ethers.utils.parseUnits(perDay, "wei");
   strike = ethers.utils.parseUnits(strike);
   expiration = ethers.utils.parseUnits(expiration);
   riskFree = ethers.utils.parseUnits(riskFree);
