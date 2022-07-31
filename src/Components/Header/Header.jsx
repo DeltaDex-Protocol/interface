@@ -9,7 +9,7 @@ import logo from "./../../etc/logo.png";
 
 const Header = ({walletAddress, connectPressed}) => {
 
-
+	// console.log('header:', walletAddress)
     return (
         <div className={`${styles['header']}`}>
         	<img src={logo} className={`${styles['logo']}`} />

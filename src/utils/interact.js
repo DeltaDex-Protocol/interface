@@ -1,12 +1,4 @@
-// import {pinJSONToIPFS} from './pinata.js'
 
-// require('dotenv').config();
-// const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
-// const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
-// const web3 = createAlchemyWeb3(alchemyKey);
-
-// const contractABI = require("../contract-abi.json")
-// const contractAddress = "0xd1b04035bB8E12584070f3f42090877Cee52817a";
 
 const contractABI = require("./OptionMaker.json");
 const contractAddress = "0x512F7469BcC83089497506b5df64c6E246B39925";
@@ -21,7 +13,7 @@ export const connectWallet = async () => {
         method: "eth_requestAccounts",
       });
       const obj = {
-        status: "👆🏽 Write a message in the text-field above.",
+        status: "🦊 Successfully connected",
         address: addressArray[0],
       };
       return obj;
@@ -60,7 +52,7 @@ export const startReplication = async (formInputs) => {
   ) {
     isCall = true;
   }
-  /* 
+  
   if (formInputs.model_type.label === "Black-Scholes") {
     let token1_balance = ethers.utils.parseUnits(formInputs.token1_balance);
     let token2_balance = ethers.utils.parseUnits(formInputs.token2_balance);
@@ -119,7 +111,7 @@ export const startReplication = async (formInputs) => {
       };
     }
   }
- */
+ 
   if (formInputs.model_type.label === "Jump Diffusion") {
     let token1_balance = ethers.utils.parseUnits(formInputs.token1_balance);
     let token2_balance = ethers.utils.parseUnits(formInputs.token2_balance);
@@ -177,7 +169,7 @@ export const startReplication = async (formInputs) => {
       signer
     );
 
-    console.log(JDM_input)
+    // console.log(JDM_input)
 
     try {
       const tx = await optionmaker.JDM_START_REPLICATION(JDM_input);
@@ -217,6 +209,14 @@ export const startReplication2 = async (
   jumpDeviation,
   jumpIntensity
 ) => {
+
+  const signer = provider.getSigner();
+  const optionmaker = new ethers.Contract(
+    contractAddress,
+    contractABI,
+    signer
+  );
+
   if (model == "BS") {
     const BS_input = [
       addressToken0,
@@ -242,12 +242,7 @@ export const startReplication2 = async (
     riskFree = ethers.utils.parseUnits(riskFree);
     volatility = ethers.utils.parseUnits(volatility);
 
-    const signer = provider.getSigner();
-    const optionmaker = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
+
 
     try {
       const tx = await optionmaker.BS_START_REPLICATION(BS_input);
@@ -303,12 +298,12 @@ export const startReplication2 = async (
     jumpDeviation = ethers.utils.parseUnits(jumpDeviation);
     jumpIntensity = ethers.utils.parseUnits(jumpIntensity);
 
-    const signer = provider.getSigner();
-    const optionmaker = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
+    // const signer = provider.getSigner();
+    // const optionmaker = new ethers.Contract(
+    //   contractAddress,
+    //   contractABI,
+    //   signer
+    // );
 
     try {
       const tx = await optionmaker.JDM_START_REPLICATION(JDM_Input);
@@ -387,10 +382,12 @@ export const sendForm = async (
       jumpIntensity,
     ],
   ];
-  console.log("JDM_call_input", JDM_Call_Input);
+  // console.log("JDM_call_input", JDM_Call_Input);
 
   const signer = provider.getSigner();
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+
+  console.log(JDM_Call_Input)
 
   try {
     const tx = await optionmaker.JDM_START_REPLICATION(JDM_Call_Input);
@@ -420,7 +417,7 @@ export const getCurrentWalletConnected = async () => {
       if (addressArray.length > 0) {
         return {
           address: addressArray[0],
-          status: "👆🏽 Write a message in the text-field above.",
+          status: "🦊 Successfully connected",
         };
       } else {
         return {
@@ -561,7 +558,8 @@ function parseJDM(i, optionPosition) {
     ethers.BigNumber.from(JDMparsed[6]),
     "ether"
   );
-
+  
+  // console.log(ethers.BigNumber.from(JDMparsed[7]).toString());
   var expiry = ethers.BigNumber.from(JDMparsed[7]).toString();
 
   var fees = ethers.utils.formatUnits(
@@ -854,13 +852,13 @@ export const getAllPositions = async () => {
 
   let uniqueUsers = users.filter(onlyUnique);
 
-  console.log(uniqueUsers);
+  // console.log(uniqueUsers);
   // let positions = [];
   for (const user of uniqueUsers) {
     // addresses of token pairs that user is a part of
     let tokenPairs = await optionmaker.getUserPositions(user);
 
-    console.log("token pairs", tokenPairs);
+    // console.log("token pairs", tokenPairs);
 
     // number of positions in this tokenPair
     let noOfPositionsInPair = tokenPairs.filter((x) => x == tokenPair).length;
@@ -901,7 +899,7 @@ export const getAllPositions = async () => {
         rows.push(BSCrow);
       }
     }
-    console.log(positions);
+    // console.log(positions);
     return rows;
   }
 };

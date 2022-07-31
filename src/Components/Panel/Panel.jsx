@@ -7,7 +7,7 @@ import styles from './Panel.module.css'
 // import other component
 import UserCard from './UserCard/UserCard'
 import ReplicationForm from './UserInformation/ReplicationForm'
-import UserChangePassword from './UserChangePassword/UserChangePassword'
+// import UserChangePassword from './UserChangePassword/old_myPositions'
 
 // import other pkgs
 import { UserEdit, Lock, ProfileCircle, Code1 } from "iconsax-react";
@@ -45,9 +45,9 @@ import MyPositions from "./../Positions/MyPositions.jsx";
 // };
 
 
-const Panel = () => {
+const Panel = ({walletAddress, connectWalletPressed}) => {
 
-    // console.log(deltaBScurvedCall(inputs))
+    // console.log('panel:', walletAddress);
 
     const sidebarLinks = [
             {
@@ -74,32 +74,32 @@ const Panel = () => {
         ]
 
     const [toggle, setToggle] = useState("Replicate option");
-    const [walletAddress, setWallet] = useState("Not connected");
-    const [status, setStatus] = useState("");
+    // const [walletAddress, setWallet] = useState("Not connected");
+    // const [status, setStatus] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [url, setURL] = useState("");
     const [data, setData] = useState([]);
 
 
-    const connectWalletPressed = async () => { 
-        const walletResponse = await connectWallet();
-        let address = walletResponse.address;
+    // const connectWalletPressed = async () => { 
+    //     const walletResponse = await connectWallet();
+    //     let address = walletResponse.address;
 
-        if (address) {
-            address = address.slice(0, 7) + "..." + address.slice(-6, );
-        }
+    //     if (address) {
+    //         address = address.slice(0, 7) + "..." + address.slice(-6, );
+    //     }
 
-        // this.setState({
-        //     status: walletResponse.status,
-        //     walletAddress: address
-        // });
-        // console.log(walletResponse);
+    //     // this.setState({
+    //     //     status: walletResponse.status,
+    //     //     walletAddress: address
+    //     // });
+    //     // console.log(walletResponse);
 
-        setStatus(walletResponse.status);
-        setWallet(address);
+    //     setStatus(walletResponse.status);
+    //     setWallet(address);
 
-    };
+    // };
 
     const changeToggle = (toggle) => {
         setToggle(toggle);
@@ -117,7 +117,6 @@ const Panel = () => {
             };  
 
         fetchData().then((_data) => {
-            
             _data = _data.map(
                 (el) => {
 
@@ -148,11 +147,9 @@ const Panel = () => {
             />*/}
 
             <aside className="w-64 mt-24" aria-label="Sidebar">
-               <div className="overflow-y-auto py-4 px-3  rounded ">
+               <div className="overflow-y-auto py-4 px-3 rounded ">
                   <Sidebar 
-                            username={"Your address"}
                             userAddress={walletAddress}
-                            userProfile={walletAddress}
                             sidebarLinks={sidebarLinks}
                             onChangeToggle={changeToggle}
                         />

@@ -6,7 +6,7 @@ import Titles from "../../Titles/Titles";
 
 // import other pkg
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { useFormik } from "formik";
+// import { useFormik } from "formik";
 import { object, string, date } from "yup";
 import PropTypes from "prop-types";
 
@@ -90,34 +90,17 @@ const ReplicationForm = ({ data }) => {
   const [JDMjumpDeviation, setJDMjumpDeviation] = useState("0");
   const [JDMjumpIntensity, setJDMjumpIntensity] = useState("0");
 
-  // useEffect(() => {
-
-  // }, []);
-
-  // var formInputs = {
-  //       option_type: OptionType,
-  //       option_direction: OptionDirection,
-  //       strike: strike,
-  //       expiry: expiration,
-  //       address_token1: addressToken1,
-  //       address_token2: addressToken2,
-  //       hedges_per_day: perDay,
-  //       option_amount: OptionAmount,
-  //       total_value_of_fees: fees,
-  //       model_type: chosenModel,
-  //       model: {
-  //         risk_free_rate: riskFree,
-  //         ...
-  //       }
-  //   }
 
   const processForm = async () => {
+
+    const EXP_IN_YEARS = expiration / 365.25;
+
     var formInputs = {
       model_type: chosenModel,
       option_type: OptionType,
       option_direction: OptionDirection,
       strike: strike + "",
-      expiration: expiration + "",
+      expiration: EXP_IN_YEARS + "",
       address_token1: addressToken1,
       address_token2: addressToken2,
       token1_balance: token1Balance + "",
@@ -163,35 +146,8 @@ const ReplicationForm = ({ data }) => {
       // pass
     }
 
-    // addressToken0,
-    // addressToken1,
-    // token0Balance,
-    // fees,
-    // perDay,
-    // strike,
-    // expiration,
-    // riskFree,
-    // volatility,
-    // meanReversion,
-    // jumpDeviation,
-    // jumpIntensity
-
     console.log(formInputs);
 
-    /*     console.log([
-      formInputs.address_token1 + "",
-      formInputs.address_token2 + "",
-      formInputs.token1_balance + "",
-      formInputs.total_value_of_fees + "",
-      formInputs.hedges_per_day + "",
-      formInputs.strike + "",
-      formInputs.expiration + "",
-      formInputs.model_params.risk_free_rate + "",
-      formInputs.model_params.vol + "",
-      formInputs.model_params.jump_size_mean + "",
-      formInputs.model_params.jump_deviation + "",
-      formInputs.model_params.jump_intensity + "",
-    ]); */
 
     const { success, status } = await startReplication(formInputs);
     console.log(success, status);
@@ -417,7 +373,7 @@ const ReplicationForm = ({ data }) => {
             <Row className="mt-2">
               <Col>
                 <Slider
-                  sliderType="amountOfToken2"
+                  sliderType="OptionAmount"
                   onChangeToggle={setOptionAmount}
                 />
               </Col>
@@ -425,6 +381,23 @@ const ReplicationForm = ({ data }) => {
                 <Slider
                   sliderType="deltaHedgesPerDay"
                   onChangeToggle={setPerDay}
+                />
+              </Col>
+            </Row>
+            <span className="my-3 font-bold text-lg">
+                Initial liquidity to trade underlying
+              </span>
+            <Row className="mt-2">
+              <Col>
+                <Slider
+                  sliderType="token1Balance"
+                  onChangeToggle={setToken1Balance}
+                />
+              </Col>
+              <Col>
+                <Slider
+                  sliderType="token2Balance"
+                  onChangeToggle={setToken2Balance}
                 />
               </Col>
             </Row>

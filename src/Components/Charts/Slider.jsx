@@ -24,8 +24,8 @@ const sliderInfos = {
 		step: 100,
 		symbol: "$"
 	},
-	'amountOfToken2': {
-		name: "How many options you want to replicate (i.e. 1 ETH)",
+	'OptionAmount': {
+		name: "Contracts amount to replicate",
 		min: 1,
 		max: 999,
 		step: 1,
@@ -50,6 +50,20 @@ const sliderInfos = {
 		min: 0,
 		max: 0.2,
 		step: 0.01,
+		symbol: ""
+	},
+	'token1Balance': {
+		name: "Amount of token 1",
+		min: 10,
+		max: 10000,
+		step: 10,
+		symbol: ""
+	},
+	'token2Balance': {
+		name: "Amount of token 2",
+		min: 10,
+		max: 10000,
+		step: 10,
 		symbol: ""
 	}
 }

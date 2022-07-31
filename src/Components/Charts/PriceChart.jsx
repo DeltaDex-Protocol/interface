@@ -68,7 +68,7 @@ export default function PriceChart( { data } ) {
     y: el.value,
   }));
 
-  console.log(data);
+  // console.log(data);
 
   // data = data.slice(40, data.length);
 
@@ -90,7 +90,7 @@ export default function PriceChart( { data } ) {
       animation: {
         duration: 0,
       },
-      onHover: (el) => {console.log(el.x); setHoverPrice(data[el.x].y)},
+      onHover: (el) => { setHoverPrice(data[el.x].y)},
       interaction: {
         mode: 'x',
         intersect: false,

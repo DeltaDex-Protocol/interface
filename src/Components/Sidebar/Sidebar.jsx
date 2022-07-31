@@ -11,7 +11,7 @@ import LinksOfSidebar from './LinksOfSidebar';
 
 
 
-const Sidebar = ({username, userAddress, userProfile, sidebarLinks, onChangeToggle} ) => {
+const Sidebar = ({userAddress, sidebarLinks, onChangeToggle} ) => {
 
 	const sidebarStyle = {
 		position: "fixed",
@@ -23,7 +23,7 @@ const Sidebar = ({username, userAddress, userProfile, sidebarLinks, onChangeTogg
 
 	return (
 		<div style={sidebarStyle}>
-			<UserProfile username={username} userAddress={userAddress} userProfile={userProfile} />
+			<UserProfile userAddress={userAddress} />
 			<LinksOfSidebar sidebarLinks={sidebarLinks} onChangeToggle={onChangeToggle}/>
 		</div>
 	);
@@ -32,17 +32,27 @@ const Sidebar = ({username, userAddress, userProfile, sidebarLinks, onChangeTogg
 
 
 
-const UserProfile = ({ userProfile='0x1111111111111111111111111111111111111111', userAddress, username, userEmail }) => {
+const UserProfile = ({userAddress}) => {
 
-    
+	// console.log(userAddress)
     return (
         <div className={`${styles['user-profile']} d-flex flex-column border bg-white`}>
 	        
-	        <Jazzicon diameter={40} seed={jsNumberForAddress(userProfile)} />
+	        <Jazzicon diameter={40} 
+			seed={jsNumberForAddress(userAddress)
+				  }/>
 
-	        <h1 className={`${styles.username} mt-3`}> {(username)} </h1>
-	        <h4 className={`${styles['user-birthday']} mt-1`}> {userAddress}</h4>
-	        <h4 className={`${styles['user-email']} mt-1`}>{(userEmail)}</h4>
+	        <h1 className={`${styles.username} mt-3`}>Your address</h1>
+	        <h4 className={`${styles['user-birthday']} mt-1`}>
+						{userAddress !== "Not connected" ? (
+							"Connected: " +
+							String(userAddress).substring(0, 6) +
+							"..." +
+							String(userAddress).substring(38)
+							) : (
+							<span>Not connected</span>
+	                    )}
+			</h4>
 
         </div>
     )
