@@ -389,16 +389,27 @@ const ReplicationForm = ({ data }) => {
               </span>
             <Row className="mt-2">
               <Col>
+              {console.log(OptionType.label, OptionDirection.label)}
+              {((OptionType.label.split(' ')[1] === "call" && 
+               OptionDirection.label === "long") ||
+               (OptionType.label.split(' ')[1] === "put" && 
+               OptionDirection.label === "short")) && (
                 <Slider
                   sliderType="token1Balance"
                   onChangeToggle={setToken1Balance}
                 />
-              </Col>
-              <Col>
+               )}
+              {(OptionType.label.split(' ')[1] === "put" && 
+               OptionDirection.label === "long" ||
+               OptionType.label.split(' ')[1] === "call" && 
+               OptionDirection.label === "short") && (
                 <Slider
                   sliderType="token2Balance"
                   onChangeToggle={setToken2Balance}
                 />
+              )}
+              </Col>
+              <Col>
               </Col>
             </Row>
             <Row className="mt-2">
