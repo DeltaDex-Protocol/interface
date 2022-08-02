@@ -1,5 +1,3 @@
-
-
 const contractABI = require("./OptionMaker.json");
 const contractAddress = "0xCBBe2A5c3A22BE749D5DDF24e9534f98951983e2";
 
@@ -52,7 +50,7 @@ export const startReplication = async (formInputs) => {
   ) {
     isCall = true;
   }
-  
+
   if (formInputs.model_type.label === "Black-Scholes") {
     let token1_balance = ethers.utils.parseUnits(formInputs.token1_balance);
     let token2_balance = ethers.utils.parseUnits(formInputs.token2_balance);
@@ -111,7 +109,7 @@ export const startReplication = async (formInputs) => {
       };
     }
   }
- 
+
   if (formInputs.model_type.label === "Jump Diffusion") {
     let token1_balance = ethers.utils.parseUnits(formInputs.token1_balance);
     let token2_balance = ethers.utils.parseUnits(formInputs.token2_balance);
@@ -209,13 +207,8 @@ export const startReplication2 = async (
   jumpDeviation,
   jumpIntensity
 ) => {
-
   const signer = provider.getSigner();
-  const optionmaker = new ethers.Contract(
-    contractAddress,
-    contractABI,
-    signer
-  );
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
 
   if (model == "BS") {
     const BS_input = [
@@ -241,8 +234,6 @@ export const startReplication2 = async (
     expiration = ethers.utils.parseUnits(expiration);
     riskFree = ethers.utils.parseUnits(riskFree);
     volatility = ethers.utils.parseUnits(volatility);
-
-
 
     try {
       const tx = await optionmaker.BS_START_REPLICATION(BS_input);
@@ -382,12 +373,9 @@ export const sendForm = async (
       jumpIntensity,
     ],
   ];
-  // console.log("JDM_call_input", JDM_Call_Input);
 
   const signer = provider.getSigner();
   const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
-
-  console.log(JDM_Call_Input)
 
   try {
     const tx = await optionmaker.JDM_START_REPLICATION(JDM_Call_Input);
@@ -559,7 +547,7 @@ function parseJDM(i, optionPosition) {
     ethers.BigNumber.from(JDMparsed[6]),
     "ether"
   );
-  
+
   // console.log(ethers.BigNumber.from(JDMparsed[7]).toString());
   var expiry = ethers.BigNumber.from(JDMparsed[7]).toString();
 
@@ -928,6 +916,5 @@ export const getTokenPair = async (token0, token1) => {
 
   return pairAddress;
 };
-
 
 export default getUserPositions;
