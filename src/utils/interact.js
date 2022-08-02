@@ -1,5 +1,5 @@
 const contractABI = require("./OptionMaker.json");
-const contractAddress = "0x512F7469BcC83089497506b5df64c6E246B39925";
+const contractAddress = "0xCBBe2A5c3A22BE749D5DDF24e9534f98951983e2";
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -454,6 +454,7 @@ export const getUserPositions = async () => {
 
   for (let i = 0; i < noOfPositions; i++) {
     const pairAddress = await optionmaker.Positions(userAddress, i.toString());
+
 
     // JDM positions
 

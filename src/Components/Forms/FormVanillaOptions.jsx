@@ -58,8 +58,8 @@ const Rform = () => {
     const [addressToken2, setAddressToken2] = useState(TokenOptions[TokenOptions.length-1].value);
     const [token1Balance, setToken1Balance] = useState("1");
     const [token2Balance, setToken2Balance] = useState("1");
-    const [fees, setFees] = useState("");
-    const [perDay, setPerDay] = useState("");
+    const [fees, setFees] = useState(0);
+    const [perDay, setPerDay] = useState(1);
     const [OptionAmount, setOptionAmount] = useState(1);
     const [strike, setStrike] = useState(300);
     const [expiration, setExpiration] = useState(5);
@@ -98,15 +98,33 @@ const Rform = () => {
                     <span className="-ml-5 text-medium text-xl">Add initial liquidity to trade underlying</span>
                     <span className="-ml-5 text-black text-normal mt-1">Please add the liquidity in <span className="font-bold">{AddressToToken[addressToken1]}</span> tokens</span>
                 </div>
-                <div className="relative h-9 rounded-xl mt-4 -ml-5">
+                <div className="relative h-9 rounded-xl mt-4 -ml-5 mb-10">
                     <input type={'number'} step='any' placeholder='0.00' className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
                             onChange={(value) => {setToken1Balance(value.target.value); console.log(value.target.value)}}/>
                     <span className="absolute ml-32 text-xl top-3">{`${AddressToToken[addressToken1]}`}</span>
                 </div>
-                    <div className="flex mt-4 w-8/12 space-x-20 justify-between -ml-5">
-                        <Slider style='mt-2 w-40' sliderType={'feesToHedgers'} onChangeToggle={setFees}/>
-                        <Slider style="mt-2 w-40" sliderType={'deltaHedgesPerDay'} onChangeToggle={setPerDay}/>
+                <span className="-ml-5 text-medium text-xl  relative ">Fees to be splitted between hedgers</span>
+                <div className="mt-1 flex ">
+                    <div className="">
+                    <div className="relative h-9 rounded-xl mt-2 -ml-5 w-60">
+                        <input type={'number'} step='any' placeholder='0.00' className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
+                                onChange={(value) => {setFees(value.target.value); console.log(value.target.value)}}/>
+                        <span className="absolute ml-32 text-xl top-2">{`DAI`}</span>
                     </div>
+                    </div>
+                    <div className="mt-3 text-xl">
+                        <span className="bg-gray-100 rounded-md py-1 px-3 text-gray-500">{`${Math.round(parseInt(fees) / parseInt(perDay)* 1000)/1000} DAI per hedge`}</span>
+                    </div>
+                </div>
+                <div className="mt-5">
+                    <span className="-ml-5 text-medium text-xl relative">Number of delta hedges per day</span>
+                    <div className="relative h-9 rounded-xl mt-2 -ml-5">
+                        <input type={'number'} step='1' min="1" max='48' placeholder='1' className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
+                                onChange={(value) => {setPerDay(value.target.value); console.log(value.target.value)}}/>
+                        <span className="absolute ml-32 text-xl top-3">{`times per day`}</span>
+                    </div>
+                </div>
+
                 </div>
                 <div className="flex flex-col">
                     <ProfitChart params={{S:1000,K:1000,T:0.5,r:0.1,sigma:0.5}} OptionDirection={OptionDirection} OptionType={VanillaType}/>
@@ -120,11 +138,13 @@ const Rform = () => {
                             setAdvanced(!showAdvancedSettings);
                         }}
                         />
-                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300  rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue-600"></div>
+                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300  rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-indigo-600"></div>
                         <span className="ml-3 text-xl text-gray-900 ">
                             Advanced settings
                         </span>
                     </label>
+                    <button className=" mt-20 bg-indigo-400 ml-28  w-50 rounded text-white text-center hover:bg-indigo-300"
+                                onClick={()=> alert('start replication')}> Start replication</button>
                 </div>
             </div>
             <div className="flex justify-between -mt-10 mb-10">
