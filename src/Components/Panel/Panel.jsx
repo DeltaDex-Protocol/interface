@@ -33,7 +33,7 @@ import AllPositions from "./../Positions/AllPositions.jsx";
 
 import MyPositions from "./../Positions/MyPositions.jsx";
 
-import Rform from '../Forms/ReplicationForm';
+import Rform from '../Forms/FormVanillaOptions';
 
 
 import logo from "./../../etc/logo.png";
@@ -70,18 +70,18 @@ const Header = ({walletAddress, connectPressed}) => {
 const UserAccountSidebar = ({walletAddress}) => {
 
     return (
-        <div class="relative rounded-xl bg-white shadow  py-14 px-20 flex flex-col ">
-            <div className='flex absolute left-3 top-7 '>
+        <div class="relative rounded-xl bg-white shadow  py-12 px-20 flex flex-col ">
+            <div className='flex absolute left-3 top-4 '>
                 <span class="text-black font-medium  text-base w-10 mr-12 leading-tight">Your address</span>
                 <Jazzicon className="" diameter={36} seed={jsNumberForAddress("0x11111111")}/>
             </div>
-            <span className='absolute left-3 top-20  text-sm'>
+            <span className='absolute left-3 top-16  text-sm'>
             {walletAddress !== "Not connected" ? (
-                    <>
+                    <span className=''>
                     {String(walletAddress).substring(0, 6)}
                     ...
                     {String(walletAddress).substring(38)}
-                    </>
+                    </span>
                     ) : (
                     <span className=''>Connect Wallet</span>
                 )}
@@ -202,39 +202,22 @@ const Panel = ({walletAddress, connectWalletPressed}) => {
 
     return (
         <div className='w-full min-h-screen bg-gray-100'>
-            <div className='relative max-w-6xl mx-auto'>
+            <div className='relative max-w-6xl mx-auto pb-32'>
 
             <Header walletAddress={walletAddress} connectPressed={connectWalletPressed}/>
 
             <div className='flex justify-center space-x-10'>
 
-                <div class="hidden h-screen xl:inline mt-16">
+                <div class="hidden h-screen xl:inline mt-10">
                     <UserAccountSidebar walletAddress={walletAddress}/>
 
                     <SidebarUnit Menu={"VanillaOptions"} onChangeToggle={setToggle} toggle={toggle} />
                     <SidebarUnit Menu={"CurvedOptions"} onChangeToggle={setToggle} toggle={toggle}/>
                     <SidebarUnit Menu={"YourPositions"} onChangeToggle={setToggle} toggle={toggle}/>
                     <SidebarUnit Menu={"AllPositions"} onChangeToggle={setToggle} toggle={toggle}/>
-
-                    {/* <div class="relative mt-6 rounded-xl bg-white shadow py-12 px-20 flex flex-col" onClick={() => setToggle("Vanilla options")}>
-                        <span class="absolute left-3 top-3 text-black font-normal text-lg">Vanilla options</span>
-                        <span className='absolute left-3 top-11 text-black font-light leading-tight text-sm w-32'>Replicate your vanilla option</span>
-                    </div> */}
-                    {/* <div class="relative mt-6 rounded-xl bg-white shadow py-12 px-20 flex flex-col" onClick={() => setToggle("Curved options")}>
-                        <span class="absolute left-3 top-3 text-black font-normal text-lg">Curved options</span>
-                        <span className='absolute left-3 top-11 text-black font-light leading-tight text-sm w-40'>Hedge against impermanent losses</span>
-                    </div> */}
-                    {/* <div class="relative mt-6 rounded-xl bg-white shadow py-12 px-20 flex flex-col" onClick={() => setToggle("User positions")}>
-                        <span class="absolute left-3 top-3 text-black font-normal text-lg">Your positions</span>
-                        <span className='absolute left-3 top-11 text-black font-light leading-tight text-sm w-40'>Click to see your previous replications</span>
-                    </div> */}
-                    {/* <div class="relative mt-6 rounded-xl bg-white shadow py-12 px-20 flex flex-col" onClick={() => setToggle("All positions")}>
-                        <span class="absolute left-2 top-3 text-black font-normal text-lg">All positions</span>
-                        <span className='absolute left-2 top-11 text-black font-light leading-tight text-sm w-40'>Check users' positions close to replication</span>
-                    </div> */}
                 </div>
             
-            <div className='mt-16 w-screen'>
+            <div className='mt-10 w-screen'>
 
             {toggle === "VanillaOptions" && (
                     <>  
