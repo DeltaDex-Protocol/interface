@@ -306,8 +306,8 @@ export default function ProfitChart(
   }, [OptionType, OptionDirection, data])
 
   return (
-    <div className="w-3/4  p-2 sm:p-8 border rounded-lg shadow-md">
-      <h5 className="font-sans text-base">{title}</h5>
+    <div className="border rounded-lg shadow-md mt-1">
+      <h5 className=" my-1 text-center font-sans text-base">{title}</h5>
       <hr className="my-2"/>
       <canvas id="profit-chart"/>
 

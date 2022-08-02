@@ -9,7 +9,11 @@ import {
 
 import ProfitChart from "../Charts/NewChart";
 import Slider from "../Charts/Slider";
-import PriceChart from "../Charts/PriceChart";
+// import PriceChart from "../Charts/PriceChart";
+
+import Creatable, { useCreatable } from "react-select/creatable";
+
+// import CreatableSelect from 'react-select/creatable';
 
 
 const TokenOptions = [
@@ -23,6 +27,11 @@ const OptionDirections = [
     { label: "long", value: "long" },
     { label: "short", value: "short" },
 ]; 
+
+const VanillaTypes = [
+    {label: "call", value: "vanillaCall"},
+    {label: "put", value: "vanillaPut"}
+]
 
 const AvailableModels = [
     { label: "Black-Scholes", value: "black-scholes" },
@@ -47,6 +56,9 @@ const Rform = () => {
     // const [OptionType, setOptionType] = useState(OptionTypes[0]);
     const [OptionDirection, setDirection] = useState(OptionDirections[0]);
 
+    const [VanillaType, setVanillaType] = useState(VanillaTypes[0]);
+
+
 
     const [totalValueInvestedInLP, setTotalValueInvestedInLP] = useState(1000);
 
@@ -58,11 +70,74 @@ const Rform = () => {
     const [chosenModel, setModel] = useState(AvailableModels[0]);
   
     const [riskFree, setRiskFree] = useState("0");
+    
 
 
     return (
-        <div className="w-5xl">
-        123
+        <div className="px-10 py-4 relative">
+            {/* <input type="date" class="rounded text-pink-500" />
+            <input type="email" class="form-input px-4 py-3 rounded-full"/> */}
+            <div className="flex justify-between mb-2">
+                <div className="flex w-8/12 justify-between">
+                    <div>
+                    <div className="">
+                        <span className="-ml-5 left-0 ">Choose option type</span>
+                        <Creatable
+                            className="-ml-5 mt-2"
+                            options={VanillaTypes}
+                            defaultValue={VanillaTypes[0]}
+                            onChange={(value) => {
+                                if (value === null) return
+                                setVanillaType(value)}}
+                        />
+                    </div>
+                    <div className="mt-3">
+                        <span className="-ml-5 left-0">Direction of the option</span>
+                        <Creatable
+                            className="-ml-5 mt-2"
+                            options={OptionDirections}
+                            defaultValue={OptionDirections[0]}
+                            onChange={(value) => {
+                                if (value === null) return
+                                setDirection(value)}}
+                        />
+                        <Creatable
+                            className="-ml-5 mt-20 w-40"
+                            options={TokenOptions}
+                            defaultValue={TokenOptions[0]}
+                            onChange={(value) => {
+                                if (value === null) return
+                                setAddressToken1(value)}}
+                        />
+                    </div>
+                    </div>
+                    <div className="ml-2 md:mr-20 flex flex-col mt-2">
+                        {/* <span>Strike price</span> */}
+                        <Slider style='-mt-1' sliderType={'strike'} onChangeToggle={setStrike}/>
+                        <Slider style="mt-12" sliderType={'expiry'} onChangeToggle={setStrike}/>
+                        <Creatable
+                            className="mt-24 w-40"
+                            options={TokenOptions}
+                            defaultValue={TokenOptions[TokenOptions.length-1]}
+                            onChange={(value) => {
+                                if (value === null) return
+                                setAddressToken2(value)}}
+                        />
+                    </div>
+                 </div>
+                <div>
+                    <ProfitChart params={{S:1000,K:1000,T:0.5,r:0.1,sigma:0.5}} OptionDirection={OptionDirection} OptionType={VanillaType}/>
+                </div>
+            </div>
+        <span className="absolute top-52 -ml-5 text-medium text-xl">Specify the token pair by chosing tokens</span>
+        <div>
+            <div className="flex w-6/12 justify-between ">
+                <Slider style="mt-10 -ml-5 w-40" sliderType={'OptionAmount'} onChangeToggle={setOptionAmount}/>
+                <Slider style="mt-10 w-40" sliderType={'deltaHedgesPerDay'} onChangeToggle={setPerDay}/>
+            </div>
+            
+        </div>
+
         </div>
     )
 }
