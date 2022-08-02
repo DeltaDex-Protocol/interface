@@ -268,7 +268,15 @@ const Panel = ({walletAddress, connectWalletPressed}) => {
                 )}
 
                 {toggle === 'AllPositions' && (
-                    <AllPositions className="mt-0"/>)}
+                    <>
+                        <div className='mb-5 px-4 py-2 bg-indigo-400 w-1/2 rounded-xl flex flex-col'>
+                            <span className='text-xl font-medium text-white'>All users' positions</span>
+                            <span className='text-base font-normal text-white'>Here's the list of positions close to be hedged</span>
+                        </div>
+                        <div className=''>
+                            <AllPositions/>
+                        </div>
+                    </>)}
             </div>
             </div>
 

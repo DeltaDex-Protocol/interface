@@ -97,7 +97,7 @@ const GenerateRow = ({ row }) => {
   return (
     <>
       <tr
-        className="bg-gray-00  hover:bg-gray-300 text-center"
+        className="hover:bg-indigo-100 text-center"
         id={row.id}
         onClick={() => setVisibility(!isVisible)}
       >
@@ -119,14 +119,14 @@ const GenerateRow = ({ row }) => {
           {seconds > 0 ? (
             <button
               disabled
-              className="font-medium text-white rounded-lg bg-blue-500 disabled:bg-gray-300"
+              className="font-medium text-white rounded-lg bg-indigo-500 disabled:bg-gray-300"
               onClick={() => setVisibility(!isVisible)}
             >
               Hedge
             </button>
           ) : (
             <button
-              className="font-medium text-white rounded-lg bg-blue-500 disabled:bg-gray-300"
+              className="font-medium text-white rounded-lg bg-indigo-400 disabled:bg-gray-300 hover:bg-indigo-300"
               onClick={() => setVisibility(!isVisible)}
             >
               Hedge
@@ -167,9 +167,9 @@ const AllPositions = ({}) => {
   }, [upd]);
 
   return (
-    <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
-      <table className="w-full text-sm text-left  shadow-lg">
-        <thead className="text-xs text-black uppercase bg-gray-400 text-center">
+    // <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
+      <table className="text-sm shadow-lg ">
+        <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
           <tr>
             <th scope="col" className="py-3 px-6">
               Position id
@@ -198,7 +198,7 @@ const AllPositions = ({}) => {
           </tbody>
         )}
       </table>
-    </div>
+    // </div>
   );
 };
 
