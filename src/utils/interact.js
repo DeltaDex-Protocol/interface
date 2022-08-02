@@ -927,3 +927,6 @@ export const getTokenPair = async (token0, token1) => {
 
   return pairAddress;
 };
+
+
+export default getUserPositions;

@@ -8,6 +8,9 @@ import {
   Route,
 } from "react-router-dom";
 
+import DeltaDex from './layouts/deltadex/DeltaDex';
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // const Expenses = () => {
@@ -22,6 +25,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
+      <Route path="deltadex" element={<DeltaDex/>} />
       {/* <Route path="expenses" element={<Expenses />} /> */}
       {/* <Route path="invoices" element={<Invoices />} /> */}
     </Routes>

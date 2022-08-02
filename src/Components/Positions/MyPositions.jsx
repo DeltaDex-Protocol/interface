@@ -62,18 +62,18 @@ const GenerateRow = ({row}) => {
 
   return (
     <>
-    <tr className="bg-gray-00  hover:bg-gray-300 text-center" id={row.id} onClick={() => setVisibility(!isVisible)}>
-      <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
+    <tr className="hover:bg-indigo-100 text-center" id={row.id} onClick={() => setVisibility(!isVisible)}>
+      <th scope="row" className="py-4 px-6">
           {row.id} 
       </th>
       <td className="py-4 px-6">
           {defineAddresses[row.token0] + "-" + defineAddresses[row.token1]}
       </td>
-      <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
-          {parseFloat(row.token0_balance).toFixed(3)}
+      <th scope="row" className="py-4 px-6  ">
+          <span className="font-normal">{parseFloat(row.token0_balance).toFixed(3)}</span>
       </th>
-      <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
-          {parseFloat(row.token1_balance).toFixed(3)}
+      <th scope="row" className="py-4 px-6 ">
+          <span className="font-normal">{parseFloat(row.token1_balance).toFixed(3)}</span>
       </th>
 
       <td className="py-4 px-6">
@@ -93,33 +93,33 @@ const GenerateRow = ({row}) => {
       </td>
       <td className="py-4 px-3">
           <button 
-          className="font-medium text-white rounded-lg bg-blue-500"
+          className="text-white rounded-lg bg-indigo-400 hover:bg-indigo-300"
           onClick={() => setVisibility(!isVisible)}
           >Show</button>
       </td>
     </tr>
     {(isVisible !== false) && (
         <>
-              <tr className=" bg-gray-300 text-center">
+              <tr className="bg-gray-100 text-center">
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">fees</span>
+                      <span className="font-normal">fees</span>
                       <br/>
-                      {row.fees}
+                      <span className="font-normal">{row.fees}</span>
                   </th>
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">amount</span>
+                      <span className="font-normal">amount</span>
                       <br/>
-                      {parseFloat(row.amount).toFixed(3)}
+                      <span className="font-normal">{parseFloat(row.amount).toFixed(3)}</span>
                   </th>
                   <th scope="col" colspan="1" className="py-3 px-6 ">
-                      <span className="text-black">hedge fee</span>
+                      <span className="font-normal">hedge fee</span>
                       <br/>
-                      {parseFloat(row.hedgeFee).toFixed(3)} 
+                      <span className="font-normal">{parseFloat(row.hedgeFee).toFixed(3)} </span>
                   </th>
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">hedges per day</span>
+                      <span className="font-normal">hedges per day</span>
                       <br/>
-                      {row.perday}
+                      <span className="font-normal">{row.perday} </span>
                   </th>
                   <th/>
                   <th/>
@@ -128,36 +128,36 @@ const GenerateRow = ({row}) => {
                   <th/>
                   <th/>
               </tr>
-              <tr className=" bg-gray-300 text-center">
+              <tr className=" bg-gray-100 text-center">
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">model</span>
+                      <span className="font-normal">model</span>
                       <br/>
-                      {"jump diffusion"}
+                      <span className="font-normal">{"jump diffusion"} </span>
                   </th>
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">lambda</span>
+                      <span className="font-normal">lambda</span>
                       <br/>
-                      {parseFloat(row.lam).toFixed(3)}
+                      <span className="font-normal">{parseFloat(row.lam).toFixed(3)}</span>
                   </th>
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">m</span>
+                      <span className="font-normal">m</span>
                       <br/>
-                      {parseFloat(row.m).toFixed(3)}
+                      <span className="font-normal">{parseFloat(row.m).toFixed(3)}</span>
                   </th>
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">risk-free rate</span>
+                      <span className="font-normal">risk-free rate</span>
                       <br/>
-                      {parseFloat(row.r).toFixed(3)}
+                      <span className="font-normal">{parseFloat(row.r).toFixed(3)}</span>
                   </th>
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">sigma</span>
+                      <span className="font-normal">sigma</span>
                       <br/>
-                      {parseFloat(row.sigma).toFixed(3)}
+                      <span className="font-normal">{parseFloat(row.sigma).toFixed(3)}</span>
                   </th>
                   <th scope="col" className="py-3 px-6">
-                      <span className="text-black">nu</span>
+                      <span className="font-normal">nu</span>
                       <br/>
-                      {parseFloat(row.v).toFixed(3)}
+                      <span className="font-normal">{parseFloat(row.v).toFixed(3)}</span>
                   </th>
                   <th/>
                   <th/>
@@ -177,6 +177,34 @@ const GenerateRow = ({row}) => {
 const rows = [{}];
 
 // const rows = getUserPositionsTable();
+
+
+const NewMyPositions = ({}) => {
+    const [ReplicationModel, setReplicationModel] = useState("");
+
+    const [tagInputValue, setTagInputValue] = useState("");
+    const [tagValue, setTagValue] = useState("");
+  
+    const [rowData, setRowData] = useState([]);
+  
+    const [upd, setUpd] = useState(false);
+  
+    const [rowsExpanded, setExpandedRows] = useState({});
+
+    useEffect(() => {
+        const func = async () => {
+          const rowData = await getUserPositions();
+          console.log(rowData);
+          setRowData(rowData);
+        };
+        func();
+      }, [upd]);
+
+    return (
+        <>123</>
+    )
+}
+
 
 const MyPositions = ({}) => {
   const [ReplicationModel, setReplicationModel] = useState("");
@@ -201,9 +229,8 @@ const MyPositions = ({}) => {
   }, [upd]);
 
   return (
-    <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
-      <table className="w-full text-sm text-left  shadow-lg">
-          <thead className="text-xs text-black uppercase bg-gray-400 text-center">
+      <table className="text-sm shadow-lg max-w-4xl  ">
+          <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
               <tr>
                   <th scope="col" className="py-3 px-6">
                       Position id
@@ -246,35 +273,7 @@ const MyPositions = ({}) => {
           </tbody>
           )}
       </table>
-    </div>
-    // <>
-    //   <Titles title="My Positions" text="" />
-    //   <div>
-    //     <Creatable
-    //       options={TokenOptions}
-    //       isClearable
-    //       xs={12}
-    //       lg
-    //       inpClass="py-2"
-    //       className="p-0"
-    //       name="amountOfToken0"
-    //       type="text"
-    //       controlId=""
-    //       placeholder="Filter by model"
-    //       size="sm"
-    //     />
-    //     <DataGrid columns={columns} rows={rowData} rdg-light />
-
-    //     <Button
-    //       variant="primary"
-    //       className="mt-5 py-2 px-4"
-    //       type="submit"
-    //       onClick={() => setUpd(!upd)}
-    //     >
-    //       View Positions
-    //     </Button>
-    //   </div>
-    // </>
+ 
   );
 };
 

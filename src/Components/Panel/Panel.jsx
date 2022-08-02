@@ -33,6 +33,12 @@ import AllPositions from "./../Positions/AllPositions.jsx";
 
 import MyPositions from "./../Positions/MyPositions.jsx";
 
+import Rform from '../Forms/ReplicationForm';
+
+
+import logo from "./../../etc/logo.png";
+
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
 
 
 // var inputs = {
@@ -43,6 +49,8 @@ import MyPositions from "./../Positions/MyPositions.jsx";
 //     r: 0.01,          // annual risk-free interest rate
 //     sigma: 0.50,      // volatility of the underlying asset
 // };
+
+
 
 
 const Panel = ({walletAddress, connectWalletPressed}) => {
@@ -132,57 +140,90 @@ const Panel = ({walletAddress, connectWalletPressed}) => {
 
 
     return (
-            <>
-            <Header walletAddress={walletAddress} connectPressed={connectWalletPressed}/>
-            <div className={`${styles['panel-wrapper']}  px-5 `}>
+        <div className='w-full bg-gray-100'>
+            <div className='relative max-w-6xl mx-auto'>
+
+            <div className='sticky top-0 flex justify-between z-10'>
+                <img className=" max-h-10 mx-3 my-2 " src={logo}/>
+                <button className='bg-indigo-400 rounded text-white text-center  my-2 mx-4'>
+                    <span className=''>Connected: 0x111...</span>
+                </button>
+            </div>
+
+            <div className='flex justify-center space-x-10'>
+
+                <div class="hidden h-screen xl:inline mt-20">
+
+                    <div class="relative rounded-xl bg-white shadow  py-14 px-20 flex flex-col ">
+                        <div className='flex absolute left-3 top-7 '>
+                            <span class="text-black font-medium  text-base w-10 mr-12 leading-tight">Your address</span>
+                            <Jazzicon className="" diameter={36} seed={jsNumberForAddress("0x11111111")}/>
+                        </div>
+                        <span className='absolute left-3 top-20  text-sm'>Connected: 0x111</span>
+                    </div>
+                    <div class="relative mt-6 rounded-xl bg-white shadow py-12 px-20 flex flex-col ">
+                        <span class="absolute left-3 top-3 text-black font-normal text-lg">Vanilla options</span>
+                        <span className='absolute left-3 top-11 text-black font-light leading-tight text-sm w-32'>Replicate your vanilla option</span>
+                    </div>
+                    <div class="relative mt-6 rounded-xl bg-white shadow py-12 px-20 flex flex-col">
+                        <span class="absolute left-3 top-3 text-black font-normal text-lg">Curved options</span>
+                        <span className='absolute left-3 top-11 text-black font-light leading-tight text-sm w-40'>Hedge against impermanent losses</span>
+                    </div>
+                    <div class="relative mt-6 rounded-xl bg-white shadow py-12 px-20 flex flex-col">
+                        <span class="absolute left-3 top-3 text-black font-normal text-lg">Your positions</span>
+                        <span className='absolute left-3 top-11 text-black font-light leading-tight text-sm w-40'>Click to see your previous replications</span>
+                    </div>
+                    <div class="relative mt-6 rounded-xl bg-white shadow py-12 px-20 flex flex-col">
+                        <span class="absolute left-2 top-3 text-black font-normal text-lg">All positions</span>
+                        <span className='absolute left-2 top-11 text-black font-light leading-tight text-sm w-40'>Check users' positions close to replication</span>
+                    </div>
+                </div>
+            
+            <div className='mt-20'>
+                {toggle === 'My positions' && (
+                    <>
+                        <div className='mb-5 px-4 py-2 bg-indigo-400 w-1/2 rounded-xl flex flex-col'>
+                            <span className='text-xl font-medium text-white'>Your positions</span>
+                            <span className='text-base font-normal text-white'>Here's the full list of your previous replications</span>
+                        </div>
+                        <div className=''>
+                            <MyPositions/>
+                        </div>
+                    </>
+                )}
+                
+                {toggle === "Replicate option" && (
+                    <>
+                        <div className='mb-5 px-4 py-2 bg-indigo-400 w-2/3 rounded-xl flex flex-col'>
+                            <span className='text-xl font-medium text-white'>Replicate your Vanilla option</span>
+                            <span className='text-base font-normal text-white'>Choose the parameters of the option you'd like to replicate</span>
+                        </div>
+                        <div className='bg-white px-10 py-4'>
+                            {/* <ReplicationForm data={data}/> */}
+                            <Rform />
+                        </div>
+                    </>
+                )}
+            </div>
+            </div>
                 
 
-            <div className={`${styles['panel-wrapper']} d-flex`}>
-            {/*<Sidebar 
-                username={"Your address"}
-                userAddress={walletAddress}
-                userProfile={walletAddress}
-                sidebarLinks={sidebarLinks}
-                onChangeToggle={changeToggle}
-            />*/}
-
-            <aside className="w-64 mt-24" aria-label="Sidebar">
-               <div className="overflow-y-auto py-4 px-3 rounded ">
-                  <Sidebar 
-                            userAddress={walletAddress}
-                            sidebarLinks={sidebarLinks}
-                            onChangeToggle={changeToggle}
-                        />
-               </div>
-            </aside>
 
 
-
-                <div className={`${styles.container} justify-content-center align-items-center p-0`}>
-                      {/*<PriceChart data={data} className="justify-content-center"/>*/}
-
-                    <Row className={`${styles['panel']}  `}>
-                        {toggle !== 'All positions' && toggle !== 'My positions' && (
+                        {/* {toggle !== 'All positions' && toggle !== 'My positions' && (
                         <div className={`${styles['panel-column']} bg-white border mt-5 mt-md-0  p-5`}>
                             {toggle === 'Replicate option' && (
                                 <ReplicationForm data={data}/>
                             )}
-                        </div>)}
-{/*                        {toggle === 'My positions' && (
-                                <UserChangePassword />
-                            )}*/}
-                    </Row>
+                        </div>)} */}
                     {toggle === 'My positions' && (
-                                <MyPositions />
+                                <MyPositions  />
                             )}
                     {toggle === 'All positions' && (
                                 <AllPositions className="mt-0"/>)}
-                </div >
 
             </div>
             </div>
-
-            </>
         )
 
 
