@@ -90,9 +90,7 @@ const ReplicationForm = ({ data }) => {
   const [JDMjumpDeviation, setJDMjumpDeviation] = useState("0");
   const [JDMjumpIntensity, setJDMjumpIntensity] = useState("0");
 
-
   const processForm = async () => {
-
     const EXP_IN_YEARS = expiration / 365.25;
 
     var formInputs = {
@@ -147,7 +145,6 @@ const ReplicationForm = ({ data }) => {
     }
 
     console.log(formInputs);
-
 
     const { success, status } = await startReplication(formInputs);
     console.log(success, status);
@@ -385,32 +382,31 @@ const ReplicationForm = ({ data }) => {
               </Col>
             </Row>
             <span className="my-3 font-bold text-lg">
-                Initial liquidity to trade underlying
-              </span>
+              Initial liquidity to trade underlying
+            </span>
             <Row className="mt-2">
               <Col>
-              {console.log(OptionType.label, OptionDirection.label)}
-              {((OptionType.label.split(' ')[1] === "call" && 
-               OptionDirection.label === "long") ||
-               (OptionType.label.split(' ')[1] === "put" && 
-               OptionDirection.label === "short")) && (
-                <Slider
-                  sliderType="token1Balance"
-                  onChangeToggle={setToken1Balance}
-                />
-               )}
-              {(OptionType.label.split(' ')[1] === "put" && 
-               OptionDirection.label === "long" ||
-               OptionType.label.split(' ')[1] === "call" && 
-               OptionDirection.label === "short") && (
-                <Slider
-                  sliderType="token2Balance"
-                  onChangeToggle={setToken2Balance}
-                />
-              )}
+                {console.log(OptionType.label, OptionDirection.label)}
+                {((OptionType.label.split(" ")[1] === "call" &&
+                  OptionDirection.label === "long") ||
+                  (OptionType.label.split(" ")[1] === "put" &&
+                    OptionDirection.label === "short")) && (
+                  <Slider
+                    sliderType="token1Balance"
+                    onChangeToggle={setToken1Balance}
+                  />
+                )}
+                {((OptionType.label.split(" ")[1] === "put" &&
+                  OptionDirection.label === "long") ||
+                  (OptionType.label.split(" ")[1] === "call" &&
+                    OptionDirection.label === "short")) && (
+                  <Slider
+                    sliderType="token2Balance"
+                    onChangeToggle={setToken2Balance}
+                  />
+                )}
               </Col>
-              <Col>
-              </Col>
+              <Col></Col>
             </Row>
             <Row className="mt-2">
               <Col>
