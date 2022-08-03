@@ -100,7 +100,7 @@ const SidebarMenuInfos = {
   },
   CurvedOptions: {
     label: "Curved options",
-    description: "Hedge against impermanent losse",
+    description: "Hedge against impermanent loss",
   },
   YourPositions: {
     label: "Your positions",
@@ -127,7 +127,7 @@ const SidebarUnit = ({ Menu, onChangeToggle, toggle }) => {
         {SidebarMenuInfos[Menu].label}
       </span>
       <span
-        className={`absolute left-3 top-11 ${text_color} font-light leading-tight text-sm w-40`}
+        className={`absolute left-3 top-11 ${text_color} font-light leading-tight text-sm w-30`}
       >
         {SidebarMenuInfos[Menu].description}
       </span>
@@ -170,7 +170,8 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
   const [url, setURL] = useState("");
   const [data, setData] = useState([]);
 
-  const currentPrice = data[data.length-1] === undefined ? 1000 : data[data.length-1].value;
+  const currentPrice =
+    data[data.length - 1] === undefined ? 1000 : data[data.length - 1].value;
 
   // const connectWalletPressed = async () => {
   //     const walletResponse = await connectWallet();
@@ -273,7 +274,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                 </div>
                 <div className="bg-white mr-5 xl:mr-0">
                   {/* <ReplicationForm data={data}/> */}
-                  <Rform currentPrice={currentPrice}/>
+                  <Rform currentPrice={currentPrice} />
                 </div>
               </>
             )}
@@ -320,7 +321,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
               <>
                 <div className="mb-5 px-4 py-2 bg-indigo-400 w-1/2 rounded-xl flex flex-col">
                   <span className="text-xl font-medium text-white">
-                    All users' positions
+                    All positions
                   </span>
                   <span className="text-base font-normal text-white">
                     Here's the list of positions close to be hedged
