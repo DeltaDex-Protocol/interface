@@ -1,5 +1,5 @@
 const contractABI = require("./OptionMaker.json");
-const contractAddress = "0xCBBe2A5c3A22BE749D5DDF24e9534f98951983e2";
+const contractAddress = "0x512F7469BcC83089497506b5df64c6E246B39925";
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -69,6 +69,8 @@ export const startReplication = async (formInputs) => {
     );
     let vol = ethers.utils.parseUnits(formInputs.model_params.vol);
 
+    let amount = ethers.utils.parseUnits("1");
+
     const BS_input = [
       formInputs.address_token1,
       formInputs.address_token2,
@@ -78,15 +80,15 @@ export const startReplication = async (formInputs) => {
       isCall,
       isLong,
 
-      token1_balance,
+      amount,
       0,
-      0,
-      hedges_per_day,
       total_value_of_fees,
+      hedges_per_day,
+      0,
       0,
       [strike, expiration, risk_free_rate, vol],
     ];
-    console.log(BS_input, '123123')
+    console.log(BS_input, "123123");
 
     const signer = provider.getSigner();
     const optionmaker = new ethers.Contract(
