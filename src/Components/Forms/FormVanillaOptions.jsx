@@ -57,12 +57,12 @@ const ModelsParams = {
 
 
 const GenerateModelInput = ({param}) => {
-    // console.log(model, ModelsParams[model])
+    console.log(param)
 
     return (
 
-        <div className="-ml-5 mt-4 flex flex-col">
-            <label for={param} class="block mb-2   text-gray-900">{param}</label>
+        <div className="-ml-5 -mt-2 flex flex-col">
+            <label for={param} class="block mb-2  text-gray-900">{param}</label>
             <input type="number" id={param} class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
                 placeholder="0.2" required/>
         </div>
@@ -322,7 +322,12 @@ const Rform = () => {
                     <input type="number" id="sigma" class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
                            placeholder="0.2" required/>
                 </div> */}
-                {ModelsParams[chosenModel.value].map((el) => <GenerateModelInput param={el}/>)}
+                <div className="grid grid-cols-2 gap-12 mt-4">
+
+                {ModelsParams[chosenModel.value].map((el) => 
+                    <GenerateModelInput param={el}/>
+                )}
+                </div>
 
               </div>
             ) : (
