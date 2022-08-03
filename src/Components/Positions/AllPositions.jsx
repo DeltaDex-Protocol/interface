@@ -165,38 +165,38 @@ const AllPositions = ({}) => {
   }, [upd]);
 
   return (
-    // <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
-    <table className="text-sm shadow-lg ">
-      <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
-        <tr>
-          <th scope="col" className="py-3 px-6">
-            Position id
-          </th>
-          <th scope="col" className="py-3 px-6">
-            Option pair
-          </th>
-          <th scope="col" className="py-3 px-6">
-            Estimated tx cost for hedging
-          </th>
-          <th scope="col" className="py-3 px-6">
-            Reward for hedging
-          </th>
+    <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
+      <table className="text-sm shadow-lg bg-white">
+        <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
+          <tr>
+            <th scope="col" className="py-3 px-6">
+              Position id
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Option pair
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Estimated tx cost for hedging
+            </th>
+            <th scope="col" className="py-3 px-6">
+              Reward for hedging
+            </th>
 
-          <th scope="col" className="py-3 px-6">
-            Time left until next hedging
-          </th>
-          <th />
-        </tr>
-      </thead>
-      {rowData[0] !== undefined && (
-        <tbody>
-          {rowData.map((el, i) => (
-            <GenerateRow row={rowData[i]} />
-          ))}
-        </tbody>
-      )}
-    </table>
-    // </div>
+            <th scope="col" className="py-3 px-6">
+              Time left until next hedging
+            </th>
+            <th />
+          </tr>
+        </thead>
+        {rowData[0] !== undefined && (
+          <tbody>
+            {rowData.map((el, i) => (
+              <GenerateRow row={rowData[i]} />
+            ))}
+          </tbody>
+        )}
+      </table>
+    </div>
   );
 };
 

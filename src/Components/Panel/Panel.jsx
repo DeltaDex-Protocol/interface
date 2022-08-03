@@ -100,7 +100,7 @@ const SidebarMenuInfos = {
   },
   CurvedOptions: {
     label: "Curved options",
-    description: "Hedge against impermanent losses",
+    description: "Hedge against impermanent losse",
   },
   YourPositions: {
     label: "Your positions",
@@ -108,7 +108,7 @@ const SidebarMenuInfos = {
   },
   AllPositions: {
     label: "All positions",
-    description: "Check users' positions close to replication",
+    description: "View all open positions",
   },
 };
 
