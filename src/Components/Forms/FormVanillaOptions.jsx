@@ -49,37 +49,44 @@ const AvailableModels = [
 ];
 
 const ModelsParams = {
-    "black-scholes": ['BS vol'],
-    "jump-diffusion": ['JDM vol', "JDM jump size mean", "JDM jump deviation", "JDM jump intensity"],
-    "sabr": ['alpha', 'beta', 'rho'],
-    'heston': [],
-}
+  "black-scholes": ["BS vol"],
+  "jump-diffusion": [
+    "JDM vol",
+    "JDM jump size mean",
+    "JDM jump deviation",
+    "JDM jump intensity",
+  ],
+  sabr: ["alpha", "beta", "rho"],
+  heston: [],
+};
 
+const GenerateModelInput = ({ param }) => {
+  console.log(param);
 
-const GenerateModelInput = ({param}) => {
-    console.log(param)
-
-    return (
-
-        <div className="-ml-5 -mt-2 flex flex-col">
-            <label for={param} class="block mb-2  text-gray-900">{param}</label>
-            <input type="number" id={param} class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
-                placeholder="0.2" required/>
-        </div>
-    )
-}
+  return (
+    <div className="-ml-5 -mt-2 flex flex-col">
+      <label for={param} class="block mb-2  text-gray-900">
+        {param}
+      </label>
+      <input
+        type="number"
+        id={param}
+        class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
+        placeholder="0.2"
+        required
+      />
+    </div>
+  );
+};
 
 const DAYS_IN_YEAR = 365.25;
 
 const DaysToYears = (days) => {
-    return Math.round(days / DAYS_IN_YEAR * 1000) / 1000;
-}
+  return Math.round((days / DAYS_IN_YEAR) * 1000) / 1000;
+};
 
-
-
-const Rform = ({currentPrice}) => {
-
-//   console.log(currentPrice)
+const Rform = ({ currentPrice }) => {
+  //   console.log(currentPrice)
 
   const [submit, setSubmit] = useState(false);
 
@@ -95,7 +102,7 @@ const Rform = ({currentPrice}) => {
   const [strike, setStrike] = useState(300);
   const [expiration, setExpiration] = useState(5);
 
-//   const [OptionType, setOptionType] = useState(VanillaTypes[0]);
+  //   const [OptionType, setOptionType] = useState(VanillaTypes[0]);
 
   const [OptionDirection, setDirection] = useState(OptionDirections[0]);
 
@@ -144,7 +151,7 @@ const Rform = ({currentPrice}) => {
       model_params: {},
       etc: {},
     };
-    console.log(`initial formInputs`,formInputs);
+    console.log(`initial formInputs`, formInputs);
 
     if (
       formInputs.option_type.value === "curvedCall" ||
@@ -185,7 +192,6 @@ const Rform = ({currentPrice}) => {
     const { success, status } = await startReplication(formInputs);
     console.log(success, status);
   };
-
 
   return (
     <>
@@ -231,7 +237,11 @@ const Rform = ({currentPrice}) => {
                       placeholder="0.00"
                       className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
                       onChange={(value) => {
-                        setFees(parseFloat(value.target.value) > 0 ? parseFloat(value.target.value) : 0);
+                        setFees(
+                          parseFloat(value.target.value) > 0
+                            ? parseFloat(value.target.value)
+                            : 0
+                        );
                         console.log(value.target.value);
                       }}
                     />
@@ -240,8 +250,12 @@ const Rform = ({currentPrice}) => {
                 </div>
                 <div className="mt-3 text-xl">
                   <span className="bg-gray-100 rounded-md py-1 px-3 text-gray-500">{`${
-                    Math.round((parseFloat(fees) / parseInt(perDay) / parseFloat(expiration)) * 1000) /
-                    1000
+                    Math.round(
+                      (parseFloat(fees) /
+                        parseInt(perDay) /
+                        parseFloat(expiration)) *
+                        1000
+                    ) / 1000
                   } DAI per hedge`}</span>
                 </div>
               </div>
@@ -258,7 +272,11 @@ const Rform = ({currentPrice}) => {
                     placeholder="1"
                     className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
                     onChange={(value) => {
-                      setPerDay(parseFloat(value.target.value) > 0 ? parseFloat(value.target.value) : 0);
+                      setPerDay(
+                        parseFloat(value.target.value) > 0
+                          ? parseFloat(value.target.value)
+                          : 0
+                      );
                       console.log(value.target.value);
                     }}
                   />
@@ -275,7 +293,13 @@ const Rform = ({currentPrice}) => {
             </div>
             <div className="flex flex-col">
               <ProfitChart
-                params={{ S: currentPrice, K: strike, T: DaysToYears(expiration), r: riskFree, sigma: 0.5 }}
+                params={{
+                  S: currentPrice,
+                  K: strike,
+                  T: DaysToYears(expiration),
+                  r: riskFree,
+                  sigma: 0.5,
+                }}
                 OptionDirection={OptionDirection}
                 OptionType={VanillaType}
               />
@@ -322,12 +346,10 @@ const Rform = ({currentPrice}) => {
                   }}
                 />
                 <div className="grid grid-cols-2 gap-12 mt-4">
-
-                {ModelsParams[chosenModel.value].map((el) => 
-                    <GenerateModelInput param={el}/>
-                )}
+                  {ModelsParams[chosenModel.value].map((el) => (
+                    <GenerateModelInput param={el} />
+                  ))}
                 </div>
-
               </div>
             ) : (
               <div></div>
@@ -377,7 +399,13 @@ const Rform = ({currentPrice}) => {
               />
             </div>
             <ProfitChart
-              params={{ S: currentPrice, K: strike, T: DaysToYears(expiration), r: riskFree, sigma: 0.5 }}
+              params={{
+                S: currentPrice,
+                K: strike,
+                T: DaysToYears(expiration),
+                r: riskFree,
+                sigma: 0.5,
+              }}
               OptionDirection={OptionDirection}
               OptionType={VanillaType}
             />
