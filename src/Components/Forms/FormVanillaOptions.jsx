@@ -48,15 +48,17 @@ const AvailableModels = [
   { label: "Heston model (coming soon)", value: "heston" },
 ];
 
-const ModelsParams = {
-    "black-scholes": ['BS vol'],
-    "jump-diffusion": ['JDM vol', "JDM jump size mean", "JDM jump deviation", "JDM jump intensity"],
-    "sabr": ['alpha', 'beta', 'rho'],
-    'heston': [],
-}
+// const ModelsParams = {
+//     "black-scholes": [['BS vol', setBSvol]],
+//     "jump-diffusion": [['JDM vol', setJDMvol], ["JDM jump size mean", setJDMjumpSizeMean], 
+//                       ["JDM jump deviation", setJDMjumpDeviation], ["JDM jump intensity", setJDMjumpIntensity]],
+//     "sabr": ['alpha', 'beta', 'rho'],
+//     'heston': [],
+// }
 
 
-const GenerateModelInput = ({param}) => {
+
+const GenerateModelInput = ({param, onChangeToggle}) => {
     console.log(param)
 
     return (
@@ -64,7 +66,7 @@ const GenerateModelInput = ({param}) => {
         <div className="-ml-5 -mt-2 flex flex-col">
             <label for={param} class="block mb-2  text-gray-900">{param}</label>
             <input type="number" id={param} class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
-                placeholder="0.2" required/>
+                placeholder="0.2" onChange={(e)=>{onChangeToggle(e.target.value)}} required/>
         </div>
     )
 }
@@ -125,6 +127,19 @@ const Rform = ({currentPrice}) => {
   const [JDMjumpDeviation, setJDMjumpDeviation] = useState("0");
   const [JDMjumpIntensity, setJDMjumpIntensity] = useState("0");
 
+
+
+  const ModelsParams = {
+    "black-scholes": [['BS vol', setBSvol]],
+    "jump-diffusion": [['JDM vol', setJDMvol], ["JDM jump size mean", setJDMjumpSizeMean], 
+                      ["JDM jump deviation", setJDMjumpDeviation], ["JDM jump intensity", setJDMjumpIntensity]],
+    "sabr": ['alpha', 'beta', 'rho'],
+    'heston': [],
+    }
+
+
+
+
   const processForm = async () => {
     const EXP_IN_YEARS = expiration / 365.25;
 
@@ -144,7 +159,7 @@ const Rform = ({currentPrice}) => {
       model_params: {},
       etc: {},
     };
-    console.log(`initial formInputs`,formInputs);
+    // console.log(`initial formInputs`,formInputs);
 
     if (
       formInputs.option_type.value === "curvedCall" ||
@@ -325,7 +340,7 @@ const Rform = ({currentPrice}) => {
                 <div className="grid grid-cols-2 gap-12 mt-4">
 
                 {ModelsParams[chosenModel.value].map((el) => 
-                    <GenerateModelInput param={el}/>
+                    <GenerateModelInput param={el[0]} onChangeToggle={el[1]}/>
                 )}
                 </div>
 

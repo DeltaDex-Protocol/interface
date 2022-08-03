@@ -42,14 +42,13 @@ export const connectWallet = async () => {
 
 export const startReplication = async (formInputs) => {
   let isCall = false;
-  let isLong = false;
+  let isLong = true;
 
   if (
     formInputs.option_type.value === "curvedCall" ||
     formInputs.option_type.value === "vanillaCall"
   ) {
     isCall = true;
-    isLong = true;
   }
 
   if (formInputs.model_type.label === "Black-Scholes") {
@@ -69,18 +68,19 @@ export const startReplication = async (formInputs) => {
     );
     let vol = ethers.utils.parseUnits(formInputs.model_params.vol);
 
-    let amount = ethers.utils.parseUnits("1");
+    let option_amount = ethers.utils.parseUnits(formInputs.option_amount);
 
     const BS_input = [
       formInputs.address_token1,
       formInputs.address_token2,
+
       !isCall ? 0 : token1_balance,
       isCall ? 0 : token2_balance,
 
       isCall,
       isLong,
 
-      amount,
+      option_amount,
       0,
       total_value_of_fees,
       hedges_per_day,
@@ -128,6 +128,7 @@ export const startReplication = async (formInputs) => {
     );
     let strike = ethers.utils.parseUnits(formInputs.strike);
     let expiration = ethers.utils.parseUnits(formInputs.expiration);
+    let option_amount = ethers.utils.parseUnits(formInputs.option_amount);
     let risk_free_rate = ethers.utils.parseUnits(
       formInputs.model_params.risk_free_rate
     );
@@ -141,15 +142,17 @@ export const startReplication = async (formInputs) => {
     let jump_intensity = ethers.utils.parseUnits(
       formInputs.model_params.jump_intensity
     );
+    
 
     const JDM_input = [
       formInputs.address_token1,
       formInputs.address_token2,
       !isCall ? 0 : token1_balance,
       isCall ? 0 : token2_balance,
-      isCall.toString(),
-      isLong.toString(),
-      0,
+      isCall.toString(),   // isCall,   ?
+      isLong.toString(),   // isLong,   ?
+
+      option_amount,
       0,
       total_value_of_fees,
       hedges_per_day,
@@ -165,6 +168,8 @@ export const startReplication = async (formInputs) => {
         jump_intensity,
       ],
     ];
+
+    console.log(JDM_input)
 
     const signer = provider.getSigner();
     const optionmaker = new ethers.Contract(
