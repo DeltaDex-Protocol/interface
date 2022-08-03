@@ -240,7 +240,7 @@ const MyPositions = ({}) => {
 
   return (
     <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
-      <table className="text-sm shadow-lg max-w-4xl">
+      <table className="text-sm shadow-lg max-w-4xl bg-white">
         <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
           <tr>
             <th scope="col" className="py-3 px-6">
