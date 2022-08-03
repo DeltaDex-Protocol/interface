@@ -272,7 +272,8 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                     <PriceChart className="" data={data} />
                   </div>
                 </div>
-                <div className="bg-white mr-5 xl:mr-0">
+
+                <div className="bg-white mr-5 rounded-lg xl:mr-0">
                   {/* <ReplicationForm data={data}/> */}
                   <Rform currentPrice={currentPrice} />
                 </div>
@@ -294,7 +295,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                     <PriceChart className="" data={data} />
                   </div>
                 </div>
-                <div className="bg-white mr-5 xl:mr-0">
+                <div className="bg-white mr-5 rounded-lg xl:mr-0">
                   {/* <ReplicationForm data={data}/> */}
                   <Rform />
                 </div>
@@ -324,7 +325,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                     All positions
                   </span>
                   <span className="text-base font-normal text-white">
-                    Here's the list of positions close to be hedged
+                    List of open positions of all users
                   </span>
                 </div>
                 <div className="">
