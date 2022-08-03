@@ -324,7 +324,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                     All positions
                   </span>
                   <span className="text-base font-normal text-white">
-                    Here's the list of positions close to be hedged
+                    List of open positions of all users
                   </span>
                 </div>
                 <div className="">
