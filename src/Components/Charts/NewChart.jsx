@@ -215,7 +215,7 @@ export default function ProfitChart(
 
   var {S, K, T, r, sigma} = params;
 
-  var TV0 = params.TV0 || 1000; 
+  var TV0 = parseInt(params.TV0) || 1000; 
 
   var x0 = TV0 / 2;
 
@@ -228,7 +228,9 @@ export default function ProfitChart(
 
   var data = [];
 
-  T = T / 365;
+  // T = T / 365;
+
+  console.log(T)
 
   if (OptionType.value === "vanillaCall")
     data = fillVanillaCall(S, K, T, r, sigma, OptionDirection.value);

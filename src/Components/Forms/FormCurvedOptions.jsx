@@ -37,8 +37,8 @@ const OptionDirections = [
 ];
 
 const VanillaTypes = [
-  { label: "call", value: "vanillaCall" },
-  { label: "put", value: "vanillaPut" },
+  { label: "call", value: "curvedCall" },
+  { label: "put", value: "curvedPut" },
 ];
 
 const AvailableModels = [
@@ -79,7 +79,7 @@ const DaysToYears = (days) => {
 
 
 
-const VanillaForm = ({currentPrice}) => {
+const CurvesForm = ({currentPrice}) => {
 
 //   console.log(currentPrice)
 
@@ -252,7 +252,6 @@ const VanillaForm = ({currentPrice}) => {
                     console.log(value.target.value);
                   }}
                 />
-                {console.log()}
                 <span className="absolute ml-32 text-xl top-3">{`${AddressToToken[addressToken1]}`}</span>
               </div>
               <span className="-ml-5 text-medium text-xl  relative ">
@@ -311,7 +310,7 @@ const VanillaForm = ({currentPrice}) => {
             </div>
             <div className="flex flex-col">
               <ProfitChart
-                params={{ S: parseFloat(currentPrice), K: parseFloat(strike), T: DaysToYears(expiration), r: parseFloat(riskFree), sigma: 0.5 }}
+                params={{ S: parseFloat(currentPrice), K: parseFloat(strike), T: DaysToYears(expiration), r: parseFloat(riskFree), sigma: 0.5, TV0: parseFloat(totalValueInvestedInLP) }}
                 OptionDirection={OptionDirection}
                 OptionType={VanillaType}
               />
@@ -374,7 +373,7 @@ const VanillaForm = ({currentPrice}) => {
         </div>
       ) : (
         <div className="px-10 py-4 relative">
-          <div className="flex justify-between mb-2 mt-0 space-x-10">
+          <div className="flex justify-between mb-0 mt-0 space-x-10">
             <div className="flex flex-col">
               <div className="">
                 <span className="-ml-5 left-0 ">Choose option type</span>
@@ -416,19 +415,39 @@ const VanillaForm = ({currentPrice}) => {
               />
             </div>
             <ProfitChart
-                params={{ S: parseFloat(currentPrice), K: parseFloat(strike), T: DaysToYears(expiration), r: parseFloat(riskFree), sigma: 0.5 }}
+                params={{ S: parseFloat(currentPrice), K: parseFloat(strike), T: DaysToYears(expiration), r: parseFloat(riskFree), sigma: 0.5, TV0: parseFloat(totalValueInvestedInLP) }}
                 OptionDirection={OptionDirection}
               OptionType={VanillaType}
             />
           </div>
 
-          <span className="absolute -ml-5 text-medium text-xl">
+          <div className="flex flex-col mb-5 ">
+          <span className=" -ml-5 text-medium text-xl mb-3">
+            Total value invested in LP uniswap v2
+          </span>
+          
+          <div className="flex space-x-4">
+          <input
+            type={"number"}
+            step="any"
+            placeholder="0.00"
+            className="outline-0 w-28 h-10 -ml-5 text-xl bg-gray-100 text-center  left-0 top-1 rounded-2xl"
+            onChange={(value) => {
+              setTotalValueInvestedInLP(value.target.value || "0");
+              console.log(value.target.value);
+            }} 
+          />
+          <span className="text-xl mt-1">DAI</span>
+          </div>
+          </div>
+
+          <span className=" -ml-5 text-medium text-xl">
             Specify the token pair by choosing tokens
           </span>
 
           <div className="flex justify-between w-5/12 space-x-10">
             <Creatable
-              className="-ml-5 mt-14 w-40 z-10"
+              className="-ml-5 mt-6 w-40 z-10"
               options={TokenOptions}
               defaultValue={TokenOptions[0]}
               onChange={(labelAndValue) => {
@@ -437,7 +456,7 @@ const VanillaForm = ({currentPrice}) => {
               }}
             />
             <Creatable
-              className="mt-14 w-40 z-10 "
+              className="mt-6 w-40 z-10 "
               options={TokenOptions}
               defaultValue={TokenOptions[TokenOptions.length - 1]}
               onChange={(labelAndValue) => {
@@ -473,4 +492,4 @@ const VanillaForm = ({currentPrice}) => {
   );
 };
 
-export default VanillaForm;
+export default CurvesForm;

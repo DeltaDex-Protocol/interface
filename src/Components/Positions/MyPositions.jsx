@@ -19,6 +19,10 @@ import Creatable, { useCreatable } from "react-select/creatable";
 import DataGrid from "react-data-grid";
 import { useEffect } from "react";
 
+import { settings } from "../../constants";
+
+
+
 const TokenOptions = [
   { label: "Black Scholes", value: "BSM" },
   { label: "Jump Diffusion Model", value: "JDM" },
@@ -94,7 +98,7 @@ const GenerateRow = ({ row }) => {
         </td>
         <td className="py-4 px-3">
           <button
-            className="text-white rounded-lg bg-indigo-400 hover:bg-indigo-300"
+            className={`text-white rounded-lg ${settings.main_color} hover:${settings.hover_main_color}`}
             onClick={() => setVisibility(!isVisible)}
           >
             Show
@@ -241,7 +245,7 @@ const MyPositions = ({}) => {
   return (
     <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
       <table className="text-sm shadow-lg max-w-4xl bg-white">
-        <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
+        <thead className={`text-xs ${settings.text_color} uppercase ${settings.hover_main_color} text-center`}>
           <tr>
             <th scope="col" className="py-3 px-6">
               Position id

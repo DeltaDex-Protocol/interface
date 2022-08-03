@@ -20,6 +20,11 @@ import Creatable, { useCreatable } from "react-select/creatable";
 import DataGrid from "react-data-grid";
 import { useEffect } from "react";
 
+
+import { settings } from "../../constants";
+
+
+
 const TokenOptions = [
   { label: "Black Scholes", value: "BSM" },
   { label: "Jump Diffusion Model", value: "JDM" },
@@ -176,7 +181,7 @@ const AllPositions = ({}) => {
   return (
     <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
       <table className="text-sm shadow-lg bg-white">
-        <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
+        <thead className={`text-xs ${settings.text_color} uppercase ${settings.hover_main_color} text-center`}>
           <tr>
             <th scope="col" className="py-3 px-6">
               Position id

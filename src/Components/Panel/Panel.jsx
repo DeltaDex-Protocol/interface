@@ -36,18 +36,22 @@ import AllPositions from "./../Positions/AllPositions.jsx";
 
 import MyPositions from "./../Positions/MyPositions.jsx";
 
-import Rform from "../Forms/FormVanillaOptions";
+import VanillaForm from "../Forms/FormVanillaOptions";
+
+import CurvesForm from "../Forms/FormCurvedOptions";
 
 import logo from "./../../etc/logo.png";
 
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
+
+import {settings} from './../../constants.js';
 
 const Header = ({ walletAddress, connectPressed }) => {
   return (
     <div className="sticky top-0 flex justify-between z-10">
       <img className=" max-h-10 mx-3 my-2 " src={logo} />
       <button
-        className="bg-indigo-400 rounded text-white text-center  my-2 mx-4"
+        className={`${settings.main_color} rounded ${settings.text_color} text-center  my-2 mx-2 `}
         onClick={connectPressed}
       >
         {/* <span className=''>Connected: 0x111...</span>
@@ -113,7 +117,7 @@ const SidebarMenuInfos = {
 };
 
 const SidebarUnit = ({ Menu, onChangeToggle, toggle }) => {
-  const bg_color = toggle === Menu ? "bg-indigo-400" : "bg-white";
+  const bg_color = toggle === Menu ? settings.main_color : "bg-white";
   const text_color = toggle === Menu ? "text-white" : "text-black";
 
   return (
@@ -122,12 +126,12 @@ const SidebarUnit = ({ Menu, onChangeToggle, toggle }) => {
       onClick={() => onChangeToggle(Menu)}
     >
       <span
-        className={`absolute left-3 top-3 ${text_color} font-normal text-lg`}
+        className={`absolute left-3 top-3 ${text_color} font-medium text-lg`}
       >
         {SidebarMenuInfos[Menu].label}
       </span>
       <span
-        className={`absolute left-3 top-11 ${text_color} font-light leading-tight text-sm w-30`}
+        className={`absolute left-3 top-11 ${text_color} font-normal leading-tight text-sm w-36`}
       >
         {SidebarMenuInfos[Menu].description}
       </span>
@@ -173,24 +177,6 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
   const currentPrice =
     data[data.length - 1] === undefined ? 1000 : data[data.length - 1].value;
 
-  // const connectWalletPressed = async () => {
-  //     const walletResponse = await connectWallet();
-  //     let address = walletResponse.address;
-
-  //     if (address) {
-  //         address = address.slice(0, 7) + "..." + address.slice(-6, );
-  //     }
-
-  //     // this.setState({
-  //     //     status: walletResponse.status,
-  //     //     walletAddress: address
-  //     // });
-  //     // console.log(walletResponse);
-
-  //     setStatus(walletResponse.status);
-  //     setWallet(address);
-
-  // };
 
   const changeToggle = (toggle) => {
     setToggle(toggle);
@@ -222,7 +208,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-r from-slate-200 to-gray-200">
+    <div className={`w-full min-h-screen ${settings.main_bg}`}>
       <div className="relative max-w-6xl mx-auto pb-32">
         <Header
           walletAddress={walletAddress}
@@ -259,7 +245,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
             {toggle === "VanillaOptions" && (
               <>
                 <div className="flex justify-between">
-                  <div className="mb-5 px-4 py-2 bg-indigo-400 w-1/2 h-24 rounded-xl flex flex-col">
+                  <div className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 h-24 rounded-xl flex flex-col`}>
                     <span className="text-xl font-medium text-white mt-2">
                       Replicate your Vanilla option
                     </span>
@@ -275,20 +261,19 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
 
                 <div className="bg-white mr-5 rounded-lg xl:mr-0">
                   {/* <ReplicationForm data={data}/> */}
-                  <Rform currentPrice={currentPrice} />
+                  <VanillaForm currentPrice={currentPrice} />
                 </div>
               </>
             )}
             {toggle === "CurvedOptions" && (
               <>
                 <div className="flex justify-between">
-                  <div className="mb-5 px-4 py-2 bg-indigo-400 w-1/2 h-24 rounded-xl flex flex-col">
+                  <div className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 h-24 rounded-xl flex flex-col`}>
                     <span className="text-xl font-medium text-white mt-2">
-                      Replicate your Vanilla option
+                      Replicate your Curved option
                     </span>
                     <span className="text-base font-normal text-white">
-                      Choose the parameters of the option you'd like to
-                      replicate
+                    Choose the parameters of the option and hedge against impermanent losses
                     </span>
                   </div>
                   <div className="">
@@ -297,14 +282,14 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                 </div>
                 <div className="bg-white mr-5 rounded-lg xl:mr-0">
                   {/* <ReplicationForm data={data}/> */}
-                  <Rform />
+                  <CurvesForm currentPrice={currentPrice}/>
                 </div>
               </>
             )}
 
             {toggle === "YourPositions" && (
               <>
-                <div className="mb-5 px-4 py-2 bg-indigo-400 w-1/2 rounded-xl flex flex-col">
+                <div className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}>
                   <span className="text-xl font-medium text-white">
                     Your positions
                   </span>
@@ -320,7 +305,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
 
             {toggle === "AllPositions" && (
               <>
-                <div className="mb-5 px-4 py-2 bg-indigo-400 w-1/2 rounded-xl flex flex-col">
+                <div className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}>
                   <span className="text-xl font-medium text-white">
                     All positions
                   </span>
@@ -439,3 +424,4 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
 // }
 
 export default Panel;
+
