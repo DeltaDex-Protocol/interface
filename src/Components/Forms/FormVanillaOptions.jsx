@@ -217,6 +217,7 @@ const Rform = ({currentPrice}) => {
                     console.log(value.target.value);
                   }}
                 />
+                {console.log()}
                 <span className="absolute ml-32 text-xl top-3">{`${AddressToToken[addressToken1]}`}</span>
               </div>
               <span className="-ml-5 text-medium text-xl  relative ">
@@ -235,14 +236,14 @@ const Rform = ({currentPrice}) => {
                         console.log(value.target.value);
                       }}
                     />
-                    <span className="absolute ml-32 text-xl top-2">{`DAI`}</span>
+                    <span className="absolute ml-32 text-xl top-2">{`${AddressToToken[addressToken1]}`}</span>
                   </div>
                 </div>
                 <div className="mt-3 text-xl">
                   <span className="bg-gray-100 rounded-md py-1 px-3 text-gray-500">{`${
                     Math.round((parseFloat(fees) / parseInt(perDay) / parseFloat(expiration)) * 1000) /
                     1000
-                  } DAI per hedge`}</span>
+                  } ${AddressToToken[addressToken1]} per hedge`}</span>
                 </div>
               </div>
               <div className="mt-5">
@@ -329,7 +330,9 @@ const Rform = ({currentPrice}) => {
                 </div>
 
               </div>
-            ) : (
+
+            ) : ( // first page
+
               <div></div>
             )}
           </div>
@@ -392,18 +395,18 @@ const Rform = ({currentPrice}) => {
               className="-ml-5 mt-14 w-40 z-10"
               options={TokenOptions}
               defaultValue={TokenOptions[0]}
-              onChange={(value) => {
-                if (value === null) return;
-                setAddressToken1(value);
+              onChange={(labelAndValue) => {
+                if (labelAndValue === null) return;
+                setAddressToken1(labelAndValue.value);
               }}
             />
             <Creatable
               className="mt-14 w-40 z-10 "
               options={TokenOptions}
               defaultValue={TokenOptions[TokenOptions.length - 1]}
-              onChange={(value) => {
-                if (value === null) return;
-                setAddressToken2(value);
+              onChange={(labelAndValue) => {
+                if (labelAndValue === null) return;
+                setAddressToken2(labelAndValue.value);
               }}
             />
           </div>
