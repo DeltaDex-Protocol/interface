@@ -67,7 +67,7 @@ const Rform = () => {
   const [riskFree, setRiskFree] = useState("0");
 
   return (
-    <div className="rounded-xl">
+    <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
       <div className="px-10 py-4 relative">
         {/* <input type="date" class="rounded text-pink-500" />
             <input type="email" class="form-input px-4 py-3 rounded-full"/> */}
