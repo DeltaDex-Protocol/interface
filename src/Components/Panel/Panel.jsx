@@ -219,7 +219,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-slate-200">
+    <div className="w-full min-h-screen bg-gradient-to-r from-slate-200 to-zinc-200">
       <div className="relative max-w-6xl mx-auto">
         <Header
           walletAddress={walletAddress}
