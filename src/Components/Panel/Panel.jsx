@@ -322,7 +322,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                     Your positions
                   </span>
                   <span className="text-base font-normal text-white">
-                    Here's the full list of your previous replications
+                    Here's the list of your positions
                   </span>
                 </div>
                 <div className="">
@@ -331,7 +331,21 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
               </>
             )}
 
-            {toggle === "AllPositions" && <AllPositions className="mt-0" />}
+            {toggle === "AllPositions" && (
+              <>
+                <div className="mb-5 px-4 py-2 bg-indigo-400 w-1/2 rounded-xl flex flex-col">
+                  <span className="text-xl font-medium text-white">
+                    All positions
+                  </span>
+                  <span className="text-base font-normal text-white">
+                    Here's the list of current positions of all users
+                  </span>
+                </div>
+                <div className="">
+                  <AllPositions />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
