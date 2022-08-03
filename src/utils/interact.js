@@ -49,6 +49,7 @@ export const startReplication = async (formInputs) => {
     formInputs.option_type.value === "vanillaCall"
   ) {
     isCall = true;
+    isLong = true;
   }
 
   if (formInputs.model_type.label === "Black-Scholes") {
@@ -73,16 +74,19 @@ export const startReplication = async (formInputs) => {
       formInputs.address_token2,
       !isCall ? 0 : token1_balance,
       isCall ? 0 : token2_balance,
+
       isCall,
       isLong,
+
+      token1_balance,
       0,
       0,
-      total_value_of_fees,
       hedges_per_day,
-      0,
+      total_value_of_fees,
       0,
       [strike, expiration, risk_free_rate, vol],
     ];
+    console.log(BS_input, '123123')
 
     const signer = provider.getSigner();
     const optionmaker = new ethers.Contract(

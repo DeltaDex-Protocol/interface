@@ -68,9 +68,12 @@ const sliderInfos = {
   },
 };
 
-export default function Slider({ sliderType, onChangeToggle, style = "mt-0" }) {
+export default function Slider({ sliderType, onChangeToggle, currentValue, style = "mt-0" }) {
   // console.log(props);
   const [value, setValue] = useState(sliderInfos[sliderType].min);
+
+//   console.log(currentValue)
+//   if (currentValue && currentValue !== 1000) {setValue(currentValue)};
 
   const name = sliderInfos[sliderType].name;
   const sym = sliderInfos[sliderType].symbol;

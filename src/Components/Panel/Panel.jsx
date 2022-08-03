@@ -170,6 +170,8 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
   const [url, setURL] = useState("");
   const [data, setData] = useState([]);
 
+  const currentPrice = data[data.length-1] === undefined ? 1000 : data[data.length-1].value;
+
   // const connectWalletPressed = async () => {
   //     const walletResponse = await connectWallet();
   //     let address = walletResponse.address;
@@ -271,7 +273,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                 </div>
                 <div className="bg-white mr-5 xl:mr-0">
                   {/* <ReplicationForm data={data}/> */}
-                  <Rform />
+                  <Rform currentPrice={currentPrice}/>
                 </div>
               </>
             )}

@@ -69,26 +69,33 @@ const GenerateModelInput = ({param}) => {
     )
 }
 
+const DAYS_IN_YEAR = 365.25;
+
+const DaysToYears = (days) => {
+    return Math.round(days / DAYS_IN_YEAR * 1000) / 1000;
+}
 
 
 
+const Rform = ({currentPrice}) => {
 
-const Rform = () => {
+//   console.log(currentPrice)
+
   const [submit, setSubmit] = useState(false);
 
   const [addressToken1, setAddressToken1] = useState(TokenOptions[0].value);
   const [addressToken2, setAddressToken2] = useState(
     TokenOptions[TokenOptions.length - 1].value
   );
-  const [token1Balance, setToken1Balance] = useState("1");
-  const [token2Balance, setToken2Balance] = useState("1");
+  const [token1Balance, setToken1Balance] = useState(1);
+  const [token2Balance, setToken2Balance] = useState(1);
   const [fees, setFees] = useState(0);
   const [perDay, setPerDay] = useState(1);
   const [OptionAmount, setOptionAmount] = useState(1);
   const [strike, setStrike] = useState(300);
   const [expiration, setExpiration] = useState(5);
 
-  const [OptionType, setOptionType] = useState();
+//   const [OptionType, setOptionType] = useState(VanillaTypes[0]);
 
   const [OptionDirection, setDirection] = useState(OptionDirections[0]);
 
@@ -110,10 +117,10 @@ const Rform = () => {
   //
 
   // BS params
-  const [BSvol, setBSvol] = useState("");
+  const [BSvol, setBSvol] = useState(0.2);
 
   // JDM params
-  const [JDMvol, setJDMvol] = useState(0.1);
+  const [JDMvol, setJDMvol] = useState(0.2);
   const [JDMjumpSizeMean, setJDMjumpSizeMean] = useState("0");
   const [JDMjumpDeviation, setJDMjumpDeviation] = useState("0");
   const [JDMjumpIntensity, setJDMjumpIntensity] = useState("0");
@@ -123,7 +130,7 @@ const Rform = () => {
 
     var formInputs = {
       model_type: chosenModel,
-      option_type: OptionType,
+      option_type: VanillaType, // here it was OptionType before
       option_direction: OptionDirection,
       strike: strike + "",
       expiration: EXP_IN_YEARS + "",
@@ -137,6 +144,7 @@ const Rform = () => {
       model_params: {},
       etc: {},
     };
+    console.log(`initial formInputs`,formInputs);
 
     if (
       formInputs.option_type.value === "curvedCall" ||
@@ -178,9 +186,10 @@ const Rform = () => {
     console.log(success, status);
   };
 
+
   return (
     <>
-      {console.log(AddressToToken[addressToken1])}
+      {/* {console.log(AddressToToken[addressToken1])} */}
       {isNext ? (
         <div className="px-10 py-4 relative">
           <div className="flex justify-between">
@@ -266,7 +275,7 @@ const Rform = () => {
             </div>
             <div className="flex flex-col">
               <ProfitChart
-                params={{ S: 1000, K: 1000, T: 0.5, r: 0.1, sigma: 0.5 }}
+                params={{ S: currentPrice, K: strike, T: DaysToYears(expiration), r: riskFree, sigma: 0.5 }}
                 OptionDirection={OptionDirection}
                 OptionType={VanillaType}
               />
@@ -291,7 +300,7 @@ const Rform = () => {
 
               <button
                 className="mt-20 bg-indigo-400 ml-28  w-50 rounded text-white text-center hover:bg-indigo-300"
-                // onClick={processForm}
+                onClick={processForm}
                 // onClick={() => alert("start replication")}
               >
                 {" "}
@@ -312,16 +321,6 @@ const Rform = () => {
                     setModel(value);
                   }}
                 />
-                {/* <div className="-ml-5 mt-4 flex flex-col">
-                    <label for="sigma" class="block mb-2   text-gray-900">Sigma</label>
-                    <input type="number" id="sigma" class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
-                           placeholder="0.2" required/>
-                </div>
-                <div className="-ml-5 mt-4 flex flex-col">
-                    <label for="sigma" class="block mb-2   text-gray-900">Sigma</label>
-                    <input type="number" id="sigma" class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
-                           placeholder="0.2" required/>
-                </div> */}
                 <div className="grid grid-cols-2 gap-12 mt-4">
 
                 {ModelsParams[chosenModel.value].map((el) => 
@@ -369,15 +368,16 @@ const Rform = () => {
                 style="mt-2"
                 sliderType={"strike"}
                 onChangeToggle={setStrike}
+                currentValue={currentPrice}
               />
               <Slider
                 style="mt-20"
                 sliderType={"expiry"}
-                onChangeToggle={setStrike}
+                onChangeToggle={setExpiration}
               />
             </div>
             <ProfitChart
-              params={{ S: 1000, K: 1000, T: 0.5, r: 0.1, sigma: 0.5 }}
+              params={{ S: currentPrice, K: strike, T: DaysToYears(expiration), r: riskFree, sigma: 0.5 }}
               OptionDirection={OptionDirection}
               OptionType={VanillaType}
             />
