@@ -57,7 +57,8 @@ const GenerateRow = ({ row }) => {
   const [isVisible, setVisibility] = useState(false);
   // console.log(defineAddresses.)
 
-  const costForHedging = parseFloat(Math.random() * 1.5).toFixed(3);
+  // const costForHedging = parseFloat(Math.random() * 1.5).toFixed(3);
+  const [_costForHedge, _setCostForHedge] = useState(1);
 
   var current = Date.now();
   // console.log((current - parseInt(row.lastHedge) * 1000) / 1000);
@@ -71,6 +72,14 @@ const GenerateRow = ({ row }) => {
   );
 
   const [seconds, setSeconds] = useState(counter);
+  const [_seconds, _setSeconds] = useState(counter);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      _setCostForHedge(parseFloat(Math.random() * 1.5).toFixed(3));
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -106,7 +115,7 @@ const GenerateRow = ({ row }) => {
           {defineAddresses[row.token0] + "-" + defineAddresses[row.token1]}
         </td>
         <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
-          {costForHedging + " $"}
+          {_costForHedge + " $"}
         </th>
         <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
           {parseFloat(row.hedgeFee).toFixed(3) + " DAI"}
