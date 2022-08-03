@@ -56,12 +56,28 @@ Chart.register(
 )
 
 
+// const isCorrectData = (data) => {
+//   try {
+//     if (data[data.length-1].value === undefined) {
+//       return 1500
+//     }
+//     else {
+//       return data[data.length-1].value
+//     }
+//   }
+//   catch (err) {
+//     return 1500
+//   }
+// }
+
 
 export default function PriceChart( { data } ) {
 
   const title = 'ETH price';
+  console.log(data)
 
-  const [hoverPrice, setHoverPrice] = useState(1000);
+
+  const [hoverPrice, setHoverPrice] = useState("");
 
   data = data.map((el, index) => ({
     x: index,
@@ -79,7 +95,7 @@ export default function PriceChart( { data } ) {
       backgroundColor: '#e85b9480',
       borderColor: '#e85b94ff',
       showLine: true,
-      pointHoverRadius: 10,
+      pointHoverRadius: 0, // somewhen it was 10
     }],
   }
 
@@ -90,7 +106,7 @@ export default function PriceChart( { data } ) {
       animation: {
         duration: 0,
       },
-      onHover: (el) => { setHoverPrice(data[el.x].y)},
+      // onHover: (el) => { setHoverPrice(data[el.x].y)},
       interaction: {
         mode: 'x',
         intersect: false,
@@ -150,16 +166,20 @@ export default function PriceChart( { data } ) {
       .getContext('2d')
 
     const chart = new Chart(ctx, config)
+
+    if (data[data.length-1] !== undefined)
+      setHoverPrice(data[data.length-1].y)
+
     return () => {
       chart.destroy()
     }
   }, [data])
 
   return (
-    <div className="mt-5 w-3/4 p-2 sm:p-8 border rounded-lg shadow-md">
-      <h5 className="font-sans text-sm">{title + ": "+ hoverPrice + "$"}</h5>
+    <div className="relative bg-white rounded-lg mr-4 xl:mr-0">
+      <h5 className="absolute -left-3 -bottom-1 font-sans text-sm ml-5">{hoverPrice + "$"}</h5>
       {/*<hr className="my-2"/>*/}
-      <canvas id="price-chart"/>
+      <canvas id="price-chart" className=' w-48' />
 
       {/*<div className="mt-3 flex justify-between text-gray-500 font-sans">
         <span className="flex items-center gap-3">

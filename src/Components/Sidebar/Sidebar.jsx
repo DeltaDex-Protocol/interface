@@ -29,6 +29,15 @@ const Sidebar = ({userAddress, sidebarLinks, onChangeToggle} ) => {
 	);
 }
 
+const NewSidebar = ({userAddress, sidebarLinks, onChangeToggle} ) => {
+
+
+	return (
+		<div>
+			<></>
+		</div>
+	);
+}
 
 
 

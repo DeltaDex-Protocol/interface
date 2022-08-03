@@ -11,10 +11,10 @@ const Header = ({walletAddress, connectPressed}) => {
 
 	// console.log('header:', walletAddress)
     return (
-        <div className={`${styles['header']}`}>
+        <div className={`${styles['header']} fixed`}>
         	<img src={logo} className={`${styles['logo']}`} />
 
-    		<Button variant="primary" className={`${styles['btn']} py-2 position-fixed`} onClick={connectPressed}> 
+    		<button className='fixed top-5 right-5 rounded bg-indigo-400 text-white font-normal' onClick={connectPressed}> 
 	                    {walletAddress !== "Not connected" ? (
 	                      "Connected: " +
 	                      String(walletAddress).substring(0, 6) +
@@ -23,7 +23,7 @@ const Header = ({walletAddress, connectPressed}) => {
 	                    ) : (
 	                      <span>Connect Wallet</span>
 	                    )}
-	    	</Button>
+	    	</button>
 
         </div>
     );
