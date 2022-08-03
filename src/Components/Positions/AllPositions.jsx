@@ -53,8 +53,6 @@ const defineAddresses = {
   "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH",
 };
 
-
-
 const GenerateRow = ({ row }) => {
   const [isVisible, setVisibility] = useState(false);
   // console.log(defineAddresses.)
@@ -111,7 +109,7 @@ const GenerateRow = ({ row }) => {
           {costForHedging + " $"}
         </th>
         <th scope="row" className="py-4 px-6  whitespace-nowrap justify-center">
-          {(parseFloat(row.hedgeFee).toFixed(3)) + " DAI"}
+          {parseFloat(row.hedgeFee).toFixed(3) + " DAI"}
         </th>
 
         <td>{seconds > 0 ? secondsToDhms(seconds) : "0 s"}</td>
@@ -168,36 +166,36 @@ const AllPositions = ({}) => {
 
   return (
     // <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
-      <table className="text-sm shadow-lg ">
-        <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
-          <tr>
-            <th scope="col" className="py-3 px-6">
-              Position id
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Option pair
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Estimated tx cost for hedging
-            </th>
-            <th scope="col" className="py-3 px-6">
-              Reward for hedging
-            </th>
+    <table className="text-sm shadow-lg ">
+      <thead className="text-xs text-black uppercase bg-indigo-200 text-center">
+        <tr>
+          <th scope="col" className="py-3 px-6">
+            Position id
+          </th>
+          <th scope="col" className="py-3 px-6">
+            Option pair
+          </th>
+          <th scope="col" className="py-3 px-6">
+            Estimated tx cost for hedging
+          </th>
+          <th scope="col" className="py-3 px-6">
+            Reward for hedging
+          </th>
 
-            <th scope="col" className="py-3 px-6">
-              Time left until next hedging
-            </th>
-            <th />
-          </tr>
-        </thead>
-        {rowData[0] !== undefined && (
-          <tbody>
-            {rowData.map((el, i) => (
-              <GenerateRow row={rowData[i]} />
-            ))}
-          </tbody>
-        )}
-      </table>
+          <th scope="col" className="py-3 px-6">
+            Time left until next hedging
+          </th>
+          <th />
+        </tr>
+      </thead>
+      {rowData[0] !== undefined && (
+        <tbody>
+          {rowData.map((el, i) => (
+            <GenerateRow row={rowData[i]} />
+          ))}
+        </tbody>
+      )}
+    </table>
     // </div>
   );
 };
