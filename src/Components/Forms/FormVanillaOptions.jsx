@@ -11,6 +11,7 @@ import Slider from "../Charts/Slider";
 // import PriceChart from "../Charts/PriceChart";
 
 import Creatable, { useCreatable } from "react-select/creatable";
+import { e, re } from "mathjs";
 
 // import CreatableSelect from 'react-select/creatable';
 
@@ -46,6 +47,31 @@ const AvailableModels = [
   { label: "SABR model (coming soon)", value: "sabr" },
   { label: "Heston model (coming soon)", value: "heston" },
 ];
+
+const ModelsParams = {
+    "black-scholes": ['BS vol'],
+    "jump-diffusion": ['JDM vol', "JDM jump size mean", "JDM jump deviation", "JDM jump intensity"],
+    "sabr": ['alpha', 'beta', 'rho'],
+    'heston': [],
+}
+
+
+const GenerateModelInput = ({param}) => {
+    // console.log(model, ModelsParams[model])
+
+    return (
+
+        <div className="-ml-5 mt-4 flex flex-col">
+            <label for={param} class="block mb-2   text-gray-900">{param}</label>
+            <input type="number" id={param} class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
+                placeholder="0.2" required/>
+        </div>
+    )
+}
+
+
+
+
 
 const Rform = () => {
   const [submit, setSubmit] = useState(false);
@@ -178,7 +204,7 @@ const Rform = () => {
                   placeholder="0.00"
                   className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
                   onChange={(value) => {
-                    setToken1Balance(value.target.value);
+                    setToken1Balance(value.target.value || "0");
                     console.log(value.target.value);
                   }}
                 />
@@ -196,7 +222,7 @@ const Rform = () => {
                       placeholder="0.00"
                       className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
                       onChange={(value) => {
-                        setFees(value.target.value);
+                        setFees(parseFloat(value.target.value) > 0 ? parseFloat(value.target.value) : 0);
                         console.log(value.target.value);
                       }}
                     />
@@ -205,7 +231,7 @@ const Rform = () => {
                 </div>
                 <div className="mt-3 text-xl">
                   <span className="bg-gray-100 rounded-md py-1 px-3 text-gray-500">{`${
-                    Math.round((parseInt(fees) / parseInt(perDay)) * 1000) /
+                    Math.round((parseFloat(fees) / parseInt(perDay) / parseFloat(expiration)) * 1000) /
                     1000
                   } DAI per hedge`}</span>
                 </div>
@@ -223,7 +249,7 @@ const Rform = () => {
                     placeholder="1"
                     className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
                     onChange={(value) => {
-                      setPerDay(value.target.value);
+                      setPerDay(parseFloat(value.target.value) > 0 ? parseFloat(value.target.value) : 0);
                       console.log(value.target.value);
                     }}
                   />
@@ -273,12 +299,12 @@ const Rform = () => {
               </button>
             </div>
           </div>
-          <div className="flex justify-between -mt-10 mb-10">
+          <div className="flex justify-between mt-10 mb-10">
             {showAdvancedSettings ? (
               <div className="flex flex-col">
                 <span className="-ml-5 w-80 text-xl">Choose the model</span>
                 <Creatable
-                  className="-ml-5 mt-2"
+                  className="-ml-5 mt-2 "
                   options={AvailableModels}
                   defaultValue={AvailableModels[0]}
                   onChange={(value) => {
@@ -286,20 +312,18 @@ const Rform = () => {
                     setModel(value);
                   }}
                 />
-                <div className="-ml-5 mt-3 flex flex-col">
-                  <input
-                    type="number"
-                    step="any"
-                    className="border h-10"
-                    placeholder="123"
-                  />
-                  <input
-                    type="number"
-                    step="any"
-                    className="border h-10 mt-3"
-                    placeholder="123"
-                  />
+                {/* <div className="-ml-5 mt-4 flex flex-col">
+                    <label for="sigma" class="block mb-2   text-gray-900">Sigma</label>
+                    <input type="number" id="sigma" class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
+                           placeholder="0.2" required/>
                 </div>
+                <div className="-ml-5 mt-4 flex flex-col">
+                    <label for="sigma" class="block mb-2   text-gray-900">Sigma</label>
+                    <input type="number" id="sigma" class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
+                           placeholder="0.2" required/>
+                </div> */}
+                {ModelsParams[chosenModel.value].map((el) => <GenerateModelInput param={el}/>)}
+
               </div>
             ) : (
               <div></div>
