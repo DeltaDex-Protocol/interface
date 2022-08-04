@@ -372,7 +372,7 @@ const CurvesForm = ({currentPrice}) => {
           </div>
         </div>
       ) : (
-        <div className="px-10 py-4 relative">
+        <div className="px-10 py-4 relative -mt-6">
           <div className="flex justify-between mb-0 mt-0 space-x-10">
             <div className="flex flex-col">
               <div className="">

@@ -289,8 +289,8 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
 
             {toggle === "YourPositions" && (
               <>
-                <div className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}>
-                  <span className="text-xl font-medium text-white">
+                <div className={`mb-4 px-4 py-2 h-24 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}>
+                  <span className="text-xl mt-2 font-medium text-white">
                     Your positions
                   </span>
                   <span className="text-base font-normal text-white">
@@ -305,8 +305,8 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
 
             {toggle === "AllPositions" && (
               <>
-                <div className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}>
-                  <span className="text-xl font-medium text-white">
+                <div className={`mb-4 px-4 py-2 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}>
+                  <span className="text-xl mt-2 font-medium text-white">
                     All positions
                   </span>
                   <span className="text-base font-normal text-white">
