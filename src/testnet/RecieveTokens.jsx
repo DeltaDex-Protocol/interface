@@ -44,16 +44,16 @@ const RecieveTokens = () => {
       }
     }
   
-    const connectWalletPressed = async () => {
-      const walletResponse = await connectWallet();
-      setStatus(walletResponse.status);
-      setWallet(walletResponse.address);
-    };
 
+  const connectWalletPressed = async () => {
+    const walletResponse = await connectWallet();
+    setStatus(walletResponse.status);
+    setWallet(walletResponse.address);
+  };
 
-    return (
-        <div className="bg-gradient-to-r from-slate-900 to-indigo-900 h-screen ">
-            {/* <div className="max-w-6xl">
+  return (
+    <div className="bg-gradient-to-r from-slate-900 to-indigo-900 h-screen ">
+      {/* <div className="max-w-6xl">
                 <span>
                 DeltaDex
                 </span>
@@ -62,8 +62,10 @@ const RecieveTokens = () => {
                 <div class="flex-col flex  max-w-md ml-10 xl:ml-0 z-10">
                     <div class=" flex flex-col  text-white my-72">
                         <h1 class=" font-semibold text-4xl ">Receive testnet <br/> tokens for free</h1>
-                        <p class="pr-3 text-sm max-w-sm">Lorem ipsum is placeholder text commonly used in the graphic, print,
-                            and publishing industries for previewing layouts and visual mockups</p>
+                        <p class="pr-3 text-sm max-w-sm">
+                            Connect you metamask wallet, mint DAI and WETH, approve the
+                            DeltaDex contract.
+                        </p>
                     </div>
                 </div>
 
