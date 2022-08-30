@@ -6,13 +6,17 @@ const RecieveTokens = () => {
     const [walletAddress, setWallet] = useState("");
     const [status, setStatus] = useState("");
   
-    useEffect(async () => {
-      const { address, status } = await getCurrentWalletConnected();
-  
-      setWallet(address);
-      setStatus(status);
-  
-      addWalletListener();
+    useEffect(() => {
+        getCurrentWalletConnected()
+            .then((res) => {
+                const { address, status } = res;
+                setWallet(address);
+                setStatus(status);
+                console.log(address);
+
+            });
+
+        addWalletListener();
     }, []);
   
     function addWalletListener() {
@@ -55,8 +59,8 @@ const RecieveTokens = () => {
                 </span>
             </div> */}
             <div className="max-w-6xl max-h-screen mx-auto flex justify-between">
-                <div class="flex-col flex  max-w-md ml-10 lg:ml-0 z-10">
-                    <div class=" flex flex-col  text-white my-52">
+                <div class="flex-col flex  max-w-md ml-10 xl:ml-0 z-10">
+                    <div class=" flex flex-col  text-white my-72">
                         <h1 class=" font-semibold text-4xl ">Receive testnet <br/> tokens for free</h1>
                         <p class="pr-3 text-sm max-w-sm">Lorem ipsum is placeholder text commonly used in the graphic, print,
                             and publishing industries for previewing layouts and visual mockups</p>
@@ -67,34 +71,41 @@ const RecieveTokens = () => {
                     <span className="text-white text-xl">Get free DeltaDex DAI and WETH tokens</span>
                     <div className="flex space-x-32 mr-10 lg:ml-0 mt-10">
                         <span className="my-auto text-white text-3xl w-max">Step 1.</span>
-                        <div className="rounded-xl py-2 px-3 text-lg text-white text-center font-semibold bg-violet-500"
+                        <button className=" rounded-xl w-52 py-2 px-3 text-normal text-white text-center font-semibold bg-violet-500 hover:bg-violet-800"
                             onClick={connectWallet}>
-                            {walletAddress !== "Not connected" ? (
-                                <span>Not connected</span>
+                            {walletAddress == "" ? (
+                                <span>Connect your wallet</span>
                             ) : (
                                 <span>Connected</span>
                             )}
-                        </div>
+                        </button>
                     </div>
                     <div className="flex space-x-32 mr-10 lg:ml-0 mt-10">
                         <span className="my-auto text-white text-3xl w-max">Step 2.</span>
-                        <div className="rounded-xl py-2 px-3 text-lg text-black text-center font-normal bg-white">
-                        {walletAddress !== "Not connected" ? (
+                        <div className="rounded-xl w-52 py-2 px-3 text-normal text-black text-center font-normal bg-white">
+                        {walletAddress !== "" ? (
                             String(walletAddress).substring(0, 6) +
                             "..." +
                             String(walletAddress).substring(38)
                         ) : (
-                            <span>Connect Wallet</span>
+                            <span>Check your address</span>
                         )}
                         </div>
                     </div>
-                    <span>
-
-                    </span>
                     <div className="flex space-x-32 mr-10 lg:ml-0 mt-10">
-                        <span className="my-auto text-white text-3xl w-max">Step 3.</span>
-                        <div className="rounded-xl py-2 px-3 text-lg text-white text-center font-semibold bg-violet-500">
-                            <span className="">Check your address</span>
+                        <span className="mt-16 text-white text-3xl w-max">Step 3.</span>
+                        <div className="flex flex-col space-y-4">
+                            <span className="text-white text-normal font-base w-36">
+                                Mint 10000 DAI and 5 WETH tokens
+                            </span>
+                            <div className="flex flex-col space-y-6">
+                                <button className="rounded-xl py-2 px-3 w-52 text-normal text-white text-center font-semibold bg-violet-500 hover:bg-violet-800">
+                                    <span className="">Mint 10000 DAI</span>
+                                </button>
+                                <button className="rounded-xl py-2 px-3 w-52 text-normal text-white text-center font-semibold bg-violet-500 hover:bg-violet-800">
+                                    <span className="">Mint 5 WETH</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
