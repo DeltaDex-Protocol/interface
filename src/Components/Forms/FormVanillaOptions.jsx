@@ -16,19 +16,19 @@ import { e, re } from "mathjs";
 // import CreatableSelect from 'react-select/creatable';
 
 const TokenOptions = [
-  { label: "DAI", value: "0x6B175474E89094C44Da98b954EedeAC495271d0F" },
+  { label: "DAI", value: "0xaaa31658EfA0da2a69fE925Ff652FeCb9cF94E24" },
   { label: "USDC", value: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" },
   { label: "USDT", value: "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
-  { label: "WETH", value: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" },
+  { label: "WETH", value: "0x6D73De24AA0a5154df2915095BAe44598997029e" },
 ];
 
 // const addrToToken = TokenOptions.map((el) => {})
 
 const AddressToToken = {
-  "0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
+  "0xaaa31658EfA0da2a69fE925Ff652FeCb9cF94E24": "DAI",
   "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
   "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
-  "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH",
+  "0x6D73De24AA0a5154df2915095BAe44598997029e": "WETH",
 };
 
 const OptionDirections = [
@@ -50,38 +50,42 @@ const AvailableModels = [
 
 // const ModelsParams = {
 //     "black-scholes": [['BS vol', setBSvol]],
-//     "jump-diffusion": [['JDM vol', setJDMvol], ["JDM jump size mean", setJDMjumpSizeMean], 
+//     "jump-diffusion": [['JDM vol', setJDMvol], ["JDM jump size mean", setJDMjumpSizeMean],
 //                       ["JDM jump deviation", setJDMjumpDeviation], ["JDM jump intensity", setJDMjumpIntensity]],
 //     "sabr": ['alpha', 'beta', 'rho'],
 //     'heston': [],
 // }
 
+const GenerateModelInput = ({ param, onChangeToggle }) => {
+  console.log(param);
 
-
-const GenerateModelInput = ({param, onChangeToggle}) => {
-    console.log(param)
-
-    return (
-
-        <div className="-ml-5 -mt-2 flex flex-col">
-            <label for={param} class="block mb-2  text-gray-900">{param}</label>
-            <input type="number" id={param} class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
-                placeholder="0.2" onChange={(e)=>{onChangeToggle(e.target.value)}} required/>
-        </div>
-    )
-}
+  return (
+    <div className="-ml-5 -mt-2 flex flex-col">
+      <label for={param} class="block mb-2  text-gray-900">
+        {param}
+      </label>
+      <input
+        type="number"
+        id={param}
+        class=" border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5  "
+        placeholder="0.2"
+        onChange={(e) => {
+          onChangeToggle(e.target.value);
+        }}
+        required
+      />
+    </div>
+  );
+};
 
 const DAYS_IN_YEAR = 365.25;
 
 const DaysToYears = (days) => {
-    return Math.round(days / DAYS_IN_YEAR * 1000) / 1000;
-}
+  return Math.round((days / DAYS_IN_YEAR) * 1000) / 1000;
+};
 
-
-
-const VanillaForm = ({currentPrice}) => {
-
-//   console.log(currentPrice)
+const VanillaForm = ({ currentPrice }) => {
+  //   console.log(currentPrice)
 
   const [submit, setSubmit] = useState(false);
 
@@ -97,7 +101,7 @@ const VanillaForm = ({currentPrice}) => {
   const [strike, setStrike] = useState(300);
   const [expiration, setExpiration] = useState(5);
 
-//   const [OptionType, setOptionType] = useState(VanillaTypes[0]);
+  //   const [OptionType, setOptionType] = useState(VanillaTypes[0]);
 
   const [OptionDirection, setDirection] = useState(OptionDirections[0]);
 
@@ -128,35 +132,39 @@ const VanillaForm = ({currentPrice}) => {
   const [JDMjumpIntensity, setJDMjumpIntensity] = useState("0");
 
   const fillDefault = () => {
-      console.log(VanillaType, OptionDirection)
-      setVanillaType(VanillaTypes[0]);
-      setDirection(OptionDirections[0]);
-      setAddressToken1(TokenOptions[0].value);
-      setAddressToken2(TokenOptions[TokenOptions.length - 1].value);
-      setToken1Balance(1);
-      setToken2Balance(1);
-      setRiskFree(0);
-      setModel(AvailableModels[0]);
-      setOptionAmount(1);
-      setStrike(300);
-      setExpiration(5);
-  }
+    console.log(VanillaType, OptionDirection);
+    setVanillaType(VanillaTypes[0]);
+    setDirection(OptionDirections[0]);
+    setAddressToken1(TokenOptions[0].value);
+    setAddressToken2(TokenOptions[TokenOptions.length - 1].value);
+    setToken1Balance(1);
+    setToken2Balance(1);
+    setRiskFree(0);
+    setModel(AvailableModels[0]);
+    setOptionAmount(1);
+    setStrike(300);
+    setExpiration(5);
+  };
 
   const ModelsParams = {
-    "black-scholes": [['BS vol', setBSvol]],
-    "jump-diffusion": [['JDM vol', setJDMvol], ["JDM jump size mean", setJDMjumpSizeMean], 
-                      ["JDM jump deviation", setJDMjumpDeviation], ["JDM jump intensity", setJDMjumpIntensity]],
-    "sabr": ['alpha', 'beta', 'rho'],
-    'heston': [],
-    }
+    "black-scholes": [["BS vol", setBSvol]],
+    "jump-diffusion": [
+      ["JDM vol", setJDMvol],
+      ["JDM jump size mean", setJDMjumpSizeMean],
+      ["JDM jump deviation", setJDMjumpDeviation],
+      ["JDM jump intensity", setJDMjumpIntensity],
+    ],
+    sabr: ["alpha", "beta", "rho"],
+    heston: [],
+  };
 
-    const ShouldPayFirstToken = (option_type, option_direction) => {
-        // alert(option_type+option_direction)
-        return option_type === 'call' && option_direction === 'long' 
-                || option_type === 'put' && option_direction === 'short' ? true : false;
-        
-        }
-
+  const ShouldPayFirstToken = (option_type, option_direction) => {
+    // alert(option_type+option_direction)
+    return (option_type === "call" && option_direction === "long") ||
+      (option_type === "put" && option_direction === "short")
+      ? true
+      : false;
+  };
 
   const processForm = async () => {
     const EXP_IN_YEARS = expiration / 365.25;
@@ -219,7 +227,6 @@ const VanillaForm = ({currentPrice}) => {
     console.log(success, status);
   };
 
-
   return (
     <>
       {/* {console.log(AddressToToken[addressToken1])} */}
@@ -234,9 +241,12 @@ const VanillaForm = ({currentPrice}) => {
                 <span className="-ml-5 text-black text-normal mt-1">
                   Please add the liquidity in
                   <span className="font-bold">
-                  {ShouldPayFirstToken(VanillaType.label, OptionDirection.value) ?
-                      ` ${AddressToToken[addressToken1]} `
-                    : ` ${AddressToToken[addressToken2]} `}
+                    {ShouldPayFirstToken(
+                      VanillaType.label,
+                      OptionDirection.value
+                    )
+                      ? ` ${AddressToToken[addressToken1]} `
+                      : ` ${AddressToToken[addressToken2]} `}
                   </span>
                   tokens
                 </span>
@@ -267,7 +277,11 @@ const VanillaForm = ({currentPrice}) => {
                       placeholder="0.00"
                       className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
                       onChange={(value) => {
-                        setFees(parseFloat(value.target.value) > 0 ? parseFloat(value.target.value) : 0);
+                        setFees(
+                          parseFloat(value.target.value) > 0
+                            ? parseFloat(value.target.value)
+                            : 0
+                        );
                         console.log(value.target.value);
                       }}
                     />
@@ -276,8 +290,12 @@ const VanillaForm = ({currentPrice}) => {
                 </div>
                 <div className="mt-3 text-xl">
                   <span className="bg-gray-100 rounded-md py-1 px-3 text-gray-500">{`${
-                    Math.round((parseFloat(fees) / parseInt(perDay) / parseFloat(expiration)) * 1000) /
-                    1000
+                    Math.round(
+                      (parseFloat(fees) /
+                        parseInt(perDay) /
+                        parseFloat(expiration)) *
+                        1000
+                    ) / 1000
                   } ${AddressToToken[addressToken1]} per hedge`}</span>
                 </div>
               </div>
@@ -294,14 +312,21 @@ const VanillaForm = ({currentPrice}) => {
                     placeholder="1"
                     className="outline-0 w-28 h-10 text-xl bg-gray-100 text-center absolute left-0 top-1 rounded-2xl"
                     onChange={(value) => {
-                      setPerDay(parseFloat(value.target.value) > 0 ? parseFloat(value.target.value) : 0);
+                      setPerDay(
+                        parseFloat(value.target.value) > 0
+                          ? parseFloat(value.target.value)
+                          : 0
+                      );
                       console.log(value.target.value);
                     }}
                   />
                   <span className="absolute ml-32 text-xl top-3">{`times per day`}</span>
                   <button
                     className="mt-20 bg-indigo-400 ml w-50 rounded text-white text-center hover:bg-indigo-300"
-                    onClick={() => {fillDefault(); setNext(!isNext)}}
+                    onClick={() => {
+                      fillDefault();
+                      setNext(!isNext);
+                    }}
                   >
                     {" "}
                     Back
@@ -311,7 +336,13 @@ const VanillaForm = ({currentPrice}) => {
             </div>
             <div className="flex flex-col">
               <ProfitChart
-                params={{ S: parseFloat(currentPrice), K: parseFloat(strike), T: DaysToYears(expiration), r: parseFloat(riskFree), sigma: 0.5 }}
+                params={{
+                  S: parseFloat(currentPrice),
+                  K: parseFloat(strike),
+                  T: DaysToYears(expiration),
+                  r: parseFloat(riskFree),
+                  sigma: 0.5,
+                }}
                 OptionDirection={OptionDirection}
                 OptionType={VanillaType}
               />
@@ -358,15 +389,13 @@ const VanillaForm = ({currentPrice}) => {
                   }}
                 />
                 <div className="grid grid-cols-2 gap-12 mt-4">
-
-                {ModelsParams[chosenModel.value].map((el) => 
-                    <GenerateModelInput param={el[0]} onChangeToggle={el[1]}/>
-                )}
+                  {ModelsParams[chosenModel.value].map((el) => (
+                    <GenerateModelInput param={el[0]} onChangeToggle={el[1]} />
+                  ))}
                 </div>
-
               </div>
-
-            ) : ( // first page
+            ) : (
+              // first page
 
               <div></div>
             )}
@@ -416,8 +445,14 @@ const VanillaForm = ({currentPrice}) => {
               />
             </div>
             <ProfitChart
-                params={{ S: parseFloat(currentPrice), K: parseFloat(strike), T: DaysToYears(expiration), r: parseFloat(riskFree), sigma: 0.5 }}
-                OptionDirection={OptionDirection}
+              params={{
+                S: parseFloat(currentPrice),
+                K: parseFloat(strike),
+                T: DaysToYears(expiration),
+                r: parseFloat(riskFree),
+                sigma: 0.5,
+              }}
+              OptionDirection={OptionDirection}
               OptionType={VanillaType}
             />
           </div>
