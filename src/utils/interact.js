@@ -1,5 +1,11 @@
-const contractABI = require("./OptionMaker.json");
-const contractAddress = "0x512F7469BcC83089497506b5df64c6E246B39925";
+const OptionMakerABI = require("./OptionMaker.json");
+const OptionMakerAddress = "0x04b63d858D2F4633aC004C90223d7CF2f21596B9";
+
+const StorageABI = require("./Storage.json");
+const StorageAddress = "0xF7dD19f183adb9bD1aeAE660422D7208558E10bE";
+
+// OptionMakerABI
+// OptionMakerAddress
 
 var ethers = require("ethers");
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -92,8 +98,8 @@ export const startReplication = async (formInputs) => {
 
     const signer = provider.getSigner();
     const optionmaker = new ethers.Contract(
-      contractAddress,
-      contractABI,
+      OptionMakerAddress,
+      OptionMakerABI,
       signer
     );
 
@@ -172,8 +178,8 @@ export const startReplication = async (formInputs) => {
 
     const signer = provider.getSigner();
     const optionmaker = new ethers.Contract(
-      contractAddress,
-      contractABI,
+      OptionMakerAddress,
+      OptionMakerABI,
       signer
     );
 
@@ -218,7 +224,11 @@ export const startReplication2 = async (
   jumpIntensity
 ) => {
   const signer = provider.getSigner();
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+  const optionmaker = new ethers.Contract(
+    OptionMakerAddress,
+    OptionMakerABI,
+    signer
+  );
 
   if (model == "BS") {
     const BS_input = [
@@ -301,8 +311,8 @@ export const startReplication2 = async (
 
     // const signer = provider.getSigner();
     // const optionmaker = new ethers.Contract(
-    //   contractAddress,
-    //   contractABI,
+    //   OptionMakerAddress,
+    //   OptionMakerABI,
     //   signer
     // );
 
@@ -385,7 +395,11 @@ export const sendForm = async (
   ];
 
   const signer = provider.getSigner();
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+  const optionmaker = new ethers.Contract(
+    OptionMakerAddress,
+    OptionMakerABI,
+    signer
+  );
 
   try {
     const tx = await optionmaker.JDM_START_REPLICATION(JDM_Call_Input);
@@ -452,22 +466,31 @@ export const getCurrentWalletConnected = async () => {
 export const getUserPositions = async () => {
   const signer = provider.getSigner();
 
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+  /*   const optionmaker = new ethers.Contract(
+    OptionMakerAddress,
+    OptionMakerABI,
+    signer
+  ); */
+
+  const optionstorage = new ethers.Contract(StorageAddress, StorageABI, signer);
 
   const userAddress = await signer.getAddress();
   // // console.log(userAddress.address);
 
-  const noOfPositions = await optionmaker.userIDlength(userAddress);
+  const noOfPositions = await optionstorage.userIDlength(userAddress);
   // // console.log(noOfPositions);
 
   const rows = [];
 
   for (let i = 0; i < noOfPositions; i++) {
-    const pairAddress = await optionmaker.Positions(userAddress, i.toString());
+    const pairAddress = await optionstorage.Positions(
+      userAddress,
+      i.toString()
+    );
 
     // JDM positions
 
-    var optionPosition1 = await optionmaker.JDM_Options(
+    var optionPosition1 = await optionstorage.JDM_Options(
       pairAddress,
       userAddress,
       i
@@ -485,7 +508,7 @@ export const getUserPositions = async () => {
 
     // BS positions
 
-    var optionPosition2 = await optionmaker.BS_Options(
+    var optionPosition2 = await optionstorage.BS_Options(
       pairAddress,
       userAddress,
       i
@@ -502,7 +525,7 @@ export const getUserPositions = async () => {
     }
 
     // BSC positions
-    var optionPosition3 = await optionmaker.BSC_Options(
+    var optionPosition3 = await optionstorage.BSC_Options(
       pairAddress,
       userAddress,
       i
@@ -840,13 +863,13 @@ function onlyUnique(value, index, self) {
 export const getAllPositions = async () => {
   const signer = provider.getSigner();
 
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+  const optionstorage = new ethers.Contract(StorageAddress, StorageABI, signer);
 
   // const tokenAddresses = await getAllPairAddresses();
 
   let tokenPair = "0x7BDA8b27E891F9687BD6d3312Ab3f4F458e2cC91";
 
-  let users = await optionmaker.getUserAddressesInPair(tokenPair);
+  let users = await optionstorage.getUserAddressesInPair(tokenPair);
 
   let uniqueUsers = users.filter(onlyUnique);
 
@@ -854,7 +877,7 @@ export const getAllPositions = async () => {
   // let positions = [];
   for (const user of uniqueUsers) {
     // addresses of token pairs that user is a part of
-    let tokenPairs = await optionmaker.getUserPositions(user);
+    let tokenPairs = await optionstorage.getUserPositions(user);
 
     // console.log("token pairs", tokenPairs);
 
@@ -868,7 +891,7 @@ export const getAllPositions = async () => {
     let rows = [];
 
     for (let i = 0; i < noOfPositionsInPair; i++) {
-      let JDM = await optionmaker.JDM_Options(tokenPair, user, i);
+      let JDM = await optionstorage.JDM_Options(tokenPair, user, i);
 
       var isEmpty = checkIfEmptyPosition2(JDM);
       if (isEmpty == true) {
@@ -878,7 +901,7 @@ export const getAllPositions = async () => {
         rows.push(JDMrow);
       }
 
-      let BS = await optionmaker.BS_Options(tokenPair, user, i);
+      let BS = await optionstorage.BS_Options(tokenPair, user, i);
 
       var isEmpty = checkIfEmptyPosition2(BS);
       if (isEmpty == true) {
@@ -888,7 +911,7 @@ export const getAllPositions = async () => {
         rows.push(BSrow);
       }
 
-      let BSC = await optionmaker.BSC_Options(tokenPair, user, i);
+      let BSC = await optionstorage.BSC_Options(tokenPair, user, i);
       var isEmpty = checkIfEmptyPosition2(BSC);
       if (isEmpty == true) {
         // pass
@@ -904,13 +927,13 @@ export const getAllPositions = async () => {
 
 async function getAllPairAddresses() {
   const signer = provider.getSigner();
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+  const optionstorage = new ethers.Contract(StorageAddress, StorageABI, signer);
 
-  const numberOfPairs = await optionmaker.numOfPairs();
+  const numberOfPairs = await optionstorage.numOfPairs();
 
   let pairs = [];
   for (let i = 0; i < numberOfPairs; i++) {
-    let pair = await optionmaker.Pairs(i);
+    let pair = await optionstorage.Pairs(i);
     pairs.push(pair);
   }
   return pairs;
@@ -919,7 +942,11 @@ async function getAllPairAddresses() {
 export const getTokenPair = async (token0, token1) => {
   const signer = provider.getSigner();
 
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer);
+  const optionmaker = new ethers.Contract(
+    OptionMakerAddress,
+    OptionMakerABI,
+    signer
+  );
 
   let pairAddress = await optionmaker.getPair(token0, token1);
 

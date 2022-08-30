@@ -2,18 +2,23 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "_BS",
+        "internalType": "contract OptionStorage",
+        "name": "_storage",
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_JDM",
+        "internalType": "contract BSMOptionMaker",
+        "name": "_BSM_MAKER",
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_BSC",
+        "internalType": "contract JDMOptionMaker",
+        "name": "_JDM_MAKER",
+        "type": "address"
+      },
+      {
+        "internalType": "contract BSCOptionMaker",
+        "name": "_BSC_MAKER",
         "type": "address"
       }
     ],
@@ -27,7 +32,7 @@
   },
   {
     "inputs": [],
-    "name": "PRBMathSD59x18__DivInputTooSmall",
+    "name": "PRBMathSD59x18__MulInputTooSmall",
     "type": "error"
   },
   {
@@ -38,7 +43,7 @@
         "type": "uint256"
       }
     ],
-    "name": "PRBMathSD59x18__DivOverflow",
+    "name": "PRBMathSD59x18__MulOverflow",
     "type": "error"
   },
   {
@@ -47,33 +52,15 @@
         "internalType": "uint256",
         "name": "prod1",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "denominator",
-        "type": "uint256"
       }
     ],
-    "name": "PRBMath__MulDivOverflow",
+    "name": "PRBMath__MulDivFixedPointOverflow",
     "type": "error"
   },
   {
     "inputs": [],
     "name": "T",
     "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "BSCOptionMaker",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [
@@ -105,116 +92,13 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "BSC_Options",
+    "inputs": [],
+    "name": "BSC_MAKER",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "tokenA",
+        "internalType": "contract BSCOptionMaker",
+        "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenB",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenA_balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenB_balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isCall",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "isLong",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expiry",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "fees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "perDay",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "hedgeFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastHedgeTimeStamp",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "int256",
-            "name": "K",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "T",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "r",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "sigma",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "tv0",
-            "type": "int256"
-          }
-        ],
-        "internalType": "struct BSC.BSCurvedParams",
-        "name": "parameters",
-        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -326,12 +210,12 @@
     "outputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "pair",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "amountOut",
         "type": "uint256"
       }
     ],
@@ -354,14 +238,9 @@
     "name": "BSC_Withdraw",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
       }
     ],
     "stateMutability": "nonpayable",
@@ -511,69 +390,6 @@
         "internalType": "uint256",
         "name": "ID",
         "type": "uint256"
-      },
-      {
-        "internalType": "int256",
-        "name": "price",
-        "type": "int256"
-      }
-    ],
-    "name": "BSCcalculateNewDelta",
-    "outputs": [
-      {
-        "internalType": "int256",
-        "name": "delta",
-        "type": "int256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "pair",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "ID",
-        "type": "uint256"
-      }
-    ],
-    "name": "BSCcalculatePreviousDelta",
-    "outputs": [
-      {
-        "internalType": "int256",
-        "name": "delta",
-        "type": "int256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "pair",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "ID",
-        "type": "uint256"
       }
     ],
     "name": "BSCgetHedgeAvailability",
@@ -589,10 +405,10 @@
   },
   {
     "inputs": [],
-    "name": "BSOptionMaker",
+    "name": "BSM_MAKER",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract BSMOptionMaker",
         "name": "",
         "type": "address"
       }
@@ -627,117 +443,6 @@
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "BS_Options",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "tokenA",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenB",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenA_balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenB_balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isCall",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "isLong",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expiry",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "fees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "perDay",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "hedgeFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastHedgeTimeStamp",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "int256",
-            "name": "K",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "T",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "r",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "sigma",
-            "type": "int256"
-          }
-        ],
-        "internalType": "struct BS.BSOptionParams",
-        "name": "parameters",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -841,12 +546,12 @@
     "outputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "pair",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "amountOut",
         "type": "uint256"
       }
     ],
@@ -869,14 +574,9 @@
     "name": "BS_Withdraw",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
       }
     ],
     "stateMutability": "nonpayable",
@@ -1048,19 +748,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "JDMOptionMaker",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -1090,126 +777,13 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "JDM_Options",
+    "inputs": [],
+    "name": "JDM_MAKER",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "tokenA",
+        "internalType": "contract JDMOptionMaker",
+        "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenB",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenA_balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenB_balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isCall",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "isLong",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expiry",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "fees",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "perDay",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "hedgeFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lastHedgeTimeStamp",
-        "type": "uint256"
-      },
-      {
-        "components": [
-          {
-            "internalType": "int256",
-            "name": "K",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "T",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "r",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "sigma",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "m",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "v",
-            "type": "int256"
-          },
-          {
-            "internalType": "int256",
-            "name": "lam",
-            "type": "int256"
-          }
-        ],
-        "internalType": "struct JDM.JDMOptionParams",
-        "name": "parameters",
-        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -1331,12 +905,12 @@
     "outputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "pair",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "amountOut",
         "type": "uint256"
       }
     ],
@@ -1359,14 +933,9 @@
     "name": "JDM_Withdraw",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
       }
     ],
     "stateMutability": "nonpayable",
@@ -1540,151 +1109,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "PairFees",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "tokenA",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenB",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "PairUsers",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "Pairs",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "tokenA",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenA_balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "tokenB",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tokenB_balance",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "Positions",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "USDC",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "USDT",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "WETH",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "_factory",
     "outputs": [
@@ -1698,14 +1122,71 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "addrBSC_MAKER",
+    "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
-    "name": "allPairs",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "addrBSM_MAKER",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "addrJDM_MAKER",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenA",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "tokenB",
+        "type": "address"
+      }
+    ],
+    "name": "createPair",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "pair",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "deployer",
     "outputs": [
       {
         "internalType": "address",
@@ -1751,26 +1232,9 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "pair",
-        "type": "address"
-      }
-    ],
-    "name": "getNumberOfUsersInPair",
+    "inputs": [],
+    "name": "getPeripheryAddr",
     "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "numberOfUsers",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
       {
         "internalType": "address",
         "name": "",
@@ -1780,37 +1244,10 @@
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "name": "getPair",
-    "outputs": [
+      },
       {
         "internalType": "address",
         "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "pair",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "ID",
-        "type": "uint256"
-      }
-    ],
-    "name": "getPairUserAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "user",
         "type": "address"
       }
     ],
@@ -1842,38 +1279,13 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "pair",
-        "type": "address"
-      }
-    ],
-    "name": "getUserAddressesInPair",
+    "inputs": [],
+    "name": "getStorageAddr",
     "outputs": [
       {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
-    ],
-    "name": "getUserPositions",
-    "outputs": [
-      {
-        "internalType": "address[]",
         "name": "",
-        "type": "address[]"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1881,15 +1293,44 @@
   },
   {
     "inputs": [],
-    "name": "numOfPairs",
+    "name": "storageContract",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract OptionStorage",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token0",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "token1",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountIn",
+        "type": "uint256"
+      }
+    ],
+    "name": "swapExactInputSingle",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountOut",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1909,19 +1350,63 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "user",
+        "name": "token",
         "type": "address"
-      }
-    ],
-    "name": "userIDlength",
-    "outputs": [
+      },
       {
         "internalType": "uint256",
-        "name": "numberOfPositions",
+        "name": "amount",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "name": "transferIn",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenA",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "tokenB",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenA_balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenB_balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "feeBalance",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdraw_transfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
