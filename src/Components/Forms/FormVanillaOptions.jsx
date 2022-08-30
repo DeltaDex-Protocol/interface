@@ -16,19 +16,19 @@ import { e, re } from "mathjs";
 // import CreatableSelect from 'react-select/creatable';
 
 const TokenOptions = [
-  { label: "DAI", value: "0xaaa31658EfA0da2a69fE925Ff652FeCb9cF94E24" },
+  { label: "DAI", value: "0x2dc042385a6b1efaeec4816118e704028a733bed" },
   { label: "USDC", value: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" },
   { label: "USDT", value: "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
-  { label: "WETH", value: "0x6D73De24AA0a5154df2915095BAe44598997029e" },
+  { label: "WETH", value: "0xA8132b63AdE6ff0eAFE2b6a8E7E252A2418eCCec" },
 ];
 
 // const addrToToken = TokenOptions.map((el) => {})
 
 const AddressToToken = {
-  "0xaaa31658EfA0da2a69fE925Ff652FeCb9cF94E24": "DAI",
+  "0x2dc042385a6b1efaeec4816118e704028a733bed": "DAI",
   "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
   "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
-  "0x6D73De24AA0a5154df2915095BAe44598997029e": "WETH",
+  "0xA8132b63AdE6ff0eAFE2b6a8E7E252A2418eCCec": "WETH",
 };
 
 const OptionDirections = [

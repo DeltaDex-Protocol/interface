@@ -1,8 +1,8 @@
 const OptionMakerABI = require("./OptionMaker.json");
-const OptionMakerAddress = "0x04b63d858D2F4633aC004C90223d7CF2f21596B9";
+const OptionMakerAddress = "0xe21dA5f66317980f74E20Faec80b1c96D1Ca64FE";
 
 const StorageABI = require("./Storage.json");
-const StorageAddress = "0xF7dD19f183adb9bD1aeAE660422D7208558E10bE";
+const StorageAddress = "0xa045292aE1A0ACd388e5C6f632437d2481845A28";
 
 // OptionMakerABI
 // OptionMakerAddress
@@ -194,7 +194,7 @@ export const startReplication = async (formInputs) => {
       return {
         success: true,
         status:
-          "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+          "✅ Check out your transaction on Etherscan: https://rinkeby.etherscan.io/tx/",
       };
     } catch (error) {
       return {
@@ -264,7 +264,7 @@ export const startReplication2 = async (
       return {
         success: true,
         status:
-          "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+          "✅ Check out your transaction on Etherscan: https://rinkeby.etherscan.io/tx/",
       };
     } catch (error) {
       return {
@@ -325,7 +325,7 @@ export const startReplication2 = async (
       return {
         success: true,
         status:
-          "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+          "✅ Check out your transaction on Etherscan: https://rinkeby.etherscan.io/tx/",
       };
     } catch (error) {
       return {
@@ -410,7 +410,7 @@ export const sendForm = async (
     return {
       success: true,
       status:
-        "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+        "✅ Check out your transaction on Etherscan: https://rinkeby.etherscan.io/tx/",
     };
   } catch (error) {
     return {
@@ -867,7 +867,7 @@ export const getAllPositions = async () => {
 
   // const tokenAddresses = await getAllPairAddresses();
 
-  let tokenPair = "0x27675B275E84f2dC7EB825Be9fe5e5DEe88c2808";
+  let tokenPair = "0x21a5CD4cF0f5247d0B91c8031168c79a3cbc5Cfb";
 
   let users = await optionstorage.getUserAddressesInPair(tokenPair);
 

@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-
-
 // import ProfitChart from "../Charts/NewChart";
 import Slider from "../Charts/Slider";
 // import PriceChart from "../Charts/PriceChart";
@@ -11,10 +9,10 @@ import Creatable, { useCreatable } from "react-select/creatable";
 // import CreatableSelect from 'react-select/creatable';
 
 const TokenOptions = [
-  { label: "DAI", value: "0x6B175474E89094C44Da98b954EedeAC495271d0F" },
+  { label: "DAI", value: "0x2dc042385a6b1efaeec4816118e704028a733bed" },
   { label: "USDC", value: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" },
   { label: "USDT", value: "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
-  { label: "WETH", value: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" },
+  { label: "WETH", value: "0xA8132b63AdE6ff0eAFE2b6a8E7E252A2418eCCec" },
 ];
 
 const OptionDirections = [
