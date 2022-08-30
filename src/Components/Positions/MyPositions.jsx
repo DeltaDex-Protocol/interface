@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 import {
   getUserPositions,
   getUserPositionsTable,
@@ -40,10 +39,10 @@ const columns = [
 ];
 
 const defineAddresses = {
-  "0xaaa31658EfA0da2a69fE925Ff652FeCb9cF94E24": "DAI",
-  "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
-  "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
-  "0x6D73De24AA0a5154df2915095BAe44598997029e": "WETH",
+  "0x2DC042385a6b1eFAeec4816118E704028A733BED": "DAI",
+  "0x2DC042385a6b1eFAeec4816118E704128A733BED": "USDC",
+  "0x2DC042385a6b1eFAeec4816118E704128A733BED": "USDT",
+  "0xA8132b63AdE6ff0eAFE2b6a8E7E252A2418eCCec": "WETH",
 };
 
 const GenerateRow = ({ row }) => {
