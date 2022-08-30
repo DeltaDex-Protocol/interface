@@ -21,8 +21,6 @@ import { useEffect } from "react";
 
 import { settings } from "../../constants";
 
-
-
 const TokenOptions = [
   { label: "Black Scholes", value: "BSM" },
   { label: "Jump Diffusion Model", value: "JDM" },
@@ -50,10 +48,10 @@ const columns = [
 ];
 
 const defineAddresses = {
-  "0x6B175474E89094C44Da98b954EedeAC495271d0F": "DAI",
+  "0xaaa31658EfA0da2a69fE925Ff652FeCb9cF94E24": "DAI",
   "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC",
   "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
-  "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH",
+  "0x6D73De24AA0a5154df2915095BAe44598997029e": "WETH",
 };
 
 const GenerateRow = ({ row }) => {
@@ -245,7 +243,9 @@ const MyPositions = ({}) => {
   return (
     <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
       <table className="text-sm shadow-lg max-w-4xl bg-white">
-        <thead className={`text-xs ${settings.text_color} uppercase ${settings.hover_main_color} text-center`}>
+        <thead
+          className={`text-xs ${settings.text_color} uppercase ${settings.hover_main_color} text-center`}
+        >
           <tr>
             <th scope="col" className="py-3 px-6">
               Position id

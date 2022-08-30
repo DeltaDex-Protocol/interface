@@ -27,10 +27,10 @@ import Slider from "../../Charts/Slider.jsx";
 import PriceChart from "../../Charts/PriceChart.jsx";
 
 const TokenOptions = [
-  { label: "DAI", value: "0x6B175474E89094C44Da98b954EedeAC495271d0F" },
+  { label: "DAI", value: "0xaaa31658EfA0da2a69fE925Ff652FeCb9cF94E24" },
   { label: "USDC", value: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" },
   { label: "USDT", value: "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
-  { label: "WETH", value: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" },
+  { label: "WETH", value: "0x6D73De24AA0a5154df2915095BAe44598997029e" },
 ];
 
 const OptionTypes = [
@@ -90,9 +90,7 @@ const ReplicationForm = ({ data }) => {
   const [JDMjumpDeviation, setJDMjumpDeviation] = useState("0");
   const [JDMjumpIntensity, setJDMjumpIntensity] = useState("0");
 
-
   const processForm = async () => {
-
     const EXP_IN_YEARS = expiration / 365.25;
 
     var formInputs = {
@@ -147,7 +145,6 @@ const ReplicationForm = ({ data }) => {
     }
 
     console.log(formInputs);
-
 
     const { success, status } = await startReplication(formInputs);
     console.log(success, status);
@@ -385,32 +382,31 @@ const ReplicationForm = ({ data }) => {
               </Col>
             </Row>
             <span className="my-3 font-bold text-lg">
-                Initial liquidity to trade underlying
-              </span>
+              Initial liquidity to trade underlying
+            </span>
             <Row className="mt-2">
               <Col>
-              {console.log(OptionType.label, OptionDirection.label)}
-              {((OptionType.label.split(' ')[1] === "call" && 
-               OptionDirection.label === "long") ||
-               (OptionType.label.split(' ')[1] === "put" && 
-               OptionDirection.label === "short")) && (
-                <Slider
-                  sliderType="token1Balance"
-                  onChangeToggle={setToken1Balance}
-                />
-               )}
-              {(OptionType.label.split(' ')[1] === "put" && 
-               OptionDirection.label === "long" ||
-               OptionType.label.split(' ')[1] === "call" && 
-               OptionDirection.label === "short") && (
-                <Slider
-                  sliderType="token2Balance"
-                  onChangeToggle={setToken2Balance}
-                />
-              )}
+                {console.log(OptionType.label, OptionDirection.label)}
+                {((OptionType.label.split(" ")[1] === "call" &&
+                  OptionDirection.label === "long") ||
+                  (OptionType.label.split(" ")[1] === "put" &&
+                    OptionDirection.label === "short")) && (
+                  <Slider
+                    sliderType="token1Balance"
+                    onChangeToggle={setToken1Balance}
+                  />
+                )}
+                {((OptionType.label.split(" ")[1] === "put" &&
+                  OptionDirection.label === "long") ||
+                  (OptionType.label.split(" ")[1] === "call" &&
+                    OptionDirection.label === "short")) && (
+                  <Slider
+                    sliderType="token2Balance"
+                    onChangeToggle={setToken2Balance}
+                  />
+                )}
               </Col>
-              <Col>
-              </Col>
+              <Col></Col>
             </Row>
             <Row className="mt-2">
               <Col>
