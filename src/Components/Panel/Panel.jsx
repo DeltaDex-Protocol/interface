@@ -21,6 +21,7 @@ import {
   getCurrentWalletConnected,
 } from "./../../utils/interact.js";
 import Sidebar from "../Sidebar/Sidebar";
+
 // import Header from "./../Header/Header.jsx";
 // import TradingViewWidget, { Themes } from 'react-tradingview-widget';
 // import Slider from "./../Slider/Slider.jsx";
@@ -44,7 +45,7 @@ import logo from "./../../etc/logo.png";
 
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 
-import {settings} from './../../constants.js';
+import { settings } from "./../../constants.js";
 
 const Header = ({ walletAddress, connectPressed }) => {
   return (
@@ -177,7 +178,6 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
   const currentPrice =
     data[data.length - 1] === undefined ? 1000 : data[data.length - 1].value;
 
-
   const changeToggle = (toggle) => {
     setToggle(toggle);
   };
@@ -245,7 +245,9 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
             {toggle === "VanillaOptions" && (
               <>
                 <div className="flex justify-between">
-                  <div className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 h-24 rounded-xl flex flex-col`}>
+                  <div
+                    className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 h-24 rounded-xl flex flex-col`}
+                  >
                     <span className="text-xl font-medium text-white mt-2">
                       Replicate your Vanilla option
                     </span>
@@ -268,12 +270,15 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
             {toggle === "CurvedOptions" && (
               <>
                 <div className="flex justify-between">
-                  <div className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 h-24 rounded-xl flex flex-col`}>
+                  <div
+                    className={`mb-5 px-4 py-2 ${settings.main_color} w-1/2 h-24 rounded-xl flex flex-col`}
+                  >
                     <span className="text-xl font-medium text-white mt-2">
                       Replicate your Curved option
                     </span>
                     <span className="text-base font-normal text-white">
-                    Choose the parameters of the option and hedge against impermanent losses
+                      Choose the parameters of the option and hedge against
+                      impermanent losses
                     </span>
                   </div>
                   <div className="">
@@ -282,14 +287,16 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
                 </div>
                 <div className="bg-white mr-5 rounded-lg xl:mr-0">
                   {/* <ReplicationForm data={data}/> */}
-                  <CurvesForm currentPrice={currentPrice}/>
+                  <CurvesForm currentPrice={currentPrice} />
                 </div>
               </>
             )}
 
             {toggle === "YourPositions" && (
               <>
-                <div className={`mb-4 px-4 py-2 h-24 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}>
+                <div
+                  className={`mb-4 px-4 py-2 h-24 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}
+                >
                   <span className="text-xl mt-2 font-medium text-white">
                     Your positions
                   </span>
@@ -305,7 +312,9 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
 
             {toggle === "AllPositions" && (
               <>
-                <div className={`mb-4 px-4 py-2 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}>
+                <div
+                  className={`mb-4 px-4 py-2 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}
+                >
                   <span className="text-xl mt-2 font-medium text-white">
                     All positions
                   </span>
@@ -424,4 +433,3 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
 // }
 
 export default Panel;
-
