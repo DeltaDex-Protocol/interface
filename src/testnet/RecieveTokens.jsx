@@ -94,10 +94,11 @@ const RecieveTokens = () => {
                         )}
                         </div>
                     </div>
-                    <div className="flex space-x-32 mr-10 lg:ml-0 mt-10">
-                        <span className="mt-16 text-white text-3xl w-max">Step 3.</span>
-                        <div className="flex flex-col space-y-4">
-                            <span className="text-white text-normal font-base w-36">
+                    <div className="mt-10">
+                    <span className=" text-white text-3xl w-max">Step 3.</span>
+                    <div className="flex space-x-32 mr-10 lg:ml-0 mt-4">
+                        <div className="flex space-x-24">
+                            <span className="text-white text-normal font-base w-32">
                                 Mint 10000 DAI and 5 WETH tokens
                             </span>
                             <div className="flex flex-col space-y-6">
@@ -109,6 +110,7 @@ const RecieveTokens = () => {
                                 </button>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
