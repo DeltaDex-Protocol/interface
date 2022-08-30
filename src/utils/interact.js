@@ -867,7 +867,7 @@ export const getAllPositions = async () => {
 
   // const tokenAddresses = await getAllPairAddresses();
 
-  let tokenPair = "0x7BDA8b27E891F9687BD6d3312Ab3f4F458e2cC91";
+  let tokenPair = "0x27675B275E84f2dC7EB825Be9fe5e5DEe88c2808";
 
   let users = await optionstorage.getUserAddressesInPair(tokenPair);
 
