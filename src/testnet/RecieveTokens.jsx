@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
 
 const RecieveTokens = () => {
-    return (
-        <div className="bg-gradient-to-r from-slate-900 to-blue-900 h-screen">
-            <div className="max-w-6xl max-h-screen mx-auto flex justify-between">
-                <div class="flex-col flex  self-center lg:p-14 sm:max-w-4xl xl:max-w-md  z-10">
-                    <div class="self-start hidden lg:flex flex-col  text-white">
-                        <h1 class="my-3 font-semibold text-4xl">Welcome back</h1>
-                        <p class="pr-3 text-sm ">Lorem ipsum is placeholder text commonly used in the graphic, print,
-                            and publishing industries for previewing layouts and visual mockups</p>
-                    </div>
-                </div>
+  return (
+    <div className="bg-gradient-to-r from-slate-900 to-indigo-900 h-screen">
+      <div className="max-w-6xl max-h-screen mx-auto flex justify-between">
+        <div class="flex-col flex  self-center lg:p-14 sm:max-w-4xl xl:max-w-md  z-10">
+          <div class="self-start hidden lg:flex flex-col  text-white">
+            <h1 class="my-3 font-semibold text-4xl">Welcome back</h1>
+            <p class="pr-3 text-sm ">
+              Lorem ipsum is placeholder text commonly used in the graphic,
+              print, and publishing industries for previewing layouts and visual
+              mockups
+            </p>
+          </div>
+        </div>
 
-                <div className="mx-auto my-auto flex flex-col">
-                    <div className="flex space-x-10">
-                        <span className="my-auto text-white">Step 1.</span>
-                        <button className="rounded-xl text-black font-semibold">Connect your wallet</button>
-                    </div>
-                </div>
+        <div className="mx-auto my-auto flex flex-col">
+          <div className="flex space-x-10">
+            <span className="my-auto text-white">Step 1.</span>
+            <button className="rounded-xl text-black font-semibold">
+              Connect your wallet
+            </button>
+          </div>
+        </div>
 
         {/* <div class="w-full max-w-xs">
           <form class="bg-slate shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
