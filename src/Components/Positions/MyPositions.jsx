@@ -1,13 +1,5 @@
 import { useState } from "react";
 
-// import other component
-import Titles from "./../Titles/Titles";
-// import FormInput from "./../Forms/FormInput/FormInput";
-
-// import other pkg
-import { Form, Button } from "react-bootstrap";
-// import { useFormik } from "formik";
-import { string, object, ref } from "yup";
 
 import {
   getUserPositions,

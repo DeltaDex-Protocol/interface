@@ -6,7 +6,7 @@ import {
   startReplication,
 } from "../../utils/interact";
 
-import ProfitChart from "../Charts/NewChart";
+import ProfitChart from "../Charts/OptionChart";
 import Slider from "../Charts/Slider";
 // import PriceChart from "../Charts/PriceChart";
 

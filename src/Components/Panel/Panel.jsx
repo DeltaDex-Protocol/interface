@@ -1,35 +1,6 @@
 import { PureComponent, useState, useEffect } from "react";
-import { createPortal } from "react-dom";
 
-// import styles of this component
-import styles from "./Panel.module.css";
 
-// import other component
-import UserCard from "./UserCard/UserCard";
-import ReplicationForm from "./UserInformation/ReplicationForm";
-// import UserChangePassword from './UserChangePassword/old_myPositions'
-
-// import other pkgs
-import { UserEdit, Lock, ProfileCircle, Code1 } from "iconsax-react";
-import { Row, Col, Button } from "react-bootstrap";
-import PropTypes from "prop-types";
-
-// import utils
-import { getStorage, updateStorage } from "./../../utils/storage";
-import {
-  connectWallet,
-  getCurrentWalletConnected,
-} from "./../../utils/interact.js";
-import Sidebar from "../Sidebar/Sidebar";
-
-// import Header from "./../Header/Header.jsx";
-// import TradingViewWidget, { Themes } from 'react-tradingview-widget';
-// import Slider from "./../Slider/Slider.jsx";
-
-// import {BSvanillaCall, deltaBSvanillaCall} from './../../utils/BSvanillaCall.js';
-// import {BSvanillaPut, deltaBSvanillaPut} from './../../utils/BSvanillaPut.js';
-// import {BScurvedPut, deltaBScurvedPut} from './../../utils/BScurvedPut.js';
-// import {BScurvedCall, deltaBScurvedCall} from './../../utils/BScurvedCall.js';
 
 import PriceChart from "./../Charts/PriceChart.jsx";
 
@@ -41,7 +12,7 @@ import VanillaForm from "../Forms/FormVanillaOptions";
 
 import CurvesForm from "../Forms/FormCurvedOptions";
 
-import logo from "./../../etc/logo.png";
+import logo from "./../../images/logo.png";
 
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 

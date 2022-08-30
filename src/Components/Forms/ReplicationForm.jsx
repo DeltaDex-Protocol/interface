@@ -1,12 +1,8 @@
 import { useState } from "react";
 
-import {
-  sendForm,
-  getCurrentPositions,
-  startReplication,
-} from "../../utils/interact";
 
-import ProfitChart from "../Charts/NewChart";
+
+// import ProfitChart from "../Charts/NewChart";
 import Slider from "../Charts/Slider";
 // import PriceChart from "../Charts/PriceChart";
 
