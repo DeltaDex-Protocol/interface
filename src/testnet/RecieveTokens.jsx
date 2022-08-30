@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 
 const RecieveTokens = () => {
-
     return (
         <div className="bg-gray-100 h-screen">
             <div className="max-w-6xl max-h-screen mx-auto flex justify-between">
@@ -13,7 +12,7 @@ const RecieveTokens = () => {
                             and publishing industries for previewing layouts and visual mockups</p>
                     </div>
                 </div>
-                <div class="w-full max-w-xs">
+                {/* <div class="w-full max-w-xs">
                     <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 ">
                         <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
@@ -40,6 +39,13 @@ const RecieveTokens = () => {
                     <p class="text-center text-gray-500 text-xs">
                         &copy;2020 Acme Corp. All rights reserved.
                     </p>
+                </div> */}
+
+                <div className="mx-auto my-auto flex flex-col">
+                    <div className=" flex">
+                        <span>Step 1.</span>
+                        <button className="bg-gray-100 py-2">Connect your wallet</button>
+                    </div>
                 </div>
             </div>
         </div>
