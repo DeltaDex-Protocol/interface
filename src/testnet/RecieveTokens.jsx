@@ -2,20 +2,43 @@ import { useEffect, useState } from "react";
 
 const RecieveTokens = () => {
     return (
-        <div className="bg-gradient-to-r from-slate-900 to-indigo-900 h-screen">
+        <div className="bg-gradient-to-r from-slate-900 to-indigo-900 h-screen ">
+            {/* <div className="max-w-6xl">
+                <span>
+                DeltaDex
+                </span>
+            </div> */}
             <div className="max-w-6xl max-h-screen mx-auto flex justify-between">
-                <div class="flex-col flex  self-center lg:p-14 sm:max-w-4xl xl:max-w-md sm:ml-10 lg:ml-0 z-10">
-                    <div class="self-start hidden sm:flex flex-col  text-white">
-                        <h1 class="my-3 font-semibold text-4xl">Receive free <br/> DeltaDex tokens</h1>
-                        <p class="pr-3 text-sm ">Lorem ipsum is placeholder text commonly used in the graphic, print,
+                <div class="flex-col flex  max-w-md ml-10 lg:ml-0 z-10">
+                    <div class=" flex flex-col  text-white my-52">
+                        <h1 class=" font-semibold text-4xl ">Receive testnet <br/> tokens for free</h1>
+                        <p class="pr-3 text-sm max-w-sm">Lorem ipsum is placeholder text commonly used in the graphic, print,
                             and publishing industries for previewing layouts and visual mockups</p>
                     </div>
                 </div>
 
-                <div className="mx-auto my-auto flex flex-col">
-                    <div className="flex space-x-24">
-                        <span className="my-auto text-white text-3xl">Step 1.</span>
-                        <button className="rounded-xl text-lg  text-white font-semibold bg-violet-500">Connect your wallet</button>
+                <div className="mx-auto mt-40">
+                    <span className="text-white text-xl">Get free DeltaDex DAI and WETH tokens</span>
+                    <div className="flex space-x-32 mr-10 lg:ml-0 mt-10">
+                        <span className="my-auto text-white text-3xl w-max">Step 1.</span>
+                        <div className="rounded-xl py-2 px-3 text-lg text-white text-center font-semibold bg-violet-500">
+                            <span className="">Connect your wallet</span>
+                        </div>
+                    </div>
+                    <div className="flex space-x-32 mr-10 lg:ml-0 mt-10">
+                        <span className="my-auto text-white text-3xl w-max">Step 2.</span>
+                        <div className="rounded-xl py-2 px-3 text-lg text-black text-center font-normal bg-white">
+                            <span className="">Check your address</span>
+                        </div>
+                    </div>
+                    <span>
+
+                    </span>
+                    <div className="flex space-x-32 mr-10 lg:ml-0 mt-10">
+                        <span className="my-auto text-white text-3xl w-max">Step 3.</span>
+                        <div className="rounded-xl py-2 px-3 text-lg text-white text-center font-semibold bg-violet-500">
+                            <span className="">Check your address</span>
+                        </div>
                     </div>
                 </div>
 

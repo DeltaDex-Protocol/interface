@@ -27,7 +27,7 @@ const sliderInfos = {
   OptionAmount: {
     name: "Contracts amount to replicate",
     min: 1,
-    max: 999,
+    max: 5,
     step: 1,
     symbol: "",
   },
