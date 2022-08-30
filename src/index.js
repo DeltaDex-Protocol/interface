@@ -8,7 +8,7 @@ import {
   Route,
 } from "react-router-dom";
 
-
+import ReceiveTokens from './testnet/RecieveTokens.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -17,7 +17,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      {/* <Route path="expenses" element={<Expenses />} /> */}
+      <Route path="get-tokens" element={<ReceiveTokens />} />
       {/* <Route path="invoices" element={<Invoices />} /> */}
     </Routes>
   </BrowserRouter>
