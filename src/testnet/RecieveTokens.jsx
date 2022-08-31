@@ -7,7 +7,6 @@ import { ApproveTokens } from "./ApproveTokens";
 import ReactLoading from 'react-loading';
 
 
-
 const RecieveTokens = () => {
     const [walletAddress, setWallet] = useState("");
     const [status, setStatus] = useState("");
@@ -133,7 +132,7 @@ const RecieveTokens = () => {
                                                     setDaiMinted(null);
                                                     MintTokens("DAI").then((res) => setDaiMinted(res.success));
                                                 }}>
-                                            <span className="">Approve 9999 DAI</span>
+                                            <span className="">Mint 10,000 DAI</span>
                                         </button>
                                     </div>
                                 )}
@@ -149,7 +148,7 @@ const RecieveTokens = () => {
                                                 setWethMinted(null);
                                                 MintTokens("WETH").then((res) => setWethMinted(res.success));
                                             }}>
-                                        <span className="">Approve 5 WETH</span>
+                                        <span className="">Mint 5 WETH</span>
                                     </button>
                                 </div>
                                 )}
@@ -177,7 +176,7 @@ const RecieveTokens = () => {
                                                     setDaiApproved(null);
                                                     ApproveTokens("DAI").then((res) => setDaiApproved(res.success));
                                                     }}>
-                                                <span className="">Approve 9999 DAI</span>
+                                                <span className="">Approve 10,000 DAI</span>
                                             </button>
                                         </div>
                                 )}
@@ -199,6 +198,20 @@ const RecieveTokens = () => {
                                     )}
                             </div>
                         </div>
+                    </div>
+                    <div className="flex space-x-32 mr-10 lg:ml-0 mt-10 mx-auto">
+                    <div className="flex flex-col w-36 ">
+                                <span className=" text-white text-3xl w-36">Step 5.</span>
+                                <span className="text-white text-normal font-base mt-4 w-36">
+                                    Return to the DeltaDex interface
+                                </span>
+                            </div>
+                        
+
+                        <button className=" rounded-xl w-52 py-2 px-3 text-normal text-white text-center font-semibold bg-violet-500 hover:bg-violet-800"
+                        onClick={connectWallet}>
+                        <span>DeltaDex</span>
+                        </button>
                     </div>
                 </div>
             </div>
