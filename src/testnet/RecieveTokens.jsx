@@ -82,7 +82,7 @@ const RecieveTokens = () => {
             <div className="flex-col lg:flex-row lg:flex justify-between  py-24  ">
                 <div class="flex flex-col  z-10 ">
                     <div class="flex flex-col text-center text-white my-auto w-96 mx-auto">
-                        <h1 class="font-semibold text-4xl ">Receive testnet <br/> tokens for free</h1>
+                        <h1 class="font-semibold text-4xl ">Receive DeltaDex testnet tokens</h1>
                         <p class="pr-3 text-xl ">
                             Connect you metamask wallet, mint DAI and WETH, approve the
                             DeltaDex contract.
