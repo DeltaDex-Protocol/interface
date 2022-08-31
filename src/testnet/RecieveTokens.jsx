@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { connectWallet, getCurrentWalletConnected } from "./connectWallet";
 import { MintTokens } from './MintTokens.js';
@@ -62,6 +63,12 @@ const RecieveTokens = () => {
         setStatus(walletResponse.status);
         setWallet(walletResponse.address);
     };
+
+    const navigate = useNavigate();
+    const handleClick = () => {
+        console.log("link");
+        navigate("www.google.com");
+    }
 
 
   return (
@@ -207,9 +214,12 @@ const RecieveTokens = () => {
                                 </span>
                             </div>
                         
-
                         <button className=" rounded-xl w-52 py-2 px-3 text-normal text-white text-center font-semibold bg-violet-500 hover:bg-violet-800"
-                        onClick={connectWallet}>
+                        
+                        onClick={() =>
+                            (window.location.href =
+                              "/")
+                          }>
                         <span>DeltaDex</span>
                         </button>
                     </div>
