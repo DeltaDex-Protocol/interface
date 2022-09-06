@@ -8,7 +8,7 @@ const StorageAddress = "0xd7b2f396D78A5a29AF817D9f403FC6f24C5C2065";
 // OptionMakerAddress
 
 var ethers = require("ethers");
-const provider = new ethers.providers.Web3Provider(window.ethereum);
+// const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 export const connectWallet = async () => {
   if (window.ethereum) {
@@ -49,6 +49,9 @@ export const connectWallet = async () => {
 export const startReplication = async (formInputs) => {
   let isCall = false;
   let isLong = true;
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+
 
   if (
     formInputs.option_type.value === "curvedCall" ||
@@ -223,6 +226,8 @@ export const startReplication2 = async (
   jumpDeviation,
   jumpIntensity
 ) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+
   const signer = provider.getSigner();
   const optionmaker = new ethers.Contract(
     OptionMakerAddress,
@@ -353,6 +358,8 @@ export const sendForm = async (
   jumpDeviation,
   jumpIntensity
 ) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+
   if (addressToken0 == "") {
     return {
       success: false,
@@ -422,6 +429,7 @@ export const sendForm = async (
 
 export const getCurrentWalletConnected = async () => {
   if (window.ethereum) {
+    
     try {
       const addressArray = await window.ethereum.request({
         method: "eth_accounts",
@@ -464,7 +472,10 @@ export const getCurrentWalletConnected = async () => {
 
 // @dev get react grid rows
 export const getUserPositions = async () => {
-  const signer = provider.getSigner();
+  if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    const signer = provider.getSigner();
 
   /*   const optionmaker = new ethers.Contract(
     OptionMakerAddress,
@@ -544,6 +555,8 @@ export const getUserPositions = async () => {
   // console.log(rows);
 
   return rows;
+
+  }
 };
 
 function checkIfEmptyPosition(position) {
@@ -861,6 +874,10 @@ function onlyUnique(value, index, self) {
 }
 
 export const getAllPositions = async () => {
+  if (window.ethereum) {
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+
   const signer = provider.getSigner();
 
   const optionstorage = new ethers.Contract(StorageAddress, StorageABI, signer);
@@ -923,9 +940,13 @@ export const getAllPositions = async () => {
     // console.log(positions);
     return rows;
   }
+  }
 };
 
 async function getAllPairAddresses() {
+  if (window.ethereum) {
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const optionstorage = new ethers.Contract(StorageAddress, StorageABI, signer);
 
@@ -937,9 +958,14 @@ async function getAllPairAddresses() {
     pairs.push(pair);
   }
   return pairs;
+  }
 }
 
 export const getTokenPair = async (token0, token1) => {
+  if (window.ethereum) {
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+
   const signer = provider.getSigner();
 
   const optionmaker = new ethers.Contract(
@@ -951,6 +977,7 @@ export const getTokenPair = async (token0, token1) => {
   let pairAddress = await optionmaker.getPair(token0, token1);
 
   return pairAddress;
+  }
 };
 
 export default getUserPositions;

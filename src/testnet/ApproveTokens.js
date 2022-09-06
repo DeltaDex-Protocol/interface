@@ -1,7 +1,6 @@
 const erc20ABI = require("./ERC20.json");
 var ethers = require("ethers");
 
-const provider = new ethers.providers.Web3Provider(window.ethereum);
 
 const DAI = "0x2DC042385a6b1eFAeec4816118E704028A733BED";
 const WETH = '0xA8132b63AdE6ff0eAFE2b6a8E7E252A2418eCCec';
@@ -9,6 +8,10 @@ const WETH = '0xA8132b63AdE6ff0eAFE2b6a8E7E252A2418eCCec';
 
 export const ApproveTokens = async (token) => {
   
+    if (window.ethereum) {
+
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
     // console.log("amount", amount);
     let coreAddress = "0xe21dA5f66317980f74E20Faec80b1c96D1Ca64FE";
     let tokenAddress;
@@ -46,4 +49,5 @@ export const ApproveTokens = async (token) => {
         status: "😥 Something went wrong: " + error.message,
       });
     }
+  }
   };

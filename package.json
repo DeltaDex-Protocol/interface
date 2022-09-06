@@ -43,7 +43,7 @@
     "tailwindcss": "^3.1.6"
   },
   "scripts": {
-    "start": "craco start",
+    "start": " craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"

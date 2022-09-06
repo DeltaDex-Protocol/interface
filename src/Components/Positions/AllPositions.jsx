@@ -192,7 +192,7 @@ const AllPositions = ({}) => {
             <th />
           </tr>
         </thead>
-        {rowData[0] !== undefined && (
+        {rowData !== undefined && (
           <tbody>
             {rowData.map((el, i) => (
               <GenerateRow row={rowData[i]} />
