@@ -16,8 +16,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/app" element={<App />} />
-      <Route path="/app/get-tokens" element={<ReceiveTokens />} />
+      <Route path="/" element={<App />} />
+      <Route path="/get-tokens" element={<ReceiveTokens />} />
       {/* <Route path="invoices" element={<Invoices />} /> */}
     </Routes>
   </BrowserRouter>
