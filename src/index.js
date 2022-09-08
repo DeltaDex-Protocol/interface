@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
 root.render(
-  <BrowserRouter history={history} basename="/app">
+  <BrowserRouter basename="/app">
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/get-tokens" element={<ReceiveTokens />} />
