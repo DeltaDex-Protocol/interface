@@ -17,7 +17,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route exact path="/app" element={<App />} />
-      <Route exact path="/get-tokens" element={<ReceiveTokens />} />
+      <Route exact path="/app/get-tokens" element={<ReceiveTokens />} />
       {/* <Route path="invoices" element={<Invoices />} /> */}
     </Routes>
   </BrowserRouter>
