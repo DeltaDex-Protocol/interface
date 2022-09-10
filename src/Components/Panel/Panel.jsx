@@ -17,26 +17,41 @@ import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { settings } from "./../../constants.js";
 
 const Header = ({ walletAddress, connectPressed }) => {
-  return (
-    <div className="sticky top-0 flex justify-between z-10">
-      <img className=" max-h-10 mx-3 my-2 " src={logo} />
-      <button
-        className={`${settings.main_color} rounded ${settings.text_color} text-center  my-2 mx-2 `}
-        onClick={connectPressed}
-      >
-        {/* <span className=''>Connected: 0x111...</span>
-         */}
-        {walletAddress !== "Not connected" ? (
-          "Connected: " +
-          String(walletAddress).substring(0, 6) +
-          "..." +
-          String(walletAddress).substring(38)
-        ) : (
-          <span>Connect Wallet</span>
-        )}
-      </button>
-    </div>
-  );
+
+
+    const raiseInvoiceClicked = () => {
+        const url = 'https://medium.com/@deltadexprotocol/how-to-create-an-option-contract-on-deltadex-rinkeby-testnet-tutorial-4621004c521f';
+        window.open(url, '_blank');
+    }
+
+    return (
+        <div className="sticky top-0 flex justify-between z-10">
+            <div className="flex w-40 space-x-20">
+                <img className=" max-h-10 mx-1 my-2 " src={logo} />
+                <button
+                    className={`${settings.main_color} rounded ${settings.text_color} text-center  my-2 mx-2 hover:bg-violet-400`}
+                    onClick = {raiseInvoiceClicked}>
+                    Tutorial
+                </button>
+            </div>
+
+            <button
+                className={`${settings.main_color} rounded ${settings.text_color} text-center  my-2 mx-2 `}
+                onClick={connectPressed}
+            >
+                {/* <span className=''>Connected: 0x111...</span>
+                */}
+                {walletAddress !== "Not connected" ? (
+                "Connected: " +
+                String(walletAddress).substring(0, 6) +
+                "..." +
+                String(walletAddress).substring(38)
+                ) : (
+                <span>Connect Wallet</span>
+                )}
+            </button>
+        </div>
+    );
 };
 
 const UserAccountSidebar = ({ walletAddress }) => {

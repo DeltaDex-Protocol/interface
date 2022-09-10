@@ -101,19 +101,19 @@ const GenerateRow = ({ row }) => {
         <>
           <tr className="bg-gray-100 text-center">
             <th scope="col" className="py-3 px-6">
-              <span className="font-normal">fees</span>
+              <span className="font-normal">hedge balance</span>
               <br />
               <span className="font-normal">{row.fees}</span>
             </th>
             <th scope="col" className="py-3 px-6">
-              <span className="font-normal">amount</span>
+              <span className="font-normal">contract amount</span>
               <br />
               <span className="font-normal">
                 {parseFloat(row.amount).toFixed(3)}
               </span>
             </th>
             <th scope="col" colspan="1" className="py-3 px-6 ">
-              <span className="font-normal">hedge fee</span>
+              <span className="font-normal">fees per hedge</span>
               <br />
               <span className="font-normal">
                 {parseFloat(row.hedgeFee).toFixed(3)}{" "}
