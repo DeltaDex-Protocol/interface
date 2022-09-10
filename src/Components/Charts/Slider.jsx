@@ -83,7 +83,11 @@ export default function Slider({ sliderType, onChangeToggle, currentValue, style
 
   return (
     <div className={`${style}`}>
-      <span className={``}>{`${name}: ${value}${sym}`}</span>
+      {sliderType == 'riskFree' ? 
+        (<span className={``}>{`${name}: ${parseInt((value*100))}${'%'}`}</span>)
+        : (<span className={``}>{`${name}: ${value}${sym}`}</span>)
+      }
+      {/* <span className={``}>{`${name}: ${value}${sym}`}</span> */}
       <ReactSlider
         step={step}
         min={min}
