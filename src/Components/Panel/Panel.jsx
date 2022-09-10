@@ -1,7 +1,5 @@
 import { PureComponent, useState, useEffect } from "react";
 
-
-
 import PriceChart from "./../Charts/PriceChart.jsx";
 
 import AllPositions from "./../Positions/AllPositions.jsx";
@@ -79,8 +77,8 @@ const SidebarMenuInfos = {
     description: "Hedge against impermanent loss",
   },
   YourPositions: {
-    label: "Your positions",
-    description: "Click to see your previous replications",
+    label: "My positions",
+    description: "Click to see your current replications",
   },
   AllPositions: {
     label: "All positions",
