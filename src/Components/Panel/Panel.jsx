@@ -114,29 +114,7 @@ const SidebarUnit = ({ Menu, onChangeToggle, toggle }) => {
 const Panel = ({ walletAddress, connectWalletPressed }) => {
   // console.log('panel:', walletAddress);
 
-  const sidebarLinks = [
-    {
-      id: 1,
-      border: true,
-      text: "Replicate option",
-      description: "Start the replication with arbitrary parameters",
-      active: true,
-    },
-    {
-      id: 2,
-      border: true,
-      text: "My positions",
-      description: "Click to see your previous replications",
-      active: false,
-    },
-    {
-      id: 3,
-      border: true,
-      text: "All positions",
-      description: "Check users' positions close to hedging",
-      active: false,
-    },
-  ];
+  
 
   const [toggle, setToggle] = useState("VanillaOptions");
   // const [walletAddress, setWallet] = useState("Not connected");
@@ -305,102 +283,6 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
   );
 };
 
-// class Panel extends PureComponent {
-//     constructor(props) {
-//         super(props)
 
-//         this.state = {
-
-//             toggle: 'Replicate option',
-//             walletAddress: "Not connected",
-//             status: "",
-//             name: "",
-//             description: "",
-//             url: "",
-//             data: [],
-
-//         }
-
-//         this.sidebarLinks = [
-//             {
-//                 id: 1,
-//                 border: true,
-//                 text: 'Replicate option',
-//                 description: 'Start the replication with arbitrary parameters',
-//                 active: true,
-//             },
-//             {
-//                 id: 2,
-//                 border: true,
-//                 text: 'My positions',
-//                 description: 'Click to see your previous replications',
-//                 active: false,
-//             },
-//             {
-//                 id: 3,
-//                 border: true,
-//                 text: 'All positions',
-//                 description: "Check users' positions close to hedging",
-//                 active: false,
-//             },
-//         ]
-
-//         this.changeToggle = this.changeToggle.bind(this)
-//     }
-
-//     connectWalletPressed = async () => {
-//         const walletResponse = await connectWallet();
-//         let address = walletResponse.address;
-
-//         if (address) {
-//             address = address.slice(0, 7) + "..." + address.slice(-6, );
-//         }
-
-//         this.setState({
-//             status: walletResponse.status,
-//             walletAddress: address
-//         });
-
-//   };
-
-//     changeToggle(toggle) {
-//         this.setState({ toggle })
-//     }
-
-//     render() {
-//         return (
-//             <>
-//             <Header walletAddress={this.state.walletAddress} connectPressed={this.connectWalletPressed}/>
-//             <div className={`${styles['panel-wrapper']}  px-5 `}>
-
-//             <div className={`${styles['panel-wrapper']} d-flex`}>
-//             <Sidebar
-//                 username={"Your address"}
-//                 userAddress={this.state.walletAddress}
-//                 userProfile={this.state.walletAddress}
-//                 sidebarLinks={this.sidebarLinks}
-//                 onChangeToggle={this.changeToggle}
-//             />
-
-//                 <div className={`${styles.container} justify-content-center align-items-center p-0`}>
-//                     <Row className={`${styles['panel']}  `}>
-
-//                         <div className={`${styles['panel-column']} bg-white border mt-5 mt-md-0  p-5`}>
-//                             {this.state.toggle === 'Replicate option' && (
-//                                 <UserInformation />
-//                             )}
-//                             {this.state.toggle === 'My positions' && (
-//                                 <UserChangePassword />
-//                             )}
-//                         </div>
-//                     </Row>
-//                 </div >
-
-//             </div>
-//             </div>
-//             </>
-//         )
-//     }
-// }
 
 export default Panel;

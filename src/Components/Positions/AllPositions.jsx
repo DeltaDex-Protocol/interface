@@ -7,11 +7,13 @@ import {
   getAllPositions,
 } from "./../../utils/interact";
 
-import Creatable, { useCreatable } from "react-select/creatable";
-import DataGrid from "react-data-grid";
+
+import ReactLoading from 'react-loading';
+
 import { useEffect } from "react";
 
 import { settings } from "../../constants";
+import { row } from "mathjs";
 
 const TokenOptions = [
   { label: "Black Scholes", value: "BSM" },
@@ -167,6 +169,7 @@ const AllPositions = ({}) => {
   }, [upd]);
 
   return (
+    <>
     <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
       <table className="text-sm shadow-lg bg-white">
         <thead
@@ -199,8 +202,12 @@ const AllPositions = ({}) => {
             ))}
           </tbody>
         )}
-      </table>
+        </table>
+        {console.log(rowData)}
     </div>
+    {rowData.length == 0 && (<ReactLoading type={'spin'} color="#fff" width={70} className="mx-auto my-10"/>)}
+
+    </>
   );
 };
 

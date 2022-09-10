@@ -6,6 +6,9 @@ import {
   getCurrentPositions,
 } from "./../../utils/interact";
 
+import ReactLoading from 'react-loading';
+
+
 import Creatable, { useCreatable } from "react-select/creatable";
 import DataGrid from "react-data-grid";
 import { useEffect } from "react";
@@ -232,6 +235,7 @@ const MyPositions = ({}) => {
   }, [upd]);
 
   return (
+    <>
     <div className="overflow-x-auto relative sm:rounded-lg shadow-lg mb-8">
       <table className="text-sm shadow-lg max-w-4xl bg-white">
         <thead
@@ -280,6 +284,8 @@ const MyPositions = ({}) => {
         )}
       </table>
     </div>
+    {rowData.length == 0 && (<ReactLoading type={'spin'} color="#fff" width={70} className="mx-auto my-10"/>)}
+    </>
   );
 };
 
