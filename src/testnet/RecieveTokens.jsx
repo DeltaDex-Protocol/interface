@@ -218,7 +218,7 @@ const RecieveTokens = () => {
                         
                         onClick={() =>
                             (window.location.href =
-                              "/")
+                              "/app/")
                           }>
                         <span>DeltaDex</span>
                         </button>
