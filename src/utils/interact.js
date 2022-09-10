@@ -1,8 +1,10 @@
 const OptionMakerABI = require("./OptionMaker.json");
-const OptionMakerAddress = "0xF128FDf327e9F94e1ef4b99779a845dD0d51a015";
+const OptionMakerAddress = "0x30d99e3BED319849c98a96E953bf161958940612";
+// const OptionMakerAddress = "0x4649E867C2d70035D69BA6B04BA7489f18AdD8ee";
 
 const StorageABI = require("./Storage.json");
-const StorageAddress = "0xd7b2f396D78A5a29AF817D9f403FC6f24C5C2065";
+const StorageAddress = "0xE2D0b79fF3e12100695cDc8181C9d405B8dE7f4e";
+// const StorageAddress = "0x5A94c414233edF7A24aE788100A08ee2ba96461f";
 
 // OptionMakerABI
 // OptionMakerAddress
@@ -51,7 +53,6 @@ export const startReplication = async (formInputs) => {
   let isLong = true;
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-
 
   if (
     formInputs.option_type.value === "curvedCall" ||
@@ -429,7 +430,6 @@ export const sendForm = async (
 
 export const getCurrentWalletConnected = async () => {
   if (window.ethereum) {
-    
     try {
       const addressArray = await window.ethereum.request({
         method: "eth_accounts",
@@ -477,85 +477,88 @@ export const getUserPositions = async () => {
 
     const signer = provider.getSigner();
 
-  /*   const optionmaker = new ethers.Contract(
+    /*   const optionmaker = new ethers.Contract(
     OptionMakerAddress,
     OptionMakerABI,
     signer
   ); */
 
-  const optionstorage = new ethers.Contract(StorageAddress, StorageABI, signer);
-
-  const userAddress = await signer.getAddress();
-  // // console.log(userAddress.address);
-
-  const noOfPositions = await optionstorage.userIDlength(userAddress);
-  // // console.log(noOfPositions);
-
-  const rows = [];
-
-  for (let i = 0; i < noOfPositions; i++) {
-    const pairAddress = await optionstorage.Positions(
-      userAddress,
-      i.toString()
+    const optionstorage = new ethers.Contract(
+      StorageAddress,
+      StorageABI,
+      signer
     );
 
-    // JDM positions
+    const userAddress = await signer.getAddress();
+    // // console.log(userAddress.address);
 
-    var optionPosition1 = await optionstorage.JDM_Options(
-      pairAddress,
-      userAddress,
-      i
-    );
-    const JDMrow = parseJDM(i, optionPosition1);
+    const noOfPositions = await optionstorage.userIDlength(userAddress);
+    // // console.log(noOfPositions);
 
-    // // console.log(JDMrow["token0"]);
+    const rows = [];
 
-    var isEmpty = checkIfEmptyPosition(JDMrow);
-    if (isEmpty == true) {
-      // // console.log("empty");
-    } else {
-      rows.push(JDMrow);
+    for (let i = 0; i < noOfPositions; i++) {
+      const pairAddress = await optionstorage.Positions(
+        userAddress,
+        i.toString()
+      );
+
+      // JDM positions
+
+      var optionPosition1 = await optionstorage.JDM_Options(
+        pairAddress,
+        userAddress,
+        i
+      );
+      const JDMrow = parseJDM(i, optionPosition1);
+
+      // // console.log(JDMrow["token0"]);
+
+      var isEmpty = checkIfEmptyPosition(JDMrow);
+      if (isEmpty == true) {
+        // // console.log("empty");
+      } else {
+        rows.push(JDMrow);
+      }
+
+      // BS positions
+
+      var optionPosition2 = await optionstorage.BS_Options(
+        pairAddress,
+        userAddress,
+        i
+      );
+
+      const BSrow = parseBS(i, optionPosition2);
+
+      var isEmpty = checkIfEmptyPosition(BSrow);
+
+      if (isEmpty == true) {
+        // console.log("empty");
+      } else {
+        rows.push(BSrow);
+      }
+
+      // BSC positions
+      var optionPosition3 = await optionstorage.BSC_Options(
+        pairAddress,
+        userAddress,
+        i
+      );
+      const BSCrow = parseBSC(i, optionPosition3);
+
+      // console.log(JDMrow["token0"]);
+
+      var isEmpty = checkIfEmptyPosition(BSCrow);
+      if (isEmpty == true) {
+        // console.log("empty");
+      } else {
+        rows.push(BSCrow);
+      }
     }
+    // console.log(rows);
 
-    // BS positions
-
-    var optionPosition2 = await optionstorage.BS_Options(
-      pairAddress,
-      userAddress,
-      i
-    );
-
-    const BSrow = parseBS(i, optionPosition2);
-
-    var isEmpty = checkIfEmptyPosition(BSrow);
-
-    if (isEmpty == true) {
-      // console.log("empty");
-    } else {
-      rows.push(BSrow);
-    }
-
-    // BSC positions
-    var optionPosition3 = await optionstorage.BSC_Options(
-      pairAddress,
-      userAddress,
-      i
-    );
-    const BSCrow = parseBSC(i, optionPosition3);
-
-    // console.log(JDMrow["token0"]);
-
-    var isEmpty = checkIfEmptyPosition(BSCrow);
-    if (isEmpty == true) {
-      // console.log("empty");
-    } else {
-      rows.push(BSCrow);
-    }
-  }
-  // console.log(rows);
-
-  return rows;
-
+    return rows;
   }
 };
 
@@ -875,108 +878,113 @@ function onlyUnique(value, index, self) {
 
 export const getAllPositions = async () => {
   if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
 
-  const signer = provider.getSigner();
+    const optionstorage = new ethers.Contract(
+      StorageAddress,
+      StorageABI,
+      signer
+    );
 
-  const optionstorage = new ethers.Contract(StorageAddress, StorageABI, signer);
+    // const tokenAddresses = await getAllPairAddresses();
 
-  // const tokenAddresses = await getAllPairAddresses();
+    let tokenPair = "0xCebEF20D443152883BC87C005005B53f65B903dC";
 
-  let tokenPair = "0x21a5CD4cF0f5247d0B91c8031168c79a3cbc5Cfb";
+    let users = await optionstorage.getUserAddressesInPair(tokenPair);
 
-  let users = await optionstorage.getUserAddressesInPair(tokenPair);
+    let uniqueUsers = users.filter(onlyUnique);
 
-  let uniqueUsers = users.filter(onlyUnique);
+    // console.log(uniqueUsers);
+    // let positions = [];
+    for (const user of uniqueUsers) {
+      // addresses of token pairs that user is a part of
+      let tokenPairs = await optionstorage.getUserPositions(user);
 
-  // console.log(uniqueUsers);
-  // let positions = [];
-  for (const user of uniqueUsers) {
-    // addresses of token pairs that user is a part of
-    let tokenPairs = await optionstorage.getUserPositions(user);
+      // console.log("token pairs", tokenPairs);
 
-    // console.log("token pairs", tokenPairs);
+      // number of positions in this tokenPair
+      let noOfPositionsInPair = tokenPairs.filter((x) => x == tokenPair).length;
 
-    // number of positions in this tokenPair
-    let noOfPositionsInPair = tokenPairs.filter((x) => x == tokenPair).length;
+      // console.log(noOfPositionsInPair);
+      // let noOfPosiitons = optionmaker.userIDlength(user);
 
-    // console.log(noOfPositionsInPair);
-    // let noOfPosiitons = optionmaker.userIDlength(user);
+      let positions = [];
+      let rows = [];
 
-    let positions = [];
-    let rows = [];
+      for (let i = 0; i < noOfPositionsInPair; i++) {
+        let JDM = await optionstorage.JDM_Options(tokenPair, user, i);
 
-    for (let i = 0; i < noOfPositionsInPair; i++) {
-      let JDM = await optionstorage.JDM_Options(tokenPair, user, i);
+        var isEmpty = checkIfEmptyPosition2(JDM);
+        if (isEmpty == true) {
+          // pass
+        } else {
+          const JDMrow = parseJDM(i, JDM);
+          rows.push(JDMrow);
+        }
 
-      var isEmpty = checkIfEmptyPosition2(JDM);
-      if (isEmpty == true) {
-        // pass
-      } else {
-        const JDMrow = parseJDM(i, JDM);
-        rows.push(JDMrow);
+        let BS = await optionstorage.BS_Options(tokenPair, user, i);
+
+        var isEmpty = checkIfEmptyPosition2(BS);
+        if (isEmpty == true) {
+          // pass
+        } else {
+          const BSrow = parseBS(i, BS);
+          rows.push(BSrow);
+        }
+
+        let BSC = await optionstorage.BSC_Options(tokenPair, user, i);
+        var isEmpty = checkIfEmptyPosition2(BSC);
+        if (isEmpty == true) {
+          // pass
+        } else {
+          const BSCrow = parseBSC(i, BSC);
+          rows.push(BSCrow);
+        }
       }
-
-      let BS = await optionstorage.BS_Options(tokenPair, user, i);
-
-      var isEmpty = checkIfEmptyPosition2(BS);
-      if (isEmpty == true) {
-        // pass
-      } else {
-        const BSrow = parseBS(i, BS);
-        rows.push(BSrow);
-      }
-
-      let BSC = await optionstorage.BSC_Options(tokenPair, user, i);
-      var isEmpty = checkIfEmptyPosition2(BSC);
-      if (isEmpty == true) {
-        // pass
-      } else {
-        const BSCrow = parseBSC(i, BSC);
-        rows.push(BSCrow);
-      }
+      // console.log(positions);
+      return rows;
     }
-    // console.log(positions);
-    return rows;
-  }
   }
 };
 
 async function getAllPairAddresses() {
   if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const optionstorage = new ethers.Contract(
+      StorageAddress,
+      StorageABI,
+      signer
+    );
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const optionstorage = new ethers.Contract(StorageAddress, StorageABI, signer);
+    const numberOfPairs = await optionstorage.numOfPairs();
 
-  const numberOfPairs = await optionstorage.numOfPairs();
-
-  let pairs = [];
-  for (let i = 0; i < numberOfPairs; i++) {
-    let pair = await optionstorage.Pairs(i);
-    pairs.push(pair);
-  }
-  return pairs;
+    let pairs = [];
+    for (let i = 0; i < numberOfPairs; i++) {
+      let pair = await optionstorage.Pairs(i);
+      pairs.push(pair);
+    }
+    return pairs;
   }
 }
 
 export const getTokenPair = async (token0, token1) => {
   if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
 
-  const signer = provider.getSigner();
+    const optionmaker = new ethers.Contract(
+      OptionMakerAddress,
+      OptionMakerABI,
+      signer
+    );
 
-  const optionmaker = new ethers.Contract(
-    OptionMakerAddress,
-    OptionMakerABI,
-    signer
-  );
+    let pairAddress = await optionmaker.getPair(token0, token1);
 
-  let pairAddress = await optionmaker.getPair(token0, token1);
-
-  return pairAddress;
+    return pairAddress;
   }
 };
 

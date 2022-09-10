@@ -1,7 +1,5 @@
-
 const erc20ABI = require("./ERC20.json");
-const erc20Address = "0x2dc042385a6b1efaeec4816118e704028a733bed";
-
+const erc20Address = "0xE6937ab8cc964D616DeD01225a208a732f0dBF47";
 
 /* export const connectWalletPressed = async () => {
   const walletResponse = await connectWallet();
@@ -86,5 +84,3 @@ export const getCurrentWalletConnected = async () => {
     };
   }
 };
-
-
