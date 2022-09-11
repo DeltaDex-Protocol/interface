@@ -275,7 +275,7 @@ const Panel = ({ walletAddress, connectWalletPressed }) => {
             {toggle === "AllPositions" && (
               <>
                 <div
-                  className={`mb-4 px-4 py-2 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}
+                  className={`mb-4 px-4 py-2 h-24 ${settings.main_color} w-1/2 rounded-xl flex flex-col`}
                 >
                   <span className="text-xl mt-2 font-medium text-white">
                     All positions

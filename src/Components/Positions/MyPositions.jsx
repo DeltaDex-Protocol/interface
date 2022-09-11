@@ -189,29 +189,7 @@ const rows = [{}];
 
 // const rows = getUserPositionsTable();
 
-const NewMyPositions = ({}) => {
-  const [ReplicationModel, setReplicationModel] = useState("");
 
-  const [tagInputValue, setTagInputValue] = useState("");
-  const [tagValue, setTagValue] = useState("");
-
-  const [rowData, setRowData] = useState([]);
-
-  const [upd, setUpd] = useState(false);
-
-  const [rowsExpanded, setExpandedRows] = useState({});
-
-  useEffect(() => {
-    const func = async () => {
-      const rowData = await getUserPositions();
-      console.log(rowData);
-      setRowData(rowData);
-    };
-    func();
-  }, [upd]);
-
-  return <>123</>;
-};
 
 const MyPositions = ({}) => {
   const [ReplicationModel, setReplicationModel] = useState("");
@@ -227,7 +205,7 @@ const MyPositions = ({}) => {
 
   useEffect(() => {
     const func = async () => {
-      const rowData = await getUserPositions();
+      const rowData = await getUserPositions() || [];
       console.log(rowData);
       setRowData(rowData);
     };
