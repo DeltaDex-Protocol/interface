@@ -4,4 +4,7 @@ const nextConfig = {
   swcMinify: true,
 }
 
+// const withImages = require('next-images')
+
+
 module.exports = nextConfig
