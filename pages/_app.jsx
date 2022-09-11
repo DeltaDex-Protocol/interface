@@ -5,14 +5,17 @@ import WalletContext from '../app/contexts/Wallet'
 import useMetamask from '../app/hooks/useMetamask'
 
 
+
 function MyApp({ Component, pageProps }) {
   const walletValue = useMetamask()
 
 
   return (
-    <WalletContext.Provider value={walletValue}>
-        <Component {...pageProps} />
-    </WalletContext.Provider>
+    <div className='h-full w-full bg-gradient-to-r from-slate-900 to-indigo-900'>
+      <WalletContext.Provider value={walletValue}>
+          <Component {...pageProps} />
+      </WalletContext.Provider>
+    </div>
   )
 }
 

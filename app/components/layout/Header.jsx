@@ -1,20 +1,20 @@
 import Button from "../shared/Button";
-import shortenAddress from "../../utils/shortenAddress";
-// import logo from '/logo.png';
+import displayAddress from "../../utils/displayAddress";
 import Logo from '../../components/shared/Logo.jsx'
 
 
-const Header = ({ walletAddress, connectPressed }) => {
+const Header = ({walletAddress, connect}) => {
+    
     return (
-        <div className="sticky mt-4 top-0 flex justify-between z-10 mx-10">
-            <div className="flex h-10 space-x-10 ">
+        <div className="sticky top-0 flex justify-between z-10 ">
+            <div className="flex h-10 space-x-10 mt-4">
                 <Logo />
                 <Button value={'Tutorial'} onClick={()=>{alert()}}/>
             </div>
-
-            <Button value={shortenAddress('0x42e47b0eB2df592890cf620027e8bf6F52adbAAD')}
-                    onClick={connectPressed}/>
-
+            <div className="mt-4">
+                <Button value={displayAddress(walletAddress)}
+                        onClick={connect}/>
+            </div>
         </div>
     );
 };
