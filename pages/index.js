@@ -8,23 +8,26 @@ import Header from '../app/components/layout/Header.jsx'
 import Sidebar from '../app/components/layout/Sidebar'
 import Footer from '../app/components/layout/Footer'
 import { SidebarMenuKeys } from '../app/configs/sidebar.config'
+import useEthPrice from '../app/hooks/useEthPrice'
 
 
 
 export default function App () {
   const walletValue = useContext(WalletContext)
   const [activeUnit, setActiveUnit] = useState(SidebarMenuKeys[0])
+  const [ethPrice, updateEthPrice] = useEthPrice()
+
 
   return (
       <div className='max-w-6xl mx-6 xl:mx-auto '>
         <Header walletAddress={walletValue.wallet} connect={walletValue.request}/>
-      <div className='flex space-x-44'>
+      <div className='md:flex md:space-x-10'>
         <Sidebar walletAddress={walletValue.wallet} activeUnit={activeUnit} setActiveUnit={setActiveUnit}/>
-        <div className='mt-10 w-screen'>
-          {activeUnit == 'VanillaOptions' && <VanillaOptionForm />}
-          {activeUnit == 'CurvedOptions' &&  <CurvedOptionsForm />}
-          {activeUnit == 'YourPositions' &&  <MyPositions />}
-          {activeUnit == 'AllPositions' &&  <AllPositions />}
+        <div className='mt-10 '>
+          {activeUnit == 'VanillaOptions' && <VanillaOptionForm ethPrice={ethPrice}/>}
+          {activeUnit == 'CurvedOptions' &&  <CurvedOptionsForm ethPrice={ethPrice}/>}
+          {activeUnit == 'YourPositions' &&  <MyPositions ethPrice={ethPrice}/>}
+          {activeUnit == 'AllPositions' &&  <AllPositions ethPrice={ethPrice}/>}
         </div>
       </div>
         <Footer />

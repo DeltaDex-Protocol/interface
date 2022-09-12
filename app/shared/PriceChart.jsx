@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { memo } from 'react';
 
 import {
   Chart,
@@ -157,4 +158,4 @@ function PriceChart( { data } ) {
   )
 }
 
-export default PriceChart;
+export default (PriceChart);

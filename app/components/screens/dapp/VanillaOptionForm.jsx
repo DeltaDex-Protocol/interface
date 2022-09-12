@@ -2,20 +2,18 @@ import { useState, useEffect } from 'react'
 import Banner from '../../dapp/Banner'
 // import ProfitChart from '../../../shared/OptionChart'
 import PriceChart from '../../../shared/PriceChart'
-import useEthPrice from '../../../hooks/useEthPrice'
 
 
 
-export const VanillaOptionForm = () => {
+export const VanillaOptionForm = ({ ethPrice }) => {
     
-    const [ethPrice, updateEthPrice] = useEthPrice();
 
     return (
         <div className=''>
             <div className=''>
                 <div className="flex justify-between">
                     <Banner Unit={'VanillaOptions'}/>
-                    <div className=''>
+                    <div className='invisible lg:visible'>
                         <PriceChart data={ethPrice}/>
                     </div>
                 </div>
