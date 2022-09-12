@@ -4,6 +4,7 @@ const link = "https://api.binance.com/api/v3/klines?symbol=ETHUSDT&interval=3d&l
 
 const useEthPrice = () => {
     const [data, setData] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const fetchData = async () => {
         const response = await fetch(link);
@@ -21,6 +22,9 @@ const useEthPrice = () => {
               value: (parseInt(el[1]) + parseInt(el[4])) / 2,
             };
           }));
+        })
+        .catch(error => {
+          setErrorMessage(error.message);
         });
     }
 
