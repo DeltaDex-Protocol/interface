@@ -3,7 +3,7 @@ import { SidebarMenuInfos } from '../../configs/Sidebar.js'
 
 
 const SidebarUnit = ({Unit, activeUnit, setActiveUnit }) => {
-    const bg_color = Unit === activeUnit ? "bg-violet-500" : "bg-white";
+    const bg_color = Unit === activeUnit ? "bg-violet-500" : "bg-gray-100";
     const text_color = Unit === activeUnit ? "text-white" : "text-black";
   
     return (

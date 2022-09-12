@@ -8,7 +8,7 @@ import UserAccountSidebar from './SidebarUserUnit'
 const Sidebar = ({walletAddress, activeUnit, setActiveUnit}) => {
 
     return (
-        <div className="mt-10 w-10 h-full">
+        <div className="mt-10 w-10">
             <UserAccountSidebar walletAddress={walletAddress} />
 
             {SidebarMenuLabels.map((el, index) => 

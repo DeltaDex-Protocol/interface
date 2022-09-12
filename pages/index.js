@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import VanillaOptions from '../app/components/screens/dapp/VanillaOptions'
+import VanillaOptionForm from '../app/components/screens/dapp/VanillaOptionForm'
 import WalletContext from '../app/contexts/Wallet.jsx'
 import Header from '../app/components/layout/Header.jsx'
 import Sidebar from '../app/components/layout/Sidebar'
@@ -15,11 +15,11 @@ export default function App () {
   return (
       <div className='max-w-6xl mx-6 xl:mx-auto '>
         <Header walletAddress={walletValue.wallet} connect={walletValue.request}/>
-        <Sidebar walletAddress={walletValue.wallet} activeUnit={activeUnit} setActiveUnit={setActiveUnit}/>
-        {activeUnit === VanillaOptions && <VanillaOptions />}
-        <div className=''>
-          <Footer />
+        <div className='flex space-x-44'>
+          <Sidebar walletAddress={walletValue.wallet} activeUnit={activeUnit} setActiveUnit={setActiveUnit}/>
+          {activeUnit == 'VanillaOptions' && <VanillaOptionForm />}
         </div>
+          <Footer />
       </div>
       )
     }
