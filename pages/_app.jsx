@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
 
 
   return (
-    <div className='h-full w-full bg-gradient-to-r from-slate-900 to-indigo-900'>
+    <div className='min-h-screen w-full bg-gradient-to-r from-slate-900 to-indigo-900 pb-10'>
       <WalletContext.Provider value={walletValue}>
           <Component {...pageProps} />
       </WalletContext.Provider>
