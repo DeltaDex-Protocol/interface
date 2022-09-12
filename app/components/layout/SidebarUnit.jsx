@@ -1,4 +1,4 @@
-import { SidebarMenuInfos } from '../../configs/Sidebar.js'
+import { SidebarMenuInfos } from '../../configs/sidebar.config.js'
 
 
 

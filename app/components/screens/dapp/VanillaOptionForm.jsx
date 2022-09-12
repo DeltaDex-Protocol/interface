@@ -6,13 +6,13 @@ import useEthPrice from '../../../hooks/useEthPrice'
 
 
 
-const VanillaOptionForm = () => {
+export const VanillaOptionForm = () => {
     
     const [ethPrice, updateEthPrice] = useEthPrice();
 
     return (
-        <div className='w-screen '>
-            <div className='mt-10'>
+        <div className=''>
+            <div className=''>
                 <div className="flex justify-between">
                     <Banner Unit={'VanillaOptions'}/>
                     <div className=''>

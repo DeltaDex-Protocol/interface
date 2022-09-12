@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SidebarMenuLabels, SidebarMenuKeys } from '../../configs/Sidebar'
+import { SidebarMenuLabels, SidebarMenuKeys } from '../../configs/sidebar.config'
 import SidebarUnit from "./SidebarUnit"
 import UserAccountSidebar from './SidebarUserUnit'
     

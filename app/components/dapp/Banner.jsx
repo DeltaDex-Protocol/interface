@@ -1,4 +1,4 @@
-import { BannerInfos } from "../../configs/Banner";
+import { BannerInfos } from "../../configs/banner.config";
 
 
 const Banner = ({ Unit }) => {
