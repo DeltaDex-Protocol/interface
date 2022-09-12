@@ -17,7 +17,8 @@ const SidebarMenuInfos = {
     },
 };
 
+const SidebarMenuKeys = Object.keys(SidebarMenuInfos)
 const SidebarMenuLabels = Object.keys(SidebarMenuInfos).map(el => SidebarMenuInfos[el].label)
 
 
-export { SidebarMenuInfos, SidebarMenuLabels }
+export { SidebarMenuInfos, SidebarMenuKeys , SidebarMenuLabels }

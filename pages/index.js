@@ -4,13 +4,13 @@ import WalletContext from '../app/contexts/Wallet.jsx'
 import Header from '../app/components/layout/Header.jsx'
 import Sidebar from '../app/components/layout/Sidebar'
 import Footer from '../app/components/layout/Footer'
-import { SidebarMenuLabels } from '../app/configs/Sidebar'
+import { SidebarMenuKeys } from '../app/configs/Sidebar'
 
 
 
 export default function App () {
   const walletValue = useContext(WalletContext)
-  const [activeUnit, setActiveUnit] = useState(SidebarMenuLabels[0])
+  const [activeUnit, setActiveUnit] = useState(SidebarMenuKeys[0])
 
   return (
       <div className='max-w-6xl mx-6 xl:mx-auto '>
