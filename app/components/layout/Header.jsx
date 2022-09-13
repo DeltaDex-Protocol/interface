@@ -11,7 +11,7 @@ const Header = ({walletAddress, connect}) => {
     }
     
     return (
-        <div className="sticky top-0 flex justify-between z-10 ">
+        <div className="sticky top-0 flex justify-between z-50 ">
             <div className="flex h-10 space-x-6 mt-4">
                 <Logo />
                 <Button value={'Tutorial'} onClick={goToLink}/>

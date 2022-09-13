@@ -3,6 +3,8 @@ import Banner from '../../dapp/Banner'
 // import ProfitChart from '../../../shared/OptionChart'
 import PriceChart from '../../../shared/PriceChart'
 
+import ReplicationForm from '../../shared/ReplicationForm/ReplicationForm.jsx'
+
 
 
 export const VanillaOptionForm = ({ ethPrice }) => {
@@ -18,7 +20,8 @@ export const VanillaOptionForm = ({ ethPrice }) => {
                     </div>
                 </div>
             </div>
-            <div className='bg-gray-100 rounded-xl p-4 mt-1'>
+            <ReplicationForm />
+            {/* <div className='bg-gray-100 rounded-xl p-4 mt-1'>
                 <div className="flex flex-col">
                     <span className=" text-medium text-xl">
                     Add initial liquidity to trade underlying
@@ -30,7 +33,7 @@ export const VanillaOptionForm = ({ ethPrice }) => {
                     tokens
                     </span>
                 </div>
-            </div>
+            </div> */}
         </div>
 
     )
