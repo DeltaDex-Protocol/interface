@@ -1,0 +1,188 @@
+import { useCallback, useContext, useState } from 'react'
+import cx from 'classnames'
+
+import styles from './Header.module.scss'
+import { socials } from '@/data/socials'
+import { Icon } from '@/components/kit'
+
+import { StateContext } from '@/state'
+import { WalletContext } from '@viaprotocol/web3-wallets'
+
+function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const { connect, isConnected, address } = useContext(WalletContext)
+
+  const toggleMenu = useCallback(() => {
+    setIsMenuOpen((state) => !state)
+  }, [])
+
+  const { openMobileMenu } = useContext(StateContext)
+
+  return (
+    <header className={styles.header}>
+      <div className={styles.headerLogoContainer}>
+        <img src="/images/deltadex.svg" alt="DeltaDex" className="w-8" />
+        <span className="mb-4 text-[#9FB9FC]">Beta</span>
+        <a
+          href=""
+          className={styles.headerActionButton}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Vanilla option <br />
+          replication
+        </a>
+        <a
+          href=""
+          className={styles.headerActionButton}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Impermanent
+          <br />
+          Loss hedging
+        </a>
+        <a
+          href=""
+          className={styles.headerActionButton}
+          target="_blank"
+          rel="noreferrer"
+        >
+          My positions
+        </a>
+      </div>
+
+      {/* <ul className={styles.headerSocials}>
+        {socials.map((social) => (
+          <li key={social.name}>
+            <a
+              href={social.link}
+              className={styles.headerSocialLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {social.icon}
+              <span className="visually-hidden">{social.name}</span>
+            </a>
+          </li>
+        ))}
+      </ul> */}
+
+      <button
+        type="button"
+        className={styles.headerBurgerButton}
+        onClick={openMobileMenu}
+      >
+        <img
+          src="/images/icons/menu-icon.svg"
+          alt="Menu icon"
+          width="24"
+          height="24"
+        />
+      </button>
+
+      <nav className={styles.headerActions}>
+        <button
+          className={cx(
+            styles.headerActionButton,
+            'bg-[#8B5CF6] bg-opacity-30 hover:shadow-md ',
+          )}
+        >
+          <span className="text-white flex">
+            Polygon
+            <Icon className="" icon="arrowDown" width={19} height={19} />
+          </span>
+        </button>
+        <button
+          onClick={() => connect({ name: 'MetaMask', chainId: 137 })}
+          className={cx(
+            styles.headerActionButton,
+            'bg-[#726DA6] bg-opacity-50 hover:bg-opacity-70 ',
+          )}
+        >
+          <span className="text-white flex">
+            {isConnected && address
+              ? address?.slice(0, 5) + '..' + address?.slice(address.length - 5)
+              : 'Connect'}
+          </span>
+        </button>
+        {/* <button
+          onClick={toggleMenu}
+          className={cx(
+            styles.headerActionButton,
+            styles.headerProductsButton,
+            isMenuOpen && styles.headerProductsButtonOpened,
+          )}
+        > */}
+        {/* {isMenuOpen ? (
+            <Icon icon="close" className="mt-1" />
+          ) : (
+            <span>Products</span>
+          )} */}
+        {/* </button> */}
+        {/* <div
+          className={cx(
+            styles.headerProducts,
+            isMenuOpen && styles.headerProductsOpened,
+          )}
+        >
+          <ul className={styles.headerProductsList}>
+            <li className={styles.menuProduct}>
+              <a
+                href="https://router.via.exchange/"
+                className={styles.menuProductWrapper}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className={styles.menuProductImageWrapper}>
+                  <img
+                    className={styles.menuProductImage}
+                    width="24"
+                    height="24"
+                    src="/images/icons/router.svg"
+                    alt="Cross-chain Aggregation Protocol"
+                  />
+                </div>
+                <div className={styles.menuProductInfo}>
+                  <h4 className={styles.menuProductTitle}>
+                    Cross-chain Aggregation Protocol
+                  </h4>
+                  <p className={styles.menuProductDescription}>
+                    The best router for any-to-any cross-chain swaps
+                  </p>
+                </div>
+              </a>
+            </li>
+            <li className={styles.menuProduct}>
+              <a
+                href="https://github.com/viaprotocol/via-sdk-js"
+                className={styles.menuProductWrapper}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className={styles.menuProductImageWrapper}>
+                  <img
+                    className={styles.menuProductImage}
+                    width="24"
+                    height="24"
+                    src="/images/icons/api.svg"
+                    alt="API"
+                  />
+                </div>
+                <div className={styles.menuProductInfo}>
+                  <h4 className={styles.menuProductTitle}>SDK</h4>
+                  <p className={styles.menuProductDescription}>
+                    Access to multi-chain for wallets, games and marketplaces
+                  </p>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div> */}
+      </nav>
+    </header>
+  )
+}
+
+export { Header }
