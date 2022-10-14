@@ -14,6 +14,7 @@ import successIcon from 'public/images/icons/success.svg'
 import errorIcon from 'public/images/icons/error.svg'
 import StepBridge from 'public/images/icons/step-bridge.svg'
 import StepSwap from 'public/images/icons/step-swap.svg'
+import Settings from 'public/images/icons/settings.svg'
 
 import Gitcoin from 'public/images/socials/gitcoin.svg'
 import Github from 'public/images/socials/github.svg'
@@ -45,6 +46,7 @@ const ICONS = {
   error: icon(errorIcon),
   stepBridge: icon(StepBridge),
   stepSwap: icon(StepSwap),
+  settings: icon(Settings),
   // socials
   gitcoin: icon(Gitcoin),
   github: icon(Github),

@@ -114,7 +114,7 @@ body {
 }
 
 body {
-  background-color: #090a0c;
+  background-color: #0A0F27;
   color: #fff;
   font-family: 'Inter', sans-serif;
   font-size: 16px;
@@ -143,10 +143,11 @@ body {
 
 
 .all {
-  overflow: hidden;
-  background: #090a0cff;
-  animation: enlight 2s ease 1 normal forwards;
-  will-change: background;
+  // overflow: hidden;
+  // background: #312E81 0.9;
+  
+  // animation: enlight 2s ease 1 normal forwards;
+  // will-change: background;
 }
 
 @keyframes enlight {

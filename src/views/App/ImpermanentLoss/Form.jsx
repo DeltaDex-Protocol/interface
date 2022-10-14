@@ -13,23 +13,42 @@ import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
 // import Tutorial from 'src/views/App/ImpermanentLoss/ForTests'
 import { createContext } from 'react'
 import { curvedOptionInitialValues } from 'src/views/App/ImpermanentLoss/data/form'
-
+import styles from './IL.module.scss'
+import AdvancedSettings from './AdvancedSettings'
 
 export const FormContext = createContext({
   form: {},
   handleFormChange: () => {},
 })
 
+const InputStyle = 'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90'
+
 const Form = ({ className }) => {
   const [form, setForm] = useState(curvedOptionInitialValues)
+  const [isPopupOpen, setPopup] = useState(false)
+  const changePopupVisibility = (isPopupOpen) => setPopup(!isPopupOpen)
 
-  const handleFormChange = (name, value) => {
-    // const { name, value } = event.target
+  useEffect(() => {
+    let value = parseInt(560 / parseInt(form.leverage.slice(1)))
+    setForm({
+      ...form,
+      providedLiquidity: value,
+    })
+  }, [])
+
+  const handleFormChange = (name, value, isAdvancedSetting = false) => {
     console.log(name, value)
 
-    if (name == 'pair') {
+    if (isAdvancedSetting) {
+      setForm({
+        ...form,
+        advancedSettings: {
+          ...form.advancedSettings,
+          [name]: value,
+        },
+      })
+    } else if (name == 'pair') {
       let [_token1, _token2] = value.split('-')
-      console.log(_token1, _token2)
       setForm({
         ...form,
         token1: _token1,
@@ -47,29 +66,49 @@ const Form = ({ className }) => {
 
   return (
     <FormContext.Provider value={{ form, handleFormChange }}>
-      <section className={cx(className, 'bg-[#141822]/80')}>
-        <header className=" mt-2 mb-4 px-2  md:gap-6">
+      <section className={cx(className, 'bg-[#fff]/5 ')}>
+        <header className=" mt-2 mb-4 px-2  md:gap-6 ">
           <div className="flex justify-between">
             <div className="flex gap-2">
               <span className="font-semibold text-[17px] text-[#726DA6]">
-                Uniswap IL protection:{' '}
+                Uniswap IL protection:
               </span>
               <span className="text-[18px]">V2</span>
             </div>
-            <div className="flex flex-col -space-y-1 text-[12px] text-[#726DA6] font-semibold ">
-              <span>advanced</span>
-              <span>settings</span>
+            <div className="flex ">
+              {isPopupOpen && (
+                <button
+                  className="flex flex-col text-[13px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
+                  onClick={() => changePopupVisibility(isPopupOpen)}
+                >
+                  <span className="mx-auto mr-2">back</span>
+                  <span className="mx-auto"></span>
+                </button>
+              )}
+              {!isPopupOpen && (
+                <button
+                  className="flex flex-col -space-y-1 text-[12px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
+                  onClick={() => changePopupVisibility(isPopupOpen)}
+                >
+                  <span className="mx-auto">advanced</span>
+                  <span className="mx-auto">settings</span>
+                </button>
+              )}
             </div>
           </div>
-          {/* <Tutorial label="Email Address" type="email" /> */}
         </header>
-        <div className="">
+        <div className={styles.inputs}>
           <div className="grid grid-cols-5 gap-2 mb-4 px-1">
-            <Pairs />
-            <ValueToProtect />
-            <Period />
-            <Leverage />
-            <MinimalLiquidity />
+            {isPopupOpen && <AdvancedSettings className={InputStyle} />}
+            {!isPopupOpen && (
+              <>
+                <Pairs className={InputStyle} />
+                <ValueToProtect className={InputStyle} />
+                <Period className={InputStyle} />
+                <Leverage className={InputStyle} />
+                <MinimalLiquidity className={InputStyle} />
+              </>
+            )}
           </div>
           <div className="flex justify-between px-2">
             <span className="font-semibold text-[#726DA6]">
@@ -89,7 +128,5 @@ const Form = ({ className }) => {
     </FormContext.Provider>
   )
 }
-
-// Routes.displayName = 'Routes'
 
 export default Form

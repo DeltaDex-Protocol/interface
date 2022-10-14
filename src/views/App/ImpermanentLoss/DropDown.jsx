@@ -6,7 +6,7 @@ import { Icon } from '@/components/kit'
 import { useContext } from 'react'
 import { FormContext } from './Form'
 
-function DropDown({ name, array }) {
+function DropDown({ name, array, isAdvancedSetting = false }) {
   const { handleFormChange } = useContext(FormContext)
 
   return (
@@ -19,7 +19,7 @@ function DropDown({ name, array }) {
             icon="arrowDown"
             width={19}
             height={19}
-          />{' '}
+          />
         </button>
       }
       position="bottom left"
@@ -31,7 +31,7 @@ function DropDown({ name, array }) {
         padding: '0px',
         border: 'none',
         backgroundColor: 'rgba(0, 0, 0, 0)',
-        maxWidth: '120px',
+        maxWidth: '200px',
         // maxHeight: '40px'
       }}
       arrow={false}
@@ -42,7 +42,7 @@ function DropDown({ name, array }) {
             return (
               <div className="menu-item bg-black  h-10" key={index}>
                 <button
-                  onClick={() => handleFormChange(name, el)}
+                  onClick={() => handleFormChange(name, el, isAdvancedSetting)}
                   className="bg-black w-full text-left hover:bg-[#fff]/20 px-2 py-1 rounded-md"
                   style={{ outline: 'none' }}
                 >

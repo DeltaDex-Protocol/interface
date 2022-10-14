@@ -19,7 +19,7 @@
     "@viaprotocol/web3-wallets": "^1.1.0",
     "eslint-plugin-tailwindcss": "^3.6.0",
     "lodash-es": "^4.17.21",
-    "next": "12.2.5",
+    "next": "^12.3.1",
     "react": "18.2.0",
     "react-collapsed": "^3.3.2",
     "react-copy-to-clipboard": "^5.1.0",

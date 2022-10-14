@@ -3,11 +3,12 @@ import useCollapse from 'react-collapsed'
 import { memo, useEffect, useMemo, useState } from 'react'
 import { useContext } from 'react'
 import { FormContext } from '../Form'
+import cx from 'classnames'
 
 import EthLogo from 'public/images/tokens/eth.svg'
 import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
 
-function Pairs() {
+function Pairs({className}) {
   const { token1, token2 } = useContext(FormContext).form
   const pairs = [token1 + '-' + token2, ...['WETH-USDC']] //'WETH-WBTC'
 
@@ -20,7 +21,7 @@ function Pairs() {
   }, [])
 
   return (
-    <div className="col-span-5 relative h-100 rounded-md py-3 px-5 transition-colors bg-[#06070A]/50 hover:bg-[#06070A]/70">
+    <div className={cx(className, "col-span-5 relative rounded-md py-3 px-5 ")}>
       <div className="pb-0 flex flex-col gap-2">
         <span className="font-semibold text-[13px] text-[#726DA6]">
           Select pair
