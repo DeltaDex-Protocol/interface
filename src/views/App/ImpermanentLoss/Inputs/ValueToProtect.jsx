@@ -22,7 +22,7 @@ function ValueToProtect({ className }) {
           <input
             type="number"
             step="0.01"
-            defaultValue={valueToProtect === 0 ? '' : valueToProtect}
+            defaultValue={valueToProtect === 0 ? null : valueToProtect}
             placeholder="100"
             // placeholder={valueToProtect === 0 ? 100 : valueToProtect}
             className="font-normal text-white   w-40 text-[18px]"

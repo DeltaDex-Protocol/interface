@@ -21,7 +21,7 @@ export const FormContext = createContext({
   handleFormChange: () => {},
 })
 
-const InputStyle = 'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90'
+const InputStyle = 'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
 
 const Form = ({ className }) => {
   const [form, setForm] = useState(curvedOptionInitialValues)
@@ -66,7 +66,7 @@ const Form = ({ className }) => {
 
   return (
     <FormContext.Provider value={{ form, handleFormChange }}>
-      <section className={cx(className, 'bg-[#fff]/5 ')}>
+      <section className={cx(className, 'bg-[#fff]/5')}>
         <header className=" mt-2 mb-4 px-2  md:gap-6 ">
           <div className="flex justify-between">
             <div className="flex gap-2">

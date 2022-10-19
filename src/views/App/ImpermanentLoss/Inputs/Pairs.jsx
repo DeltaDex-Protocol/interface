@@ -21,7 +21,7 @@ function Pairs({className}) {
   }, [])
 
   return (
-    <div className={cx(className, "col-span-5 relative rounded-md py-3 px-5 ")}>
+    <div className={cx(className, "col-span-5 relative rounded-md py-3 px-5 border-2 ")}>
       <div className="pb-0 flex flex-col gap-2">
         <span className="font-semibold text-[13px] text-[#726DA6]">
           Select pair

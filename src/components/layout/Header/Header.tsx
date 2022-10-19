@@ -1,12 +1,14 @@
 import { useCallback, useContext, useState } from 'react'
 import cx from 'classnames'
+import Image from 'next/image'
 
 import styles from './Header.module.scss'
-import { socials } from '@/data/socials'
+// import { socials } from '@/data/socials'
 import { Icon } from '@/components/kit'
 
 import { StateContext } from '@/state'
 import { WalletContext } from '@viaprotocol/web3-wallets'
+import Navbar from './Navbar'
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -22,35 +24,15 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.headerLogoContainer}>
-        <img src="/images/deltadex.svg" alt="DeltaDex" className="w-8" />
+        <Image
+          src="/images/deltadex.svg"
+          alt="DeltaDex"
+          width={50}
+          height={35}
+          className="w-8"
+        />
         <span className="mb-4 text-[#9FB9FC]">Beta</span>
-        <a
-          href=""
-          className={styles.headerActionButton}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Vanilla option <br />
-          replication
-        </a>
-        <a
-          href=""
-          className={styles.headerActionButton}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Impermanent
-          <br />
-          Loss hedging
-        </a>
-        <a
-          href=""
-          className={styles.headerActionButton}
-          target="_blank"
-          rel="noreferrer"
-        >
-          My positions
-        </a>
+        <Navbar />
       </div>
 
       {/* <ul className={styles.headerSocials}>
