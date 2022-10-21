@@ -4,24 +4,34 @@ import useCollapse from 'react-collapsed'
 // import { Icon } from '@/components/kit'
 import cx from 'classnames'
 import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
-import { useContext } from 'react'
-import { FormContext } from '../Form'
+import { useFormContext } from '@/context/form/formContext'
+import { FormActionTypes } from '@/context/form/formReducer'
 
 function Period({ className }) {
   //   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
-  const { expiresIn } = useContext(FormContext).form
+  // const { expiresIn } = useContext(FormContext).form
+  const { expiresIn } = useFormContext().formData
   const periods = [
     expiresIn,
     ...['7 Days', '14 Days', '21 Days', '28 Days', '35 Days', '42 Days'],
   ]
 
   return (
-    <div className={cx(className, "col-span-2 relative h-500 rounded-md py-3 px-5")}>
+    <div
+      className={cx(
+        className,
+        'col-span-2 relative h-500 rounded-md py-3 px-5',
+      )}
+    >
       <div className=" flex flex-col gap-2">
         <span className="font-semibold text-[12px] text-[#726DA6]">
           Protected period
         </span>
-        <DropDown name="expiresIn" array={periods} />
+        <DropDown
+          name="expiresIn"
+          array={periods}
+          ActionType={FormActionTypes.UPDATE_BASE_SETTINGS}
+        />
 
         {/* <div className="">
           <header className="flex justify-end">

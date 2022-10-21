@@ -3,4 +3,16 @@
 ```
 yarn dev
 ```
-and open localhost:3000/impermanent-loss
+and open `localhost:3000/impermanent-loss`
+
+`src/Context`:
+```
+\- form
+    \- formContext
+    \- formReducer
+\- modal
+    \- modalContext
+    \- modalReducer
+
+```
+`src/`

@@ -1,6 +1,8 @@
 import React from 'react'
-import { useContext } from 'react'
-import { FormContext } from './Form'
+// import { useContext } from 'react'
+// import { FormContext } from './Form'
+import { useFormContext } from '@/context/form/formContext'
+import { FormActionTypes } from '@/context/form/formReducer'
 import cx from 'classnames'
 
 import DropDown from './DropDown'
@@ -9,17 +11,19 @@ const settingsInfo = {
   feesToSplit: { desc: 'Fees to split (in usdcs per hedge)', type: 'input' },
   hedgesPerDay: { desc: 'Amount of delta-hedges per day', type: 'input' },
   optionType: { desc: 'Option type', type: 'dropdown' },
-  modelName: { desc: 'Model used for replication', type: 'dropdown' },
+  modelParams: { desc: 'Model used for replication', type: 'dropdown' },
 }
 const SettingsArrays = {
   optionType: ['call', 'put'],
-  modelName: ['Black-Scholes', 'Jump Diffusion'],
+  modelParams: ['Black-Scholes'],
 }
 
-function Setting({ name, value, className, handleFormChange }) {
+function Setting({ name, value, className }) {
   // console.log(value)
+  const { dispatch } = useFormContext()
 
-  if (name === 'modelParams') return <></>
+  // if (name === 'modelParams') return <></>
+  console.log(name, value)
 
   return (
     <div className={cx(className, 'col-span-5 relative rounded-md py-3 px-5 ')}>
@@ -28,7 +32,7 @@ function Setting({ name, value, className, handleFormChange }) {
           {settingsInfo[name].desc}
         </span>
         <div className="md:flex gap-0">
-          {console.log(name)}
+          {/* {console.log(name)} */}
           {settingsInfo[name].type === 'input' && (
             <input
               // type="number"
@@ -37,16 +41,27 @@ function Setting({ name, value, className, handleFormChange }) {
               placeholder={value}
               className="font-normal text-white   w-40 text-[18px]"
               onChange={(event) =>
-                handleFormChange(name, event.target.value, true)
+                dispatch({
+                  type: FormActionTypes.UPDATE_ADVANCED_SETTINGS,
+                  name: name,
+                  value: event.target.value,
+                })
               }
               style={{ backgroundColor: 'transparent', outline: 'none' }}
             />
           )}
-          {settingsInfo[name].type === 'dropdown' && (
+          {name === 'optionType' && (
             <DropDown
+              ActionType={FormActionTypes.UPDATE_ADVANCED_SETTINGS}
               name={name}
               array={[value, ...SettingsArrays[name]]}
-              isAdvancedSetting={true}
+            />
+          )}
+          {name === 'modelParams' && (
+            <DropDown
+              ActionType={FormActionTypes.UPDATE_MODEL}
+              name={'type'}
+              array={[value.type, ...SettingsArrays[name]]}
             />
           )}
 
@@ -62,19 +77,19 @@ function Setting({ name, value, className, handleFormChange }) {
 }
 
 function AdvancedSettings({ className }) {
-  const { form, handleFormChange } = useContext(FormContext)
+  const { formData } = useFormContext()
+
   //   const { feesToSplit, hedgesPerDay, optionType, model } = form.advancedSettings
   //   console.log(feesToSplit, hedgesPerDay, optionType, model)
   //   console.log([form.advancedSettings.feesToSplit])
 
   return (
     <>
-      {Object.keys(form.advancedSettings).map((el, index) => (
+      {Object.keys(formData.advancedSettings).map((el, index) => (
         <Setting
           name={el}
-          value={form.advancedSettings[el]}
+          value={formData.advancedSettings[el]}
           className={className}
-          handleFormChange={handleFormChange}
         />
       ))}
     </>

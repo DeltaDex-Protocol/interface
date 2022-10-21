@@ -1,6 +1,7 @@
-import Form from 'src/views/App/ImpermanentLoss/Form.jsx'
+import Form from 'src/views/App/ImpermanentLoss/Form'
 import { Section } from '@/components/layout'
 import styles from 'src/views/App/ImpermanentLoss/IL.module.scss'
+import Table from '@/components/kit/Table'
 
 import { Footer, Header, MobileMenu } from '@/components/layout'
 

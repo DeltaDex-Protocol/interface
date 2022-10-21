@@ -2,12 +2,11 @@ import React from 'react'
 import Popup from 'reactjs-popup'
 import cx from 'classnames'
 import { Icon } from '@/components/kit'
+import { useFormContext } from '@/context/form/formContext'
 
-import { useContext } from 'react'
-import { FormContext } from './Form'
-
-function DropDown({ name, array, isAdvancedSetting = false }) {
-  const { handleFormChange } = useContext(FormContext)
+function DropDown({ name, array, ActionType }) {
+  // const { handleFormChange } = useContext(FormContext)
+  const { dispatch } = useFormContext()
 
   return (
     <Popup
@@ -42,7 +41,13 @@ function DropDown({ name, array, isAdvancedSetting = false }) {
             return (
               <div className="menu-item bg-black  h-10" key={index}>
                 <button
-                  onClick={() => handleFormChange(name, el, isAdvancedSetting)}
+                  onClick={() =>
+                    dispatch({
+                      type: ActionType,
+                      name: name,
+                      value: el,
+                    })
+                  }
                   className="bg-black w-full text-left hover:bg-[#fff]/20 px-2 py-1 rounded-md"
                   style={{ outline: 'none' }}
                 >
