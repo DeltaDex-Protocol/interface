@@ -37,7 +37,7 @@ function MyPositions() {
           ))}
         </div>
         {data?.map((el, index) => (
-          <Position data={el} key={index} />
+          <Position rowData={el} key={index} />
         ))}
       </div>
     </div>

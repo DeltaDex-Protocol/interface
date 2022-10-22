@@ -5,7 +5,7 @@ import { Icon } from '@/components/kit'
 import cx from 'classnames'
 import Chart from './Chart/Chart'
 
-function Position({ data }) {
+function Position({ rowData }) {
   const [isExpanded, setExpanded] = useState(false)
   const { getToggleProps, getCollapseProps } = useCollapse({ isExpanded })
 
@@ -16,7 +16,7 @@ function Position({ data }) {
     currentPnL,
     performance,
     expand,
-  } = data
+  } = rowData
 
   const { onClick: onClickCollapse } = useMemo(
     () =>
