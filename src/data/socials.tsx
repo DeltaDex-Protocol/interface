@@ -8,32 +8,32 @@ import GuildIcon from 'public/images/socials/guild.svg'
 export const socials = [
   {
     name: 'Twitter',
-    link: 'https://twitter.com/via_protocol',
-    icon: <TwitterIcon />
+    link: '',
+    icon: <TwitterIcon />,
   },
   {
     name: 'Discord',
-    link: 'https://discord.gg/viaexchange',
-    icon: <DiscordIcon/>
+    link: '',
+    icon: <DiscordIcon />,
   },
   {
     name: 'Medium',
-    link: 'https://medium.com/via-exchange',
-    icon: <MediumIcon />
+    link: '',
+    icon: <MediumIcon />,
   },
   {
     name: 'Gitcoin',
-    link: 'https://gitcoin.co/grants/4665/via-protocol',
-    icon: <GitcoinIcon />
+    link: '',
+    icon: <GitcoinIcon />,
   },
   {
     name: 'Github',
-    link: 'https://github.com/viaprotocol',
-    icon: <GithubIcon />
+    link: '',
+    icon: <GithubIcon />,
   },
   {
     name: 'Guild',
-    link: 'https://guild.xyz/via',
-    icon: <GuildIcon />
-  }
+    link: '',
+    icon: <GuildIcon />,
+  },
 ]

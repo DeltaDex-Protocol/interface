@@ -6,6 +6,8 @@ import Head from 'next/head'
 import { FormContextProvider } from '@/context/form/formContext'
 import { StateContextProvider } from '@/state'
 import { WalletProvider } from '@viaprotocol/web3-wallets'
+import { Header, Footer } from '@/components/layout'
+import { MobileMenu } from '@/components/layout'
 
 import 'tailwindcss/tailwind.css'
 import '../styles/globals.scss'
@@ -24,7 +26,10 @@ function App({ Component, pageProps }: AppProps) {
                 />
                 <title>DeltaDex</title>
               </Head>
+              <Header />
               <Component {...pageProps} />
+              <Footer />
+              <MobileMenu />
             </WalletProvider>
           </StateContextProvider>
         </QueryClientProvider>

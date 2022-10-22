@@ -1,5 +1,7 @@
 import type { FunctionComponent, PropsWithChildren, SVGProps } from 'react'
 
+import MyArrow from 'public/images/icons/MyArrow.svg'
+
 import closeIcon from 'public/images/icons/close.svg'
 import arrowDown from 'public/images/icons/arrow-down.svg'
 import arrowRight from 'public/images/icons/arrow-right.svg'
@@ -24,17 +26,21 @@ import Medium from 'public/images/socials/medium.svg'
 import Guild from 'public/images/socials/guild.svg'
 
 const icon = (
-  Component: FunctionComponent<PropsWithChildren<SVGProps<SVGSVGElement>>> & { title?: string | undefined },
-  baseline = 0
+  Component: FunctionComponent<PropsWithChildren<SVGProps<SVGSVGElement>>> & {
+    title?: string | undefined
+  },
+  baseline = 0,
 ) => ({
   Component,
-  baseline
+  baseline,
 })
 
 const ICONS = {
   close: icon(closeIcon),
   arrowDown: icon(arrowDown),
   arrowRight: icon(arrowRight),
+  MyArrow: icon(MyArrow),
+
   highRiskDark: icon(highRiskDark),
   potentialRiskDark: icon(potentialRiskDark),
   secureRiskDark: icon(secureRiskDark),
@@ -53,7 +59,7 @@ const ICONS = {
   discord: icon(Discord),
   twitter: icon(Twitter),
   medium: icon(Medium),
-  guild: icon(Guild)
+  guild: icon(Guild),
 }
 
 export { ICONS }

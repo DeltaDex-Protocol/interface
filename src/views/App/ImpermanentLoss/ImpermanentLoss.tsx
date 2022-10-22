@@ -1,36 +1,26 @@
 /* eslint-disable react/prop-types */
 import cx from 'classnames'
-// import type { FC, PropsWithChildren } from 'react'
-import { useMemo, memo, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import styles from './IL.module.scss'
 
+import AdvancedSettings from './AdvancedSettings'
+import { useFormContext } from '@/context/form/formContext'
+import { FormActionTypes } from '@/context/form/formReducer'
+import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
 import {
   Pairs,
   ValueToProtect,
   Period,
   Leverage,
 } from 'src/views/App/ImpermanentLoss/Inputs/index'
-import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
-// import Tutorial from 'src/views/App/ImpermanentLoss/ForTests'
-import { createContext } from 'react'
-import styles from './IL.module.scss'
-import AdvancedSettings from './AdvancedSettings'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
-import { use } from 'echarts'
-
-export const FormContext = createContext({
-  form: {},
-  handleFormChange: () => {},
-})
 
 const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
 
 const Form = ({ className }) => {
-  const [isPopupOpen, setPopup] = useState(false)
-  const changePopupVisibility = (isPopupOpen) => setPopup(!isPopupOpen)
+  const [isAdvancedSettingsOpen, setAdvancedSettingsOpen] = useState(false)
 
-  const { formData, dispatch } = useFormContext()
+  const { formData } = useFormContext()
 
   useEffect(() => console.log(formData))
 
@@ -45,19 +35,19 @@ const Form = ({ className }) => {
             <span className="text-[18px]">V2</span>
           </div>
           <div className="flex ">
-            {isPopupOpen && (
+            {isAdvancedSettingsOpen && (
               <button
                 className="flex flex-col text-[13px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
-                onClick={() => changePopupVisibility(isPopupOpen)}
+                onClick={() => setAdvancedSettingsOpen(!isAdvancedSettingsOpen)}
               >
                 <span className="mx-auto mr-2">back</span>
                 <span className="mx-auto"></span>
               </button>
             )}
-            {!isPopupOpen && (
+            {!isAdvancedSettingsOpen && (
               <button
                 className="flex flex-col -space-y-1 text-[12px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
-                onClick={() => changePopupVisibility(isPopupOpen)}
+                onClick={() => setAdvancedSettingsOpen(!isAdvancedSettingsOpen)}
               >
                 <span className="mx-auto">advanced</span>
                 <span className="mx-auto">settings</span>
@@ -68,8 +58,10 @@ const Form = ({ className }) => {
       </header>
       <div className={styles.inputs}>
         <div className="grid grid-cols-5 gap-2 mb-4 px-1">
-          {isPopupOpen && <AdvancedSettings className={InputStyle} />}
-          {!isPopupOpen && (
+          {isAdvancedSettingsOpen && (
+            <AdvancedSettings className={InputStyle} />
+          )}
+          {!isAdvancedSettingsOpen && (
             <>
               <Pairs className={InputStyle} />
               <ValueToProtect className={InputStyle} />

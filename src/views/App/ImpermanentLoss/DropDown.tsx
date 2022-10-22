@@ -5,7 +5,6 @@ import { Icon } from '@/components/kit'
 import { useFormContext } from '@/context/form/formContext'
 
 function DropDown({ name, array, ActionType }) {
-  // const { handleFormChange } = useContext(FormContext)
   const { dispatch } = useFormContext()
 
   return (

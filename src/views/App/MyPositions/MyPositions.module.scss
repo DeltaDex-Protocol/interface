@@ -1,0 +1,7 @@
+.table {
+    @apply p-0 tracking-normal  place-self-center w-full rounded-2xl p-4  border border-white-160;
+    grid-area: routes;
+    // opacity: 1;
+  
+    font-family: 'Inter', sans-serif;
+  }

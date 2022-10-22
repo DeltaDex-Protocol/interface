@@ -1,12 +1,9 @@
 import React from 'react'
-// import { useContext } from 'react'
-// import { FormContext } from '../Form'
 import { useFormContext } from '@/context/form/formContext'
 import { FormActionTypes } from '@/context/form/formReducer'
 import cx from 'classnames'
 
 function ValueToProtect({ className }) {
-  // const { form, handleFormChange } = useContext(FormContext)
   const { formData, dispatch } = useFormContext()
 
   const valueToProtect = parseFloat(formData.valueToProtect)
@@ -28,10 +25,8 @@ function ValueToProtect({ className }) {
             step="0.01"
             defaultValue={valueToProtect == 0 ? undefined : valueToProtect}
             placeholder="100"
-            // placeholder={valueToProtect === 0 ? 100 : valueToProtect}
             className="font-normal text-white   w-40 text-[18px]"
             onChange={(event) =>
-              // handleFormChange('valueToProtect', event.target.value)
               dispatch({
                 type: FormActionTypes.UPDATE_BASE_SETTINGS,
                 name: 'valueToProtect',

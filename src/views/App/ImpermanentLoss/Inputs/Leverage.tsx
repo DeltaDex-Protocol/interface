@@ -1,13 +1,10 @@
 import React from 'react'
 import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
-import { useContext } from 'react'
-import { FormContext } from '../Form'
 import cx from 'classnames'
 import { useFormContext } from '@/context/form/formContext'
 import { FormActionTypes } from '@/context/form/formReducer'
 
 function Leverage({ className }) {
-  // const { leverage } = useContext(FormContext).form
   const { leverage } = useFormContext().formData
   const leverages = [leverage, ...['x1', 'x2', 'x3', 'x4']]
 
