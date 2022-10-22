@@ -6,22 +6,7 @@ export enum FormActionTypes {
   UPDATE_BASE_SETTINGS = 'UPDATE_BASE_SETTINGS',
   UPDATE_MODEL = 'UPDATE_MODEL',
   UPDATE_ADVANCED_SETTINGS = 'UPDATE_ADVANCED_SETTINGS',
-  //   [K in keyof FormContextState] = K
 }
-// export type FormActionTypes = keyof FormContextState
-
-// enum FormActionTypes {
-//     [test]
-// }
-
-// type test = {
-//     [K in keyof FormContextState]: K
-// }
-
-// export type FormAction = {
-//   action: FormActionType
-//   payload: FormContextState
-// }
 
 export type FormActionType = {
   type: FormActionTypes

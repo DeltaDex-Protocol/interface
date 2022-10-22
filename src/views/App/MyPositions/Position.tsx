@@ -3,7 +3,6 @@ import { memo, useEffect, useMemo, useState } from 'react'
 import useCollapse from 'react-collapsed'
 import { Icon } from '@/components/kit'
 import cx from 'classnames'
-import { getPositionsInfo } from '@/api/positions'
 import Chart from './Chart/Chart'
 
 function Position({ data }) {
@@ -18,11 +17,6 @@ function Position({ data }) {
     performance,
     expand,
   } = data
-  //   getPositionInfo(0).then((res) => (data = res))
-
-  //   useEffect(() => {
-  //     setExpanded(expanded)
-  //   }, [expanded])
 
   const { onClick: onClickCollapse } = useMemo(
     () =>
@@ -49,24 +43,16 @@ function Position({ data }) {
       onClick={onClickCollapse}
       className={cx(
         'rounded-xl py-3 px-2 mb-2 md:p-4 transition-colors',
-        // sectionStyles || [
-        //   isRouteActive && !meta.isNeedGas
         'bg-[#1112150a] dark:bg-[#ffffff0a] hover:bg-[#11121514] dark:hover:bg-[#ffffff14] active:bg-[#11121529] dark:active:bg-[#ffffff29]',
-        // 'border border-dashed bg-[#ffffff0a] dark:bg-[#1112150a] border-[#11121552] dark:border-[#ffffff52]',
-        //   isRouteActive ? 'cursor-pointer' : 'cursor-not-allowed',
-        // ],
       )}
     >
       <header className="relative flex ">
-        {/* <div className="flex flex-1 flex-col gap-1 md:flex-row md:justify-between"> */}
         <div className="grid grid-cols-6 gap-6 py-3 w-full text-center">
           <div>{type}</div>
           <div>{pairAddress}</div>
-          <div className='text-[14px]'>{currentBalances.join(', ')}</div>
+          <div className="text-[14px]">{currentBalances.join(', ')}</div>
           <div className="text-[#77DC89]">{currentPnL}</div>
           <div>{performance}</div>
-          {/* </div> */}
-          {/* </div> */}
           <button
             type="button"
             className="mx-auto parent flex h-6 w-6 items-center rounded-md transition-colors hover:bg-[#11121514] active:bg-coal-160 dark:hover:bg-[#ffffff14] dark:active:bg-white-160"

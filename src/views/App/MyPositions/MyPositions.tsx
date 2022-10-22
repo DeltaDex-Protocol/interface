@@ -5,7 +5,6 @@ import cx from 'classnames'
 import Position from './Position'
 import { getPositionsInfo } from '@/api/positions'
 import { PositionsInfoType } from '@/api/positions'
-import { map } from 'lodash-es'
 
 const TITLES: Array<string> = [
   'Type',
@@ -26,6 +25,7 @@ function MyPositions() {
     }
     fetchData()
   }, [])
+
   return (
     <div>
       <div className="pb-6 text-2xl">My positions</div>
@@ -39,8 +39,6 @@ function MyPositions() {
         {data?.map((el, index) => (
           <Position data={el} key={index} />
         ))}
-
-        {/* <Routes /> */}
       </div>
     </div>
   )
