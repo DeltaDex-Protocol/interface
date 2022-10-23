@@ -7,9 +7,7 @@ import AdvancedSettings from './AdvancedSettings'
 import { useFormContext } from '@/context/form/formContext'
 import { FormActionTypes } from '@/context/form/formReducer'
 import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
-import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
 import {
-  UniVersion,
   Pairs,
   ValueToProtect,
   Period,
@@ -26,24 +24,15 @@ const Form = ({ className }) => {
 
   useEffect(() => console.log(formData))
 
-  const { universion } = useFormContext().formData
-  const UniVersions = [universion, ...['V3','V2']]
-
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>
       <header className=" mt-2 mb-4 px-2  md:gap-6 ">
         <div className="flex justify-between">
-          <div className="flex gap-2 mb-3">
+          <div className="flex gap-2">
             <span className="font-semibold text-[17px] text-[#726DA6]">
               Uniswap IL protection:
             </span>
-            <DropDown
-              name="universion"
-              ActionType={FormActionTypes.UPDATE_BASE_SETTINGS}
-              array={UniVersions}
-            />
-
-
+            <span className="text-[18px]">V2</span>
           </div>
           <div className="flex ">
             {isAdvancedSettingsOpen && (
