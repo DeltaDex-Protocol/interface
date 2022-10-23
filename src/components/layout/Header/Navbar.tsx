@@ -11,7 +11,7 @@ type Nav = {
   path: string
 }
 
-const navigation: Nav[] = [
+export const navigation: Nav[] = [
   { id: 1, title: 'Vanilla options', path: '/vanilla-options' },
   { id: 2, title: `Hedge IL\n`, path: '/impermanent-loss' },
   { id: 3, title: 'Leverage Trading', path: '/leverage-trading' },

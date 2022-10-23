@@ -14,7 +14,7 @@ const Home: NextPage = () => {
     <>
       <div className="all">
         <div className="limiter">
-          <Header />
+          {/* <Header /> */}
 
           <main>
             {/* <Intro />

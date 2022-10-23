@@ -3,6 +3,7 @@ import { useContext } from 'react'
 
 import { StateContext } from '@/state'
 import { Icon } from '@/components/kit'
+import { navigation } from '../Header/Navbar'
 
 function MobileMenu() {
   const { isMobileMenuOpen, closeMobileMenu } = useContext(StateContext)
@@ -46,7 +47,7 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href=""
+            href={navigation[2].path}
             className="menu-product__wrapper"
             target="_blank"
             rel="noopener noreferrer"
@@ -61,15 +62,18 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href=""
+            href={navigation[1].path}
             className="menu-product__wrapper"
             target="_blank"
             rel="noopener noreferrer"
           >
             <div className="menu-product__info">
-              <h4 className="menu-product__title">Vanilla options replication</h4>
+              <h4 className="menu-product__title">
+                Vanilla options replication
+              </h4>
               <p className="menu-product__description">
-                Run on-chain vanilla option replication to access more DeFi derivatives opportunities
+                Run on-chain vanilla option replication to access more DeFi
+                derivatives opportunities
               </p>
             </div>
           </a>
