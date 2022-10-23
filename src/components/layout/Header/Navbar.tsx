@@ -12,9 +12,10 @@ type Nav = {
 }
 
 const navigation: Nav[] = [
-  { id: 1, title: 'Vanilla option', path: '/vanilla-options' },
-  { id: 2, title: `Impermanent loss\nhedging`, path: '/impermanent-loss' },
-  { id: 3, title: 'My positions', path: '/my-positions' },
+  { id: 1, title: 'Vanilla options', path: '/vanilla-options' },
+  { id: 2, title: `Hedge IL\n`, path: '/impermanent-loss' },
+  { id: 3, title: 'Leverage Trading', path: '/leverage-trading' },
+  { id: 4, title: 'My positions', path: '/my-positions' },
 ]
 
 const Navbar = () => {
