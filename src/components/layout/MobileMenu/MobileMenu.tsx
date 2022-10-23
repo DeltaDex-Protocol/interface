@@ -34,7 +34,7 @@ function MobileMenu() {
           <a
             href="deltadex.io"
             className="menu-product__wrapper"
-            target="_blank"
+            // target="_blank"
             rel="noopener noreferrer"
           >
             <div className="menu-product__info">
@@ -47,9 +47,9 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href={navigation[2].path}
+            href={navigation[1].path}
             className="menu-product__wrapper"
-            target="_blank"
+            // target="_blank"
             rel="noopener noreferrer"
           >
             <div className="menu-product__info">
@@ -62,9 +62,9 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href={navigation[1].path}
+            href={navigation[0].path}
             className="menu-product__wrapper"
-            target="_blank"
+            // target="_blank"
             rel="noopener noreferrer"
           >
             <div className="menu-product__info">
