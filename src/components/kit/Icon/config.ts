@@ -17,6 +17,7 @@ import errorIcon from 'public/images/icons/error.svg'
 import StepBridge from 'public/images/icons/step-bridge.svg'
 import StepSwap from 'public/images/icons/step-swap.svg'
 import Settings from 'public/images/icons/settings.svg'
+import dots from 'public/images/icons/dots.svg'
 
 import Gitcoin from 'public/images/socials/gitcoin.svg'
 import Github from 'public/images/socials/github.svg'
@@ -40,6 +41,7 @@ const ICONS = {
   arrowDown: icon(arrowDown),
   arrowRight: icon(arrowRight),
   MyArrow: icon(MyArrow),
+  dots: icon(dots),
 
   highRiskDark: icon(highRiskDark),
   potentialRiskDark: icon(potentialRiskDark),

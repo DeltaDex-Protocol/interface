@@ -1,5 +1,5 @@
 import React from 'react'
-import { formReducer, FormActionType } from './formReducer'
+import { OptionFormReducer, FormActionType } from './OptionFormReducer'
 
 export interface Token {
   id: string
@@ -28,7 +28,7 @@ export type ModelParams =
       jumpIntensity: string
     }
 
-export interface FormContextState {
+export type OptionForm = {
   token1: string // Token
   token2: string // Token
   type: OptionType1
@@ -36,6 +36,7 @@ export interface FormContextState {
   expiresIn: string
   leverage: string
   providedLiquidity: string
+  uniswapVersion: string
   advancedSettings: {
     feesToSplit: string
     hedgesPerDay: string
@@ -44,14 +45,15 @@ export interface FormContextState {
   }
 }
 
-export const initialState: FormContextState = {
+export const OptionFormInitialState: OptionForm = {
   token1: 'WETH',
   token2: 'USDC',
-  type: 'curved',
+  type: 'vanilla',
   valueToProtect: '0',
   expiresIn: '7 Days',
   leverage: 'x1',
   providedLiquidity: '560',
+  uniswapVersion: 'V2',
   advancedSettings: {
     feesToSplit: '0.5',
     hedgesPerDay: '4',
@@ -67,20 +69,32 @@ interface FormContextProviderProps {
   children: React.ReactNode
 }
 
-const FormContext = React.createContext<
-  { formData: FormContextState; dispatch: (action: FormActionType) => void } | undefined
+const OptionFormContext = React.createContext<
+  | { formData: OptionForm; dispatch: (action: FormActionType) => void }
+  | undefined
 >(undefined)
 
-export const FormContextProvider = ({ children }: FormContextProviderProps) => {
-  const [formData, dispatch] = React.useReducer(formReducer, initialState)
+export const OptionFormContextProvider = ({
+  children,
+}: FormContextProviderProps) => {
+  const [formData, dispatch] = React.useReducer(
+    OptionFormReducer,
+    OptionFormInitialState,
+  )
   const value = { formData, dispatch }
 
-  return <FormContext.Provider value={value}>{children}</FormContext.Provider>
+  return (
+    <OptionFormContext.Provider value={value}>
+      {children}
+    </OptionFormContext.Provider>
+  )
 }
 
-export const useFormContext = () => {
-  const context = React.useContext(FormContext)
+export const useOptionFormContext = () => {
+  const context = React.useContext(OptionFormContext)
   if (context === undefined)
-    throw new Error('useFormContext must be used within a FormContextProvider')
+    throw new Error(
+      'useOptionFormContext must be used within a OptionFormContextProvider',
+    )
   return context
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 import cx from 'classnames'
 
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { useOptionFormContext } from '@/context/form/OptionFormContext'
+import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 function MinimalLiquidity({ className }) {
-  const { formData, dispatch } = useFormContext()
+  const { formData, dispatch } = useOptionFormContext()
   const value = parseInt(formData['providedLiquidity'])
 
   // TODO: must change this
@@ -43,7 +43,7 @@ function MinimalLiquidity({ className }) {
             type="number"
             onChange={(event) =>
               dispatch({
-                type: FormActionTypes.UPDATE_BASE_SETTINGS,
+                type: OptionFormActionTypes.UPDATE_BASE_SETTINGS,
                 name: 'providedLiquidity',
                 value:
                   parseInt(event.target.value) > 0 ? event.target.value : '0',

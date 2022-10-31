@@ -1,15 +1,14 @@
 import React from 'react'
-import useCollapse from 'react-collapsed'
 import { memo, useEffect, useMemo, useState } from 'react'
 import cx from 'classnames'
-
-import { useFormContext } from '@/context/form/formContext'
 import EthLogo from 'public/images/tokens/eth.svg'
-import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
-import { FormActionTypes } from '@/context/form/formReducer'
+import DropDown from '../DropDown'
+import { useLeverageTradingFormContext } from '@/context/form/LeverageTradingContext'
+import { LeverageFormActionTypes } from '@/context/form/LeverageTradingReducer'
+
 
 function Pairs({ className }) {
-  const { token1, token2 } = useFormContext().formData
+  const { token1, token2 } = useLeverageTradingFormContext().formData
   const pairs = [token1 + '-' + token2, ...['WETH-USDC']] //'WETH-WBTC'
 
   const [balance, setBalance] = useState(0)
@@ -37,7 +36,7 @@ function Pairs({ className }) {
           <DropDown
             name=""
             array={pairs}
-            ActionType={FormActionTypes.CHANGE_PAIR}
+            ActionType={LeverageFormActionTypes.CHANGE_PAIR}
           />
         </div>
         <span className="text-[12px] text-[#726DA6]">Balance: {balance}</span>

@@ -2,13 +2,13 @@ import Form from '@/views/App/ImpermanentLoss/ImpermanentLoss'
 import { Section } from '@/components/layout'
 import styles from 'src/views/App/ImpermanentLoss/IL.module.scss'
 import Table from '@/components/kit/Table'
+import { OptionFormContextProvider } from '@/context/form/OptionFormContext'
 
-import { Footer, Header, MobileMenu } from '@/components/layout'
 
 const Home = () => {
   return (
     <>
-      <main>
+      <OptionFormContextProvider>
         <Section>
           <div className="mx-auto max-w-[500px]">
             <h2 className={styles['title-app']}>
@@ -20,8 +20,7 @@ const Home = () => {
             <Form className={styles.repform} />
           </div>
         </Section>
-      </main>
-      {/* <MobileMenu /> */}
+      </OptionFormContextProvider>
     </>
   )
 }

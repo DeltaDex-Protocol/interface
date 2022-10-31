@@ -1,7 +1,7 @@
-import { StateContext } from '@/state'
-import { FormContextState, initialState } from './formContext'
+// import { StateContext } from '@/state'
+import { OptionForm } from './OptionFormContext'
 
-export enum FormActionTypes {
+export enum OptionFormActionTypes {
   CHANGE_PAIR = 'CHANGE_PAIR',
   UPDATE_BASE_SETTINGS = 'UPDATE_BASE_SETTINGS',
   UPDATE_MODEL = 'UPDATE_MODEL',
@@ -9,24 +9,24 @@ export enum FormActionTypes {
 }
 
 export type FormActionType = {
-  type: FormActionTypes
+  type: OptionFormActionTypes
   name: string
   value: string
 }
 
-export const formReducer = (
-  state: FormContextState,
+export const OptionFormReducer = (
+  state: OptionForm,
   action: FormActionType,
-): FormContextState => {
+): OptionForm => {
   switch (action.type) {
-    case FormActionTypes.CHANGE_PAIR: {
+    case OptionFormActionTypes.CHANGE_PAIR: {
       let [_token1, _token2]: string[] = action.value.split('-')
       return { ...state, token1: _token1, token2: _token2 }
     }
-    case FormActionTypes.UPDATE_BASE_SETTINGS: {
+    case OptionFormActionTypes.UPDATE_BASE_SETTINGS: {
       return { ...state, [action.name]: action.value }
     }
-    case FormActionTypes.UPDATE_ADVANCED_SETTINGS: {
+    case OptionFormActionTypes.UPDATE_ADVANCED_SETTINGS: {
       return {
         ...state,
         advancedSettings: {
@@ -35,7 +35,7 @@ export const formReducer = (
         },
       }
     }
-    case FormActionTypes.UPDATE_MODEL: {
+    case OptionFormActionTypes.UPDATE_MODEL: {
       return {
         ...state,
         advancedSettings: {

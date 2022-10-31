@@ -29,10 +29,10 @@ function MobileMenu() {
 
       {/* <h3 className="mobile-menu__title">DeltaDex</h3> */}
 
-      <ul className="mobile-menu__products ">
+      <ul className="mobile-menu__products mb-10">
         <li className="mobile-menu__product menu-product">
           <a
-            href="deltadex.io"
+            href="/"
             className="menu-product__wrapper"
             // target="_blank"
             rel="noopener noreferrer"
@@ -47,7 +47,7 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href={navigation[1].path}
+            href={'/impermanent-loss'}
             className="menu-product__wrapper"
             // target="_blank"
             rel="noopener noreferrer"
@@ -62,18 +62,15 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href={navigation[0].path}
+            href={'leverage-trading'}
             className="menu-product__wrapper"
             // target="_blank"
             rel="noopener noreferrer"
           >
             <div className="menu-product__info">
-              <h4 className="menu-product__title">
-                Vanilla options replication
-              </h4>
+              <h4 className="menu-product__title">On-chain leverage trading</h4>
               <p className="menu-product__description">
-                Run on-chain vanilla option replication to access more DeFi
-                derivatives opportunities
+                Run on-chain trading with up to x5 leverage
               </p>
             </div>
           </a>

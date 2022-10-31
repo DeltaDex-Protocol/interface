@@ -1,6 +1,5 @@
 export * from './Long'
 export * from './Short'
 export * from './Pairs'
-export * from './ValueToProtect'
-export * from './Period'
+export * from './Amount'
 export * from './Leverage'

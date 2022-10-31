@@ -1,10 +1,10 @@
 import React from 'react'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { useOptionFormContext } from '@/context/form/OptionFormContext'
+import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import cx from 'classnames'
 
 function ValueToProtect({ className }) {
-  const { formData, dispatch } = useFormContext()
+  const { formData, dispatch } = useOptionFormContext()
 
   const valueToProtect = parseFloat(formData.valueToProtect)
 
@@ -28,7 +28,7 @@ function ValueToProtect({ className }) {
             className="font-normal text-white   w-40 text-[18px]"
             onChange={(event) =>
               dispatch({
-                type: FormActionTypes.UPDATE_BASE_SETTINGS,
+                type: OptionFormActionTypes.UPDATE_BASE_SETTINGS,
                 name: 'valueToProtect',
                 value: event.target.value,
               })

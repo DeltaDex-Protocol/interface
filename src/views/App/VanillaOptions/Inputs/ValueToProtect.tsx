@@ -1,6 +1,6 @@
 import React from 'react'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { useFormContext } from '@/context/form/OptionFormContext'
+import { FormActionTypes } from '@/context/form/OptionFormReducer'
 import cx from 'classnames'
 
 function ValueToProtect({ className }) {

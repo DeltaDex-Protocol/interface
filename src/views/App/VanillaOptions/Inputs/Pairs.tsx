@@ -3,10 +3,10 @@ import useCollapse from 'react-collapsed'
 import { memo, useEffect, useMemo, useState } from 'react'
 import cx from 'classnames'
 
-import { useFormContext } from '@/context/form/formContext'
+import { useFormContext } from '@/context/form/OptionFormContext'
 import EthLogo from 'public/images/tokens/eth.svg'
 import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { FormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Pairs({ className }) {
   const { token1, token2 } = useFormContext().formData

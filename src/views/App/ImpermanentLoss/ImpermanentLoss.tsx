@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react'
 import styles from './IL.module.scss'
 
 import AdvancedSettings from './AdvancedSettings'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { useOptionFormContext } from '@/context/form/OptionFormContext'
+import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
 import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
+import SelectPairModal from './test'
 import {
-  UniVersion,
+  // UniVersion,
   Pairs,
   ValueToProtect,
   Period,
@@ -22,28 +23,27 @@ const InputStyle =
 const Form = ({ className }) => {
   const [isAdvancedSettingsOpen, setAdvancedSettingsOpen] = useState(false)
 
-  const { formData } = useFormContext()
+  const { formData } = useOptionFormContext()
 
   useEffect(() => console.log(formData))
 
-  const { universion } = useFormContext().formData
-  const UniVersions = [universion, ...['V3','V2']]
+  const { uniswapVersion } = useOptionFormContext().formData
+  const UniVersions = [uniswapVersion, ...['V3', 'V2']]
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>
+      {/* <SelectPairModal/> */}
       <header className=" mt-2 mb-4 px-2  md:gap-6 ">
         <div className="flex justify-between">
           <div className="flex gap-2 mb-3">
             <span className="font-semibold text-[17px] text-[#726DA6]">
-              Uniswap IL protection:
+              Replicate a vanilla option
             </span>
-            <DropDown
-              name="universion"
-              ActionType={FormActionTypes.UPDATE_BASE_SETTINGS}
+            {/* <DropDown
+              name="uniswapVersion"
+              ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
               array={UniVersions}
-            />
-
-
+            /> */}
           </div>
           <div className="flex ">
             {isAdvancedSettingsOpen && (

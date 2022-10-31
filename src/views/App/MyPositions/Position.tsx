@@ -40,13 +40,12 @@ function Position({ rowData }) {
   return (
     <section
       aria-hidden="true"
-      onClick={onClickCollapse}
       className={cx(
         'rounded-xl py-3 px-2 mb-2 md:p-4 transition-colors',
         'bg-[#1112150a] dark:bg-[#ffffff0a] hover:bg-[#11121514] dark:hover:bg-[#ffffff14] active:bg-[#11121529] dark:active:bg-[#ffffff29]',
       )}
     >
-      <header className="relative flex ">
+      <header className="relative flex " onClick={onClickCollapse}>
         <div className="grid grid-cols-6 gap-6 py-3 w-full text-center">
           <div>{type}</div>
           <div>{pairAddress}</div>
@@ -80,18 +79,53 @@ function Position({ rowData }) {
             <Chart />
           </div>
           <div className="col-span-1 "></div>
-          <div className="pt-8 flex flex-col col-span-2 gap-1 text-[#726DA6] text-[15px]">
-            {expand &&
-              Object.keys(expand).map((el, index) => {
-                return <div>{el}</div>
-              })}
+          <div className="pt-8 flex flex-col col-span-4 gap-1 text-[8px] sm:text-[15px]">
+            <div className="grid grid-cols-2 gap-1.5">
+              {expand &&
+                Object.keys(expand).map((el, index) => {
+                  if (el === 'Advanced') {
+                    return (
+                      <>
+                        <div className="col-span-1 text-[#726DA6]">{el}</div>
+                        <div
+                          className="col-span-1 justify-self-end text-[#fff]"
+                          onClick={() => {alert(1)}}
+                        >
+                          <Icon icon="dots" width={30} height={30} />
+                        </div>
+                      </>
+                    )
+                  }
+                  return (
+                    <>
+                      <div className="col-span-1 text-[#726DA6]">{el}</div>
+                      <div className="col-span-1 text-right text-[#fff]">
+                        {expand[el]}
+                      </div>
+                    </>
+                  )
+                })}
+              <div className="col-span-1 mt-4">
+                <button className="bg-[#959595]/50 rounded-md px-3 py-1.5">
+                  <span className="text-[#000]">Close position</span>
+                </button>
+              </div>
+              <div className="col-span-1 justify-self-end mt-4">
+                <button className="bg-[#726DA6]/50 rounded-md px-3 py-1.5">
+                  Change parameters
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="pt-8 flex flex-col col-span-2 gap-1 text-[15px]">
+          {/* <div className="pt-8 flex flex-col col-span-2 gap-1 text-[15px]">
             {expand &&
               Object.keys(expand).map((el, index) => {
                 return <div>{expand[el]}</div>
               })}
-          </div>
+            <div className="my-10">
+              <button className=" bg-[#fff] rounded-md w-full">123</button>
+            </div>
+          </div> */}
         </div>
       </main>
     </section>

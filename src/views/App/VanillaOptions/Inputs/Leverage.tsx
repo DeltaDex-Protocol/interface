@@ -1,8 +1,8 @@
 import React from 'react'
 import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
 import cx from 'classnames'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { useFormContext } from '@/context/form/OptionFormContext'
+import { FormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Leverage({ className }) {
   const { leverage } = useFormContext().formData

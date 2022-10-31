@@ -2,17 +2,12 @@
 import cx from 'classnames'
 import { useState, useEffect } from 'react'
 import styles from './IL.module.scss'
-
-import AdvancedSettings from '../ImpermanentLoss/AdvancedSettings'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
-import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
+import { useLeverageTradingFormContext } from '@/context/form/LeverageTradingContext'
 import {
   Long,
   Short,
   Pairs,
-  ValueToProtect,
-  Period,
+  Amount,
   Leverage,
 } from 'src/views/App/LeverageTrading/Inputs/index'
 
@@ -20,9 +15,10 @@ const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
 
 const LeverageForm = ({ className }) => {
+  // actually is not used
   const [isAdvancedSettingsOpen, setAdvancedSettingsOpen] = useState(false)
 
-  const { formData } = useFormContext()
+  const { formData } = useLeverageTradingFormContext()
 
   useEffect(() => console.log(formData))
 
@@ -46,37 +42,21 @@ const LeverageForm = ({ className }) => {
                 <span className="mx-auto"></span>
               </button>
             )}
-            {!isAdvancedSettingsOpen && (
-              <button
-                className="flex flex-col -space-y-1 text-[12px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
-                onClick={() => setAdvancedSettingsOpen(!isAdvancedSettingsOpen)}
-              >
-                <span className="mx-auto">advanced</span>
-                <span className="mx-auto">settings</span>
-              </button>
-            )}
           </div>
         </div>
       </header>
       <div className={styles.inputs}>
+        <div className="grid grid-cols-4 gap-2 mb-4 px-1">
+          <Long className={InputStyle} />
+          <Short className={InputStyle} />
+        </div>
         <div className="grid grid-cols-5 gap-2 mb-4 px-1">
-          {isAdvancedSettingsOpen && (
-            <AdvancedSettings className={InputStyle} />
-          )}
-          {!isAdvancedSettingsOpen && (
-            <>
-              <Long className={InputStyle} />
-              <Short className={InputStyle} />
-              <Pairs className={InputStyle} />
-              <ValueToProtect className={InputStyle} />
-              <Leverage className={InputStyle} />
-            </>
-          )}
+          <Pairs className={InputStyle} />
+          <Amount className={InputStyle} />
+          <Leverage className={InputStyle} />
         </div>
         <div className="flex justify-between px-2">
-          <span className="font-semibold text-[#726DA6]">
-            Current Price:
-          </span>
+          <span className="font-semibold text-[#726DA6]">Current Price:</span>
           <span className="font-semibold px-2">1413 USDC</span>
         </div>
         <div className="flex justify-between px-2">

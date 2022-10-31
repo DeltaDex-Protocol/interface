@@ -1,12 +1,13 @@
 import React from 'react'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { useLeverageTradingFormContext } from '@/context/form/LeverageTradingContext'
+import { LeverageFormActionTypes } from '@/context/form/LeverageTradingReducer'
+
 import cx from 'classnames'
 
-function ValueToProtect({ className }) {
-  const { formData, dispatch } = useFormContext()
+function Amount({ className }) {
+  const { formData, dispatch } = useLeverageTradingFormContext()
 
-  const valueToProtect = parseFloat(formData.valueToProtect)
+  const valueToProtect = parseFloat(formData.amount)
 
   return (
     <div
@@ -16,9 +17,7 @@ function ValueToProtect({ className }) {
       )}
     >
       <div className="flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6]">
-          Amount
-        </span>
+        <span className="font-semibold text-[12px] text-[#726DA6]">Amount</span>
         <div className="md:flex gap-0">
           <input
             type="number"
@@ -28,8 +27,8 @@ function ValueToProtect({ className }) {
             className="font-normal text-white   w-40 text-[18px]"
             onChange={(event) =>
               dispatch({
-                type: FormActionTypes.UPDATE_BASE_SETTINGS,
-                name: 'valueToProtect',
+                type: LeverageFormActionTypes.UPDATE_BASE_SETTINGS,
+                name: 'amount',
                 value: event.target.value,
               })
             }
@@ -46,4 +45,4 @@ function ValueToProtect({ className }) {
   )
 }
 
-export { ValueToProtect }
+export { Amount }

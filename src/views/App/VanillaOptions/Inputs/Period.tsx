@@ -4,8 +4,8 @@ import useCollapse from 'react-collapsed'
 // import { Icon } from '@/components/kit'
 import cx from 'classnames'
 import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { useFormContext } from '@/context/form/OptionFormContext'
+import { FormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Period({ className }) {
   //   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()

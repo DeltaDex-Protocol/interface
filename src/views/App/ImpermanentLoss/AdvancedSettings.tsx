@@ -1,8 +1,8 @@
 import React from 'react'
 // import { useContext } from 'react'
 // import { FormContext } from './Form'
-import { useFormContext } from '@/context/form/formContext'
-import { FormActionTypes } from '@/context/form/formReducer'
+import { useOptionFormContext } from '@/context/form/OptionFormContext'
+import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import cx from 'classnames'
 
 import DropDown from './DropDown'
@@ -20,7 +20,7 @@ const SettingsArrays = {
 
 function Setting({ name, value, className }) {
   // console.log(value)
-  const { dispatch } = useFormContext()
+  const { dispatch } = useOptionFormContext()
 
   // if (name === 'modelParams') return <></>
   console.log(name, value)
@@ -42,7 +42,7 @@ function Setting({ name, value, className }) {
               className="font-normal text-white   w-40 text-[18px]"
               onChange={(event) =>
                 dispatch({
-                  type: FormActionTypes.UPDATE_ADVANCED_SETTINGS,
+                  type: OptionFormActionTypes.UPDATE_ADVANCED_SETTINGS,
                   name: name,
                   value: event.target.value,
                 })
@@ -52,14 +52,14 @@ function Setting({ name, value, className }) {
           )}
           {name === 'optionType' && (
             <DropDown
-              ActionType={FormActionTypes.UPDATE_ADVANCED_SETTINGS}
+              ActionType={OptionFormActionTypes.UPDATE_ADVANCED_SETTINGS}
               name={name}
               array={[value, ...SettingsArrays[name]]}
             />
           )}
           {name === 'modelParams' && (
             <DropDown
-              ActionType={FormActionTypes.UPDATE_MODEL}
+              ActionType={OptionFormActionTypes.UPDATE_MODEL}
               name={'type'}
               array={[value.type, ...SettingsArrays[name]]}
             />
@@ -77,7 +77,7 @@ function Setting({ name, value, className }) {
 }
 
 function AdvancedSettings({ className }) {
-  const { formData } = useFormContext()
+  const { formData } = useOptionFormContext()
 
   //   const { feesToSplit, hedgesPerDay, optionType, model } = form.advancedSettings
   //   console.log(feesToSplit, hedgesPerDay, optionType, model)

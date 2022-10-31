@@ -3,10 +3,11 @@ export type ExpandedRowParamsType =
       Expiry: string
       'Liquidity provided': string
       'Value to protect': string
-      'Last hedge': string
+      'Expected costs for replication': string
+      // 'Last hedge': string
       'Option type': string
       Leverage: string
-      //   Advanced: any // TODO: change to model params & position greeks
+      Advanced: any // TODO: change to model params & position greeks
     }
   | undefined
 
@@ -28,16 +29,17 @@ const pseudoData: PositionsInfoType[] = [
     performance: '93%',
     expand: {
       Expiry: '2022-12-02 00:00 UTC',
-      'Liquidity provided': '200 1INCH',
+      'Liquidity provided': '200 USDC',
       'Value to protect': '521 1INCH',
-      'Last hedge': '2022-11-02 18:30 UTC',
+      'Expected costs for replication': '33 USDC',
+      // 'Last hedge': '2022-11-02 18:30 UTC',
       'Option type': 'long put',
       Leverage: '2x',
-      // Advanced: '', // TODO: change to model params & position greeks
+      Advanced: '', // TODO: change to model params & position greeks
     },
   },
   {
-    type: 'Uniswap v2 hedging',
+    type: 'Uniswap v3 hedging',
     pairAddress: '0x0ef1...f210',
     currentBalances: ['100 USDC', '97 1INCH'],
     currentPnL: '+120.26 USDC',
@@ -46,10 +48,11 @@ const pseudoData: PositionsInfoType[] = [
       Expiry: '2022-12-02 00:00 UTC',
       'Liquidity provided': '200 1INCH',
       'Value to protect': '521 1INCH',
-      'Last hedge': '2022-11-02 18:30 UTC',
+      'Expected costs for replication': '33 USDC',
+      // 'Last hedge': '2022-11-02 18:30 UTC',
       'Option type': 'long put',
       Leverage: '2x',
-      // Advanced: '', // TODO: change to model params & position greeks
+      Advanced: '', // TODO: change to model params & position greeks
     },
   },
 ]

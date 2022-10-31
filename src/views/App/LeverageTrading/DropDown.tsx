@@ -2,10 +2,10 @@ import React from 'react'
 import Popup from 'reactjs-popup'
 import cx from 'classnames'
 import { Icon } from '@/components/kit'
-import { useOptionFormContext } from '@/context/form/OptionFormContext'
+import { useLeverageTradingFormContext } from '@/context/form/LeverageTradingContext'
 
 function DropDown({ name, array, ActionType }) {
-  const { dispatch } = useOptionFormContext()
+  const { dispatch } = useLeverageTradingFormContext()
 
   return (
     <Popup
