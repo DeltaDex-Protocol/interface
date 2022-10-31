@@ -35,6 +35,6 @@ and open `localhost:3000/impermanent-loss`
 ### Api
 For suitable and safe using of api calls, we splitted entire api into two separate folders: `pages/api/` and `src/api/` <br>
 
-In cases when user should not see how request processes (e.g. form validation), we're using `Next.js` backend (it means api must be located at `pages/api/`). <br>
+In cases when user should not see how request processes or not to influence on form validation, we're using `Next.js` backend (it means api must be located at `pages/api/`). <br>
 
 In other cases, for better user experience, api calls are located at `src/api/`
