@@ -1,52 +1,26 @@
-import axios from "axios";
-import { Network, NETWORKS } from "../types/networks";
+import axios from 'axios'
+import { number } from 'echarts'
+// const {axios} = require('axios')
+// import { Network, NETWORKS } from "../common/types";
 // import { getTokenLogoURL, sortToken } from "../utils/helper";
 // import lscache from "../utils/lscache";
 
-export let currentNetwork = NETWORKS[0];
+// export let currentNetwork = NETWORKS[0];
 
-export const updateNetwork = (network: Network) => {
-  currentNetwork = network;
-};
-
-const queryUniswap = async (query: string): Promise<any> => {
-  const { data } = await axios({
-    url: currentNetwork.subgraphEndpoint,
-    method: "post",
-    data: {
-      query,
-    },
-  });
-
-  return data.data;
-};
-
-export const getVolumn24H = async (poolAddress: string): Promise<number> => {
-  const { poolDayDatas } = await queryUniswap(`{
-    poolDayDatas(skip: 1, first: 7, orderBy: date, orderDirection: desc, where:{pool: "${poolAddress}"}) {
-      volumeUSD
-    }
-  }`);
-
-  const data = poolDayDatas.map((d: { volumeUSD: string }) =>
-    Number(d.volumeUSD)
-  );
-
-  return (
-    data.reduce((result: number, curr: number) => result + curr, 0) /
-    data.length
-  );
-};
+// export const updateNetwork = (network: Network) => {
+//   currentNetwork = network;
+// };
 
 export interface Tick {
-  tickIdx: string;
-  liquidityNet: string;
-  price0: string;
-  price1: string;
+  tickIdx: string
+  liquidityNet: string
+  price0: string
+  price1: string
 }
+
 const _getPoolTicksByPage = async (
   poolAddress: string,
-  page: number
+  page: number,
 ): Promise<Tick[]> => {
   const res = await queryUniswap(`{
     ticks(first: 1000, skip: ${
@@ -57,140 +31,90 @@ const _getPoolTicksByPage = async (
       price0
       price1
     }
-  }`);
+  }`)
 
-  return res.ticks;
-};
+  return res.ticks
+}
+
 export const getPoolTicks = async (poolAddress: string): Promise<Tick[]> => {
-  const PAGE_SIZE = 3;
-  let result: Tick[] = [];
-  let page = 0;
+  const PAGE_SIZE = 3
+  let result: Tick[] = []
+  let page = 0
   while (true) {
     const [pool1, pool2, pool3] = await Promise.all([
       _getPoolTicksByPage(poolAddress, page),
       _getPoolTicksByPage(poolAddress, page + 1),
       _getPoolTicksByPage(poolAddress, page + 2),
-    ]);
+    ])
 
-    result = [...result, ...pool1, ...pool2, ...pool3];
+    result = [...result, ...pool1, ...pool2, ...pool3]
     if (pool1.length === 0 || pool2.length === 0 || pool3.length === 0) {
-      break;
+      break
     }
-    page += PAGE_SIZE;
+    page += PAGE_SIZE
   }
-  return result;
-};
-
-export interface V3Token {
-  id: string;
-  name: string;
-  symbol: string;
-  volumeUSD: string;
-  logoURI: string;
-  decimals: string;
+  return result
 }
-export const getTopTokenList = async (): Promise<V3Token[]> => {
-  const cacheKey = `${currentNetwork.id}_getTopTokenList`;
-  const cacheData = lscache.get(cacheKey);
-  const searchTokenPageItems = localStorage.getItem(
-    `SearchTokenPage_${currentNetwork.id}_tokens`
-  );
-  if (cacheData) {
-    if (searchTokenPageItems !== null) {
-      return [...cacheData, ...JSON.parse(searchTokenPageItems)];
-    }
-    return cacheData;
-  }
 
-  const res = await queryUniswap(`{
-    tokens(skip: 0, first: 500, orderBy: volumeUSD, orderDirection: desc) {
-      id
-      name
-      symbol
-      volumeUSD
-      decimals
-    }
-  }`);
+export const queryUniswap = async (query: string): Promise<any> => {
+  const { data } = await axios({
+    url: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3',
+    method: 'post',
+    data: {
+      query,
+    },
+  })
 
-  if (res === undefined || res.tokens.length === 0) {
-    return [];
-  }
-
-  const tokens = res.tokens as V3Token[];
-  let result = tokens
-    .map((token) => {
-      token.logoURI = getTokenLogoURL(token.id);
-      return token;
-    })
-    .map((token) => {
-      if (token.name === "Wrapped Ether" || token.name === "Wrapped Ethereum") {
-        token.name = "Ethereum";
-        token.symbol = "ETH";
-        token.logoURI =
-          "https://cdn.iconscout.com/icon/free/png-128/ethereum-2752194-2285011.png";
-      }
-      if (token.name === "Wrapped Matic") {
-        token.name = "Polygon Native Token";
-        token.symbol = "MATIC";
-      }
-      return token;
-    })
-    .filter((token) => token.symbol.length < 30);
-
-  lscache.set(cacheKey, result, 10);
-  if (searchTokenPageItems !== null) {
-    result = [...result, ...JSON.parse(searchTokenPageItems)];
-  }
-
-  return result;
-};
-
-export const getToken = async (id: string): Promise<V3Token> => {
-  const res = await queryUniswap(`{
-    token(id: "${id.toLowerCase()}") {
-      id
-      name
-      symbol
-      volumeUSD
-      decimals
-    }
-  }`);
-
-  if (res.token !== null) {
-    res.token.logoURI = getTokenLogoURL(res.token.id);
-  }
-
-  return res.token;
-};
-
-export interface Pool {
-  id: string;
-  feeTier: string;
-  liquidity: string;
-  tick: string;
-  sqrtPrice: string;
-  token0Price: string;
-  token1Price: string;
+  return data.data
 }
-export const getPoolFromPair = async (
-  token0: V3Token,
-  token1: V3Token
-): Promise<Pool[]> => {
-  const sortedTokens = sortToken(token0, token1);
 
-  const { pools } = await queryUniswap(`{
-    pools(orderBy: feeTier, where: {
-        token0: "${sortedTokens[0].id}",
-        token1: "${sortedTokens[1].id}"}) {
-      id
-      tick
-      sqrtPrice
-      feeTier
-      liquidity
-      token0Price
-      token1Price
+export const getVolume24H = async (
+  poolAddress: string,
+  amount: number = 1,
+): Promise<number> => {
+  const { poolDayDatas } = await queryUniswap(`{
+    poolDayDatas(skip: 1, first: ${amount}, orderBy: date, orderDirection: desc, where:{pool: "${poolAddress}"}) {
+      volumeUSD
     }
-  }`);
+  }`)
 
-  return pools as Pool[];
-};
+  const data = poolDayDatas.map((d: { volumeUSD: string }) =>
+    Number(d.volumeUSD),
+  )
+
+  return (
+    data.reduce((result: number, curr: number) => result + curr, 0) /
+    data.length
+  )
+  //   console.log()
+  // return data
+}
+
+export const getUniStats = async (
+  poolAddress: string,
+  amount: number,
+): Promise<[]> => {
+  const { poolDayDatas } = await queryUniswap(`{
+      poolDayDatas(skip: 1, first: ${amount}, orderBy: date, orderDirection: desc, where:{pool: "${poolAddress}"}) {
+        date
+        volumeUSD
+        feesUSD
+      }
+    }`)
+
+  const data = poolDayDatas.map(
+    (d: { date: string; volumeUSD: string; feesUSD: string }) => [
+      Number(d.date),
+      Number(d.volumeUSD),
+      Number(d.feesUSD),
+    ],
+  )
+
+  return data
+}
+
+const main = async () => {
+  // console.log(await getPoolTicks('0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8'))
+}
+
+main().then(() => {})

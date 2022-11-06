@@ -3,7 +3,7 @@ import { memo, useEffect, useMemo, useState } from 'react'
 import useCollapse from 'react-collapsed'
 import { Icon } from '@/components/kit'
 import cx from 'classnames'
-import Chart from './Chart/Chart'
+import Chart from './Chart'
 
 function Position({ rowData }) {
   const [isExpanded, setExpanded] = useState(false)

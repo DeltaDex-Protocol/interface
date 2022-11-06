@@ -2,11 +2,8 @@ import React from 'react'
 import Popup from 'reactjs-popup'
 import cx from 'classnames'
 import { Icon } from '@/components/kit'
-import { useFormContext } from '@/context/form/formContext'
 
-function DropDown({ name, array, ActionType }) {
-  const { dispatch } = useFormContext()
-
+function DropDown({ name, array, ActionType, dispatch }) {
   return (
     <Popup
       trigger={

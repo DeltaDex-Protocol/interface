@@ -1,12 +1,12 @@
 import React from 'react'
-import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
+import DropDown from '@/components/kit/Form/components/DropDown'
 import cx from 'classnames'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Leverage({ className }) {
-  const { leverage } = useOptionFormContext().formData
-  const leverages = [leverage, ...['x1', 'x2', 'x3', 'x4']]
+  const { formData, dispatch } = useOptionFormContext()
+  const leverages = [formData.leverage, ...['x1', 'x2', 'x3', 'x4']]
 
   return (
     <div
@@ -25,6 +25,7 @@ function Leverage({ className }) {
               name="leverage"
               ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
               array={leverages}
+              dispatch={dispatch}
             />
           </span>
           <span></span>

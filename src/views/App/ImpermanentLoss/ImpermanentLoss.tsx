@@ -7,7 +7,6 @@ import AdvancedSettings from './AdvancedSettings'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
-import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
 import SelectPairModal from './test'
 import {
   // UniVersion,
@@ -23,11 +22,11 @@ const InputStyle =
 const Form = ({ className }) => {
   const [isAdvancedSettingsOpen, setAdvancedSettingsOpen] = useState(false)
 
-  const { formData } = useOptionFormContext()
+  const { formData, dispatch } = useOptionFormContext()
 
   useEffect(() => console.log(formData))
 
-  const { uniswapVersion } = useOptionFormContext().formData
+  const { uniswapVersion } = formData
   const UniVersions = [uniswapVersion, ...['V3', 'V2']]
 
   return (
@@ -35,16 +34,14 @@ const Form = ({ className }) => {
       {/* <SelectPairModal/> */}
       <header className=" mt-2 mb-4 px-2  md:gap-6 ">
         <div className="flex justify-between">
-          <div className="flex gap-2 mb-3">
-            <span className="font-semibold text-[17px] text-[#726DA6]">
-              Replicate a vanilla option
-            </span>
-            {/* <DropDown
+          <span className="font-semibold text-[17px] text-[#726DA6]">
+            Replicate a vanilla option
+          </span>
+          {/* <DropDown
               name="uniswapVersion"
               ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
               array={UniVersions}
             /> */}
-          </div>
           <div className="flex ">
             {isAdvancedSettingsOpen && (
               <button

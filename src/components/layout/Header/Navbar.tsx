@@ -15,6 +15,7 @@ export const navigation: Nav[] = [
   { id: 3, title: 'Leverage Trading', path: '/leverage-trading' },
   { id: 2, title: `Hedge IL\n`, path: '/impermanent-loss' },
   { id: 4, title: 'My positions', path: '/my-positions' },
+  { id: 5, title: 'Calculator', path: '/calculator' },
 ]
 
 const Navbar = () => {
@@ -27,6 +28,7 @@ const Navbar = () => {
           <a
             className={cx(
               styles.headerActionLink,
+              'my-auto',
               pathname === path ? 'text-white' : 'text-[#726DA6]',
             )}
           >

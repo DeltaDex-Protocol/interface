@@ -5,12 +5,12 @@ import cx from 'classnames'
 
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import EthLogo from 'public/images/tokens/eth.svg'
-import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
+import DropDown from '@/components/kit/Form/components/DropDown'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Pairs({ className }) {
-  const { token1, token2 } = useOptionFormContext().formData
-  const pairs = [token1 + '-' + token2, ...['WETH-USDC']] //'WETH-WBTC'
+  const { formData, dispatch } = useOptionFormContext()
+  const pairs = [formData.token1 + '-' + formData.token2, ...['WETH-USDC']] //'WETH-WBTC'
 
   const [balance, setBalance] = useState(0)
 
@@ -38,6 +38,7 @@ function Pairs({ className }) {
             name=""
             array={pairs}
             ActionType={OptionFormActionTypes.CHANGE_PAIR}
+            dispatch={dispatch}
           />
         </div>
         <span className="text-[12px] text-[#726DA6]">Balance: {balance}</span>

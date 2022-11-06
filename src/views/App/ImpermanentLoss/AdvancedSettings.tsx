@@ -5,7 +5,7 @@ import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import cx from 'classnames'
 
-import DropDown from './DropDown'
+import DropDown from '@/components/kit/Form/components/DropDown'
 
 const settingsInfo = {
   feesToSplit: { desc: 'Fees to split (in usdcs per hedge)', type: 'input' },
@@ -55,6 +55,7 @@ function Setting({ name, value, className }) {
               ActionType={OptionFormActionTypes.UPDATE_ADVANCED_SETTINGS}
               name={name}
               array={[value, ...SettingsArrays[name]]}
+              dispatch={dispatch}
             />
           )}
           {name === 'modelParams' && (
@@ -62,6 +63,7 @@ function Setting({ name, value, className }) {
               ActionType={OptionFormActionTypes.UPDATE_MODEL}
               name={'type'}
               array={[value.type, ...SettingsArrays[name]]}
+              dispatch={dispatch}
             />
           )}
 

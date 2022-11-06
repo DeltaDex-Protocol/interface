@@ -1,12 +1,12 @@
 import React from 'react'
-import DropDown from '../DropDown'
+import DropDown from '@/components/kit/Form/components/DropDown'
 import cx from 'classnames'
 import { LeverageFormActionTypes } from '@/context/form/LeverageTradingReducer'
 import { useLeverageTradingFormContext } from '@/context/form/LeverageTradingContext'
 
 function Leverage({ className }) {
-  const { leverage } = useLeverageTradingFormContext().formData
-  const leverages = [leverage, ...['x1', 'x2', 'x3', 'x4']]
+  const { formData, dispatch } = useLeverageTradingFormContext()
+  const leverages = [formData.leverage, ...['x1', 'x2', 'x3', 'x4']]
 
   return (
     <div
@@ -25,6 +25,7 @@ function Leverage({ className }) {
               name="leverage"
               ActionType={LeverageFormActionTypes.UPDATE_BASE_SETTINGS}
               array={leverages}
+              dispatch={dispatch}
             />
           </span>
           <span></span>

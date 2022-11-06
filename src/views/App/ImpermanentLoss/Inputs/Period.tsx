@@ -3,16 +3,16 @@ import useCollapse from 'react-collapsed'
 // import { memo, useEffect, useMemo, useState } from 'react'
 // import { Icon } from '@/components/kit'
 import cx from 'classnames'
-import DropDown from 'src/views/App/ImpermanentLoss/DropDown'
+import DropDown from '@/components/kit/Form/components/DropDown'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Period({ className }) {
   //   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
   // const { expiresIn } = useContext(FormContext).form
-  const { expiresIn } = useOptionFormContext().formData
+  const { formData, dispatch } = useOptionFormContext()
   const periods = [
-    expiresIn,
+    formData.expiresIn,
     ...['7 Days', '14 Days', '21 Days', '28 Days', '35 Days', '42 Days'],
   ]
 
@@ -31,6 +31,7 @@ function Period({ className }) {
           name="expiresIn"
           array={periods}
           ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
+          dispatch={dispatch}
         />
 
         {/* <div className="">

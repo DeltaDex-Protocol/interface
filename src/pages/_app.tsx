@@ -7,6 +7,7 @@ import { StateContextProvider } from '@/state'
 import { WalletProvider } from '@viaprotocol/web3-wallets'
 import { Header, Footer } from '@/components/layout'
 import { MobileMenu } from '@/components/layout'
+import { BetaVersionAlert } from '@/components/layout'
 
 import 'tailwindcss/tailwind.css'
 import '../styles/globals.scss'
@@ -26,6 +27,7 @@ function App({ Component, pageProps }: AppProps) {
             </Head>
             <Header />
             <Component {...pageProps} />
+            <BetaVersionAlert />
             <Footer />
             <MobileMenu />
           </WalletProvider>
