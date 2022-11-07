@@ -113,8 +113,8 @@ export const getUniStats = async (
   return data
 }
 
-const main = async () => {
-  // console.log(await getPoolTicks('0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8'))
-}
+// const main = async () => {
+//   // console.log(await getPoolTicks('0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8'))
+// }
 
-main().then(() => {})
+// main().then(() => {})

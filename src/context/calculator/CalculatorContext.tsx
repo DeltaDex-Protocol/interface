@@ -13,27 +13,30 @@ export interface Token {
 export type CalculatorForm = {
   token1: string // Token
   token2: string // Token
-  pool: string // e.g '0.05'
-  deposit_amount: string
-  period: string
+  // currentPrice?: string
+  feeTier: '3000' | '1000' | '500'
+  poolAddress: string
+  depositAmount: string
+  period: number
   optionType: 'Long put' | 'Long call' // 'Short put' | 'Short call'
-  minimal_price: string
-  maximal_price: string
+  minimalPrice: string
+  maximalPrice: string
   strike: string
-  contracts_amount: string
+  contractsAmount: string
 }
 
 export const CalculatorFormInitialState: CalculatorForm = {
   token1: 'WETH', // Token
   token2: 'USDC', // Token
-  pool: '0.3',
-  deposit_amount: '0',
-  period: '30 Days',
+  feeTier: '3000',
+  poolAddress: '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8',
+  depositAmount: '1000',
+  period: 30,
   optionType: 'Long put',
-  minimal_price: '1000',
-  maximal_price: '2000',
+  minimalPrice: '1000',
+  maximalPrice: '2000',
   strike: '1500',
-  contracts_amount: '1',
+  contractsAmount: '1',
 }
 
 interface FormContextProviderProps {

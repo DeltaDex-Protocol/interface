@@ -36,14 +36,16 @@ type EstimateFeesQueryType = {
   priceRange: [number, number]
   initialPrice: number
   period?: number
+  feeTier: '3000' | '500' | '1000'
 }
 
 const estimateFees24H = async (feesQuery: EstimateFeesQueryType) => {
-  const feeTier = '3000'
+  // const feeTier = '3000'
   const DEFAULT_AVG = 7 // days
   const state = {
     isSwap: false,
     pool: feesQuery.pool,
+    feeTier: feesQuery.feeTier,
     poolTicks: await getPoolTicks(feesQuery.pool),
     token0: { decimals: feesQuery.token0_decimals || '18' },
     token1: { decimals: feesQuery.token1_decimals || '18' },
@@ -109,10 +111,10 @@ const estimateFees24H = async (feesQuery: EstimateFeesQueryType) => {
   const L = calculateLiquidity(state.poolTicks || [], currentTick)
   const volume24H = state.volume24H
 
-  let fee = calculateFee(deltaL, L, volume24H, feeTier)
+  let fee = calculateFee(deltaL, L, volume24H, state.feeTier)
   if (P < Pl || P > Pu) fee = 0
 
-  let liquidity_percentage = fee / volume24H / getFeeTierPercentage(feeTier)
+  let liquidity_percentage = fee / volume24H / getFeeTierPercentage(state.feeTier)
   //@ts-ignore
   return {
     liquidity_percentage: liquidity_percentage,

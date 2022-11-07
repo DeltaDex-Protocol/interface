@@ -42,6 +42,7 @@ function Chart() {
     },
     grid: {
       show: false, // you can either change hear to disable all grids
+      // height: 250
     },
 
     // title: {
@@ -77,6 +78,7 @@ function Chart() {
     //     data: date
     //   },
     // ],
+
     yAxis: [
       {
         name: 'Total value',
@@ -121,18 +123,18 @@ function Chart() {
           color: 'rgba(119, 220, 137, 1)',
         },
         data: TVs,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgba(56, 76, 255, 0.9)',
-            },
-            {
-              offset: 1,
-              color: 'rgba(44, 62, 80, 0)',
-            },
-          ]),
-        },
+        // areaStyle: {
+        //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //     {
+        //       offset: 0,
+        //       color: 'rgba(56, 76, 255, 0.9)',
+        //     },
+        //     {
+        //       offset: 1,
+        //       color: 'rgba(44, 62, 80, 0)',
+        //     },
+        //   ]),
+        // },
       },
 
       {
@@ -160,7 +162,11 @@ function Chart() {
     ],
   }
 
-  return <ReactEcharts option={option} className="" />
+  return (
+    <div className="mx-auto">
+      <ReactEcharts option={option} style={{ height: '450px', width: '' }} />
+    </div>
+  )
 }
 
 export default Chart

@@ -1,4 +1,4 @@
-import { V3Token } from "./uniswap";
+// import { V3Token } from "./uniswap";
 // import TokenImageURI from "./tokenImageURI.json";
 
 export const getFeeTierPercentage = (tier: string): number => {
@@ -10,17 +10,17 @@ export const getFeeTierPercentage = (tier: string): number => {
 };
 
 export const getTokenLogoURL = (address: string): string => {
-  const mapper = TokenImageURI as { [key: string]: string };
-  const imageURL = mapper[address];
+  // const mapper = TokenImageURI as { [key: string]: string };
+  // const imageURL = mapper[address];
 
-  if (imageURL) return imageURL;
+  // if (imageURL) return imageURL;
 
   return `https://friconix.com/png/fi-cnsuxl-question-mark.png`;
 };
 
-export const sortToken = (token0: V3Token, token1: V3Token): V3Token[] => {
-  if (token0.id < token1.id) {
-    return [token0, token1];
-  }
-  return [token1, token0];
-};
+// export const sortToken = (token0: V3Token, token1: V3Token): V3Token[] => {
+//   if (token0.id < token1.id) {
+//     return [token0, token1];
+//   }
+//   return [token1, token0];
+// };

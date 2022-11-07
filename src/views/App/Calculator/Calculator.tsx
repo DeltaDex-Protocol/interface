@@ -1,6 +1,7 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import Chart from './Chart'
-// import { Skeleton } from '@/components/kit'
+import { Skeleton } from '@/components/kit'
 // import { Tile } from '@/components/kit'
 // import { Tooltip } from '@/components/kit/Tooltip/Tooltip'
 import EthLogo from 'public/images/tokens/eth.svg'
@@ -15,56 +16,93 @@ const FEES_FORM_TITLE = 'Uniswap v3'
 const OPTION_FORM_TITLE = 'Vanilla option replication'
 
 import estimateFees24H from '@/utils/estimateFees'
+import { getEthPrice } from '@/api/tokensPrices'
+import { round } from 'lodash-es'
 
 const Calculator = () => {
   const { formData, dispatch } = useCalculatorFormContext()
-  const period = formData.period
-  const optionType = formData.optionType
 
-  // TODO: check
+  const {
+    token1,
+    token2,
+    period,
+    poolAddress,
+    depositAmount,
+    minimalPrice,
+    maximalPrice,
+    feeTier,
+  } = formData
 
-  //   estimateFees24H({
-  //     pool: '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8',
-  //     deposit: 1000,
+  const { optionType, strike, contractsAmount } = formData
+
+  const [tokenPrice, setTokenPrice] = useState<number>(0)
+  const [DailyFees, setDailyFees] = useState<number>(0)
+
+  useEffect(() => {
+    getEthPrice().then((price) => {
+      setTokenPrice(price)
+      console.log(price)
+      estimateFees24H({
+        pool: poolAddress,
+        deposit: Number(depositAmount),
+        token0_decimals: '6',
+        token1_decimals: '18',
+        priceRange: [Number(minimalPrice), Number(maximalPrice)],
+        initialPrice: price,
+        period: period,
+        feeTier: feeTier,
+      }).then((res) => setDailyFees(round(res.collectedFees24H, 2)))
+    })
+  }, [])
+
+  //   console.log({
+  //     pool: poolAddress,
+  //     deposit: Number(depositAmount),
   //     token0_decimals: '6',
   //     token1_decimals: '18',
-  //     priceRange: [1215, 1395],
+  //     priceRange: [Number(minimalPrice), Number(maximalPrice)],
   //     initialPrice: 1312,
-  //     period: 100,
-  //   }).then((res) => console.log(res))
+  //     period: Number(period.split(' ')[0]), // in days
+  //     feeTier: feeTier,
+  //   })
 
   return (
     <div className="">
       <div className="lg:grid md:grid-cols-8">
         <div className="col-span-4 md:mt-[10%] ">
-          <div className="pb-6 text-2xl">Calculator</div>
+          <div className="pb-0 text-2xl">Calculator</div>
           <Chart />
         </div>
         <div className="col-span-1" />
         <div className="col-span-3 ">
           <div className="flex flex-col gap-5">
-            <Form header={[FEES_FORM_TITLE, period]} className="mx-auto">
+            <Form
+              header={[FEES_FORM_TITLE, period + ' Days']}
+              className="mx-auto"
+            >
               <div className="grid grid-cols-10 gap-x-2 gap-y-2">
                 <Field title="Select pair" className="col-span-6">
                   <div className="flex justify-between ">
                     <div className="flex gap-1">
                       <EthLogo className="h-7 w-7" />
                       <div className="my-auto rounded-md"></div>
-                      <span className="my-auto">ETH-USDC</span>
+                      <span className="my-auto">
+                        {token2}-{token1}
+                      </span>
                     </div>
                     <span className="my-auto bg-[#352766] px-2 py-1 rounded-lg">
-                      0.3%
+                      {Number(feeTier) / 1000 / 10}%
                     </span>
                   </div>
                 </Field>
                 <Field title="Deposit amount" className="col-span-4">
-                  <span className="my-auto py-1">1500$</span>
+                  <span className="my-auto py-1">{depositAmount}</span>
                 </Field>
                 <Field title="Min price" className="col-span-5">
                   <div className="flex flex-col gap-0">
-                    <span className="my-auto">1200</span>
+                    <span className="my-auto">{minimalPrice}</span>
                     <span className="text-[12px] text-[#726DA6]">
-                      USDC per ETH
+                      {token2} per {token1}
                     </span>
                   </div>
                 </Field>
@@ -72,7 +110,7 @@ const Calculator = () => {
                   <div className="flex flex-col gap-0">
                     <span className="my-auto">1500</span>
                     <span className="text-[12px] text-[#726DA6]">
-                      USDC per ETH
+                      {token2} per {token1}
                     </span>
                   </div>
                 </Field>
@@ -82,11 +120,18 @@ const Calculator = () => {
                 <Field className="col-span-10 pt-1 pb-2">
                   <div className="my-auto flex justify-between">
                     <span>Daily</span>
-                    <span className="font-medium text-[#55AC68]">2.20$</span>
+
+                    <span className="font-medium text-[#55AC68]">
+                      {DailyFees !== 0 && <>{DailyFees}$</>}
+                      {DailyFees == 0 && <Skeleton h={25} />}
+                    </span>
                   </div>
                   <div className="my-auto flex justify-between">
-                    <span>{period}</span>
-                    <span className="font-medium text-[#55AC68]">66.10$</span>
+                    <span>{period + ' Days'}</span>
+                    <span className="font-medium text-[#55AC68]">
+                      {DailyFees !== 0 && <>{round(DailyFees * period, 2)}$</>}
+                      {DailyFees == 0 && <Skeleton h={25} />}{' '}
+                    </span>
                   </div>
                 </Field>
               </div>
