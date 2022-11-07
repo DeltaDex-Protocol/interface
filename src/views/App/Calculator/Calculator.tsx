@@ -2,8 +2,10 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import Chart from './Chart'
 import { Skeleton } from '@/components/kit'
+import Input from '@/components/kit/Form/components/Input'
 // import { Tile } from '@/components/kit'
 // import { Tooltip } from '@/components/kit/Tooltip/Tooltip'
+
 import EthLogo from 'public/images/tokens/eth.svg'
 
 import { Form } from '@/components/kit'
@@ -81,10 +83,15 @@ const Calculator = () => {
           value: round(cost, 2),
         }),
       )
-  }, [formData.optionCost, formData.currentPrice])
+  }, [
+    formData.optionCost,
+    formData.currentPrice,
+    formData.depositAmount,
+    formData.contractsAmount,
+    formData.strike,
+  ])
 
   console.log(formData)
-
 
   return (
     <div className="">
@@ -116,11 +123,38 @@ const Calculator = () => {
                   </div>
                 </Field>
                 <Field title="Deposit amount" className="col-span-4">
-                  <span className="my-auto py-1">{depositAmount}</span>
+                  <span className="my-auto py-1">
+                    <Input
+                      value={depositAmount}
+                      min={0}
+                      max={10000}
+                      eventHandler={(value) =>
+                        dispatch({
+                          type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+                          name: 'depositAmount',
+                          value: Number(value),
+                        })
+                      }
+                    />
+                  </span>
                 </Field>
                 <Field title="Min price" className="col-span-5">
                   <div className="flex flex-col gap-0">
-                    <span className="my-auto">{minimalPrice}</span>
+                    <span className="my-auto">
+                      <Input
+                        value={minimalPrice}
+                        min={0}
+                        max={10000}
+                        eventHandler={(value) =>
+                          dispatch({
+                            type:
+                              CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+                            name: 'minimalPrice',
+                            value: Number(value),
+                          })
+                        }
+                      />
+                    </span>
                     <span className="text-[12px] text-[#726DA6]">
                       {token2} per {token1}
                     </span>
@@ -128,7 +162,21 @@ const Calculator = () => {
                 </Field>
                 <Field title="Max price" className="col-span-5">
                   <div className="flex flex-col gap-0">
-                    <span className="my-auto">{maximalPrice}</span>
+                    <span className="my-auto">
+                      <Input
+                        value={maximalPrice}
+                        min={0}
+                        max={10000}
+                        eventHandler={(value) =>
+                          dispatch({
+                            type:
+                              CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+                            name: 'maximalPrice',
+                            value: Number(value),
+                          })
+                        }
+                      />
+                    </span>
                     <span className="text-[12px] text-[#726DA6]">
                       {token2} per {token1}
                     </span>
@@ -140,7 +188,6 @@ const Calculator = () => {
                 <Field className="col-span-10 pt-1 pb-2">
                   <div className="my-auto flex justify-between">
                     <span>Daily</span>
-
                     <span className="font-medium text-[#55AC68]">
                       {dailyFees !== 0 && <>{dailyFees}$</>}
                       {dailyFees == 0 && <Skeleton h={25} />}
@@ -159,10 +206,36 @@ const Calculator = () => {
             <Form header={[OPTION_FORM_TITLE, optionType]}>
               <div className="grid grid-cols-10 gap-x-2 gap-y-2">
                 <Field title="Strike price" className="col-span-5">
-                  <span className="my-auto">{strike}</span>
+                  <span className="my-auto">
+                    <Input
+                      value={Number(strike)}
+                      min={100}
+                      max={10000}
+                      eventHandler={(value) =>
+                        dispatch({
+                          type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+                          name: 'strike',
+                          value: Number(value),
+                        })
+                      }
+                    />
+                  </span>
                 </Field>
                 <Field title="Number of contracts" className="col-span-5">
-                  <span className="my-auto">{contractsAmount}</span>
+                  <span className="my-auto">
+                    <Input
+                      value={contractsAmount}
+                      min={0}
+                      max={100}
+                      eventHandler={(value) =>
+                        dispatch({
+                          type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+                          name: 'contractsAmount',
+                          value: Number(value),
+                        })
+                      }
+                    />
+                  </span>
                 </Field>
                 <div className="px-2 py-2 col-span-10 flex flex-col gap-1">
                   <div className="my-auto flex justify-between">
