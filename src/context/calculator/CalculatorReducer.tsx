@@ -10,7 +10,7 @@ export enum CalculatorFormActionTypes {
 export type FormActionType = {
   type: CalculatorFormActionTypes
   name: string
-  value: string
+  value: any // TODO: change this (previously was 'string'), but take account that 'number' type may appear
 }
 
 export const CalculatorReducer = (

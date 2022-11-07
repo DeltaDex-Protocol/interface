@@ -13,12 +13,10 @@ import Header from '@/components/kit/Form/components/Header'
 import { useCalculatorFormContext } from '@/context/calculator/CalculatorContext'
 import { CalculatorFormActionTypes } from '@/context/calculator/CalculatorReducer'
 
-import { getTokenAmountsFromDepositAmounts } from '@/utils/liquidityMath'
-import { get_tokens_amounts } from '@/utils/upd-uniswap-math'
-
 const FEES_FORM_TITLE = 'Uniswap v3'
 const OPTION_FORM_TITLE = 'Vanilla option replication'
 
+// import { get_tokens_amounts } from '@/utils/upd-uniswap-math'
 import estimateFees24H from '@/utils/estimateFees'
 import { getEthPrice } from '@/api/tokensPrices'
 import { round } from 'lodash-es'
@@ -36,11 +34,13 @@ const Calculator = () => {
     maximalPrice,
     feeTier,
     currentPrice,
+    optionCost,
+    dailyFees,
   } = formData
 
-  const { optionType, strike, contractsAmount } = formData
+  const { optionType, strike, contractsAmount, riskFree, volatility } = formData
 
-  const [DailyFees, setDailyFees] = useState<number>(0)
+  // const [DailyFees, setDailyFees] = useState<number>(0)
 
   useEffect(() => {
     getEthPrice().then((price) => {
@@ -49,7 +49,7 @@ const Calculator = () => {
         name: 'currentPrice',
         value: price,
       })
-      console.log(price)
+      // console.log(price)
       estimateFees24H({
         pool: poolAddress,
         deposit: Number(depositAmount),
@@ -59,30 +59,42 @@ const Calculator = () => {
         initialPrice: price,
         period: period,
         feeTier: feeTier,
-      }).then((res) => setDailyFees(round(res.collectedFees24H, 2)))
+      }).then((fees) => {
+        dispatch({
+          type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+          name: 'dailyFees',
+          value: round(fees.collectedFees24H, 2),
+        })
+      })
     })
-  }, [])
 
-  //   console.log({
-  //     pool: poolAddress,
-  //     deposit: Number(depositAmount),
-  //     token0_decimals: '6',
-  //     token1_decimals: '18',
-  //     priceRange: [Number(minimalPrice), Number(maximalPrice)],
-  //     initialPrice: 1312,
-  //     period: Number(period.split(' ')[0]), // in days
-  //     feeTier: feeTier,
-  //   })
+    fetch(
+      `/api/get-option-costs?currentPrice=${currentPrice}
+      &strike=${strike}&expiry=${period}&riskFree=${riskFree}
+      &volatility=${volatility}&contractAmount=${contractsAmount}`,
+    )
+      .then((res) => res.json())
+      .then((cost) =>
+        dispatch({
+          type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+          name: 'optionCost',
+          value: round(cost, 2),
+        }),
+      )
+  }, [formData.optionCost, formData.currentPrice])
+
+  console.log(formData)
+
 
   return (
     <div className="">
-      <div className="lg:grid lg:grid-cols-8">
-        <div className="col-span-4 md:mt-[10%]  ">
-          <div className="pb-0 text-2xl">Calculator</div>
+      <div className="lg:grid lg:grid-cols-11">
+        <div className="col-span-7">
+          <div className="text-2xl">Calculator</div>
           <Chart />
         </div>
-        <div className="col-span-1" />
-        <div className="col-span-3 ">
+        {/* <div className="col-span-1" /> */}
+        <div className="col-span-4 ">
           <div className="flex flex-col gap-5">
             <Form
               header={[FEES_FORM_TITLE, period + ' Days']}
@@ -130,15 +142,15 @@ const Calculator = () => {
                     <span>Daily</span>
 
                     <span className="font-medium text-[#55AC68]">
-                      {DailyFees !== 0 && <>{DailyFees}$</>}
-                      {DailyFees == 0 && <Skeleton h={25} />}
+                      {dailyFees !== 0 && <>{dailyFees}$</>}
+                      {dailyFees == 0 && <Skeleton h={25} />}
                     </span>
                   </div>
                   <div className="my-auto flex justify-between">
                     <span>{period + ' Days'}</span>
                     <span className="font-medium text-[#55AC68]">
-                      {DailyFees !== 0 && <>{round(DailyFees * period, 2)}$</>}
-                      {DailyFees == 0 && <Skeleton h={25} />}{' '}
+                      {dailyFees !== 0 && <>{round(dailyFees * period, 2)}$</>}
+                      {dailyFees == 0 && <Skeleton h={25} />}{' '}
                     </span>
                   </div>
                 </Field>
@@ -154,12 +166,17 @@ const Calculator = () => {
                 </Field>
                 <div className="px-2 py-2 col-span-10 flex flex-col gap-1">
                   <div className="my-auto flex justify-between">
-                    <span>IV of selected option</span>
-                    <span className="font-medium ">72%</span>
+                    <span>Option price</span>
+                    <span className="font-medium text-[#F3736F]">
+                      {optionCost}$
+                    </span>
                   </div>
                   <div className="my-auto flex justify-between">
-                    <span>Estimated cost of replication</span>
-                    <span className="font-medium text-[#F3736F]">$56.12</span>
+                    <span>
+                      Overheads due to replication
+                      <br /> (estimated)
+                    </span>
+                    <span className="font-medium text-[#F3736F]">{4.6}$</span>
                   </div>
                 </div>
               </div>

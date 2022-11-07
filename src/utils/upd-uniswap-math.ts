@@ -113,9 +113,10 @@ const get_tokens_amounts = (
   let sb = upperPrice ** 0.5
   let current_sp = currentPrice ** 0.5
 
+  // this is correct formula
   let initial_y =
-    (depositAmount * (sb * sp ** 2 - sa * sb * sp)) /
-    (sp ** 2 * sb + sb - sa * sb * sp - sp)
+    (sa * sb * depositAmount - sb * sp * depositAmount) /
+    (sa * sb - 2 * sb * sp + sp ** 2)
 
   let L = get_liquidity_1(initial_y, sa, sp)
   let x = calculate_x(L, current_sp, sa, sb)
