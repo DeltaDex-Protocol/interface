@@ -1,5 +1,6 @@
 import React from 'react'
 import { CalculatorReducer, FormActionType } from './CalculatorReducer'
+import BSvanillaPut from '@/privateUtils/BSvanillaPut'
 
 export interface Token {
   id: string
@@ -13,30 +14,31 @@ export interface Token {
 export type CalculatorForm = {
   token1: string // Token
   token2: string // Token
-  // currentPrice?: string
+  currentPrice: number
   feeTier: '3000' | '1000' | '500'
   poolAddress: string
-  depositAmount: string
+  depositAmount: number
   period: number
   optionType: 'Long put' | 'Long call' // 'Short put' | 'Short call'
-  minimalPrice: string
-  maximalPrice: string
-  strike: string
-  contractsAmount: string
+  minimalPrice: number
+  maximalPrice: number
+  strike: number
+  contractsAmount: number
 }
 
 export const CalculatorFormInitialState: CalculatorForm = {
   token1: 'WETH', // Token
   token2: 'USDC', // Token
+  currentPrice: 0,
   feeTier: '3000',
   poolAddress: '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8',
-  depositAmount: '1000',
-  period: 30,
+  depositAmount: 1000,
+  period: 7,
   optionType: 'Long put',
-  minimalPrice: '1000',
-  maximalPrice: '2000',
-  strike: '1500',
-  contractsAmount: '1',
+  minimalPrice: 1000,
+  maximalPrice: 2000,
+  strike: 1500,
+  contractsAmount: 1.256,
 }
 
 interface FormContextProviderProps {

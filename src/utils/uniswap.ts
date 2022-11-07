@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { number } from 'echarts'
+// import { number } from 'echarts'
 // const {axios} = require('axios')
 // import { Network, NETWORKS } from "../common/types";
 // import { getTokenLogoURL, sortToken } from "../utils/helper";

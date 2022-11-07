@@ -11,6 +11,10 @@ import Field from '@/components/kit/Form/components/Field'
 import Header from '@/components/kit/Form/components/Header'
 
 import { useCalculatorFormContext } from '@/context/calculator/CalculatorContext'
+import { CalculatorFormActionTypes } from '@/context/calculator/CalculatorReducer'
+
+import { getTokenAmountsFromDepositAmounts } from '@/utils/liquidityMath'
+import { get_tokens_amounts } from '@/utils/upd-uniswap-math'
 
 const FEES_FORM_TITLE = 'Uniswap v3'
 const OPTION_FORM_TITLE = 'Vanilla option replication'
@@ -31,16 +35,20 @@ const Calculator = () => {
     minimalPrice,
     maximalPrice,
     feeTier,
+    currentPrice,
   } = formData
 
   const { optionType, strike, contractsAmount } = formData
 
-  const [tokenPrice, setTokenPrice] = useState<number>(0)
   const [DailyFees, setDailyFees] = useState<number>(0)
 
   useEffect(() => {
     getEthPrice().then((price) => {
-      setTokenPrice(price)
+      dispatch({
+        type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+        name: 'currentPrice',
+        value: price,
+      })
       console.log(price)
       estimateFees24H({
         pool: poolAddress,
@@ -68,8 +76,8 @@ const Calculator = () => {
 
   return (
     <div className="">
-      <div className="lg:grid md:grid-cols-8">
-        <div className="col-span-4 md:mt-[10%] ">
+      <div className="lg:grid lg:grid-cols-8">
+        <div className="col-span-4 md:mt-[10%]  ">
           <div className="pb-0 text-2xl">Calculator</div>
           <Chart />
         </div>
@@ -108,7 +116,7 @@ const Calculator = () => {
                 </Field>
                 <Field title="Max price" className="col-span-5">
                   <div className="flex flex-col gap-0">
-                    <span className="my-auto">1500</span>
+                    <span className="my-auto">{maximalPrice}</span>
                     <span className="text-[12px] text-[#726DA6]">
                       {token2} per {token1}
                     </span>
@@ -139,10 +147,10 @@ const Calculator = () => {
             <Form header={[OPTION_FORM_TITLE, optionType]}>
               <div className="grid grid-cols-10 gap-x-2 gap-y-2">
                 <Field title="Strike price" className="col-span-5">
-                  <span className="my-auto">1500$</span>
+                  <span className="my-auto">{strike}</span>
                 </Field>
                 <Field title="Number of contracts" className="col-span-5">
-                  <span className="my-auto">1.245</span>
+                  <span className="my-auto">{contractsAmount}</span>
                 </Field>
                 <div className="px-2 py-2 col-span-10 flex flex-col gap-1">
                   <div className="my-auto flex justify-between">
