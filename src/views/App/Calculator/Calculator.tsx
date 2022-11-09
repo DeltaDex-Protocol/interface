@@ -89,6 +89,8 @@ const Calculator = () => {
     formData.depositAmount,
     formData.contractsAmount,
     formData.strike,
+    formData.minimalPrice,
+    formData.maximalPrice,
   ])
 
   console.log(formData)
@@ -209,7 +211,7 @@ const Calculator = () => {
                   <span className="my-auto">
                     <Input
                       value={Number(strike)}
-                      min={100}
+                      min={0}
                       max={10000}
                       eventHandler={(value) =>
                         dispatch({
