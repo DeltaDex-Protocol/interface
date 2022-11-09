@@ -10,7 +10,7 @@ const Input = ({
   value,
   min = 0,
   placeholder = 100,
-  max = 5000,
+  max = 10000,
   eventHandler,
 }) => {
   return (

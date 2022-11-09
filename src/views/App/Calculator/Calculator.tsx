@@ -83,7 +83,9 @@ const Calculator = () => {
           value: round(cost, 2),
         }),
       )
-  }, [
+  }, 
+  // DO NOT CHANGE DEPENDENCY ARRAY TO JUST formData !!!
+  [
     formData.optionCost,
     formData.currentPrice,
     formData.depositAmount,

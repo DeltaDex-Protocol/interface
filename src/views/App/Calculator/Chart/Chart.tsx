@@ -53,15 +53,14 @@ function Chart() {
     setLPplusOption([LPdata[0], LP_plus_Option])
 
     fetchData()
-  }, [formData.currentPrice, formData.optionCost])
-  
+  }, [formData])
 
   useEffect(() => {
     let LP_plus_Option = LPdata[1]?.map((el, key) => {
       return LPdata[1][key] + OptionData[1][key]
     })
     setLPplusOption([LPdata[0], LP_plus_Option])
-  }, [OptionData, LPdata, formData.dailyFees])
+  }, [OptionData, LPdata, formData])
 
   const isLG = useMediaQuery({
     query: '(min-width: 1024px)',
