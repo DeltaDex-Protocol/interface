@@ -1,4 +1,5 @@
 import { get_tokens_amounts } from '@/utils/upd-uniswap-math'
+import { xScale } from "./constants"
 
 type LP = {
   currentPrice: number
@@ -12,11 +13,11 @@ type LP = {
 
 const LpProfileData = async (params: LP): Promise<Array<number[]>> => {
   const chartPrices: Array<number> = []
-  for (let price: number = 0; price < 1.2 * params.currentPrice; price += 1) {
+  for (let price: number = 0; price < xScale * params.currentPrice; price += 1) {
     chartPrices.push(price)
   }
   const LPpayoff: Array<number> = []
-  for (let price: number = 0; price < 1.2 * params.currentPrice; price += 1) {
+  for (let price: number = 0; price < xScale * params.currentPrice; price += 1) {
     const { x, y } = get_tokens_amounts(
       params.currentPrice,
       params.lowerPrice,

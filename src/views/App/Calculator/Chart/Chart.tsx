@@ -9,6 +9,8 @@ import LpProfileData from '@/utils/LpProfile'
 import { useCalculatorFormContext } from '@/context/calculator/CalculatorContext'
 import { round } from 'lodash-es'
 
+import { xScale } from '@/utils/constants'
+
 const colors = ['#5470C6', '#91CC75', '#EE6666']
 
 function Chart() {
@@ -178,7 +180,7 @@ function Chart() {
         itemStyle: {
           color: 'rgba(217, 217, 217, 1)',
         },
-        data: Array(round(1.2 * formData.currentPrice)).fill(
+        data: Array(round(xScale * formData.currentPrice)).fill(
           formData.depositAmount,
         ),
         // areaStyle: {

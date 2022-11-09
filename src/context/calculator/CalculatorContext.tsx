@@ -38,7 +38,7 @@ export const CalculatorFormInitialState: CalculatorForm = {
   depositAmount: 1000,
   period: 30,
   optionType: 'Long put',
-  minimalPrice: 1300,
+  minimalPrice: 600,
   maximalPrice: 1700,
   strike: 1475,
   contractsAmount: 0.686,
