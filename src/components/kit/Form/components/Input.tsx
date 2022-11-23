@@ -11,12 +11,13 @@ const Input = ({
   min = 0,
   placeholder = 100,
   max = 10000,
+  step = 0.1,
   eventHandler,
 }) => {
   return (
     <input
       type="number"
-      step={0.1}
+      step={step}
     //   defaultValue={value}
       value={value}
       placeholder={String(placeholder)}

@@ -33,8 +33,10 @@ export type OptionForm = {
   token2: string // Token
   type: OptionType1
   valueToProtect: string
+  strike: string
   expiresIn: string
   leverage: string
+  contractsAmount: string
   providedLiquidity: string
   uniswapVersion: string
   advancedSettings: {
@@ -50,8 +52,10 @@ export const OptionFormInitialState: OptionForm = {
   token2: 'USDC',
   type: 'vanilla',
   valueToProtect: '0',
-  expiresIn: '7 Days',
+  strike: '1500',
+  expiresIn: '7 days',
   leverage: 'x1',
+  contractsAmount: '1',
   providedLiquidity: '560',
   uniswapVersion: 'V2',
   advancedSettings: {

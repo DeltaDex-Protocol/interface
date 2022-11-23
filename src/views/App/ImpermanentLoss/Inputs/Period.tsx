@@ -13,26 +13,28 @@ function Period({ className }) {
   const { formData, dispatch } = useOptionFormContext()
   const periods = [
     formData.expiresIn,
-    ...['7 Days', '14 Days', '21 Days', '28 Days', '35 Days', '42 Days'],
+    ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
   ]
 
   return (
     <div
       className={cx(
         className,
-        'col-span-2 relative h-500 rounded-md py-3 px-5',
+        'col-span-3 relative h-500 rounded-md py-3 px-5',
       )}
     >
       <div className=" flex flex-col gap-2">
         <span className="font-semibold text-[12px] text-[#726DA6]">
-          Protected period
+          Expires in
         </span>
+        <span className="font-normal text-[12px] md:text-[19px] my-auto">
         <DropDown
           name="expiresIn"
           array={periods}
           ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
           dispatch={dispatch}
         />
+        </span>
 
         {/* <div className="">
           <header className="flex justify-end">

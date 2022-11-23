@@ -11,6 +11,13 @@ import EthLogo from 'public/images/tokens/eth.svg'
 import { Form } from '@/components/kit'
 import Field from '@/components/kit/Form/components/Field'
 import Header from '@/components/kit/Form/components/Header'
+// import SearchTokenPage from '@/components/kit/Select/SearchTokenPage'
+// import SelectPairModal from '@/components/kit/Select/SelectPairModal'
+// import SswapWidget from '@/components/kit/Select/Select'
+// import { Test } from '../ForTests/ForTests'
+// import DePayWidgets from '@depay/widgets'
+// import Select from '@/components/widgets/Select'
+// import TokenSelect from '@/components/uniswap-widgets/src/components/TokenSelect'
 
 import { useCalculatorFormContext } from '@/context/calculator/CalculatorContext'
 import { CalculatorFormActionTypes } from '@/context/calculator/CalculatorReducer'
@@ -44,61 +51,85 @@ const Calculator = () => {
 
   // const [DailyFees, setDailyFees] = useState<number>(0)
 
-  useEffect(() => {
-    getEthPrice().then((price) => {
-      dispatch({
-        type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
-        name: 'currentPrice',
-        value: price,
-      })
-      // console.log(price)
-      estimateFees24H({
-        pool: poolAddress,
-        deposit: Number(depositAmount),
-        token0_decimals: '6',
-        token1_decimals: '18',
-        priceRange: [Number(minimalPrice), Number(maximalPrice)],
-        initialPrice: price,
-        period: period,
-        feeTier: feeTier,
-      }).then((fees) => {
+  useEffect(
+    () => {
+      getEthPrice().then((price) => {
         dispatch({
           type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
-          name: 'dailyFees',
-          value: round(fees.collectedFees24H, 2),
+          name: 'currentPrice',
+          value: price,
+        })
+        // console.log(price)
+        estimateFees24H({
+          pool: poolAddress,
+          deposit: Number(depositAmount),
+          token0_decimals: '6',
+          token1_decimals: '18',
+          priceRange: [Number(minimalPrice), Number(maximalPrice)],
+          initialPrice: price,
+          period: period,
+          feeTier: feeTier,
+        }).then((fees) => {
+          dispatch({
+            type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+            name: 'dailyFees',
+            value: round(fees.collectedFees24H, 2),
+          })
         })
       })
-    })
 
-    fetch(
-      `/api/get-option-costs?currentPrice=${currentPrice}
+      fetch(
+        `/api/get-option-costs?currentPrice=${currentPrice}
       &strike=${strike}&expiry=${period}&riskFree=${riskFree}
       &volatility=${volatility}&contractAmount=${contractsAmount}`,
-    )
-      .then((res) => res.json())
-      .then((cost) =>
-        dispatch({
-          type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
-          name: 'optionCost',
-          value: round(cost, 2),
-        }),
       )
-  }, 
-  // DO NOT CHANGE DEPENDENCY ARRAY TO JUST formData !!!
-  [
-    formData.optionCost,
-    formData.currentPrice,
-    formData.depositAmount,
-    formData.contractsAmount,
-    formData.strike,
-    formData.minimalPrice,
-    formData.maximalPrice,
-  ])
+        .then((res) => res.json())
+        .then((cost) =>
+          dispatch({
+            type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+            name: 'optionCost',
+            value: round(cost, 2),
+          }),
+        )
+    },
+    // DO NOT CHANGE DEPENDENCY ARRAY TO JUST formData !!!
+    [
+      formData.optionCost,
+      formData.currentPrice,
+      formData.depositAmount,
+      formData.contractsAmount,
+      formData.strike,
+      formData.minimalPrice,
+      formData.maximalPrice,
+    ],
+  )
+
+  useEffect(() => {
+    // DePayWidgets.Select({ what: 'token' })
+    // Select({ what: 'token' })
+  }, [])
 
   console.log(formData)
 
   return (
     <div className="">
+      {/* <FilterOption><button>12312</button></FilterOption> */}
+      {/* { DePayWidgets.Select({ what: 'token' }) } */}
+      {/* <SearchTokenPage
+        tokens={[1, 2, 3]}
+        selectToken={() => {}}
+        refetchTokens={() => {}}
+      /> */}
+      {/* <SelectPairModal/> */}
+      {/* <SswapWidget/> */}
+      {/* <Test /> */}
+      {/* <TokenSelect
+        field={'INPUT'}
+        value={undefined}
+        disabled={false}
+        onSelect={() => {}}
+      /> */}
+
       <div className="lg:grid lg:grid-cols-11">
         <div className="col-span-7">
           <div className="text-2xl">Calculator</div>
@@ -215,6 +246,7 @@ const Calculator = () => {
                       value={Number(strike)}
                       min={0}
                       max={10000}
+                      step={10}
                       eventHandler={(value) =>
                         dispatch({
                           type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,

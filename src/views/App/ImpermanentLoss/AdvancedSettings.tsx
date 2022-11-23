@@ -26,7 +26,7 @@ function Setting({ name, value, className }) {
   console.log(name, value)
 
   return (
-    <div className={cx(className, 'col-span-5 relative rounded-md py-3 px-5 ')}>
+    <div className={cx(className, 'col-span-9 relative rounded-md py-3 px-5 ')}>
       <div className="flex flex-col gap-2">
         <span className="font-semibold text-[12px] text-[#726DA6]">
           {settingsInfo[name].desc}

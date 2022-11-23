@@ -7,7 +7,9 @@ import AdvancedSettings from './AdvancedSettings'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
-import SelectPairModal from './test'
+import { ContractsAmount } from './Inputs/ContractsAmount'
+import { Strike } from './Inputs/Strike'
+// import SelectPairModal from './test'
 import {
   // UniVersion,
   Pairs,
@@ -26,6 +28,8 @@ const Form = ({ className }) => {
 
   useEffect(() => console.log(formData))
 
+  let test_minimalLiquidity = '560 USDC'
+
   const { uniswapVersion } = formData
   const UniVersions = [uniswapVersion, ...['V3', 'V2']]
 
@@ -34,9 +38,14 @@ const Form = ({ className }) => {
       {/* <SelectPairModal/> */}
       <header className=" mt-2 mb-4 px-2  md:gap-6 ">
         <div className="flex justify-between">
-          <span className="font-semibold text-[17px] text-[#726DA6]">
-            Replicate a vanilla option
-          </span>
+          <div className="flex gap-4">
+            <span className="font-semibold text-[17px] text-[#726DA6]">
+              Replicate a vanilla option
+            </span>
+            <span className="mt-0 bg-[#8B5CF6] bg-opacity-30 px-2 py-1 my-auto rounded-md text-[12px]">
+              PUT
+            </span>
+          </div>
           {/* <DropDown
               name="uniswapVersion"
               ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
@@ -65,25 +74,34 @@ const Form = ({ className }) => {
         </div>
       </header>
       <div className={styles.inputs}>
-        <div className="grid grid-cols-5 gap-2 mb-4 px-1">
+        <div className="grid grid-cols-9 gap-2 mb-4 px-1">
           {isAdvancedSettingsOpen && (
             <AdvancedSettings className={InputStyle} />
           )}
           {!isAdvancedSettingsOpen && (
             <>
               <Pairs className={InputStyle} />
-              <ValueToProtect className={InputStyle} />
+              {/* <ValueToProtect className={InputStyle} /> */}
+              <ContractsAmount className={InputStyle} />
               <Period className={InputStyle} />
+              <Strike className={InputStyle} />
+
               <Leverage className={InputStyle} />
               <MinimalLiquidity className={InputStyle} />
             </>
           )}
         </div>
         <div className="flex justify-between px-2">
-          <span className="font-semibold text-[#726DA6]">
+          <span className="font-normal text-[#726DA6]">
+            Minimal liquidity to provide
+          </span>
+          <span className="font-normal px-2">{test_minimalLiquidity}</span>
+        </div>
+        <div className="flex justify-between px-2">
+          <span className="font-normal text-[#726DA6]">
             Historical average accuracy
           </span>
-          <span className="font-semibold px-2">93%</span>
+          <span className="font-normal px-2">93%</span>
         </div>
         <button
           className="hover:shadow-xl hover:shadow-[#883FFF] hover:bg-[#883FFF] 

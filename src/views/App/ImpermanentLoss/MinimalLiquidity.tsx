@@ -11,32 +11,35 @@ function MinimalLiquidity({ className }) {
   // TODO: must change this
   let minimalValue = 560 / parseInt(formData.leverage.slice(1))
 
-  const TEXT =
-    minimalValue === value
-      ? 'Minimal amount of \n liquidity to provide\n for  running hedging:'
-      : minimalValue < value
-      ? 'Liquidity'
-      : `Liquidity must be\n more than ${minimalValue}`
+  // const TEXT =
+  //   minimalValue === value
+  //     ? 'Minimal amount of \n liquidity to provide\n for  running hedging:'
+  //     : minimalValue < value
+  //     ? 'Liquidity'
+  //     : `Liquidity must be\n more than ${minimalValue}`
 
   return (
-    <div className={cx(className, 'col-span-3 relative rounded-md p-3 ')}>
+    <div className={cx(className, 'col-span-6 relative rounded-md p-6 my-auto pl-5')}>
       <div
         className={cx(
           'flex justify-between ',
-          TEXT === 'Liquidity' ? 'mt-4 ' : '',
+          // TEXT === 'Liquidity' ? 'mt-4 ' : '',
         )}
       >
         <div
           className={cx(
-            'font-semibold text-[7px] md:text-[11px] my-auto',
-            minimalValue <= value ? 'text-[#A680FF]' : 'text-[#CE6767]',
+            'font-normal text-[12px] md:text-[14px] my-auto',
+            // minimalValue <= value ? 'text-[#A680FF]' : 'text-[#CE6767]',
           )}
         >
-          {TEXT}
+          Liquidity to provide
         </div>
         <div className="my-auto flex gap-0 md:gap-4">
           <input
-            className="my-auto font-normal text-white w-12 text-[18px]"
+            className={cx(
+              'my-auto font-normal text-white w-12 text-[18px]',
+              minimalValue <= value ? 'text-white' : 'text-[#CE6767]',
+            )}
             placeholder={String(value)}
             defaultValue={value}
             style={{ backgroundColor: 'transparent', outline: 'none' }}
