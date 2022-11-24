@@ -33,7 +33,7 @@ const _getPoolTicksByPage = async (
     }
   }`)
 
-  return res.ticks
+  return res?.ticks
 }
 
 export const getPoolTicks = async (poolAddress: string): Promise<Tick[]> => {
