@@ -1,4 +1,3 @@
-import { queryClient } from '@/hooks/queries/common/queryClient'
 import { QueryClientProvider } from '@tanstack/react-query'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
@@ -15,7 +14,7 @@ import '../styles/globals.scss'
 function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <QueryClientProvider client={queryClient}>
+      {/* <QueryClientProvider client={queryClient}> */}
         <StateContextProvider>
           <WalletProvider>
             <Head>
@@ -32,7 +31,7 @@ function App({ Component, pageProps }: AppProps) {
             <MobileMenu />
           </WalletProvider>
         </StateContextProvider>
-      </QueryClientProvider>
+      {/* </QueryClientProvider> */}
     </>
   )
 }

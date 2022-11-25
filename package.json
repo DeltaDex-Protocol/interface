@@ -23,6 +23,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.6.6",
     "@lingui/macro": "^3.15.0",
+    "@sentry/nextjs": "^7.21.1",
     "@tanstack/react-query": "^4.2.1",
     "@types/lodash-es": "^4.17.6",
     "@uiw/codemirror-theme-sublime": "^4.11.6",
