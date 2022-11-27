@@ -109,7 +109,7 @@ const Form = ({ className }) => {
             bg-[#883FFF] my-7 py-4 rounded-xl mx-auto  duration-300  
             w-full px-10 font-semibold text-[18px]"
           onClick={() =>
-            console.log(CallReplication({
+            CallReplication({
               tokenA_balance: '5000',
               amount: '1',
               fee: '400',
@@ -118,7 +118,7 @@ const Form = ({ className }) => {
               expiration: '0.3',
               riskFree: '0.15',
               sigma: '0.8',
-            }))
+            }).then((res) => console.log(res))
           }
         >
           Hedge Impermanent Loss
