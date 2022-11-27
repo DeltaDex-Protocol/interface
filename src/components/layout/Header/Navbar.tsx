@@ -24,20 +24,21 @@ const Navbar = () => {
   return (
     <div className="flex">
       {navigation.map(({ id, title, path }) => (
-        <Link key={id} href={path}>
-          <a
-            className={cx(
-              styles.headerActionLink,
-              'my-auto',
-              pathname === path ? 'text-white' : 'text-[#726DA6]',
-            )}
-          >
-            {title}
-          </a>
-        </Link>
+        (<Link
+          key={id}
+          href={path}
+          className={cx(
+            styles.headerActionLink,
+            'my-auto',
+            pathname === path ? 'text-white' : 'text-[#726DA6]',
+          )}>
+
+          {title}
+
+        </Link>)
       ))}
     </div>
-  )
+  );
 }
 
 export default Navbar

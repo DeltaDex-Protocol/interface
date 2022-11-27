@@ -85,7 +85,7 @@ function Position({ rowData }) {
                 Object.keys(expand).map((el, index) => {
                   if (el === 'Advanced') {
                     return (
-                      <>
+                      <div key={index}>
                         <div className="col-span-1 text-[#726DA6]">{el}</div>
                         <div
                           className="col-span-1 justify-self-end text-[#fff]"
@@ -93,7 +93,7 @@ function Position({ rowData }) {
                         >
                           <Icon icon="dots" width={30} height={30} />
                         </div>
-                      </>
+                      </div>
                     )
                   }
                   return (

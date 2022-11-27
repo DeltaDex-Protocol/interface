@@ -15,22 +15,23 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <>
       {/* <QueryClientProvider client={queryClient}> */}
-        <StateContextProvider>
-          <WalletProvider>
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1, user-scalable=no"
-              />
-              <title>DeltaDex</title>
-            </Head>
-            <Header />
-            <Component {...pageProps} />
-            <BetaVersionAlert />
-            <Footer />
-            <MobileMenu />
-          </WalletProvider>
-        </StateContextProvider>
+      <StateContextProvider>
+        <WalletProvider>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, user-scalable=no"
+            />
+            <title>DeltaDex</title>
+          </Head>
+          <Header />
+          {/* @ts-ignore */}
+          <Component {...pageProps} />
+          <BetaVersionAlert />
+          <Footer />
+          <MobileMenu />
+        </WalletProvider>
+      </StateContextProvider>
       {/* </QueryClientProvider> */}
     </>
   )

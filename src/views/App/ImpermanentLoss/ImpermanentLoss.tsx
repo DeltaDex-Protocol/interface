@@ -5,16 +5,15 @@ import styles from './IL.module.scss'
 
 import AdvancedSettings from './AdvancedSettings'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
-import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
+// import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
 import { ContractsAmount } from './Inputs/ContractsAmount'
 import { Strike } from './Inputs/Strike'
-import { CallReplication } from '@/api/form'
 // import SelectPairModal from './test'
 import {
   // UniVersion,
   Pairs,
-  ValueToProtect,
+  // ValueToProtect,
   Period,
   Leverage,
 } from 'src/views/App/ImpermanentLoss/Inputs/index'
@@ -108,18 +107,6 @@ const Form = ({ className }) => {
           className="hover:shadow-xl hover:shadow-[#883FFF] hover:bg-[#883FFF] 
             bg-[#883FFF] my-7 py-4 rounded-xl mx-auto  duration-300  
             w-full px-10 font-semibold text-[18px]"
-          onClick={() =>
-            CallReplication({
-              tokenA_balance: '5000',
-              amount: '1',
-              fee: '400',
-              perDay: '8',
-              strike: '1400',
-              expiration: '0.3',
-              riskFree: '0.15',
-              sigma: '0.8',
-            }).then((res) => console.log(res))
-          }
         >
           Hedge Impermanent Loss
         </button>

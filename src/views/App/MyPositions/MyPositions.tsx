@@ -32,8 +32,10 @@ function MyPositions() {
       <div className={cx(styles.table, 'mx-auto ')}>
         <div className="h-50"></div>
         <div className="grid grid-cols-6 gap-6 pb-4">
-          {TITLES.map((el) => (
-            <div className="text-center text-[#726DA6]">{el}</div>
+          {TITLES.map((el, index) => (
+            <div className="text-center text-[#726DA6]" key={index}>
+              {el}
+            </div>
           ))}
         </div>
         {data?.map((el, index) => (

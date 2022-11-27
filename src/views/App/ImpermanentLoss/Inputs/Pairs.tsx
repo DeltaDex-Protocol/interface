@@ -1,5 +1,4 @@
 import React from 'react'
-import useCollapse from 'react-collapsed'
 import { memo, useEffect, useMemo, useState } from 'react'
 import cx from 'classnames'
 

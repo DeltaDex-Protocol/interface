@@ -42,7 +42,7 @@ module.exports = (phase, { defaultConfig }) => {
 
         return config
       },
-    }
+    };
   }
 
   return {
@@ -59,5 +59,5 @@ module.exports = (phase, { defaultConfig }) => {
 
       return config
     },
-  }
+  };
 }
