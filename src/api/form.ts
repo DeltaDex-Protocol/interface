@@ -1,5 +1,12 @@
-const { parseUnits } = require('ethers/lib/utils')
 import { DAI, WETH } from './constants'
+import Web3 from 'web3'
+const { parseUnits } = require('ethers/lib/utils')
+const ethers = require('ethers')
+// const { parseUnits } = ethers
+
+// const provider = new ethers.providers.Web3Provider(window.ethereum)
+const contractABI = require('@/abi/OptionMaker.json')
+const contractAddress = '0xd7a89AEa304A491Ef4B5e74928370059fa53D8C6' // to change
 
 type CallReplicationType = {
   tokenA_balance: string
@@ -12,7 +19,8 @@ type CallReplicationType = {
   sigma: string
 }
 
-const CallReplication = async (formData: CallReplicationType) => {
+export const CallReplication = async (formData: CallReplicationType) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
   const tokenA_balance = parseUnits(formData.tokenA_balance)
   const amount = parseUnits(formData.amount)
   const fee = parseUnits(formData.fee)
@@ -39,9 +47,36 @@ const CallReplication = async (formData: CallReplicationType) => {
     [K, T, r, sigma],
   ]
 
-  //   const tx = await optionmaker.connect(accounts[0]).BS_START_REPLICATION(input)
+  const signer = provider.getSigner()
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer)
+  // try {
+  // const tx = await optionmaker.BS_START_REPLICATION(input)
+  // // wait until the transaction is mined
+  // console.log('here')
+  // await tx.wait()
+  // console.log('success')
+  try {
+    const tx = await optionmaker.BS_START_REPLICATION(input);
+    // wait until the transaction is mined
+    // // console.log('here')
+    await tx.wait();
+    console.log('success')
+    return {
+      success: true,
+      status:
+        "✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      status: "😥 Something went wrong: " + error.message,
+    };
+  }
+
+
+  // const tx = await optionmaker.connect(accounts[0]).BS_START_REPLICATION(input)
   // wait until the transaction is mined
-  //   await tx.wait()
+  // await tx.wait()
 
   //   const pair = await optionstorage.getPair(DAI, WETH)
   //   console.log('address of pair:', pair)
