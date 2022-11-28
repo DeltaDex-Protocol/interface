@@ -1,4 +1,4 @@
-import Form from '@/views/App/ImpermanentLoss/ImpermanentLoss'
+import Form from '@/views/App/ImpermanentLoss'
 import { Section } from '@/components/layout'
 import styles from 'src/views/App/ImpermanentLoss/IL.module.scss'
 import { OptionFormContextProvider } from '@/context/form/OptionFormContext'

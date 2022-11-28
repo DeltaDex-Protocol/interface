@@ -9,11 +9,11 @@ import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Pairs({ className }) {
   const { formData, dispatch } = useOptionFormContext()
-  const pairs = [formData.token1 + '-' + formData.token2, ...['WETH-USDC']] //'WETH-WBTC'
+  const pairs = [formData.token1 + '-' + formData.token2, ...['DAI-WETH']] //'WETH-WBTC'
 
   const [balance, setBalance] = useState(0)
 
-  const getBalance = async () => 520 + ' USDC'
+  const getBalance = async () => 520 + ' DAI'
 
   useEffect(() => {
     getBalance().then((res) => setBalance(parseInt(res)))

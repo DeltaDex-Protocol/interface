@@ -5,18 +5,20 @@ import styles from './IL.module.scss'
 
 import AdvancedSettings from './AdvancedSettings'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
-// import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import MinimalLiquidity from 'src/views/App/ImpermanentLoss/MinimalLiquidity'
 import { ContractsAmount } from './Inputs/ContractsAmount'
 import { Strike } from './Inputs/Strike'
-// import SelectPairModal from './test'
+import { CallReplication, PutReplication } from '@/api/form'
 import {
-  // UniVersion,
   Pairs,
-  // ValueToProtect,
   Period,
   Leverage,
 } from 'src/views/App/ImpermanentLoss/Inputs/index'
+import {
+  getNumerrarie,
+  getMinValueForReplication,
+  getExpiryDaysToYears,
+} from '@/utils/formUtils'
 
 const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
@@ -28,10 +30,9 @@ const Form = ({ className }) => {
 
   useEffect(() => console.log(formData))
 
-  let test_minimalLiquidity = '560 USDC'
-
-  const { uniswapVersion } = formData
-  const UniVersions = [uniswapVersion, ...['V3', 'V2']]
+  const numerrarie = getNumerrarie(formData)
+  const minimalValue = getMinValueForReplication(formData)
+  let test_minimalLiquidity = minimalValue + ' ' + numerrarie
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>
@@ -43,7 +44,7 @@ const Form = ({ className }) => {
               Replicate a vanilla option
             </span>
             <span className="mt-0 bg-[#8B5CF6] bg-opacity-30 px-2 py-1 my-auto rounded-md text-[12px]">
-              PUT
+              {formData.advancedSettings.optionType}
             </span>
           </div>
           {/* <DropDown
@@ -107,6 +108,41 @@ const Form = ({ className }) => {
           className="hover:shadow-xl hover:shadow-[#883FFF] hover:bg-[#883FFF] 
             bg-[#883FFF] my-7 py-4 rounded-xl mx-auto  duration-300  
             w-full px-10 font-semibold text-[18px]"
+          onClick={() => {
+            if (formData.advancedSettings.optionType === 'call') {
+              CallReplication({
+                tokenA_balance: formData.providedLiquidity,
+                amount: formData.contractsAmount,
+                fee: formData.advancedSettings.feesToSplit,
+                perDay: formData.advancedSettings.hedgesPerDay,
+                strike: formData.strike,
+                expiration: String(getExpiryDaysToYears(formData.expiresIn)),
+                riskFree: formData.riskFree,
+                sigma: formData.advancedSettings.modelParams.volatility,
+              }).then((res) => console.log(res))
+            } else if (formData.advancedSettings.optionType === 'put') {
+              console.log({
+                tokenB_balance: formData.providedLiquidity,
+                amount: formData.contractsAmount,
+                fee: formData.advancedSettings.feesToSplit,
+                perDay: formData.advancedSettings.hedgesPerDay,
+                strike: formData.strike,
+                expiration: String(getExpiryDaysToYears(formData.expiresIn)),
+                riskFree: formData.riskFree,
+                sigma: formData.advancedSettings.modelParams.volatility,
+              })
+              PutReplication({
+                tokenB_balance: formData.providedLiquidity,
+                amount: formData.contractsAmount,
+                fee: formData.advancedSettings.feesToSplit,
+                perDay: formData.advancedSettings.hedgesPerDay,
+                strike: formData.strike,
+                expiration: String(getExpiryDaysToYears(formData.expiresIn)),
+                riskFree: formData.riskFree,
+                sigma: formData.advancedSettings.modelParams.volatility,
+              }).then((res) => console.log(res))
+            }
+          }}
         >
           Hedge Impermanent Loss
         </button>

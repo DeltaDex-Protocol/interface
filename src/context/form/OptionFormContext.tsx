@@ -38,6 +38,7 @@ export type OptionForm = {
   leverage: string
   contractsAmount: string
   providedLiquidity: string
+  riskFree: string
   uniswapVersion: string
   advancedSettings: {
     feesToSplit: string
@@ -48,15 +49,16 @@ export type OptionForm = {
 }
 
 export const OptionFormInitialState: OptionForm = {
-  token1: 'WETH',
-  token2: 'USDC',
+  token1: 'DAI',
+  token2: 'WETH',
   type: 'vanilla',
   valueToProtect: '0',
   strike: '1500',
   expiresIn: '7 days',
   leverage: 'x1',
   contractsAmount: '1',
-  providedLiquidity: '560',
+  providedLiquidity: '1',
+  riskFree: '0.1',
   uniswapVersion: 'V2',
   advancedSettings: {
     feesToSplit: '0.5',
@@ -64,7 +66,7 @@ export const OptionFormInitialState: OptionForm = {
     optionType: 'put',
     modelParams: {
       type: ModelNames.BLACK_SCHOLES,
-      volatility: '0.7',
+      volatility: '0.9',
     },
   },
 }
