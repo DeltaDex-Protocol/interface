@@ -10,7 +10,7 @@ const Field = ({ title = '', children, className = '' }) => {
         'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl',
       )}
     >
-      <div className="pb-0 flex flex-col gap-2">
+      <div className={cx('pb-0 flex gap-2 flex-col')}>
         <span className="font-semibold text-[13px] text-[#726DA6]">
           {title}
         </span>

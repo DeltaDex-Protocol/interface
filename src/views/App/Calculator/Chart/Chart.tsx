@@ -64,7 +64,8 @@ function Chart() {
         priceUSDX: formData.currentPrice,
         priceUSDY: 1,
         depositAmount: formData.depositAmount,
-        fees: formData.dailyFees * formData.period,
+        // fees: formData.dailyFees * formData.period,
+        fees: formData.userFeeForecast,
       }).then((res) => {
         setLPdata(res)
       })
@@ -101,7 +102,7 @@ function Chart() {
         let res = e.map((el) => {
           return { name: [el.seriesName], value: round(el.data[1], 1) }
         })
-        res.push({ price: e[0].data[0] })
+        res.push({ price: e[0].data[0] | 0 })
         setChartTooltip(res)
       },
     },
@@ -243,7 +244,8 @@ function Chart() {
           )
         })}
         <div className="text-center text-sm">
-          {'Price: ' + chartTooltip[chartTooltip.length - 1].price}
+          {chartTooltip[chartTooltip.length - 1].price &&
+            'Price: ' + chartTooltip[chartTooltip.length - 1].price}
         </div>
       </div>
       <ReactEcharts

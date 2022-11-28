@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames'
 
 const Validation = (value, min, max) => {
   value = Number(value)
@@ -13,20 +14,24 @@ const Input = ({
   max = 10000,
   step = 0.1,
   eventHandler,
+  width = 40,
 }) => {
   return (
     <input
       type="number"
       step={step}
-    //   defaultValue={value}
+      //   defaultValue={value}
       value={value}
+      // min={0}
+      max={max}
       placeholder={String(placeholder)}
-      className="font-normal text-white  w-40 text-[18px]"
-      onChange={(event) =>
+      className={cx('font-normal text-white text-[18px]', `w-${width}`)}
+      onChange={(event) => {
+        console.log(event.target.value, min, max)
         Validation(event.target.value, min, max)
           ? eventHandler(Number(event.target.value))
           : Number(value)
-      }
+      }}
       style={{
         backgroundColor: 'transparent',
         outline: 'none',

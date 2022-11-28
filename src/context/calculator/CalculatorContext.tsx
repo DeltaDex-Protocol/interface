@@ -15,6 +15,7 @@ export type CalculatorForm = {
   token2: string // Token
   currentPrice: number
   feeTier: '3000' | '1000' | '500'
+  userFeeForecast: number
   poolAddress: string
   depositAmount: number
   period: number
@@ -34,6 +35,7 @@ export const CalculatorFormInitialState: CalculatorForm = {
   token2: 'USDC', // Token
   currentPrice: 0,
   feeTier: '3000',
+  userFeeForecast: 0,
   poolAddress: '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8',
   depositAmount: 1000,
   period: 30,

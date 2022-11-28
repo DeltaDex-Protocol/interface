@@ -3,32 +3,21 @@ import { useState, useEffect } from 'react'
 import Chart from './Chart'
 import { Skeleton } from '@/components/kit'
 import Input from '@/components/kit/Form/components/Input'
-// import { Tile } from '@/components/kit'
-// import { Tooltip } from '@/components/kit/Tooltip/Tooltip'
-
 import EthLogo from 'public/images/tokens/eth.svg'
 
 import { Form } from '@/components/kit'
 import Field from '@/components/kit/Form/components/Field'
 import Header from '@/components/kit/Form/components/Header'
-// import SearchTokenPage from '@/components/kit/Select/SearchTokenPage'
-// import SelectPairModal from '@/components/kit/Select/SelectPairModal'
-// import SswapWidget from '@/components/kit/Select/Select'
-// import { Test } from '../ForTests/ForTests'
-// import DePayWidgets from '@depay/widgets'
-// import Select from '@/components/widgets/Select'
-// import TokenSelect from '@/components/uniswap-widgets/src/components/TokenSelect'
+import DropDown from '@/components/kit/Form/components/DropDown'
 
 import { useCalculatorFormContext } from '@/context/calculator/CalculatorContext'
 import { CalculatorFormActionTypes } from '@/context/calculator/CalculatorReducer'
-
-const FEES_FORM_TITLE = 'Uniswap v3'
-const OPTION_FORM_TITLE = 'Vanilla option replication'
-
-// import { get_tokens_amounts } from '@/utils/upd-uniswap-math'
 import estimateFees24H from '@/utils/estimateFees'
 import { getEthPrice } from '@/api/tokensPrices'
 import { round } from 'lodash-es'
+
+const FEES_FORM_TITLE = 'Uniswap v3'
+const OPTION_FORM_TITLE = 'Vanilla option replication'
 
 const Calculator = () => {
   const { formData, dispatch } = useCalculatorFormContext()
@@ -48,6 +37,10 @@ const Calculator = () => {
   } = formData
 
   const { optionType, strike, contractsAmount, riskFree, volatility } = formData
+  const periods = [
+    formData.period + ' days',
+    ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+  ]
 
   // const [DailyFees, setDailyFees] = useState<number>(0)
 
@@ -139,7 +132,15 @@ const Calculator = () => {
         <div className="col-span-4 ">
           <div className="flex flex-col gap-5">
             <Form
-              header={[FEES_FORM_TITLE, period + ' Days']}
+              header={[
+                FEES_FORM_TITLE,
+                <DropDown
+                  name="period"
+                  array={periods}
+                  ActionType={CalculatorFormActionTypes.UPDATE_PERIOD}
+                  dispatch={dispatch}
+                />,
+              ]}
               className="mx-auto"
             >
               <div className="grid grid-cols-10 gap-x-2 gap-y-2">
@@ -160,7 +161,7 @@ const Calculator = () => {
                 <Field title="Deposit amount" className="col-span-4">
                   <span className="my-auto py-1">
                     <Input
-                      value={depositAmount}
+                      value={String(depositAmount)}
                       min={0}
                       max={10000}
                       eventHandler={(value) =>
@@ -177,7 +178,7 @@ const Calculator = () => {
                   <div className="flex flex-col gap-0">
                     <span className="my-auto">
                       <Input
-                        value={minimalPrice}
+                        value={String(minimalPrice)}
                         min={0}
                         max={10000}
                         eventHandler={(value) =>
@@ -199,7 +200,7 @@ const Calculator = () => {
                   <div className="flex flex-col gap-0">
                     <span className="my-auto">
                       <Input
-                        value={maximalPrice}
+                        value={String(maximalPrice)}
                         min={0}
                         max={10000}
                         eventHandler={(value) =>
@@ -218,24 +219,64 @@ const Calculator = () => {
                   </div>
                 </Field>
                 <div className="col-span-10">
-                  <Header content={['Estimated fees']} className="mb-0" />
+                  <Header content={['Fees estimation']} className="mb-0" />
                 </div>
-                <Field className="col-span-10 pt-1 pb-2">
-                  <div className="my-auto flex justify-between">
-                    <span>Daily</span>
+                <Field className="col-span-10">
+                  <span className="my-auto flex justify-between">
+                    <span className="text-[14px] text-[#726DA6]">
+                      Forecast of fees collected
+                    </span>
+                    <span>
+                      <Input
+                        value={
+                          String(formData.userFeeForecast) === '0'
+                            ? null
+                            : String(formData.userFeeForecast)
+                        }
+                        placeholder={10}
+                        // min={}
+                        max={1000}
+                        step={10}
+                        width={10}
+                        eventHandler={(value) =>
+                          dispatch({
+                            type:
+                              CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+                            name: 'userFeeForecast',
+                            value: Number(value),
+                          })
+                        }
+                      />
+                      <span>$</span>
+                    </span>
+                  </span>
+                </Field>
+                {/* <Field className="col-span-10 pt-0 pb-3">
+                  <div className="my-auto flex justify-between"> */}
+                {/* <span>Daily</span>
                     <span className="font-medium text-[#55AC68]">
                       {dailyFees !== 0 && <>{dailyFees}$</>}
                       {dailyFees == 0 && <Skeleton h={25} />}
-                    </span>
-                  </div>
-                  <div className="my-auto flex justify-between">
+                    </span> */}
+                {/* </div> */}
+
+                {/* <div className="my-auto flex justify-between">
                     <span>{period + ' Days'}</span>
                     <span className="font-medium text-[#55AC68]">
                       {dailyFees !== 0 && <>{round(dailyFees * period, 2)}$</>}
                       {dailyFees == 0 && <Skeleton h={25} />}{' '}
                     </span>
-                  </div>
-                </Field>
+                  </div> */}
+                {/* </Field> */}
+                <div className="text-sm mx-3 col-span-10 my-auto flex justify-between">
+                  <span className="text-[12px]">
+                    {'Historical fees collected for ' + period + ' days'}
+                  </span>
+                  <span className="font-medium text-[#55AC68]">
+                    {dailyFees !== 0 && <>{round(dailyFees * period, 2)}$</>}
+                    {dailyFees == 0 && <Skeleton h={25} />}{' '}
+                  </span>
+                </div>
               </div>
             </Form>
             <Form header={[OPTION_FORM_TITLE, optionType]}>
@@ -243,7 +284,7 @@ const Calculator = () => {
                 <Field title="Strike price" className="col-span-5">
                   <span className="my-auto">
                     <Input
-                      value={Number(strike)}
+                      value={String(strike)}
                       min={0}
                       max={10000}
                       step={10}

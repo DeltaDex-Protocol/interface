@@ -4,6 +4,7 @@ import { CalculatorForm } from './CalculatorContext'
 
 export enum CalculatorFormActionTypes {
   CHANGE_PAIR = 'CHANGE_PAIR',
+  UPDATE_PERIOD = 'UPDATE_PERIOD',
   UPDATE_BASE_SETTINGS = 'UPDATE_BASE_SETTINGS',
 }
 
@@ -24,6 +25,9 @@ export const CalculatorReducer = (
     }
     case CalculatorFormActionTypes.UPDATE_BASE_SETTINGS: {
       return { ...state, [action.name]: action.value }
+    }
+    case CalculatorFormActionTypes.UPDATE_PERIOD: {
+      return { ...state, period: Number(action.value.split(' ')[0]) }
     }
     default: {
       return state
