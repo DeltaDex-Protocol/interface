@@ -74,7 +74,6 @@ export const viewPositions = async () => {
 
   console.log(signer)
 
-
   // let address = await optionstorage.returnPairAddress(0) // it does not work
   // console.log(address)
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Section } from '@/components/layout'
-import Calculator from '@/views/App/Calculator/Calculator'
+import Calculator from '@/views/App/Calculator'
 
 import { CalculatorFormContextProvider } from '@/context/calculator/CalculatorContext'
 
@@ -8,7 +8,7 @@ const calculator = () => {
   return (
     <Section>
       <CalculatorFormContextProvider>
-        <div className="h-10"></div>
+        {/* <div className="h-5"></div> */}
         <Calculator />
       </CalculatorFormContextProvider>
     </Section>
