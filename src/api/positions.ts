@@ -1,3 +1,4 @@
+import { add } from 'mathjs'
 import { ExpandedRowParamsType, PositionsInfoType } from './positions.types'
 
 const pseudoData: PositionsInfoType[] = [
@@ -69,15 +70,21 @@ export const viewPositions = async () => {
   )
 
   const numberOfPairs = await optionstorage.numOfPairs()
-  console.log(Number(numberOfPairs))
+  console.log(Number(numberOfPairs)) // it works
 
-  for (let i = 0; i < numberOfPairs; i++) {
-    // const _pair = Object.create(Pair)
-    let input = parseUnits(String(i))
-    console.log(input)
-    let address = await optionstorage.returnPairAddress((String(i)))
-    // console.log(address)
-  }
+  console.log(signer)
+
+
+  // let address = await optionstorage.returnPairAddress(0) // it does not work
+  // console.log(address)
+
+  // for (let i = 0; i < numberOfPairs; i++) {
+  //   // const _pair = Object.create(Pair)
+  //   let input = parseUnits(String(i))
+  //   console.log(input)
+  //   let address = await optionstorage.returnPairAddress(i)
+  //   // console.log(address)
+  // }
 }
 
 // const optionmaker = new ethers.Contract(OptionMakerAddress, coreABI, signer)
@@ -87,28 +94,28 @@ export const viewPositions = async () => {
 //   signer,
 // )
 
-const Pairs: Array<any> = []
+// const Pairs: Array<any> = []
 
-const Pair = {
-  address: null,
-  users: [],
-}
+// const Pair = {
+//   address: null,
+//   users: [],
+// }
 
-const Positions: Array<any> = []
+// const Positions: Array<any> = []
 
-const Position = {
-  pairAddress: null,
-  userAddress: null,
-  type: null,
-  ID: null,
-  amount: null,
-  expiry: null,
-  fees: null,
-  perDay: null,
-  hedgeFee: null,
-  lastHedgeTimeStamp: null,
-  nextHedgeTimeStamp: null,
-}
+// const Position = {
+//   pairAddress: null,
+//   userAddress: null,
+//   type: null,
+//   ID: null,
+//   amount: null,
+//   expiry: null,
+//   fees: null,
+//   perDay: null,
+//   hedgeFee: null,
+//   lastHedgeTimeStamp: null,
+//   nextHedgeTimeStamp: null,
+// }
 
 // async function main() {
 //   while (true) {
@@ -268,20 +275,20 @@ const Position = {
 // }
 
 // @dev this is a test function
-function printPositions() {
-  for (let i = 0; i < Positions.length; i++) {
-    console.log(Positions[i])
-  }
-}
+// function printPositions() {
+//   for (let i = 0; i < Positions.length; i++) {
+//     console.log(Positions[i])
+//   }
+// }
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
+// function sleep(ms) {
+//   return new Promise((resolve) => setTimeout(resolve, ms))
+// }
 
-function output() {
-  console.log('Number of pairs in contract: ', Pairs.length.toString())
-  console.log('Number of open positions: ', Positions.length.toString())
-}
+// function output() {
+//   console.log('Number of pairs in contract: ', Pairs.length.toString())
+//   console.log('Number of open positions: ', Positions.length.toString())
+// }
 
 // main()
 //   .then(() => process.exit(0))

@@ -4,7 +4,7 @@ import cx from 'classnames'
 // import { Routes } from '@/views/IndexPage/Demo/components/Routes'
 import Position from './Position'
 import { getPositionsInfo } from '@/api/positions'
-import { PositionsInfoType } from '@/api/positions'
+import { PositionsInfoType } from '@/api/positions.types'
 
 const TITLES: Array<string> = [
   'Type',
