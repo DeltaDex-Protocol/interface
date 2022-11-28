@@ -270,7 +270,7 @@ const Calculator = () => {
                 {/* </Field> */}
                 <div className="text-sm mx-3 col-span-10 my-auto flex justify-between">
                   <span className="text-[12px]">
-                    {'Historical fees collected for ' + period + ' days'}
+                    {'Historical fees collected for last' + period + ' days'}
                   </span>
                   <span className="font-medium text-[#55AC68]">
                     {dailyFees !== 0 && <>{round(dailyFees * period, 2)}$</>}
