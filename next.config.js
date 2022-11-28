@@ -12,6 +12,7 @@ const nextConfig = {
   },
 }
 
+
 module.exports = nextConfig
 
 // const { PHASE_DEVELOPMENT_SERVER } = require('next/constants')
