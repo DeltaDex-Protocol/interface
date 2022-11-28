@@ -19,6 +19,7 @@ import {
   getMinValueForReplication,
   getExpiryDaysToYears,
 } from '@/utils/formUtils'
+import { viewPositions } from '@/api/positions'
 
 const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
@@ -33,6 +34,10 @@ const Form = ({ className }) => {
   const numerrarie = getNumerrarie(formData)
   const minimalValue = getMinValueForReplication(formData)
   let test_minimalLiquidity = minimalValue + ' ' + numerrarie
+
+  useEffect(() => {
+    viewPositions().then((res) => console.log(res))
+  })
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>
@@ -121,16 +126,6 @@ const Form = ({ className }) => {
                 sigma: formData.advancedSettings.modelParams.volatility,
               }).then((res) => console.log(res))
             } else if (formData.advancedSettings.optionType === 'put') {
-              console.log({
-                tokenB_balance: formData.providedLiquidity,
-                amount: formData.contractsAmount,
-                fee: formData.advancedSettings.feesToSplit,
-                perDay: formData.advancedSettings.hedgesPerDay,
-                strike: formData.strike,
-                expiration: String(getExpiryDaysToYears(formData.expiresIn)),
-                riskFree: formData.riskFree,
-                sigma: formData.advancedSettings.modelParams.volatility,
-              })
               PutReplication({
                 tokenB_balance: formData.providedLiquidity,
                 amount: formData.contractsAmount,

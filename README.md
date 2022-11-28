@@ -1,9 +1,14 @@
 ### DeltaDex v2-interface
 #### To run app:
 ```
-yarn dev
+yarn build
+yarn start
 ```
 and open `localhost:3000/impermanent-loss`
+#### If for some reasons version does not compile, then run by:
+```
+yarn dev
+```
 
 ### Contexts:
 #### To manage and store form data, each page has its own form context and reducer.
