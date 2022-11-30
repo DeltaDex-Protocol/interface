@@ -8,32 +8,32 @@ import GuildIcon from 'public/images/socials/guild.svg'
 export const socials = [
   {
     name: 'Twitter',
-    link: '',
+    link: 'https://twitter.com/deltadexlabs',
     icon: <TwitterIcon />,
   },
-  {
-    name: 'Discord',
-    link: '',
-    icon: <DiscordIcon />,
-  },
+  // {
+  //   name: 'Discord',
+  //   link: '',
+  //   icon: <DiscordIcon />,
+  // },
   {
     name: 'Medium',
-    link: '',
+    link: 'https://medium.com/@deltadexprotocol/',
     icon: <MediumIcon />,
   },
-  {
-    name: 'Gitcoin',
-    link: '',
-    icon: <GitcoinIcon />,
-  },
+  // {
+  //   name: 'Gitcoin',
+  //   link: '',
+  //   icon: <GitcoinIcon />,
+  // },
   {
     name: 'Github',
-    link: '',
+    link: 'https://github.com/DeltaDex-Protocol',
     icon: <GithubIcon />,
   },
-  {
-    name: 'Guild',
-    link: '',
-    icon: <GuildIcon />,
-  },
+  // {
+  //   name: 'Guild',
+  //   link: '',
+  //   icon: <GuildIcon />,
+  // },
 ]
