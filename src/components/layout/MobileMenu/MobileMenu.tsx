@@ -47,7 +47,7 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href={'/impermanent-loss'}
+            href={'/app/impermanent-loss'}
             className="menu-product__wrapper"
             // target="_blank"
             rel="noopener noreferrer"
@@ -62,7 +62,37 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href={'leverage-trading'}
+            href={'/app/my-positions'}
+            className="menu-product__wrapper"
+            // target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="menu-product__info">
+              <h4 className="menu-product__title">My positions</h4>
+              <p className="menu-product__description">
+                View your current positions
+              </p>
+            </div>
+          </a>
+        </li>
+        <li className="mobile-menu__product menu-product">
+          <a
+            href={'/app/calculator'}
+            className="menu-product__wrapper"
+            // target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div className="menu-product__info">
+              <h4 className="menu-product__title">Position builder</h4>
+              <p className="menu-product__description">
+                Build your own strategy to hedge IL
+              </p>
+            </div>
+          </a>
+        </li>
+        {/* <li className="mobile-menu__product menu-product">
+          <a
+            href={'/app/leverage-trading'}
             className="menu-product__wrapper"
             // target="_blank"
             rel="noopener noreferrer"
@@ -74,7 +104,7 @@ function MobileMenu() {
               </p>
             </div>
           </a>
-        </li>
+        </li> */}
       </ul>
       {/* <ul className="mobile-menu__socials">
         <li>

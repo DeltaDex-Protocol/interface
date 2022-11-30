@@ -35,9 +35,9 @@ const Form = ({ className }) => {
   const minimalValue = getMinValueForReplication(formData)
   let test_minimalLiquidity = minimalValue + ' ' + numerrarie
 
-  useEffect(() => {
-    viewPositions().then((res) => console.log(res))
-  })
+  // useEffect(() => {
+  //   viewPositions().then((res) => console.log(res))
+  // })
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>

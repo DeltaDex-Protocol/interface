@@ -1,4 +1,3 @@
-import { useCallback, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import cx from 'classnames'
@@ -12,10 +11,10 @@ type Nav = {
 
 export const navigation: Nav[] = [
   // { id: 1, title: 'Vanilla options', path: '/vanilla-options' },
-  { id: 3, title: 'Leverage Trading', path: '/leverage-trading' },
-  { id: 2, title: `Hedge IL\n`, path: '/impermanent-loss' },
-  { id: 4, title: 'My positions', path: '/my-positions' },
-  { id: 5, title: 'Calculator', path: '/calculator' },
+  // { id: 3, title: 'Leverage Trading', path: '/app/leverage-trading' },
+  { id: 2, title: `Hedge IL\n`, path: '/app/impermanent-loss' },
+  { id: 4, title: 'My positions', path: '/app/my-positions' },
+  { id: 5, title: 'Calculator', path: '/app/calculator' },
 ]
 
 const Navbar = () => {
