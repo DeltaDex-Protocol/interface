@@ -24,7 +24,7 @@ function MyPositions() {
     const fetchData = async () => {
       // const res = await getPositionsInfo(0)
       const res = await UserPositions()
-      console.log(await UserPositions())
+      console.log(res)
       setData(res)
     }
     fetchData()

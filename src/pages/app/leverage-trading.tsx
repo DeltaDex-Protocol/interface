@@ -1,6 +1,6 @@
 import LeverageForm from '@/views/App/LeverageTrading'
 import { Section } from '@/components/layout'
-import styles from 'src/views/App/ImpermanentLoss/IL.module.scss'
+import styles from 'src/views/App/VanillaOptions/styles.module.scss'
 import { LeverageTradingFormContextProvider } from '@/context/form/LeverageTradingContext'
 
 

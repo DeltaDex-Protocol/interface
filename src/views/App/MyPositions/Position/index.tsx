@@ -41,32 +41,36 @@ function Position({ rowData }) {
   )
 
   useEffect(() => {
-    if (type === CALL_REPLICATION) {
-      callPayoffData({
-        currentPrice: expand.Strike,
-        strike: expand.Strike,
-        expiry: 1,
-        riskFree: 0.0,
-        volatility: expand['Implied volatility'],
-        contractAmount: expand['Contracts amount'],
-        optionCost: 0,
-      }).then((res) => {
-        setOptionData(res)
-        // console.log(res)
-      })
-    } else {
-      putPayoffData({
-        currentPrice: expand.Strike,
-        strike: expand.Strike,
-        expiry: 1,
-        riskFree: 0.0,
-        volatility: expand['Implied volatility'],
-        contractAmount: expand['Contracts amount'],
-        optionCost: 0,
-      }).then((res) => {
-        setOptionData(res)
-        // console.log(res)
-      })
+    try {
+      if (type === CALL_REPLICATION) {
+        callPayoffData({
+          currentPrice: expand.Strike,
+          strike: expand.Strike,
+          expiry: 1,
+          riskFree: 0.0,
+          volatility: expand['Implied volatility'],
+          contractAmount: expand['Contracts amount'],
+          optionCost: 0,
+        }).then((res) => {
+          setOptionData(res)
+          // console.log(res)
+        })
+      } else {
+        putPayoffData({
+          currentPrice: expand.Strike,
+          strike: expand.Strike,
+          expiry: 1,
+          riskFree: 0.0,
+          volatility: expand['Implied volatility'],
+          contractAmount: expand['Contracts amount'],
+          optionCost: 0,
+        }).then((res) => {
+          setOptionData(res)
+          // console.log(res)
+        })
+      }
+    } catch (error) {
+      console.log(error)
     }
   }, [])
 

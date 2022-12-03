@@ -47,15 +47,15 @@ function MobileMenu() {
         </li>
         <li className="mobile-menu__product menu-product">
           <a
-            href={'/app/impermanent-loss'}
+            href={'/app/vanilla-options'}
             className="menu-product__wrapper"
             // target="_blank"
             rel="noopener noreferrer"
           >
             <div className="menu-product__info">
-              <h4 className="menu-product__title">Hedge Impermanent Loss</h4>
+              <h4 className="menu-product__title">Options replication</h4>
               <p className="menu-product__description">
-                Earn more LP fees with DeltaDex impermanent loss protection
+                Earn more LP fees with options replication
               </p>
             </div>
           </a>

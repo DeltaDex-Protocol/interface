@@ -120,7 +120,7 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
       sigma: Number(ethers.utils.formatEther(optionParams[3])),
       isCall: optionParams[4],
     }
-    console.log(position)
+    // console.log(position)
     PositionsInfo.push({
       type: position.isCall ? CALL_REPLICATION : PUT_REPLICATION,
       pairAddress: shortenAddress(position.pairAddress),

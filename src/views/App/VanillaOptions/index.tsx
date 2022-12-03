@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import cx from 'classnames'
 import { useState, useEffect } from 'react'
-import styles from './IL.module.scss'
+import styles from './styles.module.scss'
 
 import AdvancedSettings from './AdvansedSettings'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
-import MinimalLiquidity from '@/views/App/ImpermanentLoss/MinimalLiquidity'
+import MinimalLiquidity from '@/views/App/VanillaOptions/MinimalLiquidity'
 import { ContractsAmount } from './Inputs/ContractsAmount'
 import { Strike } from './Inputs/Strike'
 import { CallReplication, PutReplication } from '@/api/form'
@@ -13,13 +13,12 @@ import {
   Pairs,
   Period,
   Leverage,
-} from 'src/views/App/ImpermanentLoss/Inputs/index'
+} from '@/views/App/VanillaOptions/Inputs/index'
 import {
   getNumerrarie,
   getMinValueForReplication,
   getExpiryDaysToYears,
 } from '@/utils/formUtils'
-import { viewPositions } from '@/api/positions'
 
 const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
@@ -136,7 +135,7 @@ const Form = ({ className }) => {
             }
           }}
         >
-          Hedge Impermanent Loss
+          Run replication
         </button>
       </div>
     </section>

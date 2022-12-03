@@ -10,9 +10,9 @@ type Nav = {
 }
 
 export const navigation: Nav[] = [
-  // { id: 1, title: 'Vanilla options', path: '/vanilla-options' },
+  { id: 1, title: 'Vanilla options', path: '/app/vanilla-options' },
   // { id: 3, title: 'Leverage Trading', path: '/app/leverage-trading' },
-  { id: 2, title: `Hedge IL\n`, path: '/app/impermanent-loss' },
+  // { id: 2, title: `Hedge IL\n`, path: '/app/impermanent-loss' },
   { id: 4, title: 'My positions', path: '/app/my-positions' },
   { id: 5, title: 'Calculator', path: '/app/calculator' },
 ]

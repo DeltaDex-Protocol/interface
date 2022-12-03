@@ -1,5 +1,6 @@
 import * as echarts from 'echarts'
 import ReactEcharts from 'echarts-for-react'
+import { number } from 'mathjs'
 import {
   CHART_PRICES,
   INITIAL_TV,
@@ -20,7 +21,7 @@ const sampleYaxis = (length) => {
 
 const colors = ['#5470C6', '#91CC75', '#EE6666']
 
-function Chart({data}) {
+function Chart({data }) {
   // let base = +new Date(1968, 9, 3)
   // let oneDay = 24 * 3600 * 1000
   // let date = []
