@@ -45,7 +45,7 @@ export const CallReplication = async (formData: CallReplicationType) => {
     return {
       success: true,
       status:
-        '✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/',
+        '✅ Check out your transaction on Etherscan',
     }
   } catch (error) {
     return {
@@ -95,7 +95,7 @@ export const PutReplication = async (formData: PutReplicationType) => {
     return {
       success: true,
       status:
-        '✅ Check out your transaction on Etherscan: https://ropsten.etherscan.io/tx/',
+        '✅ Check out your transaction on Etherscan',
     }
   } catch (error) {
     return {
