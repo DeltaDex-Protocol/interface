@@ -1,4 +1,8 @@
 // Copyright 2022 DeltaDex
+import {
+  CALL_REPLICATION,
+  PUT_REPLICATION,
+} from '@/views/App/MyPositions/Position/titles'
 import Position from '@/views/App/MyPositions/Position'
 import { OptionStorageAddress } from './constants'
 import shortenAddress from '@/utils/shortenAddress'
@@ -116,8 +120,9 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
       sigma: Number(ethers.utils.formatEther(optionParams[3])),
       isCall: optionParams[4],
     }
+    console.log(position)
     PositionsInfo.push({
-      type: 'Put replication',
+      type: position.isCall ? CALL_REPLICATION : PUT_REPLICATION,
       pairAddress: shortenAddress(position.pairAddress),
       currentBalances: ['150 USDC', '249 1INCH'],
       currentPnL: '+230.48 USDC',

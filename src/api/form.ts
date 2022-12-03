@@ -1,10 +1,10 @@
-import { DAI, WETH } from './constants'
+import { DAI, WETH, CoreAddress } from './constants'
 import { CallReplicationType, PutReplicationType } from './form.types'
 
 const { parseUnits } = require('ethers/lib/utils')
 const ethers = require('ethers')
 const contractABI = require('@/abi/OptionMaker.json')
-const contractAddress = '0xd7a89AEa304A491Ef4B5e74928370059fa53D8C6' // to change
+const contractAddress = CoreAddress
 
 export const CallReplication = async (formData: CallReplicationType) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum)

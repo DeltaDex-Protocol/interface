@@ -5,7 +5,7 @@ import cx from 'classnames'
 import Position from './Position'
 import UserPositions from '@/api/userPositions'
 
-import { getPositionsInfo } from '@/api/positions'
+
 import { PositionsInfoType } from '@/api/positions.types'
 
 const TITLES: Array<string> = [

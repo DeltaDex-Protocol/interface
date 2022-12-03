@@ -4,7 +4,7 @@ import { useMediaQuery } from 'react-responsive'
 import { useState, useEffect } from 'react'
 import cx from 'classnames'
 
-import putPayoffData from '@/utils/optionsPayoff'
+import { putPayoffData } from '@/utils/optionsPayoff'
 import LpProfileData from '@/utils/LpProfile'
 
 import { useCalculatorFormContext } from '@/context/calculator/CalculatorContext'

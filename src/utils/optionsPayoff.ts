@@ -10,7 +10,9 @@ export type Option = {
   optionCost: number
 }
 
-const putPayoffData = async (params: Option): Promise<Array<number[]>> => {
+export const putPayoffData = async (
+  params: Option,
+): Promise<Array<number[]>> => {
   // console.log(OptionCost)
 
   const chartPrices: Array<number> = []
@@ -38,4 +40,34 @@ const putPayoffData = async (params: Option): Promise<Array<number[]>> => {
   return putPayoffs
 }
 
-export default putPayoffData
+export const callPayoffData = async (
+  params: Option,
+): Promise<Array<number[]>> => {
+  // console.log(OptionCost)
+
+  const chartPrices: Array<number> = []
+  for (
+    let price: number = 0;
+    price < xScale * params.currentPrice;
+    price += 2
+  ) {
+    chartPrices.push(price)
+  }
+  const callPayoffs: Array<[number, number]> = []
+  for (
+    let price: number = 0;
+    price < xScale * params.currentPrice;
+    price += 2
+  ) {
+    callPayoffs.push([
+      price,
+      Math.max(0, price - params.strike) * params.contractAmount -
+        params.optionCost,
+    ])
+  }
+
+  // return [chartPrices, putPayoffs]
+  return callPayoffs
+}
+
+export default { putPayoffData, callPayoffData }

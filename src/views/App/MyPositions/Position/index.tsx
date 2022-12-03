@@ -4,10 +4,13 @@ import useCollapse from 'react-collapsed'
 import { Icon } from '@/components/kit'
 import cx from 'classnames'
 import Chart from '../Chart'
+import { putPayoffData, callPayoffData } from '@/utils/optionsPayoff'
+import { CALL_REPLICATION, PUT_REPLICATION } from './titles'
 
 function Position({ rowData }) {
   const [isExpanded, setExpanded] = useState(false)
   const { getToggleProps, getCollapseProps } = useCollapse({ isExpanded })
+  const [OptionData, setOptionData] = useState<number[][]>([])
 
   const {
     type,
@@ -36,6 +39,36 @@ function Position({ rowData }) {
     () => getCollapseProps(),
     [getCollapseProps],
   )
+
+  useEffect(() => {
+    if (type === CALL_REPLICATION) {
+      callPayoffData({
+        currentPrice: expand.Strike,
+        strike: expand.Strike,
+        expiry: 1,
+        riskFree: 0.0,
+        volatility: expand['Implied volatility'],
+        contractAmount: expand['Contracts amount'],
+        optionCost: 0,
+      }).then((res) => {
+        setOptionData(res)
+        // console.log(res)
+      })
+    } else {
+      putPayoffData({
+        currentPrice: expand.Strike,
+        strike: expand.Strike,
+        expiry: 1,
+        riskFree: 0.0,
+        volatility: expand['Implied volatility'],
+        contractAmount: expand['Contracts amount'],
+        optionCost: 0,
+      }).then((res) => {
+        setOptionData(res)
+        // console.log(res)
+      })
+    }
+  }, [])
 
   return (
     <section
@@ -76,7 +109,7 @@ function Position({ rowData }) {
       <main {...{ style: collapseStyles, onTransitionEnd }} ref={ref}>
         <div className="grid grid-cols-9">
           <div className="col-span-4">
-            <Chart />
+            <Chart data={OptionData} />
           </div>
           <div className="col-span-1 "></div>
           <div className="pt-8 flex flex-col col-span-4 gap-1 text-[8px] sm:text-[15px]">
@@ -89,7 +122,9 @@ function Position({ rowData }) {
                         <div className="col-span-1 text-[#726DA6]">{el}</div>
                         <div
                           className="col-span-1 justify-self-end text-[#fff]"
-                          onClick={() => {alert(1)}}
+                          onClick={() => {
+                            alert(1)
+                          }}
                         >
                           <Icon icon="dots" width={30} height={30} />
                         </div>

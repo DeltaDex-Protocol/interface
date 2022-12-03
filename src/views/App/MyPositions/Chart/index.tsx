@@ -20,7 +20,7 @@ const sampleYaxis = (length) => {
 
 const colors = ['#5470C6', '#91CC75', '#EE6666']
 
-function Chart() {
+function Chart({data}) {
   // let base = +new Date(1968, 9, 3)
   // let oneDay = 24 * 3600 * 1000
   // let date = []
@@ -98,7 +98,7 @@ function Chart() {
         itemStyle: {
           color: 'rgba(139, 92, 246, 1)',
         },
-        data: INITIAL_TV,
+        data: data,
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
@@ -112,51 +112,51 @@ function Chart() {
           ]),
         },
       },
-      {
-        name: 'Uniswap V3 TV profile',
-        type: 'line',
-        symbol: 'none',
-        sampling: 'lttb',
-        itemStyle: {
-          color: 'rgba(119, 220, 137, 1)',
-        },
-        data: TVs,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgba(56, 76, 255, 0.9)',
-            },
-            {
-              offset: 1,
-              color: 'rgba(44, 62, 80, 0)',
-            },
-          ]),
-        },
-      },
+      // {
+      //   name: 'Uniswap V3 TV profile',
+      //   type: 'line',
+      //   symbol: 'none',
+      //   sampling: 'lttb',
+      //   itemStyle: {
+      //     color: 'rgba(119, 220, 137, 1)',
+      //   },
+      //   data: TVs,
+      //   areaStyle: {
+      //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      //       {
+      //         offset: 0,
+      //         color: 'rgba(56, 76, 255, 0.9)',
+      //       },
+      //       {
+      //         offset: 1,
+      //         color: 'rgba(44, 62, 80, 0)',
+      //       },
+      //     ]),
+      //   },
+      // },
 
-      {
-        name: 'Uniswap v3 + put replication',
-        type: 'line',
-        symbol: 'none',
-        sampling: 'lttb',
-        itemStyle: {
-          color: 'rgba(230, 121, 117, 1)',
-        },
-        data: TVs_NO_LP_FEES,
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgba(56, 76, 255, 0.9)',
-            },
-            {
-              offset: 1,
-              color: 'rgba(44, 62, 80, 0)',
-            },
-          ]),
-        },
-      },
+      // {
+      //   name: 'Uniswap v3 + put replication',
+      //   type: 'line',
+      //   symbol: 'none',
+      //   sampling: 'lttb',
+      //   itemStyle: {
+      //     color: 'rgba(230, 121, 117, 1)',
+      //   },
+      //   data: TVs_LP_FEES,
+      //   areaStyle: {
+      //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      //       {
+      //         offset: 0,
+      //         color: 'rgba(56, 76, 255, 0.9)',
+      //       },
+      //       {
+      //         offset: 1,
+      //         color: 'rgba(44, 62, 80, 0)',
+      //       },
+      //     ]),
+      //   },
+      // },
     ],
   }
 
