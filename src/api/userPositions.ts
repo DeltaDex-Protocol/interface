@@ -1,5 +1,8 @@
 // Copyright 2022 DeltaDex
+import Position from '@/views/App/MyPositions/Position'
 import { OptionStorageAddress } from './constants'
+import shortenAddress from '@/utils/shortenAddress'
+import { PositionsInfoType } from './positions.types'
 const { ethers } = require('ethers')
 const storageABI = require('@/abi/OptionStorage.json')
 
@@ -14,6 +17,7 @@ type Position = {
   tokenA_balance: number
   tokenB_balance: number
   isCall: boolean
+  leverage: string
   // isLong: boolean
 
   amount: number
@@ -25,18 +29,16 @@ type Position = {
   lastHedgeTimeStamp: number
   nextHedgeTimeStamp: number
 
-  K: number
+  strike: number
   T: number
   r: number
   sigma: number
 }
 
-async function UserPositions() {
-  let userAddress = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
-
+async function UserPositions(): Promise<PositionsInfoType[]> {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
-
   const signer = provider.getSigner()
+  const userAddress = await signer.getAddress()
 
   const optionstorage = new ethers.Contract(
     OptionStorageAddress,
@@ -45,8 +47,9 @@ async function UserPositions() {
   )
   const PairAddresses = await optionstorage.getUserPositions(userAddress)
 
-  let numberOfPairs = PairAddresses.length
-  console.log(numberOfPairs)
+  const numberOfPairs = PairAddresses.length
+
+  let PositionsInfo: PositionsInfoType[] = []
 
   for (let id = 0; id < numberOfPairs; id++) {
     let pairAddress = PairAddresses[id]
@@ -86,8 +89,6 @@ async function UserPositions() {
       id,
     )
 
-    console.log(ethers.utils.formatEther(contractsAmount))
-
     let position: Position = {
       addressTokenA: tokenA,
       addressTokenB: tokenB,
@@ -95,6 +96,7 @@ async function UserPositions() {
       tokenB_balance: tokenB_balance,
       pairAddress: pairAddress,
       userAddress: userAddress,
+      leverage: '1x',
       contractsAmount: Number(ethers.utils.formatEther(contractsAmount)),
       id: id,
       amount: Number(ethers.utils.formatEther(positionData[0])),
@@ -108,15 +110,36 @@ async function UserPositions() {
         positionData[3].toNumber(),
         positionData[5].toNumber(),
       ),
-      K: Number(ethers.utils.formatEther(optionParams[0])),
+      strike: Number(ethers.utils.formatEther(optionParams[0])),
       T: Number(ethers.utils.formatEther(optionParams[1])),
       r: Number(ethers.utils.formatEther(optionParams[2])),
       sigma: Number(ethers.utils.formatEther(optionParams[3])),
       isCall: optionParams[4],
     }
-    console.log(id)
-    console.log(position)
+    PositionsInfo.push({
+      type: 'Put replication',
+      pairAddress: shortenAddress(position.pairAddress),
+      currentBalances: ['150 USDC', '249 1INCH'],
+      currentPnL: '+230.48 USDC',
+      performance: '93%',
+      expand: {
+        Expiry: new Date(position.expiry * 1000).toLocaleDateString('en-US'),
+        Strike: position.strike,
+        'Contracts amount': position.contractsAmount,
+        'Implied volatility': position.sigma,
+        // 'Liquidity provided': '200 USDC',
+        // 'Value to protect': '521 1INCH',
+        // 'Hedging costs': '33 USDC',
+        // 'Last hedge': '2022-11-02 18:30 UTC',
+        // 'Option type': 'long put',
+        Leverage: position.leverage,
+        // Advanced: '', // TODO: change to model params & position greeks
+      },
+    })
   }
+  // return PositionsInfo
+
+  return PositionsInfo
 }
 
 function nextHedgeTimeStamp(perDay, lastHedgeTimeStamp) {

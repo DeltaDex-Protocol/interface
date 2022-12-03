@@ -3,6 +3,8 @@ import styles from './MyPositions.module.scss'
 import cx from 'classnames'
 // import { Routes } from '@/views/IndexPage/Demo/components/Routes'
 import Position from './Position'
+import UserPositions from '@/api/userPositions'
+
 import { getPositionsInfo } from '@/api/positions'
 import { PositionsInfoType } from '@/api/positions.types'
 
@@ -20,7 +22,9 @@ function MyPositions() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getPositionsInfo(0)
+      // const res = await getPositionsInfo(0)
+      const res = await UserPositions()
+      console.log(await UserPositions())
       setData(res)
     }
     fetchData()

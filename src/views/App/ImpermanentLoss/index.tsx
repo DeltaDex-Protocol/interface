@@ -9,7 +9,6 @@ import MinimalLiquidity from '@/views/App/ImpermanentLoss/MinimalLiquidity'
 import { ContractsAmount } from './Inputs/ContractsAmount'
 import { Strike } from './Inputs/Strike'
 import { CallReplication, PutReplication } from '@/api/form'
-import UserPositions from '@/api/userPositions'
 import {
   Pairs,
   Period,
@@ -36,10 +35,6 @@ const Form = ({ className }) => {
   const minimalValue = getMinValueForReplication(formData)
   let test_minimalLiquidity = minimalValue + ' ' + numerrarie
 
-  useEffect(() => {
-    // viewPositions().then((res) => console.log(res))
-    UserPositions()
-  })
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>

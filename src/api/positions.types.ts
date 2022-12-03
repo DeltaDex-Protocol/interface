@@ -1,13 +1,16 @@
 export type ExpandedRowParamsType =
   | {
       Expiry: string
-      'Liquidity provided': string
-      'Value to protect': string
-      'Expected costs for replication': string
+      Strike: number
+      'Contracts amount': number
+      'Implied volatility': number
+      // 'Liquidity provided': string
+      // 'Value to protect': string
+      // 'Hedging costs': string
       // 'Last hedge': string
-      'Option type': string
+      // 'Option type': string
       Leverage: string
-      Advanced: any // TODO: change to model params & position greeks
+      // Advanced: any // TODO: change to model params & position greeks
     }
   | undefined
 
