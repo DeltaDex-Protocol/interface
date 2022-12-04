@@ -68,7 +68,7 @@ function Header() {
         <button
           className={cx(
             styles.headerActionButton,
-            'bg-[#8B5CF6] bg-opacity-30 hover:shadow-md ',
+            'bg-[#8B5CF6] bg-opacity-30 hover:shadow-md hover:bg-opacity-70 ',
           )}
         >
           <span className="text-white flex">
