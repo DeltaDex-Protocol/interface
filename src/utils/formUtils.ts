@@ -33,14 +33,6 @@ export const getExpiryDaysToYears = (expiry: string) => {
 }
 
 // BLACK SCHOLES 
-
-// this function does not work when called from the blackscholes function
-function expiryDaysToYears(expiry) {
-  expiry = expiry.split(' ')[0]
-
-  return round(Number(expiry) / DAYS_IN_YEAR, 3)
-}
-
 function cdfNormal (x) {
   return (1 - erf(-x / (Math.sqrt(2)))) / 2
 }
@@ -64,16 +56,34 @@ function blackScholes(S, K, T, r, sigma, isCall) {
   return isCall ? call : put;
 }
 
+function getExpiryInDays(expiry) {
+  expiry = expiry.split(' ')[0]
+
+  return Number(expiry)
+}
+
+function getExpiryInYears(expiry) {
+  expiry = expiry.split(' ')[0]
+
+  return round(Number(expiry) / DAYS_IN_YEAR, 3)
+}
 
 export const getOptionPrice = (formData) => {
-  const S = formData.strike;
-  const K = formData.strike;
-  const T = 0.0192;
-  const r = 0.1;
-  const sigma = 0.9;
-  const isCall = true;
 
-  const optionPrice = blackScholes(S, K, T, r, sigma, isCall);
+  const feesToSplit = formData.advancedSettings.feesToSplit;
+  const perDay = formData.advancedSettings.hedgesPerDay;
+  const hedgeCost = feesToSplit * perDay * getExpiryInDays(formData.expiresIn)
+
+  const S = 1257;
+  const K = formData.strike;
+  const T = getExpiryInYears(formData.expiresIn);
+  const r = 0.1;
+  const sigma = 0.75;
+  const isCall = formData.advancedSettings.optionType === 'call' ? true: false;
+
+  const C = blackScholes(S, K, T, r, sigma, isCall);
+
+  const optionPrice = C + hedgeCost;
 
   return round(optionPrice, 2)
 }

@@ -21,6 +21,8 @@ import {
   getOptionPrice,
 } from '@/utils/formUtils'
 
+import { getEthPrice } from '@/api/tokensPrices'
+
 const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
 
@@ -37,6 +39,7 @@ const Form = ({ className }) => {
 
   let optionPrice = getOptionPrice(formData);
 
+  let breakEven = getOptionPrice(formData) + Number(formData.strike);
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>
@@ -101,6 +104,12 @@ const Form = ({ className }) => {
             Minimum Liquidity Required:
           </span>
           <span className="font-normal px-2">{test_minimalLiquidity}</span>
+        </div>
+        <div className="flex justify-between px-2 py-1">
+          <span className="font-normal text-[#726DA6]">
+            Break Even:
+          </span>
+          <span className="font-normal px-2">{breakEven} DAI</span>
         </div>
         <div className="flex justify-between px-2 py-1">
           <span className="font-normal text-[#726DA6]">
