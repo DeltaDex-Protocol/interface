@@ -18,6 +18,7 @@ import {
   getNumerrarie,
   getMinValueForReplication,
   getExpiryDaysToYears,
+  getOptionPrice,
 } from '@/utils/formUtils'
 
 const InputStyle =
@@ -33,6 +34,8 @@ const Form = ({ className }) => {
   const numerrarie = getNumerrarie(formData)
   const minimalValue = getMinValueForReplication(formData)
   let test_minimalLiquidity = minimalValue + ' ' + numerrarie
+
+  let optionPrice = getOptionPrice(formData);
 
 
   return (
@@ -98,6 +101,12 @@ const Form = ({ className }) => {
             Minimum Liquidity Required:
           </span>
           <span className="font-normal px-2">{test_minimalLiquidity}</span>
+        </div>
+        <div className="flex justify-between px-2 py-1">
+          <span className="font-normal text-[#726DA6]">
+            Option Price:
+          </span>
+          <span className="font-normal text-[#F3736F] px-2">{optionPrice} DAI</span>
         </div>
         <div className="flex justify-between px-2 py-1">
           <span className="font-normal text-[#726DA6]">
