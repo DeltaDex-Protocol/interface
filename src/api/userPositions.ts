@@ -75,19 +75,19 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
       id,
     )
 
-    let contractsAmount = await optionstorage.BS_Options_getAmount(
+    let contractsAmount = await optionstorage.BS_Options_contractAmount(
       pairAddress,
       userAddress,
       id,
     )
 
-    let tokenA_balance = await optionstorage.BS_Options_getTokenA_bal(
+    let tokenA_balance = await optionstorage.BS_Options_tokenA_balance(
       pairAddress,
       userAddress,
       id,
     )
 
-    let tokenB_balance = await optionstorage.BS_Options_getTokenB_bal(
+    let tokenB_balance = await optionstorage.BS_Options_tokenB_balance(
       pairAddress,
       userAddress,
       id,
