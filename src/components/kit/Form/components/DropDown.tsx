@@ -17,10 +17,10 @@ function DropDown({ name, array, ActionType, dispatch }) {
           />
         </button>
       }
-      position="bottom left"
+      position="bottom center"
       on="hover"
       closeOnDocumentClick
-      // mouseLeaveDelay={100}
+      // mouseLeaveDelay={1000}
       mouseEnterDelay={0}
       contentStyle={{
         padding: '0px',
@@ -35,7 +35,7 @@ function DropDown({ name, array, ActionType, dispatch }) {
         {array.map((el, index) => {
           if (index > 0)
             return (
-              <div className="menu-item bg-black  h-10" key={index}>
+              <div className="bg-black h-10" key={index}>
                 <button
                   onClick={() =>
                     dispatch({
