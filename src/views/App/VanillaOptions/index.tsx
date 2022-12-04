@@ -93,15 +93,15 @@ const Form = ({ className }) => {
             </>
           )}
         </div>
-        <div className="flex justify-between px-2">
+        <div className="flex justify-between px-2 py-1">
           <span className="font-normal text-[#726DA6]">
-            Minimal liquidity to provide
+            Minimum Liquidity Required:
           </span>
           <span className="font-normal px-2">{test_minimalLiquidity}</span>
         </div>
-        <div className="flex justify-between px-2">
+        <div className="flex justify-between px-2 py-1">
           <span className="font-normal text-[#726DA6]">
-            Historical average accuracy
+            Average Accuracy:
           </span>
           <span className="font-normal px-2">93%</span>
         </div>
@@ -135,7 +135,7 @@ const Form = ({ className }) => {
             }
           }}
         >
-          Run replication
+          Start Replication
         </button>
       </div>
     </section>
