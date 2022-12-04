@@ -68,7 +68,7 @@ function Header() {
         <button
           className={cx(
             styles.headerActionButton,
-            'bg-[#8B5CF6] bg-opacity-30 hover:shadow-md hover:bg-opacity-70 ',
+            'bg-[#8B5CF6] bg-opacity-30 hover:shadow-md hover:bg-opacity-70',
           )}
         >
           <span className="text-white flex">
@@ -89,6 +89,20 @@ function Header() {
               : 'Connect'}
           </span>
         </button>
+
+        <button
+          className={cx(
+            styles.headerActionButton,
+            'bg-[#726DA6] bg-opacity-50 hover:bg-opacity-70',
+          )}
+        >
+          <span className="text-white flex">
+            <Icon className="" icon="threedots" width={19} height={19} />
+          </span>
+        </button>
+
+
+
         {/* <button
           onClick={toggleMenu}
           className={cx(
