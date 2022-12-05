@@ -104,7 +104,7 @@ function Position({ rowData }) {
                   'text-[#111215cc] dark:text-[#ffffff66]',
                   isExpanded && 'rotate-90',
                 )}
-                icon="MyArrow"
+                icon="customArrow"
                 width={14}
                 height={22}
               />
@@ -151,6 +151,7 @@ function Position({ rowData }) {
                 className="bg-[#959595]/50 rounded-md px-3 py-1.5" 
                 onClick={() => {
 
+                  // how to do this without having the ID show up in the UI?
                   console.log(expand['ID']);
                   let id = expand['ID'];
                   ClosePosition(id).then((res) => {
