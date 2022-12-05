@@ -189,8 +189,6 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
       },
     })
   }
-  // return PositionsInfo 
-
   return PositionsInfo
 }
 
