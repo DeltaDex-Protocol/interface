@@ -3,12 +3,14 @@ import cx from 'classnames'
 import { useState, useEffect } from 'react'
 import styles from './styles.module.scss'
 
+// import { DAI, WETH } from 'src/utils/constants'
+
 import AdvancedSettings from './AdvansedSettings'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import MinimalLiquidity from '@/views/App/VanillaOptions/MinimalLiquidity'
 import { ContractsAmount } from './Inputs/ContractsAmount'
 import { Strike } from './Inputs/Strike'
-import { CallReplication, PutReplication } from '@/api/form'
+import { CallReplication, PutReplication, getUserBalance, approveDAI, approveWETH } from '@/api/form'
 import {
   Pairs,
   Period,
@@ -18,6 +20,7 @@ import {
   getNumerrarie,
   getMinValueForReplication,
   getExpiryDaysToYears,
+  getHedgeCost,
   getOptionPrice,
 } from '@/utils/formUtils'
 
@@ -37,9 +40,17 @@ const Form = ({ className }) => {
   const minimalValue = getMinValueForReplication(formData)
   let test_minimalLiquidity = minimalValue + ' ' + numerrarie
 
+  let hedgeCost = getHedgeCost(formData);
   let optionPrice = getOptionPrice(formData);
-
   let breakEven = getOptionPrice(formData) + Number(formData.strike);
+
+  // @dev we should use these values instead of approving the total balance of the user
+  let approveAmountCall_TokenA = Number(formData.providedLiquidity) + Number(hedgeCost);
+  let approveAmountPut_TokenB = Number(formData.providedLiquidity);
+  let approveAmountPut_TokenA = Number(hedgeCost);
+
+  // let userBalanceTokenA = getUserBalance(DAI);
+  // let userBalanceTokenB = getUserBalance(WETH);
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>
@@ -129,10 +140,12 @@ const Form = ({ className }) => {
             w-full px-10 font-semibold text-[18px]"
           onClick={() => {
             if (formData.advancedSettings.optionType === 'call') {
+              approveDAI();
+
               CallReplication({
                 tokenA_balance: formData.providedLiquidity,
                 amount: formData.contractsAmount,
-                fee: formData.advancedSettings.feesToSplit,
+                fee: hedgeCost.toString(),
                 perDay: formData.advancedSettings.hedgesPerDay,
                 strike: formData.strike,
                 expiration: String(getExpiryDaysToYears(formData.expiresIn)),
@@ -140,6 +153,9 @@ const Form = ({ className }) => {
                 sigma: formData.advancedSettings.modelParams.volatility,
               }).then((res) => console.log(res))
             } else if (formData.advancedSettings.optionType === 'put') {
+              approveDAI();
+              approveWETH();
+
               PutReplication({
                 tokenB_balance: formData.providedLiquidity,
                 amount: formData.contractsAmount,

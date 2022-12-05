@@ -5,10 +5,21 @@ const { parseUnits } = require('ethers/lib/utils')
 const ethers = require('ethers')
 
 const storageABI = require('@/abi/OptionStorage.json')
-const storageAddress = OptionStorageAddress
+const coreABI = require('@/abi/OptionMaker.json')
 
-const contractABI = require('@/abi/OptionMaker.json')
-const contractAddress = CoreAddress
+const ERC20ABI = [
+  // Read-Only Functions
+  "function balanceOf(address owner) view returns (uint256)",
+  "function decimals() view returns (uint8)",
+  "function symbol() view returns (string)",
+
+  // Authenticated Functions
+  "function transfer(address to, uint amount) returns (bool)",
+  "function approve(address spender, uint amount) returns (bool)",
+
+  // Events
+  "event Transfer(address indexed from, address indexed to, uint amount)"
+];
 
 export const CallReplication = async (formData: CallReplicationType) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -39,7 +50,7 @@ export const CallReplication = async (formData: CallReplicationType) => {
   ]
 
   const signer = provider.getSigner()
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer)
+  const optionmaker = new ethers.Contract(CoreAddress, coreABI, signer)
 
   try {
     const tx = await optionmaker.BS_START_REPLICATION(input)
@@ -89,7 +100,7 @@ export const PutReplication = async (formData: PutReplicationType) => {
   ]
 
   const signer = provider.getSigner()
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer)
+  const optionmaker = new ethers.Contract(CoreAddress, coreABI, signer)
 
   try {
     const tx = await optionmaker.BS_START_REPLICATION(input)
@@ -110,11 +121,77 @@ export const PutReplication = async (formData: PutReplicationType) => {
   }
 }
 
+export const approveDAI = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+  const signer = provider.getSigner()
+
+  const token = new ethers.Contract(DAI, ERC20ABI, signer)
+  const amount = await token.balanceOf(signer.getAddress())
+
+  try {
+    const tx = await token.approve(CoreAddress, amount)
+    // wait until the transaction is mined
+    await tx.wait()
+    console.log('success')
+    return {
+      success: true,
+      status:
+        '✅ Check out your transaction on Etherscan',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      // @ts-ignore
+      status: '😥 Something went wrong: ' + error.message,
+    }
+  }
+}
+
+export const approveWETH = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+  const signer = provider.getSigner()
+
+  const token = new ethers.Contract(WETH, ERC20ABI, signer)
+  const amount = await token.balanceOf(signer.getAddress())
+
+  try {
+    const tx = await token.approve(CoreAddress, amount)
+    // wait until the transaction is mined
+    await tx.wait()
+    console.log('success')
+    return {
+      success: true,
+      status:
+        '✅ Check out your transaction on Etherscan',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      // @ts-ignore
+      status: '😥 Something went wrong: ' + error.message,
+    }
+  }
+}
+
+
+export const getUserBalance = async (TokenAddress: string) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+
+  const token = new ethers.Contract(TokenAddress, ERC20ABI, signer)
+  const address = await signer.getAddress()
+  const balance = await token.balanceOf(address);
+
+  return balance
+}
+
 
 export const ClosePosition = async (ID: number) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()
-  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer)
+  const optionmaker = new ethers.Contract(CoreAddress, coreABI, signer)
 
   const optionstorage = new ethers.Contract(
     OptionStorageAddress,
@@ -122,11 +199,9 @@ export const ClosePosition = async (ID: number) => {
     signer,
   )
 
-  console.log("here");
   const userAddress = await signer.getAddress()
   const PairAddresses = await optionstorage.getUserPositions(userAddress)
   const PairAddress = PairAddresses[ID];
-
 
   try {
     const tx = await optionmaker.BS_Withdraw(PairAddress, ID)

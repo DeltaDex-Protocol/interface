@@ -68,13 +68,19 @@ function getExpiryInYears(expiry) {
   return round(Number(expiry) / DAYS_IN_YEAR, 3)
 }
 
+export const getHedgeCost = (formData) => {
+  const feesToSplit = formData.advancedSettings.feesToSplit;
+  const perDay = formData.advancedSettings.hedgesPerDay;
+  const hedgeCost = feesToSplit * perDay * getExpiryInDays(formData.expiresIn);
+  return hedgeCost;
+}
+
 export const getOptionPrice = (formData) => {
   const feesToSplit = formData.advancedSettings.feesToSplit;
   const perDay = formData.advancedSettings.hedgesPerDay;
   const hedgeCost = feesToSplit * perDay * getExpiryInDays(formData.expiresIn)
 
   const S = 1257;
-
   // let S = ethers.utils.formatEther(await optionmaker.getPrice(WETH, DAI));
 
   const K = formData.strike;
