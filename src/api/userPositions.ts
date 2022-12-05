@@ -4,11 +4,12 @@ import {
   PUT_REPLICATION,
 } from '@/views/App/MyPositions/Position/titles'
 import Position from '@/views/App/MyPositions/Position'
-import { OptionStorageAddress } from './constants'
+import { CoreAddress, OptionStorageAddress } from './constants'
 import shortenAddress from '@/utils/shortenAddress'
 import { PositionsInfoType } from './positions.types'
 const { ethers } = require('ethers')
 const storageABI = require('@/abi/OptionStorage.json')
+const OptionMakerABI = require('@/abi/OptionMaker.json')
 
 type Position = {
   pairAddress: string
@@ -17,16 +18,15 @@ type Position = {
 
   addressTokenA: string
   addressTokenB: string
+  tokenA_balance: string
+  tokenB_balance: string
   contractsAmount: number
-  tokenA_balance: number
-  tokenB_balance: number
   isCall: boolean
   leverage: string
   // isLong: boolean
 
-  amount: number
   expiry: number
-  fees: number
+  fees: string
   perDay: number
   hedgeFee: number
 
@@ -49,6 +49,13 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
     storageABI,
     signer,
   )
+
+  const optionmaker = new ethers.Contract(
+    CoreAddress,
+    OptionMakerABI,
+    signer,
+  )
+
   const PairAddresses = await optionstorage.getUserPositions(userAddress)
 
   const numberOfPairs = PairAddresses.length
@@ -135,44 +142,56 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
       id,
     )
 
+    let currentBalance = [tokenA_balance, tokenB_balance];
+
+    let price = await optionmaker.getPrice(tokenB, tokenA);
+
+    console.log("positionParams", positionParams);
+
     let position: Position = {
-      addressTokenA: positionParams[0],
-      addressTokenB: positionParams[1],
-      tokenA_balance: positionParams[2],
-      tokenB_balance: positionParams[3],
       pairAddress: pairAddress,
       userAddress: userAddress,
-      leverage: '1x',
-      contractsAmount: Number(ethers.utils.formatEther(positionParams[6])),
       id: id,
-      amount: Number(ethers.utils.formatEther(positionData[0])),
-      expiry: positionData[1].toNumber(),
-      fees: Number(ethers.utils.formatEther(positionData[2])),
-      perDay: positionData[3].toNumber(),
-      hedgeFee: Number(ethers.utils.formatEther(positionData[4])),
 
-      lastHedgeTimeStamp: positionData[5].toNumber(),
+      addressTokenA: positionParams[0],
+      addressTokenB: positionParams[1],
+      tokenA_balance: Number(ethers.utils.formatEther(positionParams[2])).toFixed(2),
+      tokenB_balance: Number(ethers.utils.formatEther(positionParams[3])).toFixed(2),
+      contractsAmount: Number(ethers.utils.formatEther(positionParams[6])),
+      isCall: positionParams[4],
+      leverage: '1x',
+
+      expiry: positionParams[7].toNumber(),
+      fees: Number(ethers.utils.formatEther(positionParams[8])).toFixed(2),
+      perDay: positionParams[9].toNumber(),
+      hedgeFee: Number(ethers.utils.formatEther(positionParams[10])),
+
+      lastHedgeTimeStamp: positionParams[11].toNumber(),
       nextHedgeTimeStamp: nextHedgeTimeStamp(
-        positionData[3].toNumber(),
-        positionData[5].toNumber(),
+        positionParams[9].toNumber(),
+        positionParams[11].toNumber(),
       ),
-      strike: Number(ethers.utils.formatEther(optionParams[0])),
-      T: Number(ethers.utils.formatEther(optionParams[1])),
-      r: Number(ethers.utils.formatEther(optionParams[2])),
-      sigma: Number(ethers.utils.formatEther(optionParams[3])),
-      isCall: optionParams[4],
+
+      strike: Number(ethers.utils.formatEther(positionParams[12][0])),
+      T: Number(ethers.utils.formatEther(positionParams[12][1])),
+      r: Number(ethers.utils.formatEther(positionParams[12][2])),
+      sigma: Number(ethers.utils.formatEther(positionParams[12][3])),
     }
-    // console.log(position)
+
+    // needs to get historical price from somewhere... 
+    let status = await optionstorage.getPositionStatus(pairAddress, userAddress, id);
+    let pnl = await getPnL(1250, price, initialBalance, currentBalance);
+    let performance = await getPerformance(1250, price, initialBalance, currentBalance);
+
     PositionsInfo.push({
       type: position.isCall ? CALL_REPLICATION : PUT_REPLICATION,
       pairAddress: shortenAddress(position.pairAddress),
-      currentBalances: ['150 USDC', '249 1INCH'],
-      currentPnL: '+230.48 USDC',
-      performance: '93%',
+      currentBalances: [`${position.tokenA_balance} DAI`, `${position.tokenB_balance} WETH`],
+      currentPnL: status ? `Closed` : (Number(pnl) > 0 ? `+${pnl} DAI` : `${pnl} DAI`),
+      performance: status ? `Closed` : `${performance}%`,
       expand: {
-        Expiry: new Date(position.expiry * 1000).toLocaleDateString('en-US'),
-        Strike: position.strike,
         'Contracts amount': position.contractsAmount,
+        Strike: position.strike,
         'Implied volatility': position.sigma,
         // 'Liquidity provided': '200 USDC',
         // 'Value to protect': '521 1INCH',
@@ -180,15 +199,55 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
         // 'Last hedge': '2022-11-02 18:30 UTC',
         // 'Option type': 'long put',
         Leverage: position.leverage,
-        'Next Hedge': unixTimeToUTC(position.nextHedgeTimeStamp),
+        'Hedges per day': position.perDay,
+        'Fee Balance': `${position.fees} DAI`,
+        'Next Hedge': status ? `-` : unixTimeToUTC(position.nextHedgeTimeStamp),
+        Expiry: new Date(position.expiry * 1000).toLocaleString('en-US'),
+
         // Advanced: '', // TODO: change to model params & position greeks
       },
     })
   }
-  // return PositionsInfo
+  // return PositionsInfo 
 
   return PositionsInfo
 }
+
+
+async function getPerformance(historicalPrice, currentPrice, initialBalance, currentBalance) {
+  currentPrice = ethers.utils.formatEther(currentPrice);
+
+  let balanceTokenA = ethers.utils.formatEther(initialBalance[0]);
+  let balanceTokenB = ethers.utils.formatEther(initialBalance[1]);
+
+  let currentBalanceTokenA = ethers.utils.formatEther(currentBalance[0]);
+  let currentBalanceTokenB = ethers.utils.formatEther(currentBalance[1]);
+
+  let p0 = Number(balanceTokenB) * historicalPrice + Number(balanceTokenA);
+  let p1 = Number(currentBalanceTokenB) * currentPrice + Number(currentBalanceTokenA);
+
+  let pnl = ((p1 - p0) / p0 * 100).toFixed(2);
+
+  return pnl;
+}
+
+async function getPnL(historicalPrice, currentPrice, initialBalance, currentBalance) {
+  currentPrice = ethers.utils.formatEther(currentPrice);
+
+  let balanceTokenA = ethers.utils.formatEther(initialBalance[0]);
+  let balanceTokenB = ethers.utils.formatEther(initialBalance[1]);
+
+  let currentBalanceTokenA = ethers.utils.formatEther(currentBalance[0]);
+  let currentBalanceTokenB = ethers.utils.formatEther(currentBalance[1]);
+
+  let p0 = Number(balanceTokenB) * historicalPrice + Number(balanceTokenA);
+  let p1 = Number(currentBalanceTokenB) * currentPrice + Number(currentBalanceTokenA);
+
+  let pnl = (p1 - p0).toFixed(2);
+
+  return pnl;
+}
+
 
 function nextHedgeTimeStamp(perDay, lastHedgeTimeStamp) {
   let interval = 86400 / perDay
@@ -198,7 +257,8 @@ function nextHedgeTimeStamp(perDay, lastHedgeTimeStamp) {
 
 function unixTimeToUTC(unixTime) {
   let date = new Date(unixTime * 1000)
-  return date.toUTCString()
+
+  return date.toLocaleString("en-us");
 }
 
 export default UserPositions

@@ -1,8 +1,7 @@
 export type ExpandedRowParamsType =
   | {
-      Expiry: string
-      Strike: number
       'Contracts amount': number
+      Strike: number
       'Implied volatility': number
       // 'Liquidity provided': string
       // 'Value to protect': string
@@ -10,7 +9,11 @@ export type ExpandedRowParamsType =
       // 'Last hedge': string
       // 'Option type': string
       Leverage: string
+      'Hedges per day': number
+      'Fee Balance': string
+
       'Next Hedge': string
+      Expiry: string
       // Advanced: any // TODO: change to model params & position greeks
     }
   | undefined
