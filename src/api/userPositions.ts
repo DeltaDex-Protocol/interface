@@ -58,6 +58,48 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
   for (let id = 0; id < numberOfPairs; id++) {
     let pairAddress = PairAddresses[id]
 
+    /*
+    struct BSOptionParams {
+      int K; 
+      int T; 
+      int r; 
+      int sigma; 
+    }
+    struct BS_params {
+      address tokenA;
+      address tokenB;
+
+      uint tokenA_balance;
+      uint tokenB_balance;
+
+      bool isCall;
+      bool isLong;
+
+      uint amount;
+      uint expiry;
+      uint fees;
+      uint perDay;
+      uint hedgeFee;
+
+      uint lastHedgeTimeStamp;
+
+      BSOptionParams parameters;
+    }
+    */
+    // all position data
+    let positionParams = await optionstorage.BS_allPositionParams(
+      pairAddress,
+      userAddress,
+      id,
+    )
+
+    // initial token balances
+    let initialBalance = await optionstorage.getInitialBalance(
+      pairAddress,
+      userAddress,
+      id,
+    )
+
     let positionData = await optionstorage.BS_PositionParams(
       pairAddress,
       userAddress,
@@ -94,14 +136,14 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
     )
 
     let position: Position = {
-      addressTokenA: tokenA,
-      addressTokenB: tokenB,
-      tokenA_balance: tokenA_balance,
-      tokenB_balance: tokenB_balance,
+      addressTokenA: positionParams[0],
+      addressTokenB: positionParams[1],
+      tokenA_balance: positionParams[2],
+      tokenB_balance: positionParams[3],
       pairAddress: pairAddress,
       userAddress: userAddress,
       leverage: '1x',
-      contractsAmount: Number(ethers.utils.formatEther(contractsAmount)),
+      contractsAmount: Number(ethers.utils.formatEther(positionParams[6])),
       id: id,
       amount: Number(ethers.utils.formatEther(positionData[0])),
       expiry: positionData[1].toNumber(),
