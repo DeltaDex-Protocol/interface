@@ -1,8 +1,12 @@
-import { DAI, WETH, CoreAddress } from './constants'
+import { DAI, WETH, CoreAddress, OptionStorageAddress } from './constants'
 import { CallReplicationType, PutReplicationType } from './form.types'
 
 const { parseUnits } = require('ethers/lib/utils')
 const ethers = require('ethers')
+
+const storageABI = require('@/abi/OptionStorage.json')
+const storageAddress = OptionStorageAddress
+
 const contractABI = require('@/abi/OptionMaker.json')
 const contractAddress = CoreAddress
 
@@ -89,6 +93,43 @@ export const PutReplication = async (formData: PutReplicationType) => {
 
   try {
     const tx = await optionmaker.BS_START_REPLICATION(input)
+    // wait until the transaction is mined
+    await tx.wait()
+    console.log('success')
+    return {
+      success: true,
+      status:
+        '✅ Check out your transaction on Etherscan',
+    }
+  } catch (error) {
+    return {
+      success: false,
+      // @ts-ignore
+      status: '😥 Something went wrong: ' + error.message,
+    }
+  }
+}
+
+
+export const ClosePosition = async (ID: number) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+  const optionmaker = new ethers.Contract(contractAddress, contractABI, signer)
+
+  const optionstorage = new ethers.Contract(
+    OptionStorageAddress,
+    storageABI,
+    signer,
+  )
+
+  console.log("here");
+  const userAddress = await signer.getAddress()
+  const PairAddresses = await optionstorage.getUserPositions(userAddress)
+  const PairAddress = PairAddresses[ID];
+
+
+  try {
+    const tx = await optionmaker.BS_Withdraw(PairAddress, ID)
     // wait until the transaction is mined
     await tx.wait()
     console.log('success')

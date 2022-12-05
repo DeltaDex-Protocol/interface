@@ -1,5 +1,6 @@
 export type ExpandedRowParamsType =
   | {
+      'ID': number
       'Contracts amount': number
       Strike: number
       'Implied volatility': number
@@ -25,4 +26,10 @@ export type PositionsInfoType = {
   currentPnL: string
   performance: string
   expand: ExpandedRowParamsType
+}
+
+export type WithdrawType = {
+  pairAddress: string
+  userAddress: string
+  id: number
 }

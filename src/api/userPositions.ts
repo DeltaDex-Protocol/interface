@@ -171,6 +171,7 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
       currentPnL: status ? `Closed` : (Number(pnl) > 0 ? `+${pnl} DAI` : `${pnl} DAI`),
       performance: status ? `Closed` : `${performance}%`,
       expand: {
+        'ID': id,
         'Contracts amount': position.contractsAmount,
         Strike: position.strike,
         'Implied volatility': position.sigma,

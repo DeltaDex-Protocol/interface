@@ -7,6 +7,8 @@ import Chart from '../Chart'
 import { putPayoffData, callPayoffData } from '@/utils/optionsPayoff'
 import { CALL_REPLICATION, PUT_REPLICATION } from './titles'
 
+import { ClosePosition } from '@/api/form'
+
 function Position({ rowData }) {
   const [isExpanded, setExpanded] = useState(false)
   const { getToggleProps, getCollapseProps } = useCollapse({ isExpanded })
@@ -145,7 +147,17 @@ function Position({ rowData }) {
                   )
                 })}
               <div className="col-span-1 mt-4">
-                <button className="bg-[#959595]/50 rounded-md px-3 py-1.5">
+                <button 
+                className="bg-[#959595]/50 rounded-md px-3 py-1.5" 
+                onClick={() => {
+
+                  console.log(expand['ID']);
+                  let id = expand['ID'];
+                  ClosePosition(id).then((res) => {
+                    console.log(res);
+                  });
+                }}
+                >
                   <span className="text-[#000]">Close position</span>
                 </button>
               </div>
