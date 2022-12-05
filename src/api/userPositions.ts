@@ -138,6 +138,7 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
         // 'Last hedge': '2022-11-02 18:30 UTC',
         // 'Option type': 'long put',
         Leverage: position.leverage,
+        'Next Hedge': unixTimeToUTC(position.nextHedgeTimeStamp),
         // Advanced: '', // TODO: change to model params & position greeks
       },
     })
@@ -151,6 +152,11 @@ function nextHedgeTimeStamp(perDay, lastHedgeTimeStamp) {
   let interval = 86400 / perDay
   let nextTimeStamp = lastHedgeTimeStamp + interval
   return nextTimeStamp
+}
+
+function unixTimeToUTC(unixTime) {
+  let date = new Date(unixTime * 1000)
+  return date.toUTCString()
 }
 
 export default UserPositions

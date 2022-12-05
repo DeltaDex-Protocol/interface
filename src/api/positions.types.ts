@@ -10,6 +10,7 @@ export type ExpandedRowParamsType =
       // 'Last hedge': string
       // 'Option type': string
       Leverage: string
+      'Next Hedge': string
       // Advanced: any // TODO: change to model params & position greeks
     }
   | undefined
