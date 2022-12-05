@@ -107,24 +107,7 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
       id,
     )
 
-    let positionData = await optionstorage.BS_PositionParams(
-      pairAddress,
-      userAddress,
-      id,
-    )
-    let optionParams = await optionstorage.BS_getDeltaParams(
-      pairAddress,
-      userAddress,
-      id,
-    )
-
     let { tokenA, tokenB } = await optionstorage.BS_tokenAddr(
-      pairAddress,
-      userAddress,
-      id,
-    )
-
-    let contractsAmount = await optionstorage.BS_Options_contractAmount(
       pairAddress,
       userAddress,
       id,
@@ -145,8 +128,6 @@ async function UserPositions(): Promise<PositionsInfoType[]> {
     let currentBalance = [tokenA_balance, tokenB_balance];
 
     let price = await optionmaker.getPrice(tokenB, tokenA);
-
-    console.log("positionParams", positionParams);
 
     let position: Position = {
       pairAddress: pairAddress,

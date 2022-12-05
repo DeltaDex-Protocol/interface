@@ -31,7 +31,7 @@ const Form = ({ className }) => {
 
   const { formData, dispatch } = useOptionFormContext()
 
-  useEffect(() => console.log(formData))
+  // useEffect(() => console.log(formData))
 
   const numerrarie = getNumerrarie(formData)
   const minimalValue = getMinValueForReplication(formData)
