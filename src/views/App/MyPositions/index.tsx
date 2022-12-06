@@ -5,8 +5,8 @@ import cx from 'classnames'
 import Position from './Position'
 import UserPositions from '@/api/userPositions'
 
-
 import { PositionsInfoType } from '@/api/positions.types'
+import { UserPositionsType } from '@/api/userPositions'
 
 const TITLES: Array<string> = [
   'Type',
@@ -18,7 +18,7 @@ const TITLES: Array<string> = [
 ]
 
 function MyPositions() {
-  const [data, setData] = useState<PositionsInfoType[]>()
+  const [data, setData] = useState<UserPositionsType[]>()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +43,7 @@ function MyPositions() {
           ))}
         </div>
         {data?.map((el, index) => (
-          <Position rowData={el} key={index} />
+          <Position rowData={el.data} id={el.id} key={index} />
         ))}
       </div>
     </div>

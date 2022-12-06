@@ -1,6 +1,6 @@
 export type ExpandedRowParamsType =
   | {
-      'ID': number
+      // 'ID': number
       'Contracts amount': number
       Strike: number
       'Implied volatility': number

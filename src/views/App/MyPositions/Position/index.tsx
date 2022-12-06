@@ -9,7 +9,7 @@ import { CALL_REPLICATION, PUT_REPLICATION } from './titles'
 
 import { ClosePosition } from '@/api/form'
 
-function Position({ rowData }) {
+function Position({ rowData, id }) {
   const [isExpanded, setExpanded] = useState(false)
   const { getToggleProps, getCollapseProps } = useCollapse({ isExpanded })
   const [OptionData, setOptionData] = useState<number[][]>([])
@@ -146,25 +146,21 @@ function Position({ rowData }) {
                     </>
                   )
                 })}
-              <div className="col-span-1 mt-4">
-                <button 
-                className="bg-[#959595]/50 rounded-md px-3 py-1.5" 
-                onClick={() => {
-
-                  // how to do this without having the ID show up in the UI?
-                  console.log(expand['ID']);
-                  let id = expand['ID'];
-                  ClosePosition(id).then((res) => {
-                    console.log(res);
-                  });
-                }}
-                >
-                  <span className="text-[#000]">Close position</span>
-                </button>
-              </div>
-              <div className="col-span-1 justify-self-end mt-4">
-                <button className="bg-[#726DA6]/50 rounded-md px-3 py-1.5">
+              <div className="col-span-1 justify-self-end ">
+                {/* <button className="bg-[#726DA6]/50 rounded-md px-3 py-1.5">
                   Change parameters
+                </button> */}
+              </div>
+              <div className="col-span-1 justify-self-end my-4">
+                <button
+                  className="bg-[#726DA6]/50 rounded-md px-3 py-1.5"
+                  onClick={() => {
+                    ClosePosition(id).then((res) => {
+                      console.log(res)
+                    })
+                  }}
+                >
+                  <span className="text-[#fff]">Close position</span>
                 </button>
               </div>
             </div>
