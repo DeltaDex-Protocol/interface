@@ -3,7 +3,7 @@ import Link from 'next/link'
 import cx from 'classnames'
 import styles from './Navbar.module.scss'
 
-type Nav = {
+export type Nav = {
   id: number
   title: string
   path: string

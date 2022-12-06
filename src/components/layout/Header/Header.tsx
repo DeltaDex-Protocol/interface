@@ -9,6 +9,7 @@ import { Icon } from '@/components/kit'
 import { StateContext } from '@/state'
 import { WalletContext } from '@viaprotocol/web3-wallets'
 import Navbar from './Navbar'
+import { HeaderDropDown } from './HeaderDropdown'
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -35,22 +36,6 @@ function Header() {
         <Navbar />
       </div>
 
-      {/* <ul className={styles.headerSocials}>
-        {socials.map((social) => (
-          <li key={social.name}>
-            <a
-              href={social.link}
-              className={styles.headerSocialLink}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {social.icon}
-              <span className="visually-hidden">{social.name}</span>
-            </a>
-          </li>
-        ))}
-      </ul> */}
-
       <button
         type="button"
         className={styles.headerBurgerButton}
@@ -64,7 +49,7 @@ function Header() {
         />
       </button>
 
-      <nav className={styles.headerActions}>
+      <nav className={cx(styles.headerActions, 'space-x-4')}>
         <button
           className={cx(
             styles.headerActionButton,
@@ -90,18 +75,7 @@ function Header() {
           </span>
         </button>
 
-        <button
-          className={cx(
-            styles.headerActionButton,
-            'bg-[#726DA6] bg-opacity-50 hover:bg-opacity-70',
-          )}
-        >
-          <span className="text-white flex">
-            <Icon className="" icon="threedots" width={19} height={19} />
-          </span>
-        </button>
-
-
+        <HeaderDropDown />
 
         {/* <button
           onClick={toggleMenu}

@@ -97,31 +97,10 @@ const Calculator = () => {
     ],
   )
 
-  useEffect(() => {
-    // DePayWidgets.Select({ what: 'token' })
-    // Select({ what: 'token' })
-  }, [])
-
   console.log(formData)
 
   return (
     <div className="">
-      {/* <FilterOption><button>12312</button></FilterOption> */}
-      {/* { DePayWidgets.Select({ what: 'token' }) } */}
-      {/* <SearchTokenPage
-        tokens={[1, 2, 3]}
-        selectToken={() => {}}
-        refetchTokens={() => {}}
-      /> */}
-      {/* <SelectPairModal/> */}
-      {/* <SswapWidget/> */}
-      {/* <Test /> */}
-      {/* <TokenSelect
-        field={'INPUT'}
-        value={undefined}
-        disabled={false}
-        onSelect={() => {}}
-      /> */}
 
       <div className="lg:grid lg:grid-cols-11">
         <div className="col-span-7">
