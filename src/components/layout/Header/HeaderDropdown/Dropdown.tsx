@@ -35,7 +35,7 @@ const HeaderDropDown = () => {
           ref={dropdownRef}
           className={cx(
             isActive ? 'visible' : 'invisible',
-            'absolute rounded-lg top-10 right-0',
+            'absolute rounded-lg top-10 right-0 ',
           )}
         >
           <ul className="text-white">
