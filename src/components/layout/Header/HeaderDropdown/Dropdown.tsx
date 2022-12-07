@@ -7,7 +7,7 @@ import { Icon } from '@/components/kit'
 import type { Nav } from '@/components/layout/Header/Navbar'
 
 const DOTS_LINKS: Nav[] = [
-  { id: 1, title: 'Docs', path: 'https://medium.com/@deltadexprotocol/' },
+  { id: 1, title: 'Docs', path: 'https://deltadex-protocol.github.io/deltadex.github.io/' },
   { id: 2, title: 'Github', path: 'https://github.com/deltadex-protocol' },
   { id: 3, title: 'Medium', path: 'https://medium.com/@deltadexprotocol/' },
 ]
