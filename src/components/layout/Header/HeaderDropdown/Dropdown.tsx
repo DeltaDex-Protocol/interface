@@ -50,7 +50,7 @@ const HeaderDropDown = () => {
                   onClick={() => window.open(el.path)}
                 >
                   {/* <a target="_blank" href={el.path} className=""> */}
-                    {el.title}
+                  {el.title}
                   {/* </a> */}
                 </button>
               )

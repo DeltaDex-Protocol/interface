@@ -20,8 +20,9 @@ function Period({ className }) {
   // ]
 
   useEffect(() => {
-    console.log(formData)
-    getExpirations().then((data) =>
+    // console.log(formData)
+    // getExpirations().then((data) =>
+    ;(async () => {})().then((data) =>
       setPeriods([
         formData.expiresIn,
         // ...data,
