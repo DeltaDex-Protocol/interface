@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import cx from 'classnames'
 import { getExpirations } from '@/api/optionsdata'
 
+import { NewDropDown } from './NewDropDown'
 import DropDown from '@/components/kit/Form/components/DropDown'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
@@ -19,14 +20,15 @@ function Period({ className }) {
   // ]
 
   useEffect(() => {
+    console.log(formData)
     getExpirations().then((data) =>
       setPeriods([
         formData.expiresIn,
         // ...data,
-        ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days']
+        ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
       ]),
     )
-  }, [])
+  }, [formData.expiresIn])
 
   return (
     <div
@@ -40,7 +42,7 @@ function Period({ className }) {
           Expires in
         </span>
         <span className="font-normal text-[12px] md:text-[19px] my-auto">
-          <DropDown
+          <NewDropDown
             name="expiresIn"
             array={periods}
             ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}

@@ -30,7 +30,6 @@ import {
   getOptionPrice,
 } from '@/utils/formUtils'
 
-import { getEthPrice } from '@/api/tokensPrices'
 
 const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
