@@ -41,17 +41,18 @@ const HeaderDropDown = () => {
           <ul className="text-white">
             {DOTS_LINKS.map((el, index) => {
               return (
-                <li
+                <button
                   className={cx(
                     index == 0 ? 'rounded-t-lg' : '',
-                    'p-2 bg-[#726DA6] hover:bg-opacity-70',
+                    'p-2 w-full bg-[#726DA6] hover:bg-opacity-70',
                     index == DOTS_LINKS.length - 1 ? 'rounded-b-lg' : '',
                   )}
+                  onClick={() => window.open(el.path)}
                 >
-                  <a target="_blank" href={el.path} className="">
+                  {/* <a target="_blank" href={el.path} className=""> */}
                     {el.title}
-                  </a>
-                </li>
+                  {/* </a> */}
+                </button>
               )
             })}
           </ul>
