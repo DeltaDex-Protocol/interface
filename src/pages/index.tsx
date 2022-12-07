@@ -7,14 +7,7 @@ import { Footer, Header, MobileMenu } from '@/components/layout'
 const Home: NextPage = () => {
   return (
     <>
-      <div className="all">
-        <div className="limiter">
-          {/* <Header /> */}
-          {/* <Footer /> */}
-        </div>
-      </div>
-
-      <MobileMenu />
+      <div className="h-screen"></div>
     </>
   )
 }

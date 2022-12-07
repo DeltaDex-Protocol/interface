@@ -24,12 +24,10 @@ function App({ Component, pageProps }: AppProps) {
             />
             <title>DeltaDex</title>
           </Head>
-          <div className="h-screen">
-            <Header />
-            {/* @ts-ignore */}
-            <Component {...pageProps} />
-            <BetaVersionAlert />
-          </div>
+          <Header />
+          {/* @ts-ignore */}
+          <Component {...pageProps} />
+          <BetaVersionAlert />
           <Footer />
           <MobileMenu />
         </WalletProvider>

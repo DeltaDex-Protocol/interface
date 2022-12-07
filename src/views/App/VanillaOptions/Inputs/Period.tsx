@@ -22,7 +22,8 @@ function Period({ className }) {
     getExpirations().then((data) =>
       setPeriods([
         formData.expiresIn,
-        ...data,
+        // ...data,
+        ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days']
       ]),
     )
   }, [])
