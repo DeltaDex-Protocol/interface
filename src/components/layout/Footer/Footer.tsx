@@ -3,7 +3,7 @@ import { socials } from '@/data/socials'
 
 function Footer() {
   return (
-    <div className="mt-10 px-6 py-4 text-white/25 lg:mt-[100px] lg:px-[60px] w-full">
+    <div className=" px-6 py-4 text-white/25 lg:mt-[50px] lg:px-[60px] w-full">
       <div className="flex flex-col-reverse items-center lg:flex-row lg:justify-between">
         <div className="flex flex-col items-center gap-2.5 lg:flex-row lg:gap-8">
           <div>DeltaDex, 2022</div>

@@ -3,7 +3,6 @@ import cx from 'classnames'
 import { useState, useEffect } from 'react'
 import styles from './styles.module.scss'
 
-
 // import { DAI, WETH } from 'src/utils/constants'
 
 import AdvancedSettings from './AdvansedSettings'
@@ -11,7 +10,13 @@ import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import MinimalLiquidity from '@/views/App/VanillaOptions/MinimalLiquidity'
 import { ContractsAmount } from './Inputs/ContractsAmount'
 import { Strike } from './Inputs/Strike'
-import { CallReplication, PutReplication, getUserBalance, approveDAI, approveWETH } from '@/api/form'
+import {
+  CallReplication,
+  PutReplication,
+  getUserBalance,
+  approveDAI,
+  approveWETH,
+} from '@/api/form'
 import {
   Pairs,
   Period,
@@ -35,20 +40,19 @@ const Form = ({ className }) => {
 
   const { formData, dispatch } = useOptionFormContext()
 
-  // useEffect(() => console.log(formData))
-
   const numerrarie = getNumerrarie(formData)
   const minimalValue = getMinValueForReplication(formData)
   let test_minimalLiquidity = minimalValue + ' ' + numerrarie
 
-  let hedgeCost = getHedgeCost(formData);
-  let optionPrice = getOptionPrice(formData);
-  let breakEven = getOptionPrice(formData) + Number(formData.strike);
+  let hedgeCost = getHedgeCost(formData)
+  let optionPrice = getOptionPrice(formData)
+  let breakEven = getOptionPrice(formData) + Number(formData.strike)
 
   // @dev we should use these values instead of approving the total balance of the user
-  let approveAmountCall_TokenA = Number(formData.providedLiquidity) + Number(hedgeCost);
-  let approveAmountPut_TokenB = Number(formData.providedLiquidity);
-  let approveAmountPut_TokenA = Number(hedgeCost);
+  let approveAmountCall_TokenA =
+    Number(formData.providedLiquidity) + Number(hedgeCost)
+  let approveAmountPut_TokenB = Number(formData.providedLiquidity)
+  let approveAmountPut_TokenA = Number(hedgeCost)
 
   // let userBalanceTokenA = getUserBalance(DAI);
   // let userBalanceTokenB = getUserBalance(WETH);
@@ -118,21 +122,17 @@ const Form = ({ className }) => {
           <span className="font-normal px-2">{test_minimalLiquidity}</span>
         </div>
         <div className="flex justify-between px-2 py-1">
-          <span className="font-normal text-[#726DA6]">
-            Break Even:
-          </span>
+          <span className="font-normal text-[#726DA6]">Break Even:</span>
           <span className="font-normal px-2">{breakEven} DAI</span>
         </div>
         <div className="flex justify-between px-2 py-1">
-          <span className="font-normal text-[#726DA6]">
-            Option Price:
+          <span className="font-normal text-[#726DA6]">Option Price:</span>
+          <span className="font-normal text-[#F3736F] px-2">
+            {optionPrice} DAI
           </span>
-          <span className="font-normal text-[#F3736F] px-2">{optionPrice} DAI</span>
         </div>
         <div className="flex justify-between px-2 py-1">
-          <span className="font-normal text-[#726DA6]">
-            Average Accuracy:
-          </span>
+          <span className="font-normal text-[#726DA6]">Average Accuracy:</span>
           <span className="font-normal px-2">93%</span>
         </div>
         <button
@@ -141,7 +141,7 @@ const Form = ({ className }) => {
             w-full px-10 font-semibold text-[18px]"
           onClick={() => {
             if (formData.advancedSettings.optionType === 'call') {
-              approveDAI();
+              approveDAI()
 
               CallReplication({
                 tokenA_balance: formData.providedLiquidity,
@@ -154,8 +154,8 @@ const Form = ({ className }) => {
                 sigma: formData.advancedSettings.modelParams.volatility,
               }).then((res) => console.log(res))
             } else if (formData.advancedSettings.optionType === 'put') {
-              approveDAI();
-              approveWETH();
+              approveDAI()
+              approveWETH()
 
               PutReplication({
                 tokenB_balance: formData.providedLiquidity,

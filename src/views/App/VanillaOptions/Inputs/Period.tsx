@@ -1,5 +1,7 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import cx from 'classnames'
+import { getExpirations } from '@/api/optionsdata'
+
 import DropDown from '@/components/kit/Form/components/DropDown'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
@@ -8,10 +10,22 @@ function Period({ className }) {
   //   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
   // const { expiresIn } = useContext(FormContext).form
   const { formData, dispatch } = useOptionFormContext()
-  const periods = [
-    formData.expiresIn,
-    ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
-  ]
+
+  const [periods, setPeriods] = useState<string[]>([])
+
+  // const periods = [
+  //   formData.expiresIn,
+  //   ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+  // ]
+
+  useEffect(() => {
+    getExpirations().then((data) =>
+      setPeriods([
+        formData.expiresIn,
+        ...data,
+      ]),
+    )
+  }, [])
 
   return (
     <div
