@@ -42,7 +42,7 @@ function Pairs({ className }) {
             dispatch={dispatch}
           />
         </div>
-        <span className="text-[12px] text-[#726DA6]">Balance: {balance}</span>
+        <span className="text-[12px] text-[#726DA6]"></span>
       </div>
     </div>
   )

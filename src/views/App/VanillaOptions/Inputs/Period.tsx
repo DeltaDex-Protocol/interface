@@ -75,7 +75,7 @@ function Period({ className }) {
     >
       <div className=" flex flex-col gap-2">
         <span className="font-semibold text-[12px] text-[#726DA6]">
-          Expires
+          Expiration
         </span>
         <span className="font-normal text-[12px] md:text-[19px] my-auto">
           <NewDropDown
