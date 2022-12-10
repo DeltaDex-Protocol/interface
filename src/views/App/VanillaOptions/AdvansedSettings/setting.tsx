@@ -8,7 +8,7 @@ export function Setting({ name, value, className }) {
   const { dispatch } = useOptionFormContext()
 
   return (
-    <div className={cx(className, 'col-span-9 relative rounded-md py-3 px-5 ')}>
+    <div className={cx(className, 'col-span-9 relative rounded-md py-5 px-5 ')}>
       <div className="flex flex-col gap-2">
         <span className="font-semibold text-[12px] text-[#726DA6]">
           {settingsInfo[name].desc}
@@ -32,14 +32,14 @@ export function Setting({ name, value, className }) {
               style={{ backgroundColor: 'transparent', outline: 'none' }}
             />
           )}
-          {name === 'optionType' && (
+          {/* {name === 'optionType' && (
             <DropDown
               ActionType={OptionFormActionTypes.UPDATE_ADVANCED_SETTINGS}
               name={name}
               array={[value, ...SettingsArrays[name]]}
               dispatch={dispatch}
             />
-          )}
+          )} */}
           {name === 'modelParams' && (
             <DropDown
               ActionType={OptionFormActionTypes.UPDATE_MODEL}

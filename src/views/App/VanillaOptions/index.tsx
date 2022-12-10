@@ -29,10 +29,12 @@ import {
   getHedgeCost,
   getOptionPrice,
 } from '@/utils/formUtils'
-
+import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
+
+const OPTION_TYPES = { CALL: 'call', PUT: 'put' }
 
 const Form = ({ className }) => {
   const [isAdvancedSettingsOpen, setAdvancedSettingsOpen] = useState(false)
@@ -65,8 +67,51 @@ const Form = ({ className }) => {
             <span className="font-semibold text-[17px] text-[#726DA6]">
               Replicate a vanilla option
             </span>
-            <span className="mt-0 bg-[#8B5CF6] bg-opacity-30 px-2 py-1 my-auto rounded-md text-[12px]">
-              {formData.advancedSettings.optionType}
+            <span className="flex space-x-0">
+              <button
+                className={cx(
+                  formData.advancedSettings.optionType === OPTION_TYPES.CALL
+                    ? 'bg-[#8B5CF6] bg-opacity-30 hover:bg-opacity-40'
+                    : 'bg-[#fff] bg-opacity-10 hover:bg-opacity-20',
+                  'mt-0 px-4 py-1 my-auto rounded-l-md text-[12px]',
+                )}
+                onClick={() => {
+                  dispatch({
+                    type: OptionFormActionTypes.UPDATE_ADVANCED_SETTINGS,
+                    name: 'optionType',
+                    value: OPTION_TYPES.CALL,
+                  })
+                  dispatch({
+                    type: OptionFormActionTypes.UPDATE_BASE_SETTINGS,
+                    name: 'providedLiquidity',
+                    value: '1500',
+                  })
+                }}
+              >
+                {OPTION_TYPES.CALL}
+              </button>
+              <button
+                className={cx(
+                  formData.advancedSettings.optionType === OPTION_TYPES.PUT
+                    ? 'bg-[#8B5CF6] bg-opacity-30'
+                    : 'bg-[#fff] bg-opacity-10 hover:bg-opacity-20',
+                  'mt-0  px-4 py-1 my-auto rounded-r-md text-[12px]',
+                )}
+                onClick={() => {
+                  dispatch({
+                    type: OptionFormActionTypes.UPDATE_ADVANCED_SETTINGS,
+                    name: 'optionType',
+                    value: OPTION_TYPES.PUT,
+                  })
+                  dispatch({
+                    type: OptionFormActionTypes.UPDATE_BASE_SETTINGS,
+                    name: 'providedLiquidity',
+                    value: '1',
+                  })
+                }}
+              >
+                {OPTION_TYPES.PUT}
+              </button>
             </span>
           </div>
           {/* <DropDown
