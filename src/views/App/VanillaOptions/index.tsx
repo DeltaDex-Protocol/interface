@@ -60,9 +60,10 @@ const Form = ({ className }) => {
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>
+
       {/* <SelectPairModal/> */}
       <header className=" mt-2 mb-4 px-2  md:gap-6 ">
-        <div className="flex justify-between">
+        <div className="flex justify-between space-x-4">
           <div className="flex gap-4">
             <span className="font-semibold text-[17px] text-[#726DA6]">
               Replicate a vanilla option
@@ -119,27 +120,27 @@ const Form = ({ className }) => {
               ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
               array={UniVersions}
             /> */}
-          <div className="flex ">
-            {isAdvancedSettingsOpen && (
-              <button
-                className="flex flex-col text-[13px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
-                onClick={() => setAdvancedSettingsOpen(!isAdvancedSettingsOpen)}
-              >
-                <span className="mx-auto mr-2">back</span>
-                <span className="mx-auto"></span>
-              </button>
-            )}
-            {!isAdvancedSettingsOpen && (
-              <button
-                className="flex flex-col -space-y-1 text-[12px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
-                onClick={() => setAdvancedSettingsOpen(!isAdvancedSettingsOpen)}
-              >
-                <span className="mx-auto">advanced</span>
-                <span className="mx-auto">settings</span>
-              </button>
-            )}
-          </div>
+          {/* <div className="flex "> */}
+          {isAdvancedSettingsOpen && (
+            <button
+              className="flex flex-col text-[13px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
+              onClick={() => setAdvancedSettingsOpen(!isAdvancedSettingsOpen)}
+            >
+              <span className="mx-auto mr-2">back</span>
+              <span className="mx-auto"></span>
+            </button>
+          )}
+          {!isAdvancedSettingsOpen && (
+            <button
+              className="flex flex-col -space-y-1 text-[12px] text-[#726DA6] font-semibold hover:text-[#fff] duration-300"
+              onClick={() => setAdvancedSettingsOpen(!isAdvancedSettingsOpen)}
+            >
+              <span className="mx-auto">advanced</span>
+              <span className="mx-auto">settings</span>
+            </button>
+          )}
         </div>
+        {/* </div> */}
       </header>
       <div className={styles.inputs}>
         <div className="grid grid-cols-9 gap-2 mb-4 px-1">

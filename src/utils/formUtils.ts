@@ -1,6 +1,38 @@
 import { round, erf } from 'mathjs'
 import { DAYS_IN_YEAR } from './constants'
 
+export const StringToDays = (str) => {
+  // const str = '22/04/2022'
+
+  let day = str.slice(0, 2)
+  let month = str.slice(2, 5)
+  let year = str.slice(5, 7)
+
+  let strDate = day + '/' + month + '/' + '20' + year
+
+  let today = new Date()
+
+
+
+  // let [day, month, year] = str.split('/')
+  // day = Number(day)
+  // month = Number(month)
+  // year = Number(year)
+
+  console.log(new Date())
+
+  const date = new Date(strDate)
+
+  // console.log(date) // 👉️ Fri Apr 22 2022
+
+  const diffTime = Math.abs(date - today);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+
+  console.log(diffDays)
+
+  return diffDays
+}
+
 export const getNumerrarie = (formData) => {
   const numerrarie =
     formData.advancedSettings.optionType == 'call'
@@ -32,28 +64,30 @@ export const getExpiryDaysToYears = (expiry: string) => {
   return round(Number(expiry) / DAYS_IN_YEAR, 3)
 }
 
-// BLACK SCHOLES 
-function cdfNormal (x) {
-  return (1 - erf(-x / (Math.sqrt(2)))) / 2
+// BLACK SCHOLES
+function cdfNormal(x) {
+  return (1 - erf(-x / Math.sqrt(2))) / 2
 }
 
 function D1(S, K, T, r, sigma) {
-  let d1 = (Math.log(S/K) + (r + Math.pow(sigma, 2)/2) * T) / (sigma * Math.sqrt(T));
-  return d1;
+  let d1 =
+    (Math.log(S / K) + (r + Math.pow(sigma, 2) / 2) * T) /
+    (sigma * Math.sqrt(T))
+  return d1
 }
 
 function D2(d1, sigma, T) {
-  let d2 = d1 - sigma * Math.sqrt(T);
-  return d2;
+  let d2 = d1 - sigma * Math.sqrt(T)
+  return d2
 }
 
 function blackScholes(S, K, T, r, sigma, isCall) {
-  let d1 = D1(S, K, T, r, sigma);
-  let d2 = D2(d1, sigma, T);
-  let call = S * cdfNormal(d1) - K * Math.exp(-r * T) * cdfNormal(d2);
-  let put = K * Math.exp(-r * T) * cdfNormal(-d2) - S * cdfNormal(-d1);
+  let d1 = D1(S, K, T, r, sigma)
+  let d2 = D2(d1, sigma, T)
+  let call = S * cdfNormal(d1) - K * Math.exp(-r * T) * cdfNormal(d2)
+  let put = K * Math.exp(-r * T) * cdfNormal(-d2) - S * cdfNormal(-d1)
 
-  return isCall ? call : put;
+  return isCall ? call : put
 }
 
 function getExpiryInDays(expiry) {
@@ -69,29 +103,29 @@ function getExpiryInYears(expiry) {
 }
 
 export const getHedgeCost = (formData) => {
-  const feesToSplit = formData.advancedSettings.feesToSplit;
-  const perDay = formData.advancedSettings.hedgesPerDay;
-  const hedgeCost = feesToSplit * perDay * getExpiryInDays(formData.expiresIn);
-  return hedgeCost;
+  const feesToSplit = formData.advancedSettings.feesToSplit
+  const perDay = formData.advancedSettings.hedgesPerDay
+  const hedgeCost = feesToSplit * perDay * getExpiryInDays(formData.expiresIn)
+  return hedgeCost
 }
 
 export const getOptionPrice = (formData) => {
-  const feesToSplit = formData.advancedSettings.feesToSplit;
-  const perDay = formData.advancedSettings.hedgesPerDay;
+  const feesToSplit = formData.advancedSettings.feesToSplit
+  const perDay = formData.advancedSettings.hedgesPerDay
   const hedgeCost = feesToSplit * perDay * getExpiryInDays(formData.expiresIn)
 
-  const S = 1257;
+  const S = 1257
   // let S = ethers.utils.formatEther(await optionmaker.getPrice(WETH, DAI));
 
-  const K = formData.strike;
-  const T = getExpiryInYears(formData.expiresIn);
-  const r = 0.1;
-  const sigma = 0.75;
-  const isCall = formData.advancedSettings.optionType === 'call' ? true: false;
+  const K = formData.strike
+  const T = getExpiryInYears(formData.expiresIn)
+  const r = 0.1
+  const sigma = 0.75
+  const isCall = formData.advancedSettings.optionType === 'call' ? true : false
 
-  const C = blackScholes(S, K, T, r, sigma, isCall);
+  const C = blackScholes(S, K, T, r, sigma, isCall)
 
-  const optionPrice = C + hedgeCost;
+  const optionPrice = C + hedgeCost
 
   return round(optionPrice, 2)
 }

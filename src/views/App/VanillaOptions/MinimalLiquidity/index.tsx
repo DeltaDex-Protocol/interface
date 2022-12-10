@@ -7,7 +7,7 @@ import { getNumerrarie, getMinValueForReplication } from '@/utils/formUtils'
 
 function MinimalLiquidity({ className }) {
   const { formData, dispatch } = useOptionFormContext()
-  const value = Number(formData.providedLiquidity)
+  let value = Number(formData.providedLiquidity)
 
   const numerrarie = getNumerrarie(formData)
   const minimalValue = getMinValueForReplication(formData)
@@ -19,6 +19,7 @@ function MinimalLiquidity({ className }) {
         'col-span-6 relative rounded-md p-6 my-auto pl-5',
       )}
     >
+      
       <div className={cx('flex justify-between ')}>
         <div className={cx('font-normal text-[12px] md:text-[14px] my-auto')}>
           Liquidity to provide

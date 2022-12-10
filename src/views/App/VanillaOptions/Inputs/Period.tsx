@@ -6,6 +6,7 @@ import { NewDropDown } from './NewDropDown'
 // import DropDown from '@/components/kit/Form/components/DropDown'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
+import { StringToDays } from '@/utils/formUtils'
 
 function Period({ className }) {
   //   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
@@ -14,6 +15,8 @@ function Period({ className }) {
 
   const [periods, setPeriods] = useState<string[]>([])
 
+  const [selectedPeriod, setSelectedPeriod] = useState<string>('')
+
   // const periods = [
   //   formData.expiresIn,
   //   ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
@@ -21,15 +24,31 @@ function Period({ className }) {
 
   useEffect(() => {
     // console.log(formData)
-    // getExpirations().then((data) =>
-    ;(async () => {})().then((data) =>
+    getExpirations().then((data) => {
+      // ;(async () => {})().then((data) =>
+
+      // console.log(data)
       setPeriods([
-        formData.expiresIn,
-        // ...data,
-        ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
-      ]),
-    )
-  }, [formData.expiresIn])
+        // formData.expiresIn,
+        // data[0],
+        ...data,
+        // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+      ])
+    })
+  }, [])
+
+  // useEffect(() => {
+  //   // console.log(formData)
+  //   // ;(async () => {})().then((data) =>
+  //   console.log(selectedPeriod, periods)
+  //   setPeriods([
+  //     // formData.expiresIn,
+  //     selectedPeriod,
+  //     // periods[0],
+  //     ...periods,
+  //     // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+  //   ])
+  // }, [formData.expiresIn])
 
   return (
     <div
@@ -40,14 +59,24 @@ function Period({ className }) {
     >
       <div className=" flex flex-col gap-2">
         <span className="font-semibold text-[12px] text-[#726DA6]">
-          Expires in
+          Expires
         </span>
         <span className="font-normal text-[12px] md:text-[19px] my-auto">
           <NewDropDown
             name="expiresIn"
             array={periods}
             ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
-            dispatch={dispatch}
+            dispatch={({ type, name, value }) => {
+              // setSelectedPeriod(value)
+              setPeriods([
+                // formData.expiresIn,
+                // periods[0],
+                value,
+                ...periods.slice(1),
+                // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+              ])
+              dispatch({ type, name, value: StringToDays(value) + ' days' })
+            }}
           />
         </span>
       </div>

@@ -40,6 +40,7 @@ export type OptionForm = {
   providedLiquidity: string
   riskFree: string
   uniswapVersion: string
+  IVallowedToChange: '0' | '1'
   advancedSettings: {
     feesToSplit: string
     hedgesPerDay: string
@@ -60,6 +61,7 @@ export const OptionFormInitialState: OptionForm = {
   providedLiquidity: '1500',
   riskFree: '0.1',
   uniswapVersion: 'V2',
+  IVallowedToChange: '0',
   advancedSettings: {
     feesToSplit: '0.05',
     hedgesPerDay: '12',
