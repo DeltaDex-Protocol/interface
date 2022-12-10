@@ -14,7 +14,7 @@ const NewDropDown = ({ name, array, ActionType, dispatch }) => {
       <div className="relative ">
         <button
           onClick={onClick}
-          className="border-[1px] border-white/10 rounded-xl bg-opacity-50 hover:bg-opacity-70 px-3 py-2 rounded-xl"
+          className="border-[1px] hover:bg-[#fff] hover:bg-opacity-10 rounded-xl bg-opacity-50 hover:bg-opacity-70 px-2 py-[0.2em] rounded-xl"
         >
           {/* <Icon className="" icon="threedots" width={19} height={19} /> */}
           <div className="flex space-x-2">
@@ -54,7 +54,7 @@ const NewDropDown = ({ name, array, ActionType, dispatch }) => {
                   <button
                     className={cx(
                       index == 1 ? 'rounded-t-lg' : '',
-                      'w-full pl-4 pr-2  py-2 bg-[#0A0F26]/100 hover:bg-[#726DA6]',
+                      'w-full pl-4 pr-2  py-1 bg-[#0A0F26]/100 hover:bg-[#726DA6]',
                       index == array.length - 1 ? 'rounded-b-lg' : '',
                     )}
                     onClick={() =>

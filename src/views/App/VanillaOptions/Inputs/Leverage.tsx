@@ -1,12 +1,15 @@
 import React from 'react'
+import { NewDropDown } from './NewDropDown'
 import DropDown from '@/components/kit/Form/components/DropDown'
 import cx from 'classnames'
+
+
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Leverage({ className }) {
   const { formData, dispatch } = useOptionFormContext()
-  const leverages = [formData.leverage, ...['x1', 'x2', 'x3', 'x4']]
+  const leverages = [formData.leverage, ...['x1']]
 
   return (
     <div
@@ -21,7 +24,7 @@ function Leverage({ className }) {
         </span>
         <div className="flex gap-4">
           <span className="font-normal text-[14px] md:text-[19px] my-auto">
-            <DropDown
+            <NewDropDown
               name="leverage"
               ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
               array={leverages}
