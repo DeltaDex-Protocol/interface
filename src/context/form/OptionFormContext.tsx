@@ -35,6 +35,7 @@ export type OptionForm = {
   valueToProtect: string
   strike: string
   expiresIn: string
+  expirationDate: string
   leverage: string
   contractsAmount: string
   providedLiquidity: string
@@ -55,11 +56,12 @@ export const OptionFormInitialState: OptionForm = {
   type: 'vanilla',
   valueToProtect: '0',
   strike: '1200',
-  expiresIn: '7 days',
+  expiresIn: '',
+  expirationDate: '29SEP23',
   leverage: 'x1',
   contractsAmount: '1',
   providedLiquidity: '1500',
-  riskFree: '0.1',
+  riskFree: '0.0',
   uniswapVersion: 'V2',
   IVallowedToChange: '0',
   advancedSettings: {

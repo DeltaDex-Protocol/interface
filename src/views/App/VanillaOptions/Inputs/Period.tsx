@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import cx from 'classnames'
 import { getExpirations } from '@/api/optionsdata'
 
@@ -15,7 +15,14 @@ function Period({ className }) {
 
   const [periods, setPeriods] = useState<string[]>([])
 
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('')
+  // const [selectedPeriod, setSelectedPeriod] = useState<string>('')
+
+  const setSelectedPeriod = (value) =>
+    dispatch({
+      type: OptionFormActionTypes.UPDATE_BASE_SETTINGS,
+      name: 'expirationDate',
+      value: value,
+    })
 
   // const periods = [
   //   formData.expiresIn,
@@ -28,12 +35,21 @@ function Period({ className }) {
       // ;(async () => {})().then((data) =>
 
       // console.log(data)
-      setPeriods([
-        // formData.expiresIn,
-        // data[0],
-        ...data,
-        // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
-      ])
+      if (formData.expirationDate !== '') {
+        setPeriods([
+          formData.expirationDate,
+          // data[0],
+          ...data,
+          // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+        ])
+      } else {
+        setPeriods([
+          // formData.expirationDate,
+          // data[0],
+          ...data,
+          // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+        ])
+      }
     })
   }, [])
 
@@ -67,7 +83,7 @@ function Period({ className }) {
             array={periods}
             ActionType={OptionFormActionTypes.UPDATE_BASE_SETTINGS}
             dispatch={({ type, name, value }) => {
-              // setSelectedPeriod(value)
+              setSelectedPeriod(value)
               setPeriods([
                 // formData.expiresIn,
                 // periods[0],

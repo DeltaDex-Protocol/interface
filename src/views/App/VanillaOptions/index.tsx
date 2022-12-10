@@ -29,6 +29,8 @@ import {
   getHedgeCost,
   getOptionPrice,
 } from '@/utils/formUtils'
+import { EvaluateOption } from '@/api/optionsdata'
+
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 const InputStyle =
@@ -57,10 +59,29 @@ const Form = ({ className }) => {
 
   // let userBalanceTokenA = getUserBalance(DAI);
   // let userBalanceTokenB = getUserBalance(WETH);
+  // EvaluateOption(1000, '30DEC22', 1).then((res) => console.log(res))
+
+  useEffect(() => {
+    let isCall = formData.advancedSettings.optionType === 'call' ? 1 : 0
+    EvaluateOption(formData.strike, formData.expirationDate, isCall).then(
+      (res) => {
+        console.log(res, 'sdfsdf')
+        dispatch({
+          type: OptionFormActionTypes.UPDATE_MODEL,
+          name: 'volatility',
+          value: res.implied_volatility,
+        })
+        // console.log(formData)
+      },
+    )
+  }, [
+    formData.expiresIn,
+    formData.strike,
+    formData.advancedSettings.optionType,
+  ])
 
   return (
     <section className={cx(className, 'bg-[#fff]/5')}>
-
       {/* <SelectPairModal/> */}
       <header className=" mt-2 mb-4 px-2  md:gap-6 ">
         <div className="flex justify-between space-x-4">
