@@ -4,7 +4,9 @@ import cx from 'classnames'
 
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import EthLogo from 'public/images/tokens/eth.svg'
-import DropDown from '@/components/kit/Form/components/DropDown'
+// import DropDown from '@/components/kit/Form/components/DropDown'
+import { NewDropDown } from './NewDropDown'
+
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
 function Pairs({ className }) {
@@ -33,7 +35,7 @@ function Pairs({ className }) {
         <div className="flex gap-1 my-auto">
           <EthLogo className="h-7 w-7" />
           <div className="my-auto rounded-md"></div>
-          <DropDown
+          <NewDropDown
             name=""
             array={pairs}
             ActionType={OptionFormActionTypes.CHANGE_PAIR}
