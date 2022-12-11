@@ -12,23 +12,11 @@ export const StringToDays = (str) => {
 
   const today = new Date()
 
-
-
-  // let [day, month, year] = str.split('/')
-  // day = Number(day)
-  // month = Number(month)
-  // year = Number(year)
-
-  console.log(new Date())
-
   const date = new Date(strDate)
 
-  // console.log(date) // 👉️ Fri Apr 22 2022
   // @ts-ignore
-  const diffTime = Math.abs(date - today);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-
-  console.log(diffDays)
+  const diffTime = Math.abs(date - today)
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
 
   return diffDays
 }

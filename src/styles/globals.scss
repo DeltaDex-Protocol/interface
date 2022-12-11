@@ -9,7 +9,7 @@
 * {
   box-sizing: border-box;
   white-space: pre-line;
-
+  -moz-overflow:hidden
 }
 
 a {
@@ -116,7 +116,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  
+  -moz-overflow:hidden
 }
 
 body {
@@ -670,3 +670,4 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+

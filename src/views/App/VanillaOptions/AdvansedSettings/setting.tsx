@@ -14,7 +14,7 @@ export function Setting({ name, value, className, allowedToChange = true }) {
       className={cx(
         className,
         'col-span-9 relative rounded-md py-5 px-5 ',
-        allowedToChange ? '' : 'cursor-not-allowed',
+        allowedToChange ? '' : 'cursor-not-allowed opacity-70',
       )}
     >
       <div className="flex flex-col gap-2">
