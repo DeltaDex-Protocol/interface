@@ -57,8 +57,11 @@ function Period({ className }) {
       })
     })
 
-    console.log(formData)
   }, [])
+
+  useEffect(()=>{
+    console.log(formData)
+  }, [formData.expiresIn])
 
   // useEffect(() => {
   //   // console.log(formData)

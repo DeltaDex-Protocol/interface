@@ -32,6 +32,7 @@ import {
 import { EvaluateOption } from '@/api/optionsdata'
 
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
+import { round } from 'mathjs'
 
 const InputStyle =
   'transition-colors bg-[#0A0F26]/60 hover:bg-[#0A0F26]/90 border-[1px] border-white/10 rounded-xl'
@@ -40,7 +41,6 @@ const OPTION_TYPES = { CALL: 'call', PUT: 'put' }
 
 const Form = ({ className }) => {
   const [isAdvancedSettingsOpen, setAdvancedSettingsOpen] = useState(false)
-
   const { formData, dispatch } = useOptionFormContext()
 
   const numerrarie = getNumerrarie(formData)
@@ -48,8 +48,8 @@ const Form = ({ className }) => {
   let test_minimalLiquidity = minimalValue + ' ' + numerrarie
 
   let hedgeCost = getHedgeCost(formData)
-  let optionPrice = getOptionPrice(formData)
-  let breakEven = getOptionPrice(formData) + Number(formData.strike)
+  let optionPrice = round(getOptionPrice(formData) + hedgeCost, 2)
+  let breakEven = round(getOptionPrice(formData) + Number(formData.strike), 2)
 
   // @dev we should use these values instead of approving the total balance of the user
   let approveAmountCall_TokenA =
@@ -61,8 +61,6 @@ const Form = ({ className }) => {
   // let userBalanceTokenB = getUserBalance(WETH);
   // EvaluateOption(1000, '30DEC22', 1).then((res) => console.log(res))
 
-
-
   useEffect(() => {
     let isCall = formData.advancedSettings.optionType === 'call' ? 1 : 0
     EvaluateOption(formData.strike, formData.expirationDate, isCall).then(
@@ -72,6 +70,11 @@ const Form = ({ className }) => {
           type: OptionFormActionTypes.UPDATE_MODEL,
           name: 'volatility',
           value: res.implied_volatility,
+        })
+        dispatch({
+          type: OptionFormActionTypes.UPDATE_BASE_SETTINGS,
+          name: 'underlyingPrice',
+          value: res.underlying_price,
         })
         // console.log(formData)
       },
@@ -191,7 +194,12 @@ const Form = ({ className }) => {
         </div>
         <div className="flex justify-between px-2 py-1">
           <span className="font-normal text-[#726DA6]">Break Even:</span>
-          <span className="font-normal px-2">{breakEven} DAI</span>
+          <span className="font-normal px-2">
+            {/* {round(Number(formData.strike) +
+              Number(formData.advancedSettings.optionPrice) +
+              hedgeCost, 3)}{' '} */}
+              {breakEven} DAI
+          </span>
         </div>
         <div className="flex justify-between px-2 py-1">
           <span className="font-normal text-[#726DA6]">Option Price:</span>

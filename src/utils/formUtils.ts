@@ -1,5 +1,6 @@
 import { round, erf } from 'mathjs'
 import { DAYS_IN_YEAR } from './constants'
+import { getEthPrice } from '@/api/tokensPrices'
 
 export const StringToDays = (str) => {
   // const str = '22/04/2022'
@@ -100,20 +101,20 @@ export const getHedgeCost = (formData) => {
 export const getOptionPrice = (formData) => {
   const feesToSplit = formData.advancedSettings.feesToSplit
   const perDay = formData.advancedSettings.hedgesPerDay
-  const hedgeCost = feesToSplit * perDay * getExpiryInDays(formData.expiresIn)
+  // const hedgeCost = feesToSplit * perDay * getExpiryInDays(formData.expiresIn)
 
-  const S = 1257
+  const S = formData.underlyingPrice
   // let S = ethers.utils.formatEther(await optionmaker.getPrice(WETH, DAI));
 
-  const K = formData.strike
+  const K = Number(formData.strike)
   const T = getExpiryInYears(formData.expiresIn)
-  const r = 0.1
-  const sigma = 0.75
+  const r = Number(formData.riskFree)
+  const sigma = Number(formData.advancedSettings.modelParams.volatility)
   const isCall = formData.advancedSettings.optionType === 'call' ? true : false
 
   const C = blackScholes(S, K, T, r, sigma, isCall)
 
-  const optionPrice = C + hedgeCost
+  const optionPrice = C
 
   return round(optionPrice, 2)
 }

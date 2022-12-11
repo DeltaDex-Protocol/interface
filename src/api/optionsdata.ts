@@ -9,16 +9,16 @@ export const getExpirations = async () => {
 }
 
 export const EvaluateOption = async (strike, expirationDate, isCall) => {
-  const res = await api.get(
+  const res: {
+    data: { data: { underlying_price; implied_volatility; price } }
+  } = await api.get(
     `http://deltadex.io:5000/optionsdata/get-option-price?strike=${strike}&expiry=${expirationDate}&iscall=${isCall}`,
   )
-  // @ts-ignore
   return {
+    underlying_price: round(res.data.data.underlying_price, 3),
     strike: strike,
     expirationDate: expirationDate,
-    // @ts-ignore
     implied_volatility: round(res.data.data.implied_volatility, 3),
-    // @ts-ignore
     price: round(res.data.data.price, 3),
   }
 }
