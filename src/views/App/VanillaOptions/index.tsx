@@ -217,7 +217,7 @@ const Form = ({ className }) => {
                 strike: formData.strike,
                 expiration: String(getExpiryDaysToYears(formData.expiresIn)),
                 riskFree: formData.riskFree,
-                sigma: formData.advancedSettings.modelParams.volatility,
+                sigma: String(formData.advancedSettings.modelParams.volatility),
               }).then((res) => console.log(res))
             } else if (formData.advancedSettings.optionType === 'put') {
               approveDAI()
@@ -231,7 +231,7 @@ const Form = ({ className }) => {
                 strike: formData.strike,
                 expiration: String(getExpiryDaysToYears(formData.expiresIn)),
                 riskFree: formData.riskFree,
-                sigma: formData.advancedSettings.modelParams.volatility,
+                sigma: String(formData.advancedSettings.modelParams.volatility),
               }).then((res) => console.log(res))
             }
           }}
