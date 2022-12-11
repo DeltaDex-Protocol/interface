@@ -31,7 +31,7 @@ function Period({ className }) {
 
   useEffect(() => {
     // console.log(formData)
-    getExpirations().then((data : []) => {
+    getExpirations().then((data: []) => {
       // ;(async () => {})().then((data) =>
 
       // console.log(data)
@@ -50,7 +50,14 @@ function Period({ className }) {
           // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
         ])
       }
+      dispatch({
+        type: OptionFormActionTypes.UPDATE_BASE_SETTINGS,
+        name: 'expiresIn',
+        value: StringToDays(formData.expirationDate) + ' days',
+      })
     })
+
+    console.log(formData)
   }, [])
 
   // useEffect(() => {

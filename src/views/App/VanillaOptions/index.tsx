@@ -61,6 +61,8 @@ const Form = ({ className }) => {
   // let userBalanceTokenB = getUserBalance(WETH);
   // EvaluateOption(1000, '30DEC22', 1).then((res) => console.log(res))
 
+
+
   useEffect(() => {
     let isCall = formData.advancedSettings.optionType === 'call' ? 1 : 0
     EvaluateOption(formData.strike, formData.expirationDate, isCall).then(
@@ -207,9 +209,7 @@ const Form = ({ className }) => {
             w-full px-10 font-semibold text-[18px]"
           onClick={() => {
             if (formData.advancedSettings.optionType === 'call') {
-
-              console.log(formData);
-
+              console.log(formData)
 
               approveDAI()
 
