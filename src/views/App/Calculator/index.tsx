@@ -161,7 +161,7 @@ const Calculator = () => {
     <div className="">
       <div className="lg:grid lg:grid-cols-11">
         <div className="col-span-7">
-          <div className="text-2xl">Calculator</div>
+          <div className="text-2xl">Position builder</div>
           <Chart />
         </div>
         {/* <div className="col-span-1" /> */}

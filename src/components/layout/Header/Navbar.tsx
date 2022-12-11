@@ -14,7 +14,7 @@ export const navigation: Nav[] = [
   // { id: 3, title: 'Leverage Trading', path: '/app/leverage-trading' },
   // { id: 2, title: `Hedge IL\n`, path: '/app/impermanent-loss' },
   { id: 4, title: 'My positions', path: '/app/my-positions' },
-  { id: 5, title: 'Calculator', path: '/app/calculator' },
+  { id: 5, title: 'Position builder', path: '/app/calculator' },
 ]
 
 const Navbar = () => {
