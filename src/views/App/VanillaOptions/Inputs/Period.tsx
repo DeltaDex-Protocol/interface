@@ -8,6 +8,19 @@ import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import { StringToDays } from '@/utils/formUtils'
 
+import { TOOLTIPS_DATA } from '../tooltipsData'
+
+import type { PropsWithChildren } from 'react'
+import type { TTooltipProps } from '@/components/kit'
+import dynamic from 'next/dynamic'
+
+const Tooltip = dynamic<PropsWithChildren<TTooltipProps>>(
+  () => import('@/components/kit/Tooltip/Tooltip').then((mod) => mod.Tooltip),
+  {
+    ssr: false,
+  },
+)
+
 function Period({ className }) {
   //   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
   // const { expiresIn } = useContext(FormContext).form
@@ -56,10 +69,9 @@ function Period({ className }) {
         value: StringToDays(formData.expirationDate) + ' days',
       })
     })
-
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(formData)
   }, [formData.expiresIn])
 
@@ -84,8 +96,12 @@ function Period({ className }) {
       )}
     >
       <div className=" flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6]">
-          Expiration
+        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-2">
+          <span className="my-auto">Expiration</span>
+          {
+            // @ts-ignore
+            <Tooltip content={TOOLTIPS_DATA.STRIKE} />
+          }
         </span>
         <span className="font-normal text-[12px] md:text-[19px] my-auto">
           <NewDropDown

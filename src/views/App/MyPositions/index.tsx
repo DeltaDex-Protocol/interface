@@ -8,6 +8,11 @@ import UserPositions from '@/api/userPositions'
 import { PositionsInfoType } from '@/api/positions.types'
 import { UserPositionsType } from '@/api/userPositions'
 
+import Info from 'public/images/icons/info.svg'
+import type { PropsWithChildren } from 'react'
+import type { TTooltipProps } from '@/components/kit'
+import dynamic from 'next/dynamic'
+
 const TITLES: Array<string> = [
   'Type',
   'Pair address',

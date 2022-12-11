@@ -3,6 +3,20 @@ import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import cx from 'classnames'
 
+import { TOOLTIPS_DATA } from '../tooltipsData'
+
+import Info from 'public/images/icons/info.svg'
+import type { PropsWithChildren } from 'react'
+import type { TTooltipProps } from '@/components/kit'
+import dynamic from 'next/dynamic'
+
+const Tooltip = dynamic<PropsWithChildren<TTooltipProps>>(
+  () => import('@/components/kit/Tooltip/Tooltip').then((mod) => mod.Tooltip),
+  {
+    ssr: false,
+  },
+)
+
 function ContractsAmount({ className }) {
   const { formData, dispatch } = useOptionFormContext()
 
@@ -16,8 +30,12 @@ function ContractsAmount({ className }) {
       )}
     >
       <div className="flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6]">
-          Contracts amount
+        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-2">
+          <span className="my-auto">Contracts amount</span>
+          {
+            // @ts-ignore
+            <Tooltip content={TOOLTIPS_DATA.CONTRACTS_AMOUNT} />
+          }{' '}
         </span>
         <div className="md:flex gap-0 ">
           <input

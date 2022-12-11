@@ -20,6 +20,7 @@ import Settings from 'public/images/icons/settings.svg'
 import dots from 'public/images/icons/dots.svg'
 import threedots from 'public/images/icons/threedots.svg'
 import customArrow from 'public/images/icons/customArrow.svg'
+import Info from 'public/images/icons/info.svg'
 
 import Gitcoin from 'public/images/socials/gitcoin.svg'
 import Github from 'public/images/socials/github.svg'
@@ -59,6 +60,7 @@ const ICONS = {
   stepBridge: icon(StepBridge),
   stepSwap: icon(StepSwap),
   settings: icon(Settings),
+  info: icon(Info),
   // socials
   gitcoin: icon(Gitcoin),
   github: icon(Github),

@@ -9,6 +9,17 @@ import type { TAnimationProps, TTooltipProps } from './types'
 
 import 'react-popper-tooltip/dist/styles.css'
 
+const TooltipDefaultChild = () => {
+  return (
+    <span
+      style={{ userSelect: 'none' }}
+      className="border border-[#726DA6] rounded-xl px-[3px]  text-[11px] hover:text-white/60 hover:border-[#fff]/60"
+    >
+      ?
+    </span>
+  )
+}
+
 const TooltipWrapper = function Animation({ children, isAnimated, isVisible }) {
   if (isAnimated) {
     return (
@@ -61,7 +72,9 @@ const Tooltip = ({
 
   return (
     <>
-      <span ref={setTriggerRef}>{children}</span>
+      <span ref={setTriggerRef}>
+        {children ? children : <TooltipDefaultChild />}
+      </span>
       {createPortal(
         <TooltipWrapper isAnimated={isAnimated} isVisible={visible}>
           <div
@@ -81,10 +94,10 @@ const Tooltip = ({
           >
             <div
               className={cx(
-                'px-2 py-2 rounded-lg border min-w-max',
+                'px-2 py-2 rounded-lg border w-44',
                 width === 'big' && 'max-w-[xs]',
                 theme === 'regular' &&
-                  'bg-white text-coal border-coal-80 dark:bg-coal dark:border-white-80 dark:text-white-800 text-xs shadow-lg',
+                  'bg-white text-coal border-coal-80 dark:bg-[#0A0F26] dark:border-white-80 dark:text-[#fff] text-xs shadow-lg',
                 theme === 'transparent' && 'bg-transparent border-none',
               )}
             >

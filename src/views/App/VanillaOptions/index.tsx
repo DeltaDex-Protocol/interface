@@ -2,7 +2,6 @@
 import cx from 'classnames'
 import { useState, useEffect } from 'react'
 import styles from './styles.module.scss'
-
 // import { DAI, WETH } from 'src/utils/constants'
 
 import AdvancedSettings from './AdvansedSettings'
@@ -198,7 +197,7 @@ const Form = ({ className }) => {
             {/* {round(Number(formData.strike) +
               Number(formData.advancedSettings.optionPrice) +
               hedgeCost, 3)}{' '} */}
-              {breakEven} DAI
+            {breakEven} DAI
           </span>
         </div>
         <div className="flex justify-between px-2 py-1">

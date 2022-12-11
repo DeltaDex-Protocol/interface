@@ -2,10 +2,21 @@ import React from 'react'
 import cx from 'classnames'
 
 import { NewDropDown } from './NewDropDown'
-// import DropDown from '@/components/kit/Form/components/DropDown'
 
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
+
+import { TOOLTIPS_DATA } from '../tooltipsData'
+import type { PropsWithChildren } from 'react'
+import type { TTooltipProps } from '@/components/kit'
+import dynamic from 'next/dynamic'
+
+const Tooltip = dynamic<PropsWithChildren<TTooltipProps>>(
+  () => import('@/components/kit/Tooltip/Tooltip').then((mod) => mod.Tooltip),
+  {
+    ssr: false,
+  },
+)
 
 function Leverage({ className }) {
   const { formData, dispatch } = useOptionFormContext()
@@ -19,8 +30,12 @@ function Leverage({ className }) {
       )}
     >
       <div className=" flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6]">
-          Leverage
+        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-2">
+          <span className="my-auto">Leverage</span>
+          {
+            // @ts-ignore
+            <Tooltip content={TOOLTIPS_DATA.LEVERAGE} />
+          }{' '}
         </span>
         <div className="flex gap-4">
           <span className="font-normal text-[14px] md:text-[19px] my-auto">

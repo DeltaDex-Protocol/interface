@@ -29,9 +29,10 @@ function Pairs({ className }) {
       )}
     >
       <div className="pb-0 flex flex-col gap-2">
-        <span className="font-semibold text-[13px] text-[#726DA6]">
-          Select pair
+        <span className="font-semibold text-[13px] text-[#726DA6] flex space-x-2">
+          <span className="my-auto">Select pair</span>
         </span>
+
         <div className="flex gap-1 my-auto">
           <EthLogo className="h-7 w-7" />
           <div className="my-auto rounded-md"></div>

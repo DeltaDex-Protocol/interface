@@ -4,7 +4,17 @@ import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import { settingsInfo } from './settingsInfos'
 
+import { TOOLTIPS_DATA } from '../tooltipsData'
+import type { PropsWithChildren } from 'react'
+import type { TTooltipProps } from '@/components/kit'
+import dynamic from 'next/dynamic'
 
+const Tooltip = dynamic<PropsWithChildren<TTooltipProps>>(
+  () => import('@/components/kit/Tooltip/Tooltip').then((mod) => mod.Tooltip),
+  {
+    ssr: false,
+  },
+)
 
 export function Setting({ name, value, className, allowedToChange = true }) {
   const { dispatch } = useOptionFormContext()
@@ -18,8 +28,12 @@ export function Setting({ name, value, className, allowedToChange = true }) {
       )}
     >
       <div className="flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6]">
-          {settingsInfo[name].desc}
+        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-2">
+          <span className="my-auto">{settingsInfo[name].desc}</span>
+          {
+            // @ts-ignore
+            <Tooltip content={TOOLTIPS_DATA[settingsInfo[name].tooltip]} />
+          }
         </span>
         <div className="md:flex gap-0">
           {/* {console.log(name)} */}

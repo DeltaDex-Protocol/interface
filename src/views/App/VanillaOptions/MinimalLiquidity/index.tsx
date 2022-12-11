@@ -19,7 +19,6 @@ function MinimalLiquidity({ className }) {
         'col-span-6 relative rounded-md p-6 my-auto pl-5',
       )}
     >
-      
       <div className={cx('flex justify-between ')}>
         <div className={cx('font-normal text-[12px] md:text-[14px] my-auto')}>
           Liquidity to provide

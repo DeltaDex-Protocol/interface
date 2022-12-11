@@ -8,8 +8,8 @@ import { boolean } from 'mathjs'
 const Toggle = ({ onClick }) => {
   return (
     <div className="flex space-x-4 my-2 ">
-      <div className="ml-1 w-32 font-semibold text-[12px] text-[#726DA6]">
-        Pull the slider to manually set Implied volatility
+      <div className="ml-1 w-32 font-normal text-[12px] text-[#fff]/50">
+        Pull the slider to manually set the Implied volatility
       </div>
       <label
         // for="default-toggle"
