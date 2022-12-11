@@ -9,12 +9,16 @@ import { Form } from '@/components/kit'
 import Field from '@/components/kit/Form/components/Field'
 import Header from '@/components/kit/Form/components/Header'
 import DropDown from '@/components/kit/Form/components/DropDown'
+import { NewDropDown } from '../VanillaOptions/Inputs/NewDropDown'
 
 import { useCalculatorFormContext } from '@/context/calculator/CalculatorContext'
 import { CalculatorFormActionTypes } from '@/context/calculator/CalculatorReducer'
 import estimateFees24H from '@/utils/estimateFees'
 import { getEthPrice } from '@/api/tokensPrices'
+import { EvaluateOption, getExpirations } from '@/api/optionsdata'
+
 import { round } from 'lodash-es'
+import { StringToDays } from '@/utils/formUtils'
 
 const FEES_FORM_TITLE = 'Uniswap v3'
 const OPTION_FORM_TITLE = 'Vanilla option replication'
@@ -37,12 +41,52 @@ const Calculator = () => {
   } = formData
 
   const { optionType, strike, contractsAmount, riskFree, volatility } = formData
-  const periods = [
-    formData.period + ' days',
-    ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
-  ]
+  // const periods = [
+  //   formData.period + ' days',
+  //   ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+  // ]
 
   // const [DailyFees, setDailyFees] = useState<number>(0)
+
+  const [periods, setPeriods] = useState<string[]>([])
+
+  // const [selectedPeriod, setSelectedPeriod] = useState<string>('')
+
+  const setSelectedPeriod = (value) =>
+    dispatch({
+      type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+      name: 'expirationDate',
+      value: value,
+    })
+
+  // const periods = [
+  //   formData.expiresIn,
+  //   ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+  // ]
+
+  useEffect(() => {
+    // console.log(formData)
+    getExpirations().then((data: []) => {
+      // ;(async () => {})().then((data) =>
+
+      // console.log(data)
+      if (formData.expirationDate !== '') {
+        setPeriods([
+          formData.expirationDate,
+          // data[0],
+          ...data,
+          // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+        ])
+      } else {
+        setPeriods([
+          // formData.expirationDate,
+          // data[0],
+          ...data,
+          // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+        ])
+      }
+    })
+  }, [])
 
   useEffect(
     () => {
@@ -94,14 +138,27 @@ const Calculator = () => {
       formData.strike,
       formData.minimalPrice,
       formData.maximalPrice,
+      formData.expirationDate
     ],
   )
 
-  console.log(formData)
+  useEffect(() => {
+    const isCall = formData.optionType === 'call' ? 1 : 0
+    if (formData.expirationDate !== '')
+      EvaluateOption(formData.strike, formData.expirationDate, isCall).then(
+        (res) => {
+          dispatch({
+            type: CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
+            name: 'volatility',
+            value: res.implied_volatility,
+          })
+
+        },
+      )
+  }, [formData.optionType, formData.expirationDate, period, formData.strike])
 
   return (
     <div className="">
-
       <div className="lg:grid lg:grid-cols-11">
         <div className="col-span-7">
           <div className="text-2xl">Calculator</div>
@@ -113,12 +170,29 @@ const Calculator = () => {
             <Form
               header={[
                 FEES_FORM_TITLE,
-                <DropDown
-                  name="period"
-                  array={periods}
-                  ActionType={CalculatorFormActionTypes.UPDATE_PERIOD}
-                  dispatch={dispatch}
-                />,
+                <div className="flex space-x-2">
+                  <span className="my-auto text-[15px]">Expiration: </span>
+                  <div className="bg-[#fff]/10 rounded-xl">
+                    <NewDropDown
+                      name="period"
+                      array={periods}
+                      ActionType={CalculatorFormActionTypes.UPDATE_PERIOD}
+                      // dispatch={dispatch}
+                      dispatch={({ type, name, value }) => {
+                        console.log(periods)
+                        setSelectedPeriod(value)
+                        setPeriods([
+                          // formData.expiresIn,
+                          // periods[0],
+                          value,
+                          ...periods.slice(1),
+                          // ...['7 days', '14 days', '21 days', '28 days', '35 days', '42 days'],
+                        ])
+                        dispatch({ type, name, value: StringToDays(value)})
+                      }}
+                    />
+                  </div>
+                </div>,
               ]}
               className="mx-auto"
             >
@@ -217,7 +291,7 @@ const Calculator = () => {
                         max={1000}
                         step={10}
                         width={10}
-                        eventHandler={(value) =>
+                        eventHandler={(value) => 
                           dispatch({
                             type:
                               CalculatorFormActionTypes.UPDATE_BASE_SETTINGS,
@@ -298,6 +372,12 @@ const Calculator = () => {
                     <span>Option price</span>
                     <span className="font-medium text-[#F3736F]">
                       {optionCost}$
+                    </span>
+                  </div>
+                  <div className="my-auto flex justify-between">
+                    <span>Implied volatility</span>
+                    <span className="font-medium text-[#F3736F]">
+                      {round(formData.volatility*100)}%
                     </span>
                   </div>
                   <div className="my-auto flex justify-between">

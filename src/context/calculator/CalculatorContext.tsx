@@ -19,7 +19,8 @@ export type CalculatorForm = {
   poolAddress: string
   depositAmount: number
   period: number
-  optionType: 'Long put' | 'Long call' // 'Short put' | 'Short call'
+  expirationDate: string
+  optionType: 'put' | 'call' // 'Short put' | 'Short call'
   minimalPrice: number
   maximalPrice: number
   strike: number
@@ -39,14 +40,15 @@ export const CalculatorFormInitialState: CalculatorForm = {
   poolAddress: '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8',
   depositAmount: 1000,
   period: 30,
-  optionType: 'Long put',
+  expirationDate: '29SEP23',
+  optionType: 'put',
   minimalPrice: 600,
   maximalPrice: 1700,
   strike: 1475,
   contractsAmount: 0.686,
   optionCost: 0,
   dailyFees: 0,
-  riskFree: 0.1,
+  riskFree: 0,
   volatility: 0.7,
 }
 

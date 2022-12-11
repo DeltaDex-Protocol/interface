@@ -27,7 +27,7 @@ export const CalculatorReducer = (
       return { ...state, [action.name]: action.value }
     }
     case CalculatorFormActionTypes.UPDATE_PERIOD: {
-      return { ...state, period: Number(action.value.split(' ')[0]) }
+      return { ...state, period: Number(action.value) }
     }
     default: {
       return state
