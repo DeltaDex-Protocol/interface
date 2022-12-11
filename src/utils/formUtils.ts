@@ -10,7 +10,7 @@ export const StringToDays = (str) => {
 
   let strDate = day + '/' + month + '/' + '20' + year
 
-  let today = new Date()
+  const today = new Date()
 
 
 
@@ -24,7 +24,7 @@ export const StringToDays = (str) => {
   const date = new Date(strDate)
 
   // console.log(date) // 👉️ Fri Apr 22 2022
-
+  // @ts-ignore
   const diffTime = Math.abs(date - today);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 

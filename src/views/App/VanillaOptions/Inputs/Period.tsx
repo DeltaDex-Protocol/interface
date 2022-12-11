@@ -31,7 +31,7 @@ function Period({ className }) {
 
   useEffect(() => {
     // console.log(formData)
-    getExpirations().then((data) => {
+    getExpirations().then((data : []) => {
       // ;(async () => {})().then((data) =>
 
       // console.log(data)

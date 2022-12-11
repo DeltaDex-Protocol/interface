@@ -16,7 +16,9 @@ export const EvaluateOption = async (strike, expirationDate, isCall) => {
   return {
     strike: strike,
     expirationDate: expirationDate,
+    // @ts-ignore
     implied_volatility: round(res.data.data.implied_volatility, 3),
+    // @ts-ignore
     price: round(res.data.data.price, 3),
   }
 }
