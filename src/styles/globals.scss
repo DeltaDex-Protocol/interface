@@ -4,12 +4,11 @@
 
 // @import '@/components/kit/HeaderDropdown/dropdown.css';
 
-
 /* elements */
 * {
   box-sizing: border-box;
   white-space: pre-line;
-  -moz-overflow:hidden
+  -moz-overflow: hidden;
 }
 
 a {
@@ -108,19 +107,17 @@ button {
   cursor: pointer;
 }
 
-
-
 /* layout */
 
 html,
 body {
   margin: 0;
   padding: 0;
-  -moz-overflow:hidden
+  -moz-overflow: hidden;
 }
 
 body {
-  background-color: #0A0F27;
+  background-color: #0a0f27;
   color: #fff;
   font-family: 'Inter', sans-serif;
   font-size: 16px;
@@ -147,11 +144,10 @@ body {
   }
 }
 
-
 .all {
   // overflow: hidden;
   // background: #312E81 0.9;
-  
+
   // animation: enlight 2s ease 1 normal forwards;
   // will-change: background;
 }
@@ -170,8 +166,6 @@ body {
   min-width: 375px;
   max-width: 1800px;
 }
-
-
 
 /* sections */
 
@@ -255,7 +249,7 @@ section.tools {
     letter-spacing: 0em;
 
     .dot {
-      color: #00FF60;
+      color: #00ff60;
     }
 
     @media only screen and (min-width: 960px) {
@@ -300,11 +294,11 @@ section.tools {
       font-size: 18px;
       line-height: 18px;
       font-weight: 700;
-      color: #FFFFFFCC;
+      color: #ffffffcc;
       transition: all 300ms ease;
 
       &.active {
-        background: #00FF60;
+        background: #00ff60;
         color: rgba(9, 10, 12, 1);
 
         .number {
@@ -325,11 +319,15 @@ section.tools {
     overflow: hidden;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       left: -1px;
       top: 0;
-      background: linear-gradient(270deg, rgb(9, 10, 12) 0%, rgba(9, 10, 12, 0) 100%);
+      background: linear-gradient(
+        270deg,
+        rgb(9, 10, 12) 0%,
+        rgba(9, 10, 12, 0) 100%
+      );
       transform: rotate(-180deg);
       will-change: transform;
       width: 15%;
@@ -337,11 +335,15 @@ section.tools {
       z-index: 1;
     }
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       right: -1px;
       top: 0;
-      background: linear-gradient(270deg, rgb(9, 10, 12) 0%, rgba(9, 10, 12, 0) 100%);
+      background: linear-gradient(
+        270deg,
+        rgb(9, 10, 12) 0%,
+        rgba(9, 10, 12, 0) 100%
+      );
       width: 15%;
       height: 100%;
       z-index: 1;
@@ -416,8 +418,8 @@ section.tools {
   display: none;
   z-index: 10;
   padding: 20px 16px 16px;
-  background-color: #4B1A9C;
-  
+  background-color: #4b1a9c;
+
   // box-shadow: 0px 24px 80px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(120px);
 
@@ -449,12 +451,13 @@ section.tools {
     margin-bottom: 24px;
     background-color: #07080b;
     color: white;
-    transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, color 0.25s ease-in-out;
+    transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out,
+      color 0.25s ease-in-out;
 
     &:active,
     &:hover {
-      background-color: #883FFF;
-      box-shadow: 0px 0px 16px ;
+      background-color: #883fff;
+      box-shadow: 0px 0px 16px;
       color: #07080b;
     }
   }
@@ -635,18 +638,18 @@ section.tools {
     padding: 0;
     font-size: 16px;
     line-height: 24px;
-    color: rgba(255, 255, 255, 0.4)
+    color: rgba(255, 255, 255, 0.4);
   }
 }
 
 // fix 'react-fast-marquee'
 .marquee {
-  min-width: auto!important;
+  min-width: auto !important;
 }
 
 // fix codeMirror
 .cm-gutterElement {
-  padding-right: 20px!important;
+  padding-right: 20px !important;
 }
 .cm-editor {
   background: #131416;
@@ -665,9 +668,8 @@ section.tools {
   background: rgba(255, 255, 255, 0.12);
   border: 7px solid #131416;
 }
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-

@@ -24,11 +24,15 @@ function App({ Component, pageProps }: AppProps) {
             />
             <title>DeltaDex</title>
           </Head>
-          <Header />
-          {/* @ts-ignore */}
-          <Component {...pageProps} />
-          <BetaVersionAlert />
-          <Footer />
+          <div className="min-h-screen">
+            <Header />
+            {/* @ts-ignore */}
+            <Component {...pageProps} />
+          </div>
+          <div className='relative'>
+            <BetaVersionAlert />
+            <Footer />
+          </div>
           <MobileMenu />
         </WalletProvider>
       </StateContextProvider>

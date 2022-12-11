@@ -37,8 +37,6 @@ export function Setting({ name, value, className, allowedToChange = true }) {
         </span>
         <div className="md:flex gap-0">
           {/* {console.log(name)} */}
-
-
           {name === 'volatility' && (
             <>
               <input

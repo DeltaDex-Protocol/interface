@@ -32,7 +32,7 @@ function MyPositions() {
       console.log(res)
       setData(res)
     }
-    fetchData()
+    fetchData().catch((err) => console.log(err))
   }, [])
 
   return (
