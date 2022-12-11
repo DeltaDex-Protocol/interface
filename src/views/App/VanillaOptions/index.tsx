@@ -207,6 +207,10 @@ const Form = ({ className }) => {
             w-full px-10 font-semibold text-[18px]"
           onClick={() => {
             if (formData.advancedSettings.optionType === 'call') {
+
+              console.log(formData);
+
+
               approveDAI()
 
               CallReplication({
