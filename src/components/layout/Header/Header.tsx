@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import cx from 'classnames'
 import Image from 'next/image'
 
@@ -21,6 +21,10 @@ function Header() {
   }, [])
 
   const { openMobileMenu } = useContext(StateContext)
+
+  useEffect(() => {
+    connect({ name: 'MetaMask', chainId: 137 })
+  }, [])
 
   return (
     <header className={styles.header}>
