@@ -9,9 +9,21 @@ import { PositionsInfoType } from '@/api/positions.types'
 import { UserPositionsType } from '@/api/userPositions'
 
 import { Skeleton } from '@/components/kit'
+
+import {
+  MY_POSITIONS_TOOLTIPS,
+  VANILLA_OPTIONS_TOOLTIPS,
+} from '../../../shared/tooltipsData'
 import type { PropsWithChildren } from 'react'
 import type { TTooltipProps } from '@/components/kit'
 import dynamic from 'next/dynamic'
+
+const Tooltip = dynamic<PropsWithChildren<TTooltipProps>>(
+  () => import('@/components/kit/Tooltip/Tooltip').then((mod) => mod.Tooltip),
+  {
+    ssr: false,
+  },
+)
 
 const TITLES: Array<string> = [
   'Type',
@@ -46,10 +58,16 @@ function MyPositions() {
         <div className="grid grid-cols-6 gap-6 pb-4">
           {TITLES.map((el, index) => (
             <div
-              className="text-center text-[#726DA6] text-xs md:text-base"
+              className="text-center text-[#726DA6] text-xs md:text-base flex space-x-2 mx-auto"
               key={index}
             >
-              {el}
+              <span className="">{el}</span>
+              {/* <span> */}
+              {MY_POSITIONS_TOOLTIPS[el] && (
+                // @ts-ignore
+                <Tooltip content={MY_POSITIONS_TOOLTIPS[el]} />
+              )}
+              {/* </span> */}
             </div>
           ))}
           {data?.length === 0 && (

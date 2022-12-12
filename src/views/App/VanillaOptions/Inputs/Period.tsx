@@ -8,7 +8,7 @@ import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import { StringToDays } from '@/utils/formUtils'
 
-import { TOOLTIPS_DATA } from '../tooltipsData'
+import { VANILLA_OPTIONS_TOOLTIPS } from '../../../../shared/tooltipsData'
 
 import type { PropsWithChildren } from 'react'
 import type { TTooltipProps } from '@/components/kit'
@@ -100,7 +100,7 @@ function Period({ className }) {
           <span className="my-auto">Expiration</span>
           {
             // @ts-ignore
-            <Tooltip content={TOOLTIPS_DATA.STRIKE} />
+            <Tooltip content={VANILLA_OPTIONS_TOOLTIPS.STRIKE} />
           }
         </span>
         <span className="font-normal text-[12px] md:text-[19px] my-auto">

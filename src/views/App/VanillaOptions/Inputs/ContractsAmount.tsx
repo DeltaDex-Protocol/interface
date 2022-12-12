@@ -3,7 +3,7 @@ import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import cx from 'classnames'
 
-import { TOOLTIPS_DATA } from '../tooltipsData'
+import { VANILLA_OPTIONS_TOOLTIPS } from '../../../../shared/tooltipsData'
 
 import Info from 'public/images/icons/info.svg'
 import type { PropsWithChildren } from 'react'
@@ -34,7 +34,7 @@ function ContractsAmount({ className }) {
           <span className="my-auto">Contracts amount</span>
           {
             // @ts-ignore
-            <Tooltip content={TOOLTIPS_DATA.CONTRACTS_AMOUNT} />
+            <Tooltip content={VANILLA_OPTIONS_TOOLTIPS.CONTRACTS_AMOUNT} />
           }{' '}
         </span>
         <div className="md:flex gap-0 ">
