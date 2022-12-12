@@ -10,6 +10,7 @@ import { StateContext } from '@/state'
 import { WalletContext } from '@viaprotocol/web3-wallets'
 import Navbar from './Navbar'
 import { HeaderDropDown } from './HeaderDropdown'
+import { add } from 'mathjs'
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -24,7 +25,7 @@ function Header() {
 
   useEffect(() => {
     connect({ name: 'MetaMask', chainId: 137 })
-  }, [])
+  }, [address])
 
   return (
     <header className={styles.header}>
