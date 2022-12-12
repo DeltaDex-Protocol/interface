@@ -9,7 +9,7 @@ const Toggle = ({ onClick }) => {
   return (
     <div className="flex space-x-4 my-2 ">
       <div className="ml-1 w-32 font-normal text-[12px] text-[#fff]/50">
-        Pull the slider to manually set the Implied volatility
+        Set Custom Implied Volatility
       </div>
       <label
         // for="default-toggle"
