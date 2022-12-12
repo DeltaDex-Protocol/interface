@@ -18,6 +18,8 @@ import type { PropsWithChildren } from 'react'
 import type { TTooltipProps } from '@/components/kit'
 import dynamic from 'next/dynamic'
 
+import { SAMPLE_MY_POSITIONS } from '@/data/sample-data'
+
 const Tooltip = dynamic<PropsWithChildren<TTooltipProps>>(
   () => import('@/components/kit/Tooltip/Tooltip').then((mod) => mod.Tooltip),
   {
@@ -36,6 +38,7 @@ const TITLES: Array<string> = [
 
 function MyPositions() {
   const [data, setData] = useState<UserPositionsType[] | undefined>([])
+  const [isTestData, setTestData] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,9 +53,24 @@ function MyPositions() {
     })
   }, [])
 
+  useEffect(() => {
+    setData(isTestData ? SAMPLE_MY_POSITIONS : undefined)
+  }, [isTestData])
+
   return (
     <div>
-      <div className="pb-6 text-2xl">My positions</div>
+      <div className="pb-6 text-2xl flex justify-between">
+        <span>My positions </span>
+        <button
+          className={cx(
+            isTestData ? 'bg-[#726DA6]/40' : 'hover:bg-[#726DA6]/40',
+            'rounded-xl  px-3 py-1 text-xl',
+          )}
+          onClick={() => setTestData(!isTestData)}
+        >
+          {isTestData ? 'Sample data' : 'Not sample data'}
+        </button>
+      </div>
       <div className={cx(styles.table, 'mx-auto ')}>
         <div className="h-50"></div>
         <div className="grid grid-cols-6 gap-6 pb-4">
