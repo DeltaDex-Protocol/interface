@@ -5,7 +5,6 @@ import cx from 'classnames'
 
 import { VANILLA_OPTIONS_TOOLTIPS } from '../../../../shared/tooltipsData'
 
-import Info from 'public/images/icons/info.svg'
 import type { PropsWithChildren } from 'react'
 import type { TTooltipProps } from '@/components/kit'
 import dynamic from 'next/dynamic'
@@ -30,7 +29,7 @@ function ContractsAmount({ className }) {
       )}
     >
       <div className="flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-2">
+        <span className="font-semibold text-xs md:text-[12px] text-[#726DA6] flex space-x-1 md:space-x-2">
           <span className="my-auto">Contracts amount</span>
           {
             // @ts-ignore

@@ -90,7 +90,7 @@ const Form = ({ className }) => {
       <header className=" mt-2 mb-4 px-2  md:gap-6 ">
         <div className="flex justify-between space-x-4">
           <div className="flex gap-4">
-            <span className="font-semibold text-[17px] text-[#726DA6]">
+            <span className="font-semibold text-sm md:text-[17px] text-[#726DA6]">
               Replicate a vanilla option
             </span>
             <span className="flex space-x-0">

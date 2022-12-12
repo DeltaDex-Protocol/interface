@@ -30,7 +30,7 @@ function Leverage({ className }) {
       )}
     >
       <div className=" flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-2">
+        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-1 md:space-x-2">
           <span className="my-auto">Leverage</span>
           {
             // @ts-ignore
