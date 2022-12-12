@@ -6,7 +6,7 @@ import { NewDropDown } from './NewDropDown'
 import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 
-import { TOOLTIPS_DATA } from '../tooltipsData'
+import { VANILLA_OPTIONS_TOOLTIPS } from '../../../../shared/tooltipsData'
 import type { PropsWithChildren } from 'react'
 import type { TTooltipProps } from '@/components/kit'
 import dynamic from 'next/dynamic'
@@ -30,11 +30,11 @@ function Leverage({ className }) {
       )}
     >
       <div className=" flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-2">
+        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-1 md:space-x-2">
           <span className="my-auto">Leverage</span>
           {
             // @ts-ignore
-            <Tooltip content={TOOLTIPS_DATA.LEVERAGE} />
+            <Tooltip content={VANILLA_OPTIONS_TOOLTIPS.LEVERAGE} />
           }{' '}
         </span>
         <div className="flex gap-4">

@@ -85,10 +85,10 @@ function Position({ rowData, id }) {
       )}
     >
       <header className="relative flex " onClick={onClickCollapse}>
-        <div className="grid grid-cols-6 gap-6 py-3 w-full text-center">
+        <div className="grid grid-cols-6 gap-6 py-3 w-full text-center text-sm md:text-base">
           <div>{type}</div>
-          <div>{pairAddress}</div>
-          <div className="text-[14px]">{currentBalances.join(', ')}</div>
+          <div className='text-xs md:text-base'>{pairAddress}</div>
+          <div className="text-xs md:text-[15px]">{currentBalances.join(', ')}</div>
           <div className="text-[#77DC89]">{currentPnL}</div>
           <div>{performance}</div>
           <button

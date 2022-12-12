@@ -4,13 +4,19 @@ import cx from 'classnames'
 
 import { Icon } from '@/components/kit'
 
-const NewDropDown = ({ name, array, ActionType, dispatch }) => {
+const NewDropDown = ({
+  name,
+  array,
+  ActionType,
+  dispatch,
+  className = 'text-[15px]',
+}) => {
   const dropdownRef = useRef(null)
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
   const onClick = () => setIsActive(!isActive)
 
   return (
-    <div className="text-white text-[15px]">
+    <div className={cx(className, 'text-white')}>
       <div className="relative ">
         <button
           onClick={onClick}

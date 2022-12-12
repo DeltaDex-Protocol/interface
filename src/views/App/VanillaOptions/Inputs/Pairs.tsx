@@ -38,6 +38,7 @@ function Pairs({ className }) {
           <div className="my-auto rounded-md"></div>
           <NewDropDown
             name=""
+            className='text-sm md:text-base'
             array={pairs}
             ActionType={OptionFormActionTypes.CHANGE_PAIR}
             dispatch={dispatch}

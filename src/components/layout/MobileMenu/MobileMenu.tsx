@@ -3,7 +3,6 @@ import { useContext } from 'react'
 
 import { StateContext } from '@/state'
 import { Icon } from '@/components/kit'
-import { navigation } from '../Header/Navbar'
 
 function MobileMenu() {
   const { isMobileMenuOpen, closeMobileMenu } = useContext(StateContext)

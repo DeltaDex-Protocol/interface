@@ -3,7 +3,7 @@ import { useOptionFormContext } from '@/context/form/OptionFormContext'
 import { OptionFormActionTypes } from '@/context/form/OptionFormReducer'
 import cx from 'classnames'
 
-import { TOOLTIPS_DATA } from '../tooltipsData'
+import { VANILLA_OPTIONS_TOOLTIPS } from '../../../../shared/tooltipsData'
 
 import Info from 'public/images/icons/info.svg'
 import type { PropsWithChildren } from 'react'
@@ -30,11 +30,11 @@ function Strike({ className }) {
       )}
     >
       <div className="flex flex-col gap-2">
-        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-2">
+        <span className="font-semibold text-[12px] text-[#726DA6] flex space-x-1 md:space-x-2">
           <span className="my-auto">Strike price</span>
           {
             // @ts-ignore
-            <Tooltip content={TOOLTIPS_DATA.STRIKE} />
+            <Tooltip content={VANILLA_OPTIONS_TOOLTIPS.STRIKE} />
           }
         </span>
         <div className="md:flex gap-0">
@@ -43,7 +43,7 @@ function Strike({ className }) {
             step="0.1"
             defaultValue={strike == 0 ? undefined : strike}
             placeholder="1500"
-            className="font-normal text-white   w-40 text-[18px]"
+            className="font-normal text-white   w-40 text-sm md:text-base"
             onChange={(event) =>
               dispatch({
                 type: OptionFormActionTypes.UPDATE_BASE_SETTINGS,
