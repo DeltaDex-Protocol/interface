@@ -29,10 +29,8 @@ function App({ Component, pageProps }: AppProps) {
             {/* @ts-ignore */}
             <Component {...pageProps} />
           </div>
-          <div className='relative'>
-            <BetaVersionAlert />
-            <Footer />
-          </div>
+          <BetaVersionAlert />
+          <Footer />
           <MobileMenu />
         </WalletProvider>
       </StateContextProvider>
