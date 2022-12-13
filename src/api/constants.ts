@@ -1,9 +1,9 @@
 export const WEBSOCKET_URL = 'wss://router-api.via.exchange/api/'
 export const EXPLORER_URL = 'https://explorer-api.via.exchange/'
 export const ROUTER_URL = 'https://router-api.via.exchange/api/'
-export const DAI = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063'
-export const WETH = '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
+export const DAI = '0x8628B09a0Daa0C4777EC29D740B30833e76102c9'
+export const WETH = '0xE10497EFc7884923C1aA607793b0544eb60E13F7'
 export const daiWHALE = '0x1a34edac6ab1cf8fe609f163d798c8644636c7dd' // not sure if it's really needed
 export const wethWHALE = '0xCe2CC46682E9C6D5f174aF598fb4931a9c0bE68e' // not sure if it's really needed
-export const OptionStorageAddress = '0x6E9355354c162252E473CFf3e5902603883d93A5'
-export const CoreAddress = '0x90DfA64fF1E169D7b9A496Baa64Bf423CE83b67e'
+export const OptionStorageAddress = '0xC00673a9d2B476687c1Fb27624A93dB8D619bB4c'
+export const CoreAddress = '0x879302061D233dB0cE77644eE96C960849D19256'
