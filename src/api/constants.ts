@@ -5,5 +5,5 @@ export const DAI = '0x8628B09a0Daa0C4777EC29D740B30833e76102c9'
 export const WETH = '0xE10497EFc7884923C1aA607793b0544eb60E13F7'
 export const daiWHALE = '0x1a34edac6ab1cf8fe609f163d798c8644636c7dd' // not sure if it's really needed
 export const wethWHALE = '0xCe2CC46682E9C6D5f174aF598fb4931a9c0bE68e' // not sure if it's really needed
-export const OptionStorageAddress = '0xC00673a9d2B476687c1Fb27624A93dB8D619bB4c'
-export const CoreAddress = '0x879302061D233dB0cE77644eE96C960849D19256'
+export const OptionStorageAddress = '0x67ce264Ac1ce7211A9710c13d2058B5524f99853'
+export const CoreAddress = '0x8E48B3027A8cED7621D9241f8641368022D8B0dA'
