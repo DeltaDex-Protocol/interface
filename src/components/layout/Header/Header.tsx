@@ -10,7 +10,6 @@ import { StateContext } from '@/state'
 import { WalletContext } from '@viaprotocol/web3-wallets'
 import Navbar from './Navbar'
 import { HeaderDropDown } from './HeaderDropdown'
-import { add } from 'mathjs'
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -24,7 +23,9 @@ function Header() {
   const { openMobileMenu } = useContext(StateContext)
 
   useEffect(() => {
-    connect({ name: 'MetaMask', chainId: 137 })
+    if (window.ethereum) {
+      connect({ name: 'MetaMask', chainId: 137 })
+    }
   }, [address])
 
   return (
