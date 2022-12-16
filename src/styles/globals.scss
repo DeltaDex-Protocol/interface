@@ -123,12 +123,12 @@ body {
   font-size: 16px;
   background-repeat: no-repeat;
   background-size: 100%;
-  background-image: url('/images/backgrounds/deltadex-bg-large.png');
+  background-image: url('/app/images/backgrounds/deltadex-bg-large.png');
   position: relative;
   letter-spacing: -0.02em;
 
   @media only screen and (min-width: 620px) {
-    background-image: url('/images/backgrounds/deltadex-bg-large.png');
+    background-image: url('/app/images/backgrounds/deltadex-bg-large.png');
   }
 
   @media only screen and (min-width: 2600px) {

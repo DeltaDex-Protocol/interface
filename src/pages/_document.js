@@ -7,7 +7,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <meta charSet="utf-8" />
-          <link rel="icon" href="/favicon.svg" />
+          <link rel="icon" href="/app/favicon.svg" />
           <meta name="theme-color" content="#000000" />
           {/* <link rel="manifest" href="/manifest.json" /> */}
 
