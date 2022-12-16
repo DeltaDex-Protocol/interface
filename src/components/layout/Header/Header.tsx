@@ -11,6 +11,8 @@ import { WalletContext } from '@viaprotocol/web3-wallets'
 import Navbar from './Navbar'
 import { HeaderDropDown } from './HeaderDropdown'
 
+// import DeltaDex from '/images/deltadex.svg'
+
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -31,13 +33,22 @@ function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.headerLogoContainer}>
-        <Image
+        <div className="w-8 max-h-8">
+          <Image
+            src={'/app/images/deltadex.svg'}
+            width={40}
+            height={40}
+            alt="Builder"
+            loading="lazy"
+          />
+        </div>
+        {/* <img
           src="/images/deltadex.svg"
           alt="DeltaDex"
           width={50}
           height={35}
           className="w-8"
-        />
+        /> */}
         <span className="mb-4 text-[#9FB9FC]">Beta</span>
         <Navbar />
       </div>
@@ -48,7 +59,7 @@ function Header() {
         onClick={openMobileMenu}
       >
         <img
-          src="/images/icons/menu-icon.svg"
+          src="/app/images/icons/menu-icon.svg"
           alt="Menu icon"
           width="24"
           height="24"
