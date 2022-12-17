@@ -12,6 +12,7 @@ function MinimalLiquidity({ className }) {
   const numerrarie = getNumerrarie(formData)
   const minimalValue = getMinValueForReplication(formData)
 
+  
   return (
     <div
       className={cx(
