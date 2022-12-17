@@ -68,7 +68,7 @@ function MyPositions() {
           )}
           onClick={() => setTestData(!isTestData)}
         >
-          {isTestData ? 'Sample data' : 'Not sample data'}
+          {isTestData ? 'Your Positions' : 'Sample data'}
         </button>
       </div>
       <div className={cx(styles.table, 'mx-auto ')}>

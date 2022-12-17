@@ -1,12 +1,12 @@
 export const settingsInfo = {
   feesToSplit: {
-    desc: 'Fees per rebalancing - DAI',
+    desc: 'Fees per hedge - DAI',
     type: 'input',
     advanced: false,
     tooltip: 'FEES_TO_SPLIT',
   },
   hedgesPerDay: {
-    desc: 'Number of rebalances per day',
+    desc: 'Number of hedges per day',
     type: 'input',
     advanced: false,
     tooltip: 'HEDGES_PER_DAY',

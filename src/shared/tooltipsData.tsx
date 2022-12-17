@@ -2,17 +2,17 @@ export const VANILLA_OPTIONS_TOOLTIPS = {
   EXPIRATION: 'Select expiration as if you were buying a real option',
   STRIKE: 'Set the strike price as if you were buying a real option ',
   LEVERAGE:
-    'Leveraging allows to decrease amount of liquidity required for replication. However, it increases the risks of being liquidated',
+    'Leverage decreases the amout of liquidity required for replication. However, it increases the risk of your position being liquidated',
   CONTRACTS_AMOUNT:
-    'Set the amount of option contracts as if you were buying a real option',
+    'Set the amount of option contracts for replication',
   FEES_TO_SPLIT:
-    'Replication requires a rebalancing every several hours. Set the reward for the users who will hedge your position.',
-  HEDGES_PER_DAY: 'Set the amount of rebalances within one day',
+    'Option replication requires portfolio rebalancing every several hours. Set the fee reward for the users who will hedge your position.',
+  HEDGES_PER_DAY: 'Set the number of delta hedges per day.',
   VOLATILITY: (
     <span>
-      <span className="text-red ">Advanced:</span> manually set the Implied
-      volatility of an option. By default, implied volatility fetches
-      automatically
+      <span className="text-red ">Advanced:</span> Manually set the implied
+      volatility of an option. By default, implied volatility is set
+      automatically.
     </span>
   ),
 }
