@@ -26,7 +26,7 @@ function Leverage({ className }) {
     <div
       className={cx(
         className,
-        'col-span-3 relative h-100 rounded-md py-3 px-5',
+        'col-span-5 md:col-span-3 relative h-100 rounded-md py-3 px-5',
       )}
     >
       <div className=" flex flex-col gap-2">
