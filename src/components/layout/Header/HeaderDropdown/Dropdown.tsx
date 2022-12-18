@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { createRef } from 'react'
-import { useDetectOutsideClick } from './useDetectOutsideClick'
+// import { useDetectOutsideClick } from './useDetectOutsideClick'
 import cx from 'classnames'
 import gsap from 'gsap'
 
