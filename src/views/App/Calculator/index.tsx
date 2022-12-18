@@ -116,7 +116,7 @@ const Calculator = () => {
       })
 
       fetch(
-        `/api/get-option-costs?currentPrice=${currentPrice}
+        `/app/api/get-option-costs?currentPrice=${currentPrice}
       &strike=${strike}&expiry=${period}&riskFree=${riskFree}
       &volatility=${volatility}&contractAmount=${contractsAmount}`,
       )

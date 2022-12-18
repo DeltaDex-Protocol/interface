@@ -17,50 +17,6 @@ const GetTokens = () => {
 
   const { connect, isConnected, address } = useContext(WalletContext)
 
-  // useEffect(() => {
-  //     getCurrentWalletConnected()
-  //         .then((res) => {
-  //             const { address, status } = res;
-  //             setWallet(address);
-  //             setStatus(status);
-  //             console.log(address);
-
-  //         });
-
-  //     addWalletListener();
-  // }, []);
-
-  // function addWalletListener() {
-  //   if (window.ethereum) {
-  //     window.ethereum.on("accountsChanged", (accounts) => {
-  //       if (accounts.length > 0) {
-  //         setWallet(accounts[0]);
-  //         setStatus("👆🏽 Write a message in the text-field above.");
-  //       } else {
-  //         setWallet("");
-  //         setStatus("🦊 Connect to Metamask using the top right button.");
-  //       }
-  //     });
-  //   } else {
-  //     setStatus(
-  //       <p>
-  //         {" "}
-  //         🦊{" "}
-  //         <a target="_blank" href={`https://metamask.io/download.html`}>
-  //           You must install Metamask, a virtual Ethereum wallet, in your
-  //           browser.
-  //         </a>
-  //       </p>
-  //     );
-  //   }
-  // }
-
-  //   const connectWalletPressed = async () => {
-  //     const walletResponse = await connectWallet();
-  //     setStatus(walletResponse.status);
-  //     setWallet(walletResponse.address);
-  //   };
-
   return (
     <div className="mt-16 lg:mt-24">
       <div className="lg:grid grid-cols-1 lg:grid-cols-2 mx-2">
@@ -70,7 +26,7 @@ const GetTokens = () => {
               Receive testnet <br /> tokens
             </h1>
             <span className="lg:text-lg font-semibold text-[#726DA6] w-60 lg:w-80 mx-auto lg:ml-0">
-              Connect you metamask wallet, mint DAI and WETH, approve the
+              Connect your metamask wallet, mint DAI and WETH, approve the
               DeltaDex contract.
             </span>
           </div>
