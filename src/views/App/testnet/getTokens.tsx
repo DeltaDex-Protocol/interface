@@ -4,6 +4,8 @@ import { WalletContext } from '@viaprotocol/web3-wallets'
 import { ApproveTokens } from '@/api/testnet/approve-tokens'
 import { MintTokens } from '@/api/testnet/mint-tokens'
 
+import { DEFAULT_CHAIN_ID } from '@/data/global-constants'
+
 const GetTokens = () => {
   const [status, setStatus] = useState('')
 
@@ -87,7 +89,12 @@ const GetTokens = () => {
             </div>
             <div className="my-auto cols-span-1">
               {!isConnected ? (
-                <button className="mx-auto rounded-xl w-44 py-2 text-normal text-white text-center font-semibold bg-violet-500 hover:bg-violet-800">
+                <button
+                  onClick={() =>
+                    connect({ name: 'MetaMask', chainId: DEFAULT_CHAIN_ID })
+                  }
+                  className="mx-auto rounded-xl w-44 py-2 text-normal text-white text-center font-semibold bg-violet-500 hover:bg-violet-800"
+                >
                   <span>Connect your wallet</span>
                 </button>
               ) : (
