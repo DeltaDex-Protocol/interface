@@ -11,6 +11,8 @@ import { WalletContext } from '@viaprotocol/web3-wallets'
 import Navbar from './Navbar'
 import { HeaderDropDown } from './HeaderDropdown'
 
+import { DEFAULT_CHAIN_ID } from '@/data/global-constants'
+
 // import DeltaDex from '/images/deltadex.svg'
 
 function Header() {
@@ -26,7 +28,7 @@ function Header() {
 
   useEffect(() => {
     if (window.ethereum) {
-      connect({ name: 'MetaMask', chainId: 137 })
+      connect({ name: 'MetaMask', chainId: DEFAULT_CHAIN_ID })
     }
   }, [address])
 
@@ -74,12 +76,12 @@ function Header() {
           )}
         >
           <span className="text-white flex">
-            Polygon
+            Polygon testnet
             <Icon className="" icon="arrowDown" width={19} height={19} />
           </span>
         </button>
         <button
-          onClick={() => connect({ name: 'MetaMask', chainId: 137 })}
+          onClick={() => connect({ name: 'MetaMask', chainId: DEFAULT_CHAIN_ID })}
           className={cx(
             styles.headerActionButton,
             'bg-[#726DA6] bg-opacity-50 hover:bg-opacity-70 ',

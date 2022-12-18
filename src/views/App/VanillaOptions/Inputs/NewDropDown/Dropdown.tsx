@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, createRef, useEffect } from 'react'
 import { useDetectOutsideClick } from './useDetectOutsideClick'
 import cx from 'classnames'
+import gsap from 'gsap'
 
 import { Icon } from '@/components/kit'
 
@@ -11,12 +12,41 @@ const NewDropDown = ({
   dispatch,
   className = 'text-[15px]',
 }) => {
-  const dropdownRef = useRef(null)
-  const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false)
-  const onClick = () => setIsActive(!isActive)
+  const [isOpen, setIsOpen] = useState(false) //useDetectOutsideClick(dropdownRef, false)
+  const onClick = () => setIsOpen(!isOpen)
+
+  const menuRef = createRef<HTMLDivElement>()
+  const buttonRef = createRef<HTMLDivElement>()
+
+  useEffect(() => {
+    const clickHandler = (evt: MouseEvent) => {
+      const path = evt.composedPath()
+      if (
+        !path.includes(buttonRef.current!) &&
+        !path.includes(menuRef.current!)
+      ) {
+        gsap.from(menuRef.current!, { opacity: 1 })
+        gsap.to(menuRef.current!, {
+          opacity: 0,
+          onComplete: () => {
+            setIsOpen(false)
+          },
+        })
+      }
+    }
+    if (isOpen) {
+      gsap.from(menuRef.current!, { opacity: 0, duration: 0.1 })
+      gsap.to(menuRef.current!, { opacity: 1, duration: 0.1 })
+      window.addEventListener('click', clickHandler)
+    } else {
+      window.removeEventListener('click', clickHandler)
+    }
+
+    return () => window.removeEventListener('click', clickHandler)
+  }, [isOpen])
 
   return (
-    <div className={cx(className, 'text-white')}>
+    <div className={cx(className, 'text-white')} ref={buttonRef}>
       <div className="relative ">
         <button
           onClick={onClick}
@@ -41,9 +71,9 @@ const NewDropDown = ({
           <span className="text-white flex"></span>
         </button>
         <nav
-          ref={dropdownRef}
+          ref={menuRef}
           className={cx(
-            isActive ? 'visible' : 'invisible',
+            isOpen ? 'visible' : 'invisible',
             'absolute rounded-lg  z-10 ',
           )}
         >
