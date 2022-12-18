@@ -216,7 +216,17 @@ const Form = ({ className }) => {
             w-full px-10 font-semibold text-[18px]"
           onClick={() => {
             if (formData.advancedSettings.optionType === 'call') {
-              console.log(formData)
+              console.log("here!")
+
+
+              console.log(formData.providedLiquidity);
+              console.log(formData.contractsAmount);
+              console.log(hedgeCost.toString());
+              console.log(formData.advancedSettings.hedgesPerDay);
+              console.log(formData.strike);
+              console.log(String(getExpiryDaysToYears(formData.expiresIn)));
+              console.log(formData.riskFree);
+              console.log(String(formData.advancedSettings.modelParams.volatility));
 
               approveDAI()
 
