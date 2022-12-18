@@ -65,7 +65,7 @@ const GetTokens = () => {
         <div className="cols-span-1 my-auto mx-auto">
           <div className="flex flex-col space-y-4 text-white mx-auto text-center lg:text-left">
             <h1 className="font-semibold text-4xl lg:text-5xl my-0">
-              Receive testnet <br /> tokens for free
+              Receive testnet <br /> tokens
             </h1>
             <span className="lg:text-lg font-semibold text-[#726DA6] w-60 lg:w-80 mx-auto lg:ml-0">
               Connect you metamask wallet, mint DAI and WETH, approve the
@@ -82,7 +82,7 @@ const GetTokens = () => {
             <div className="cols-span-1 w-36 mx-auto flex flex-col">
               <span className=" my-auto text-white text-3xl">Step 1.</span>
               <span className="font-semibold text-[#726DA6] mt-4">
-                Connect you wallet
+                Connect your wallet
               </span>
             </div>
             <div className="my-auto cols-span-1">
