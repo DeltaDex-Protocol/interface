@@ -23,7 +23,7 @@ const NewDropDown = ({
           className="border-[1px] hover:bg-[#fff] hover:bg-opacity-10 rounded-xl bg-opacity-50 hover:bg-opacity-70 px-2 py-[0.2em] rounded-xl"
         >
           {/* <Icon className="" icon="threedots" width={19} height={19} /> */}
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 ">
             {array[0]}
             <div className="my-auto">
               <Icon
@@ -48,7 +48,7 @@ const NewDropDown = ({
           )}
         >
           <ul
-            className="text-white max-h-36 rounded-b-lg"
+            className="text-white max-h-36 rounded-b-lg max-w-10 flex flex-col"
             style={{
               backgroundColor: 'rgba(0,0,0,.1)',
               overflow: 'scroll',
@@ -60,7 +60,7 @@ const NewDropDown = ({
                   <button
                     className={cx(
                       index == 1 ? 'rounded-t-lg' : '',
-                      'w-full pl-4 pr-2  py-1 bg-[#0A0F26]/100 hover:bg-[#726DA6]',
+                      ' px-4 py-1 bg-[#0A0F26]/100 hover:bg-[#726DA6]',
                       index == array.length - 1 ? 'rounded-b-lg' : '',
                     )}
                     onClick={() =>
