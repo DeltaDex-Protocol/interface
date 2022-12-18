@@ -1,7 +1,7 @@
 const erc20ABI = require('@/data/ERC20.json')
 var ethers = require('ethers')
 
-import { DAI, WETH } from "./constants.testnet"
+import { DAI, WETH } from '@/api/constants'
 
 export const MintTokens = async (token) => {
   if (window.ethereum) {

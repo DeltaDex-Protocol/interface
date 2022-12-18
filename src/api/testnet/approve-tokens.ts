@@ -1,13 +1,13 @@
 const erc20ABI = require('@/data/ERC20.json')
 var ethers = require('ethers')
 
-import { DAI, WETH, CORE_ADDRESS } from './constants.testnet'
+import { DAI, WETH, CoreAddress } from '@/api/constants'
 
 export const ApproveTokens = async (token) => {
   if (window.ethereum) {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     // console.log("amount", amount);
-    let coreAddress = CORE_ADDRESS
+    let coreAddress = CoreAddress
     let tokenAddress
     let amount
     // alert(1)
