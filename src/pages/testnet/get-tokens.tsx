@@ -1,15 +1,15 @@
 import { Section } from '@/components/layout'
-import RecieveTokens from '@/views/App/testnet/getTokens'
+import GetTokens from '@/views/App/testnet/getTokens'
 
 
 import React from 'react'
 
-const getTokens = () => {
+const Home = () => {
   return (
     <Section>
-        <RecieveTokens />
+        <GetTokens />
     </Section>
   )
 }
 
-export default getTokens
+export default Home
