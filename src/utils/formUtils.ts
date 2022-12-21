@@ -4,16 +4,21 @@ import { getEthPrice } from '@/api/tokensPrices'
 
 export const StringToDays = (str) => {
   // const str = '22/04/2022'
-
+  str = str.length === 6 ? '0' + str : str
+  console.log('str', str)
   let day = str.slice(0, 2)
   let month = str.slice(2, 5)
   let year = str.slice(5, 7)
 
-  let strDate = day + '/' + month + '/' + '20' + year
+  let strDate = day + '-' + month + '-' + '20' + year
 
   const today = new Date()
 
   const date = new Date(strDate)
+
+  // console.log(strDate)
+
+  console.log(new Date('22-SEP-2022'))
 
   // @ts-ignore
   const diffTime = Math.abs(date - today)
