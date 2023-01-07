@@ -26,7 +26,7 @@ export const SAMPLE_MY_POSITIONS = [
       pairAddress: '0xa09...Eb90',
       currentBalances: ['730.78 DAI', '3.42 WETH'],
       currentPnL: '+89.32 DAI',
-      performance: '1.78%',
+      performance: '98.78%',
       expand: {
         'Contracts amount': 1,
         Strike: 2000,
@@ -46,7 +46,7 @@ export const SAMPLE_MY_POSITIONS = [
       pairAddress: '0xa09...Eb90',
       currentBalances: ['979.35 DAI', '0.80 WETH'],
       currentPnL: '+20.83 DAI',
-      performance: '1.05%',
+      performance: '97.05%',
       expand: {
         'Contracts amount': 1,
         Strike: 1100,
@@ -66,7 +66,7 @@ export const SAMPLE_MY_POSITIONS = [
       pairAddress: '0xa09...Eb90',
       currentBalances: ['334.66 DAI', '1.74 WETH'],
       currentPnL: '+45.32 DAI',
-      performance: '1.81%',
+      performance: '99.81%',
       expand: {
         'Contracts amount': 1,
         Strike: 1150,
